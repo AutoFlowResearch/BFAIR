@@ -1,0 +1,20 @@
+-- Table: public."Investigation"
+
+-- DROP TABLE public."Investigation";
+
+CREATE TABLE public."Investigation"
+(
+    identifier "char" NOT NULL,
+    title "char" NOT NULL,
+    description "char",
+    submission_date date NOT NULL,
+    public_release_date date,
+    contact "char",
+    publication character(1) COLLATE pg_catalog."default",
+    CONSTRAINT "Investigation_pkey" PRIMARY KEY (identifier)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."Investigation"
+    OWNER to postgres;

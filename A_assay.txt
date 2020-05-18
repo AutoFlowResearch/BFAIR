@@ -1,0 +1,15 @@
+-- Table: public.assay
+
+-- DROP TABLE public.assay;
+
+CREATE TABLE public.assay
+(
+    measurement_type "char",
+    technology_type "char",
+    technology_platform "char"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.assay
+    OWNER to postgres;
