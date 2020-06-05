@@ -248,7 +248,7 @@ CREATE TABLE "IsaTab"."S_SAMPLES"
     "Protocol_REF" text COLLATE pg_catalog."default",
     "Term_Accession_Number" text COLLATE pg_catalog."default",
     "Term_Source_REF" text COLLATE pg_catalog."default",
-    "Comment" text[] COLLATE pg_catalog."default"
+    "Comment" text COLLATE pg_catalog."default"
 )
 
 TABLESPACE pg_default;
@@ -264,13 +264,13 @@ CREATE TABLE "IsaTab"."S_SOURCES"
 (
     "ID" oid,
     "Source_Name" text COLLATE pg_catalog."default",
-    "Characteristics" text[] COLLATE pg_catalog."default",
+    "Characteristics" text COLLATE pg_catalog."default",
     "Material_Type" text COLLATE pg_catalog."default",
     "Term_Source_REF" text COLLATE pg_catalog."default",
     "Term_Accession_Number" text COLLATE pg_catalog."default",
     "Provider" text COLLATE pg_catalog."default",
     "Description" text COLLATE pg_catalog."default",
-    "Comment" text[] COLLATE pg_catalog."default"
+    "Comment" text COLLATE pg_catalog."default"
 )
 
 TABLESPACE pg_default;
