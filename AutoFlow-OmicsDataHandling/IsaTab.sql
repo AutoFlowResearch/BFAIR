@@ -243,7 +243,7 @@ CREATE TABLE "IsaTab"."S_SAMPLES"
 (
     "ID" oid,
     "Sample_Name" text COLLATE pg_catalog."default",
-    "Characteristics" text[] COLLATE pg_catalog."default",
+    "Characteristics" text COLLATE pg_catalog."default",
     "Material_Type" text COLLATE pg_catalog."default",
     "Protocol_REF" text COLLATE pg_catalog."default",
     "Term_Accession_Number" text COLLATE pg_catalog."default",
