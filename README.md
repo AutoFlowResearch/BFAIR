@@ -1,2 +1,2 @@
 # AutoFlow-OmicsDataHandling
-Big Data Omics handling for campaign and autonomous science
+Big Data Omics handling for campaign and autonomous science.
