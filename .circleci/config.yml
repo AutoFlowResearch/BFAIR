@@ -51,7 +51,6 @@ jobs:
           command: |
             psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
-
 workflows:
   main:
     jobs:
