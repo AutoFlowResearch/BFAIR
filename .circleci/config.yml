@@ -21,7 +21,8 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python3 -m pytest tests
+            python3 -m unittest tests/test_linting.py
+            flake8 --max-line-length=120 --ignore=PT009
 
 workflows:
   main:
