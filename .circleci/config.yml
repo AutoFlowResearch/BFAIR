@@ -53,8 +53,30 @@ jobs:
             sudo apt-get install postgresql-client
             psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
+  Integration-on-windows:
+    executor:
+      name: win/default
+      shell: powershell.exe
+    steps:
+      - checkout
+      - run:
+          name: Install postgresql
+          command : |
+            choco install postgresql
+            python -m pip install -U pip
+      - run:
+          name: Install Python Dependencies
+          command : |
+            pip install -r requirements.txt
+      - run:
+          name : Integrate IsaTAB.sql into the database
+          command: |
+            choco install postgresql
+            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
+
+
 workflows:
   main:
     jobs:
-      - integration_UNIX
+      - integration-on-windows
       - unittest
