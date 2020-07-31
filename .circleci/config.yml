@@ -2,12 +2,12 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
+  win: circleci/windows@2.2.0
 
 jobs:
 
   integration_macos:
-    macos:
-      xcode: 11.3.0
+    executor: python/default
     steps:
       - checkout
       - run:
@@ -18,18 +18,8 @@ jobs:
             POSTGRES_DB: circleCI_test
 
           command: |
-            brew install postgresql
-  
-  integration_linux:
-    executor: python/default
-    steps:
-      - checkout
-      - run:
-          name: Install PostgresSQL
-          command: |
             apt-get install postgresql
-
-
+  
   unittest:
     executor: python/default
     steps:
