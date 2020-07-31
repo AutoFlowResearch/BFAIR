@@ -50,7 +50,7 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            ssudo apt-get install postgresql
+            sudo apt-get install postgresql
             psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
 workflows:
