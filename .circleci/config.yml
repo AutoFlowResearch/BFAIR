@@ -21,7 +21,7 @@ jobs:
           brew install postgresql
       - run:
           name: Set SQL table
-          command: | 
+          command: |
 
       - run: 
         name: Integration test
@@ -35,7 +35,7 @@ jobs:
           apt-get install postgresql
       - run:
           name: Set SQL table
-          command: | 
+          command: |
           
       - run: 
         name: Integration test
