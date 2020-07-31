@@ -65,4 +65,6 @@ jobs:
 workflows:
   main:
     jobs:
+      - integration_macos
+      - integration_linux
       - unittest
