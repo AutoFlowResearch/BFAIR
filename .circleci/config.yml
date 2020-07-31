@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - checkout
-      - run: 
+      - run:
           name: Install Python dependencies
           command: |
             python3 -m venv venv
