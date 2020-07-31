@@ -41,11 +41,15 @@ jobs:
     steps:
       - checkout
       - run: 
-          name: Intall Python dependencies
+          name: Install Python dependencies
           command: |
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
+      -run:
+          name: Integrate IsaTAB.sql into the database
+          command: |
+          psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
