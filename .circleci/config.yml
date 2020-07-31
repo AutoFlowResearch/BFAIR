@@ -24,7 +24,7 @@ jobs:
             python3 -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
 
-  integration_UNIX:
+  integration-on-UNIX:
     docker:
 
       - image: circleci/python:3.6.2-stretch-browsers
@@ -71,12 +71,12 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
-            choco install postgresql
             psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
   main:
     jobs:
+      - integration-on-UNIX
       - Integration-on-windows
       - unittest
