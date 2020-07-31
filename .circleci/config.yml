@@ -49,7 +49,7 @@ jobs:
       -run:
           name: Integrate IsaTAB.sql into the database
           command: |
-          psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
+            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
