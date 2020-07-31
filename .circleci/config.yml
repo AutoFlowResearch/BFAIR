@@ -4,8 +4,42 @@ orbs:
   python: circleci/python@0.2.1
 
 jobs:
+
+  integration_macos:
+    macos:
+      xcode: 11.3.0
+    steps:
+      - checkout
+      - run:
+          name: Install PostgresSQL
+          environment:
+            POSTGRES_USER: circleCI
+            POSTGRES_DB: circleCI_test
+          command: |
+          brew install postgresql
+          
+      -run:
+          name: Set SQL table
+          command: | 
+
+      -run: 
+        name: Integration test
   
-  build-in-python:
+  integration_linux:
+    steps:
+      - checkout
+      - run:
+          name: Install PostgresSQL
+          command: |
+          apt-get install postgresql
+      -run:
+          name: Set SQL table
+          command: | 
+          
+      -run: 
+        name: Integration test
+
+  unittest:
     executor: python/default
     steps:
       - checkout
@@ -27,4 +61,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - build-in-python
+      - unittest
