@@ -50,7 +50,8 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
+            sudo apt-get install postgresql-client
+            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
 workflows:
   main:
