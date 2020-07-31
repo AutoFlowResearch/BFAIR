@@ -28,6 +28,7 @@ jobs:
         name: Integration test
   
   integration_linux:
+    executor: python/default
     steps:
       - checkout
       - run:
@@ -37,7 +38,7 @@ jobs:
       - run:
           name: Set SQL table
           command: |
-            
+
           
       - run: 
         name: Integration test
