@@ -18,10 +18,11 @@ jobs:
             POSTGRES_DB: circleCI_test
 
           command: |
-          brew install postgresql
+            brew install postgresql
       - run:
           name: Set SQL table
           command: |
+
 
       - run: 
         name: Integration test
@@ -32,10 +33,11 @@ jobs:
       - run:
           name: Install PostgresSQL
           command: |
-          apt-get install postgresql
+            apt-get install postgresql
       - run:
           name: Set SQL table
           command: |
+            
           
       - run: 
         name: Integration test
