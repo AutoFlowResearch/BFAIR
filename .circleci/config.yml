@@ -78,5 +78,5 @@ jobs:
 workflows:
   main:
     jobs:
-      - integration-on-windows
+      - Integration-on-windows
       - unittest
