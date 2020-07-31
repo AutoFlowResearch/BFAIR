@@ -5,20 +5,32 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-
   integration_UNIX:
+    working_directory: ~/appName
+    docker:
+      - image: ruby:2.3.1-jessie
+        environment:
+          PG_HOST: localhost
+          PG_USER: ubuntu
+          RAILS_ENV: test
+          RACK_ENV: test
+
+      - image: postgres:9.6-jessie
+        environment:
+          POSTGRES_USER: biosustain
+          POSTGRES_DB: db_IsaTab
     executor: python/default
     steps:
       - checkout
       - run:
-          name: Install PostgresSQL
+          name: Set up db
+          command: |
+
+            bundle exec rake db:create db:schema:load --trace
+            bundle exec rake db:migrate
 
           environment:
-            POSTGRES_USER: circleCI
-            POSTGRES_DB: circleCI_test
-
-          command: |
-            apt-get install postgresql
+            DATABASE_URL: "postgres://ubuntu@localhost:5432/db_IsaTab"
   
   unittest:
     executor: python/default
