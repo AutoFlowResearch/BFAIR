@@ -46,20 +46,12 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-      - run:
-          name: Waiting for PostgreSQL to start
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z localhost 5432 && echo Success && exit 0
-              echo -n .
-              sleep 2
-            done
-            echo Failed waiting for Postgres && exit 1
+
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
+          sude apt-get 
+            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
 
 workflows:
   main:
