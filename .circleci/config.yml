@@ -19,13 +19,6 @@ jobs:
 
           command: |
             brew install postgresql
-      - run:
-          name: Set SQL table
-          command: |
-
-
-      - run: 
-        name: Integration test
   
   integration_linux:
     executor: python/default
@@ -35,13 +28,7 @@ jobs:
           name: Install PostgresSQL
           command: |
             apt-get install postgresql
-      - run:
-          name: Set SQL table
-          command: |
 
-          
-      - run: 
-        name: Integration test
 
   unittest:
     executor: python/default
