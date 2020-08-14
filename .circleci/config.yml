@@ -28,6 +28,9 @@ jobs:
   #UNIX integration 
   integration-on-UNIX:
     executor: python/default
+    environment:
+          POSTGRES_USER: biosustain
+          POSTGRES_DB: IsaTAB_DB
     steps:
       - checkout
       - run:
