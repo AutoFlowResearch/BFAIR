@@ -43,8 +43,8 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
-            postgres psql -c "CREATE DATABASE testdb;"
+            psql -c "ALTER USER postgres PASSWORD 'postgres';"
+            psql -c "CREATE DATABASE testdb;"
             service postgresql start
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql testdb
 
