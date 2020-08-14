@@ -43,7 +43,7 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
+            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
 
   #Windows integration
   Integration-on-windows:
@@ -67,7 +67,7 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
-            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
+            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
 
 
 workflows:
