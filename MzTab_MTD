@@ -73,3 +73,40 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."Metadata"
     OWNER to postgres;
+    
+    
+-- Table: MzTab.Protein section
+
+-- DROP TABLE "MzTab"."Protein section";
+
+CREATE TABLE "MzTab"."Protein section"
+(
+    accession text COLLATE pg_catalog."default" NOT NULL,
+    description text COLLATE pg_catalog."default" NOT NULL,
+    taxid integer NOT NULL,
+    species text COLLATE pg_catalog."default" NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    database_version text COLLATE pg_catalog."default" NOT NULL,
+    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
+    "best_search_engine_score[1-n]" text COLLATE pg_catalog."default" NOT NULL,
+    "search_engine_score[1-n]_ms_run[1-n]" text[] COLLATE pg_catalog."default" NOT NULL,
+    reliability integer NOT NULL,
+    "num_psms_ms_run[1-n]" integer NOT NULL,
+    "num_peptides_distinct_ms_run[1-n]" integer NOT NULL,
+    "num_peptides_unique_ms_run[1-n]" integer NOT NULL,
+    ambiguity_members text[] COLLATE pg_catalog."default" NOT NULL,
+    modifications text COLLATE pg_catalog."default" NOT NULL,
+    uri text COLLATE pg_catalog."default" NOT NULL,
+    go_terms text[] COLLATE pg_catalog."default" NOT NULL,
+    protein_coverage double precision NOT NULL,
+    "protein_abundance_assay[1-n]" double precision NOT NULL,
+    "protein_abundance_study_variable[1-n]" double precision NOT NULL,
+    "protein_abundance_stdev_study_variable[1-n]" double precision NOT NULL,
+    "protein_abundance_std_error_study_variable [1-n]" double precision NOT NULL,
+    "opt_{identifier}_*" text COLLATE pg_catalog."default" NOT NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab"."Protein section"
+    OWNER to postgres;
