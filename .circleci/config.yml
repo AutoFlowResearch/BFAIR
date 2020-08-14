@@ -39,7 +39,16 @@ jobs:
             sudo apt-get install postgresql
             sudo apt install -y postgresql-client || true
             pip install -r requirements.txt
-
+      -run:
+          name: Waiting for PostgreSQL to start
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 2
+            done
+            echo Failed waiting for Postgres && exit 1
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
@@ -70,7 +79,6 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
-            pg_ctl -D "C:\Program Files\PostgreSQL\9.6\data" start
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
 
 
@@ -78,5 +86,4 @@ workflows:
   main:
     jobs:
       - integration-on-UNIX
-      - Integration-on-windows
       - unittest
