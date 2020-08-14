@@ -43,7 +43,7 @@ jobs:
           name: Integrate IsaTAB.sql into the database
           command: |
             service postgresql Isatab_DB
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
+           
 
   #Windows integration
   Integration-on-windows:
