@@ -5,7 +5,6 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  #Linting and unit test
   unittest:
     executor: python/default
     steps:
@@ -14,11 +13,6 @@ jobs:
           name: Install Python Dependencies
           command : |
             pip install -r requirements.txt
-
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
       - run:
           name : Run Unit Tests
           command: |
