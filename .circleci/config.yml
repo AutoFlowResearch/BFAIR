@@ -26,8 +26,8 @@ jobs:
             flake8 --max-line-length=120 --ignore=PT009
 
   #UNIX integration 
-  integration-on-UNIX:
-    executor: python:3.6.2-stretch-browsers
+  Integration-on-UNIX:
+    executor: python/default
     steps:
       - checkout
       - run:
@@ -67,11 +67,13 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
+            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
   main:
     jobs:
-      - integration-on-UNIX
       - unittest
+      - Integration-on-UNIX
+      - Integration-on-windows
