@@ -27,7 +27,7 @@ jobs:
 
   #UNIX integration 
   integration-on-UNIX:
-    executor: python/default
+    executor: python:3.6.2-stretch-browsers
     steps:
       - checkout
       - run:
