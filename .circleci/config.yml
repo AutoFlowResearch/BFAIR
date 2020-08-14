@@ -5,6 +5,7 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
+  #Linting and unit test
   unittest:
     executor: python/default
     steps:
@@ -24,39 +25,29 @@ jobs:
             python3 -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
 
+  #UNIX integration 
   integration-on-UNIX:
-    docker:
-
-      - image: circleci/python:3.6.2-stretch-browsers
-        environment:
-          FLASK_CONFIG: testing
-          TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
-
-      - image: circleci/postgres:9.6.5-alpine-ram
-        environment:
-          POSTGRES_USER: biosustain
-          POSTGRES_DB: Isatab_DB
-          POSTGRES_PASSWORD: ""
-
+    executor: python/default
     steps:
       - checkout
       - run:
           name: Install Python dependencies
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
+            sudo apt-get install postgresql
+            sudo apt install -y postgresql-client || true
             pip install -r requirements.txt
 
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            sudo apt install -y postgresql-client || true
             psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
+  #Windows integration
   Integration-on-windows:
     executor:
       name: win/default
       shell: powershell.exe
+
     steps:
       - checkout
       - run:
@@ -64,14 +55,16 @@ jobs:
           command : |
             choco install postgresql
             python -m pip install -U pip
+
       - run:
           name: Install Python Dependencies
           command : |
             pip install -r requirements.txt
+
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
-            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
+            psql Isatab_DB < AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
