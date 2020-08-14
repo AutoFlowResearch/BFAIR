@@ -43,7 +43,10 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
+            sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+            sudo -u postgres psql -c "CREATE DATABASE testdb;"
+            sudo service postgresql start
+            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql testdb
 
   #Windows integration
   Integration-on-windows:
@@ -67,6 +70,7 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
+            pg_ctl -D "C:\Program Files\PostgreSQL\9.6\data" start
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
 
 
@@ -74,5 +78,4 @@ workflows:
   main:
     jobs:
       - integration-on-UNIX
-      - Integration-on-windows
       - unittest
