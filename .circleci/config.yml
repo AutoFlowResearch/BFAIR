@@ -27,35 +27,28 @@ jobs:
 
   #UNIX integration 
   integration-on-UNIX:
-    executor: python/default
-    environment:
+        environment:
           POSTGRES_USER: biosustain
-          POSTGRES_DB: IsaTAB_DB
+          TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
+          POSTGRES_DB: Isatab_DB
+          POSTGRES_PASSWORD: ""
+
     steps:
       - checkout
       - run:
-          name: Install Python dependencies
+          name: Install Python dependencies and postgresql installation
           command: |
-            sudo apt-get install postgresql
-            sudo apt install -y postgresql-client || true
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt
-      -run:
-          name: Waiting for PostgreSQL to start
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -z localhost 5432 && echo Success && exit 0
-              echo -n .
-              sleep 2
-            done
-            echo Failed waiting for Postgres && exit 1
+            sudo apt install -y postgresql-client || true
+            sudo apt install postgresql
+
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql -c "ALTER USER postgres PASSWORD 'postgres';"
-            psql -c "CREATE DATABASE testdb;"
-            service postgresql start
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql testdb
+            service postgresql Isatab_DB
+            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
 
   #Windows integration
   Integration-on-windows:
@@ -79,13 +72,11 @@ jobs:
       - run:
           name : Integrate IsaTAB.sql into the database
           command: |
-            pg_ctl -D "C:\Program Files\PostgreSQL\9.6\data" start
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql IsaTAB_DB
+            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
 
 
 workflows:
   main:
     jobs:
       - integration-on-UNIX
-      - Integration-on-windows
       - unittest
