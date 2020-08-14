@@ -42,7 +42,7 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            psql -c "create database Isatab_DB" -U postgres
+            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
 
   #Windows integration
