@@ -16,17 +16,11 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python3 -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
 
   #UNIX integration 
   integration-on-UNIX:
-        environment:
-          POSTGRES_USER: biosustain
-          TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
-          POSTGRES_DB: Isatab_DB
-          POSTGRES_PASSWORD: ""
-
+    executor: python/default
     steps:
       - checkout
       - run:
