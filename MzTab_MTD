@@ -102,8 +102,7 @@ CREATE TABLE "MzTab"."Protein section"
     "protein_abundance_assay[1-n]" double precision NOT NULL,
     "protein_abundance_study_variable[1-n]" double precision NOT NULL,
     "protein_abundance_stdev_study_variable[1-n]" double precision NOT NULL,
-    "protein_abundance_std_error_study_variable [1-n]" double precision NOT NULL,
-    "opt_{identifier}_*" text COLLATE pg_catalog."default" NOT NULL
+    "protein_abundance_std_error_study_variable[1-n]" double precision NOT NULL
 )
 
 TABLESPACE pg_default;
