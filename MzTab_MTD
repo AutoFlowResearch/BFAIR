@@ -109,3 +109,36 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."Protein section"
     OWNER to postgres;
+
+-- Table: MzTab.Peptide Section
+
+-- DROP TABLE "MzTab"."Peptide Section";
+
+CREATE TABLE "MzTab"."Peptide Section"
+(
+    sequence text COLLATE pg_catalog."default" NOT NULL,
+    accession text COLLATE pg_catalog."default" NOT NULL,
+    "unique" boolean NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    database_version text COLLATE pg_catalog."default" NOT NULL,
+    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
+    "best_search_engine_score[1-n]" double precision NOT NULL,
+    "search_engine_score[1-n]_ms_run[1-n]" double precision NOT NULL,
+    reliability integer NOT NULL,
+    modifications text COLLATE pg_catalog."default" NOT NULL,
+    retention_time double precision[] NOT NULL,
+    retention_time_window double precision[] NOT NULL,
+    charge integer NOT NULL,
+    mass_to_charge double precision NOT NULL,
+    uri text COLLATE pg_catalog."default" NOT NULL,
+    "spectra_ref " text COLLATE pg_catalog."default" NOT NULL,
+    "peptide_abundance_assay[1-n]" double precision NOT NULL,
+    "peptide_abundance_study_variable[1-n]" double precision NOT NULL,
+    "peptide_abundance_stdev_study_variable[1-n]" double precision NOT NULL,
+    "peptide_abundance_std_error_study_variable[1-n]" double precision NOT NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab"."Peptide Section"
+    OWNER to postgres;
