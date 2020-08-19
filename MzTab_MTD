@@ -142,3 +142,36 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."Peptide Section"
     OWNER to postgres;
+
+-- Table: MzTab.PSM Section
+
+-- DROP TABLE "MzTab"."PSM Section";
+
+CREATE TABLE "MzTab"."PSM Section"
+(
+    sequence text COLLATE pg_catalog."default" NOT NULL,
+    "PSM_ID" integer NOT NULL,
+    accession text COLLATE pg_catalog."default" NOT NULL,
+    "unique" boolean NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    database_version text COLLATE pg_catalog."default" NOT NULL,
+    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
+    "search_engine_score[1-n]" double precision NOT NULL,
+    reliability integer NOT NULL,
+    modifications text COLLATE pg_catalog."default" NOT NULL,
+    retention_time double precision[] NOT NULL,
+    charge integer NOT NULL,
+    exp_mass_to_charge double precision NOT NULL,
+    calc_mass_to_charge double precision NOT NULL,
+    uri text COLLATE pg_catalog."default" NOT NULL,
+    spectra_ref text COLLATE pg_catalog."default" NOT NULL,
+    pre text COLLATE pg_catalog."default" NOT NULL,
+    post text COLLATE pg_catalog."default" NOT NULL,
+    start integer NOT NULL,
+    "end" integer NOT NULL
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab"."PSM Section"
+    OWNER to postgres;
