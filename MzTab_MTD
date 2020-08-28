@@ -175,3 +175,215 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."PSM Section"
     OWNER to postgres;
+
+
+-- Table: MzTab-M.Metadata_metabolomics
+
+-- DROP TABLE "MzTab-M"."Metadata_metabolomics";
+
+CREATE TABLE "MzTab-M"."Metadata_metabolomics"
+(
+    "mzTab-version" text COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
+    title text COLLATE pg_catalog."default",
+    description text COLLATE pg_catalog."default",
+    sample_processing_number text COLLATE pg_catalog."default",
+    sample_processing text COLLATE pg_catalog."default",
+    "instrument_number-name" text COLLATE pg_catalog."default",
+    "instrument-name" text COLLATE pg_catalog."default",
+    "instrument_number-source" text COLLATE pg_catalog."default",
+    "instrument-source" text COLLATE pg_catalog."default",
+    instrument_number text COLLATE pg_catalog."default",
+    analyzer_number text COLLATE pg_catalog."default",
+    "instrument-analyzer" text COLLATE pg_catalog."default",
+    "instrument_number-detector" text COLLATE pg_catalog."default",
+    "instrument-detector" text COLLATE pg_catalog."default",
+    software_number text COLLATE pg_catalog."default" NOT NULL,
+    software text COLLATE pg_catalog."default" NOT NULL,
+    setting_number text COLLATE pg_catalog."default",
+    "software-setting" text COLLATE pg_catalog."default",
+    publication_number text COLLATE pg_catalog."default",
+    publication text COLLATE pg_catalog."default",
+    "contact_number-name" text COLLATE pg_catalog."default",
+    "contact-name" text COLLATE pg_catalog."default",
+    "contact_number-affiliation" text COLLATE pg_catalog."default",
+    "contact-affiliation" text COLLATE pg_catalog."default",
+    "contact_number-email" text COLLATE pg_catalog."default",
+    "contact-email" text COLLATE pg_catalog."default",
+    uri_number text COLLATE pg_catalog."default",
+    uri text COLLATE pg_catalog."default",
+    external_study_uri_number text COLLATE pg_catalog."default",
+    external_study_uri text COLLATE pg_catalog."default",
+    quantification_method text COLLATE pg_catalog."default" NOT NULL,
+    sample_number text COLLATE pg_catalog."default",
+    sample text COLLATE pg_catalog."default",
+    species_number text COLLATE pg_catalog."default",
+    "sample-species" text COLLATE pg_catalog."default",
+    tissue_number text COLLATE pg_catalog."default",
+    "sample-tissue" text COLLATE pg_catalog."default",
+    cell_type_number text COLLATE pg_catalog."default",
+    "sample-cell_type" text COLLATE pg_catalog."default",
+    disease_number text COLLATE pg_catalog."default",
+    "sample-disease" text COLLATE pg_catalog."default",
+    "sample-description" text COLLATE pg_catalog."default",
+    custom_number text COLLATE pg_catalog."default",
+    "sample-custom" text COLLATE pg_catalog."default",
+    ms_run_number text COLLATE pg_catalog."default" NOT NULL,
+    "ms_run-location" text COLLATE pg_catalog."default" NOT NULL,
+    "ms_run-instrument_ref" integer,
+    "ms_run-format" text COLLATE pg_catalog."default",
+    "ms_run-id_format" text COLLATE pg_catalog."default",
+    fragmentation_method_number text COLLATE pg_catalog."default",
+    "ms_run-fragmentation_method" text COLLATE pg_catalog."default",
+    scan_polarity_number text COLLATE pg_catalog."default" NOT NULL,
+    "ms_run-scan_polarity" text COLLATE pg_catalog."default" NOT NULL,
+    "ms_run-hash" text COLLATE pg_catalog."default",
+    "ms_run-hash_method" text COLLATE pg_catalog."default",
+    assay_number text COLLATE pg_catalog."default" NOT NULL,
+    assay text COLLATE pg_catalog."default" NOT NULL,
+    "assay-custom" text COLLATE pg_catalog."default",
+    "assay-external_uri" text COLLATE pg_catalog."default",
+    "assay-sample_ref" text COLLATE pg_catalog."default",
+    "assay-ms_run_ref" text COLLATE pg_catalog."default" NOT NULL,
+    study_variable_number text COLLATE pg_catalog."default" NOT NULL,
+    study_variable text COLLATE pg_catalog."default" NOT NULL,
+    "study_variable-assay_refs" text COLLATE pg_catalog."default" NOT NULL,
+    "study_variable-average_function" text COLLATE pg_catalog."default",
+    "study_variable-variation_function" text COLLATE pg_catalog."default",
+    "study_variable-description" text COLLATE pg_catalog."default" NOT NULL,
+    "study_variable-factors" text COLLATE pg_catalog."default",
+    "study-custom" text COLLATE pg_catalog."default",
+    cv_number text COLLATE pg_catalog."default" NOT NULL,
+    "cv-label" text COLLATE pg_catalog."default" NOT NULL,
+    "cv-full_name" text COLLATE pg_catalog."default" NOT NULL,
+    "cv-version" text COLLATE pg_catalog."default" NOT NULL,
+    "cv-uri" text COLLATE pg_catalog."default" NOT NULL,
+    database_number text COLLATE pg_catalog."default" NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    "database-prefix" text COLLATE pg_catalog."default" NOT NULL,
+    "database-version" text COLLATE pg_catalog."default" NOT NULL,
+    "database-uri" text COLLATE pg_catalog."default" NOT NULL,
+    derivatization_agent_number text COLLATE pg_catalog."default",
+    derivatization_agent text COLLATE pg_catalog."default",
+    "small_molecule-quantification_unit" text COLLATE pg_catalog."default",
+    "small_molecule-identification_reliability" text COLLATE pg_catalog."default",
+    id_confidence_measure_number text COLLATE pg_catalog."default" NOT NULL,
+    id_confidence_measure text COLLATE pg_catalog."default" NOT NULL,
+    "colunit-small_molecule" text COLLATE pg_catalog."default",
+    "colunit-small_molecule_feature" text COLLATE pg_catalog."default",
+    "colunit-small_molecule_evidence" text COLLATE pg_catalog."default",
+    CONSTRAINT "Metadata_metabolomics_pkey1" PRIMARY KEY ("mzTab-ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Metadata_metabolomics"
+    OWNER to postgres;
+
+-- Table: MzTab-M.Small Molecule Section
+
+-- DROP TABLE "MzTab-M"."Small Molecule Section";
+
+CREATE TABLE "MzTab-M"."Small Molecule Section"
+(
+    "mzTab-ID_REFS" text COLLATE pg_catalog."default" NOT NULL,
+    "SML_ID" integer NOT NULL,
+    "SMF_ID_REFS" integer,
+    database_identifier text[] COLLATE pg_catalog."default",
+    chemical_formula text[] COLLATE pg_catalog."default",
+    smiles text[] COLLATE pg_catalog."default",
+    inchi text[] COLLATE pg_catalog."default",
+    chemical_name text[] COLLATE pg_catalog."default",
+    uri text[] COLLATE pg_catalog."default",
+    "		theoretical_neutral_mass" double precision[],
+    adduct_ions text[] COLLATE pg_catalog."default",
+    reliability text COLLATE pg_catalog."default",
+    best_id_confidence_measure text COLLATE pg_catalog."default",
+    best_id_confidence_value double precision,
+    abundance_assay_number text COLLATE pg_catalog."default",
+    abundance_assay double precision,
+    abundance_study_variable_number text COLLATE pg_catalog."default",
+    abundance_study_variable double precision,
+    abundance_variation_study_variable_number text COLLATE pg_catalog."default",
+    abundance_variation_study_variable double precision,
+    CONSTRAINT "Small Molecule Section_pkey1" PRIMARY KEY ("SML_ID"),
+    CONSTRAINT "Small Molecule Section_SMF_ID_REFS_fkey" FOREIGN KEY ("SMF_ID_REFS")
+        REFERENCES "MzTab-M"."Small Molecule Feature (SMF) Section" ("SMF_ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT "Small Molecule Section_mzTab-ID_REFS_fkey" FOREIGN KEY ("mzTab-ID_REFS")
+        REFERENCES "MzTab-M"."Metadata_metabolomics" ("mzTab-ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Small Molecule Section"
+    OWNER to postgres;
+
+-- Table: MzTab-M.Small Molecule Feature (SMF) Section
+
+-- DROP TABLE "MzTab-M"."Small Molecule Feature (SMF) Section";
+
+CREATE TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
+(
+    "SMF_ID" integer NOT NULL,
+    "SME_ID_REFS" integer,
+    "SME_ID_REF_ambiguity_code" integer,
+    adduct_ion text COLLATE pg_catalog."default",
+    isotopomer text COLLATE pg_catalog."default",
+    exp_mass_to_charge double precision NOT NULL,
+    charge integer NOT NULL,
+    retention_time_in_seconds double precision,
+    retention_time_in_seconds_start double precision,
+    retention_time_in_seconds_end double precision,
+    abundance_assay_number text COLLATE pg_catalog."default",
+    abundance_assay text COLLATE pg_catalog."default",
+    CONSTRAINT "Small Molecule Feature (SMF) Section_pkey1" PRIMARY KEY ("SMF_ID"),
+    CONSTRAINT "Small Molecule Feature (SMF) Section_SME_ID_REFS_fkey" FOREIGN KEY ("SME_ID_REFS")
+        REFERENCES "MzTab-M"."Small Molecule Evidence (SME) Section" ("SME_ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
+    OWNER to postgres;
+
+-- Table: MzTab-M.Small Molecule Evidence (SME) Section
+
+-- DROP TABLE "MzTab-M"."Small Molecule Evidence (SME) Section";
+
+CREATE TABLE "MzTab-M"."Small Molecule Evidence (SME) Section"
+(
+    "SME_ID" integer NOT NULL,
+    evidence_input_id text COLLATE pg_catalog."default" NOT NULL,
+    database_identifier text COLLATE pg_catalog."default",
+    chemical_formula text COLLATE pg_catalog."default",
+    smiles text COLLATE pg_catalog."default",
+    inchi text COLLATE pg_catalog."default",
+    chemical_name text COLLATE pg_catalog."default",
+    uri text COLLATE pg_catalog."default",
+    derivatized_form text COLLATE pg_catalog."default",
+    adduct_ion text COLLATE pg_catalog."default",
+    exp_mass_to_charge double precision NOT NULL,
+    charge integer NOT NULL,
+    theoretical_mass_to_charge double precision NOT NULL,
+    spectra_ref text[] COLLATE pg_catalog."default" NOT NULL,
+    identification_method text COLLATE pg_catalog."default" NOT NULL,
+    ms_level text COLLATE pg_catalog."default" NOT NULL,
+    id_confidence_measure_number text COLLATE pg_catalog."default",
+    id_confidence_measure double precision,
+    rank integer NOT NULL,
+    CONSTRAINT "Small Molecule Evidence (SME) Section_pkey1" PRIMARY KEY ("SME_ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Small Molecule Evidence (SME) Section"
+    OWNER to postgres;
