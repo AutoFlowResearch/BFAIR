@@ -201,7 +201,8 @@ CREATE TABLE "MzTab"."PSM Section"
     database text COLLATE pg_catalog."default" NOT NULL,
     database_version text COLLATE pg_catalog."default" NOT NULL,
     search_engine text[] COLLATE pg_catalog."default" NOT NULL,
-    "search_engine_score[1-n]" double precision NOT NULL,
+    search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
+    search_engine_score double precision NOT NULL,
     reliability integer NOT NULL,
     modifications text COLLATE pg_catalog."default" NOT NULL,
     retention_time double precision[] NOT NULL,
@@ -213,7 +214,13 @@ CREATE TABLE "MzTab"."PSM Section"
     pre text COLLATE pg_catalog."default" NOT NULL,
     post text COLLATE pg_catalog."default" NOT NULL,
     start integer NOT NULL,
-    "end" integer NOT NULL
+    "end" integer NOT NULL,
+    CONSTRAINT "PSM Section_pkey" PRIMARY KEY ("PSM_ID"),
+    CONSTRAINT "PSM Section_accession_fkey" FOREIGN KEY (accession)
+        REFERENCES "MzTab"."Peptide Section" (accession) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
 )
 
 TABLESPACE pg_default;
