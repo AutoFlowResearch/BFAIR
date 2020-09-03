@@ -5,8 +5,8 @@
 CREATE TABLE "MzTab"."Metadata_Proteomics"
 (
     "mzTab-version" text COLLATE pg_catalog."default" NOT NULL,
-    "mzTab-mode" text COLLATE pg_catalog."default" NOT NULL,
-    "mzTab-type" text COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-mode" enum COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-type" enum COLLATE pg_catalog."default" NOT NULL,
     "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
     title text COLLATE pg_catalog."default",
     description text COLLATE pg_catalog."default",
