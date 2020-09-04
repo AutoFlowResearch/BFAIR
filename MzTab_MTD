@@ -452,3 +452,29 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab-M"."Small Molecule Evidence (SME) Section"
     OWNER to postgres;
+    
+    
+-- Table: XML.TraML
+
+-- DROP TABLE "XML"."TraML";
+
+CREATE TABLE "XML"."TraML"
+(
+    "id " text COLLATE pg_catalog."default",
+    "version " text COLLATE pg_catalog."default" NOT NULL,
+    "cvList" text[] COLLATE pg_catalog."default",
+    "SourceFileList" text[] COLLATE pg_catalog."default",
+    "ContactList" text[] COLLATE pg_catalog."default",
+    "PublicationList" text[] COLLATE pg_catalog."default",
+    "InstrumentList" text[] COLLATE pg_catalog."default",
+    "SoftwareList" text[] COLLATE pg_catalog."default",
+    "ProteinList" text[] COLLATE pg_catalog."default",
+    "CompoundList" text[] COLLATE pg_catalog."default",
+    "TransitionList" text[] COLLATE pg_catalog."default",
+    "TargetList" text[] COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "XML"."TraML"
+    OWNER to postgres;
