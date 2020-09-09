@@ -527,3 +527,22 @@ TABLESPACE pg_default;
 
 ALTER TABLE "XML"."TraML"
     OWNER to postgres;
+
+-- Table: XML.FeatureXML
+
+-- DROP TABLE "XML"."FeatureXML";
+
+CREATE TABLE "XML"."FeatureXML"
+(
+    "Investigation_ID" text COLLATE pg_catalog."default" NOT NULL,
+    "Study_ID" text COLLATE pg_catalog."default" NOT NULL,
+    "Assay_ID" text COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
+    "Sample_Name" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "FeatureXML_pkey" PRIMARY KEY ("Sample_Name")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "XML"."FeatureXML"
+    OWNER to postgres;
