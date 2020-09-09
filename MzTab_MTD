@@ -478,3 +478,52 @@ TABLESPACE pg_default;
 
 ALTER TABLE "XML"."TraML"
     OWNER to postgres;
+    
+  
+ 
+-- Table: XML.TraML
+
+-- DROP TABLE "XML"."TraML";
+
+CREATE TABLE "XML"."TraML"
+(
+    "GeneName" text COLLATE pg_catalog."default",
+    "ProteinName" text COLLATE pg_catalog."default",
+    "PeptideSequence" text COLLATE pg_catalog."default",
+    "FullPeptideName" text COLLATE pg_catalog."default",
+    transition_group_id text COLLATE pg_catalog."default",
+    transition_name text COLLATE pg_catalog."default",
+    "Annotation" text COLLATE pg_catalog."default",
+    "PrecursorMz" double precision,
+    "MS1 Res" text COLLATE pg_catalog."default",
+    "ProductMz" double precision,
+    "MS2 Res" text COLLATE pg_catalog."default",
+    "Dwell" integer,
+    "Fragmentor" integer,
+    "CollisionEnergy" double precision,
+    "CellAcceleratorVoltage" integer,
+    "LibraryIntensity" double precision,
+    decoy integer,
+    "LabelType" text COLLATE pg_catalog."default",
+    "PrecursorCharge" integer,
+    "FragmentCharge" integer,
+    "FragmentType" text COLLATE pg_catalog."default",
+    "FragmentSeriesNumber" integer,
+    quantifying_transition integer,
+    identifying_transition integer,
+    detecting_transition integer,
+    "Tr_recalibrated" double precision,
+    "RetentionTime" double precision,
+    "PeptideGroupLabel" text COLLATE pg_catalog."default",
+    "UniprotId" text COLLATE pg_catalog."default",
+    "CompoundName" text COLLATE pg_catalog."default",
+    "SMILES" text COLLATE pg_catalog."default",
+    "SumFormula" text COLLATE pg_catalog."default",
+    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "TraML_pkey" PRIMARY KEY ("mzTab-ID")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "XML"."TraML"
+    OWNER to postgres;
