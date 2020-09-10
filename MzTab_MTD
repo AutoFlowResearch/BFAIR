@@ -511,6 +511,7 @@ CREATE TABLE "XML"."FeatureXML"
     "Assay_ID" text COLLATE pg_catalog."default" NOT NULL,
     "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
     "Sample_Name" text COLLATE pg_catalog."default" NOT NULL,
+    "FeatureMap" xml NOT NULL,
     CONSTRAINT "FeatureXML_pkey" PRIMARY KEY ("Sample_Name")
 )
 
