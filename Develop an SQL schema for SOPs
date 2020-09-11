@@ -4,7 +4,6 @@
 
 CREATE TABLE public."SOPs"
 (
-    id text COLLATE pg_catalog."default" NOT NULL,
     sop_title text COLLATE pg_catalog."default" NOT NULL,
     sop_authors text COLLATE pg_catalog."default" NOT NULL,
     sop_version text COLLATE pg_catalog."default" NOT NULL,
@@ -20,7 +19,8 @@ CREATE TABLE public."SOPs"
     sop_appendix text COLLATE pg_catalog."default" NOT NULL,
     sop_timeline text COLLATE pg_catalog."default" NOT NULL,
     sop_deviations_from_procedure text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT "SOPs_pkey" PRIMARY KEY (id)
+    "sop_ID" integer NOT NULL DEFAULT nextval('"SOPs_sop_ID_seq"'::regclass),
+    CONSTRAINT "SOPs_pkey" PRIMARY KEY ("sop_ID")
 )
 
 TABLESPACE pg_default;
