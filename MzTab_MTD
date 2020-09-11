@@ -491,7 +491,7 @@ CREATE TABLE "XML"."TraML"
     "CompoundName" text COLLATE pg_catalog."default",
     "SMILES" text COLLATE pg_catalog."default",
     "SumFormula" text COLLATE pg_catalog."default",
-    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-ID" integer COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "TraML_pkey" PRIMARY KEY ("mzTab-ID")
 )
 
