@@ -475,9 +475,9 @@ CREATE TABLE "XML"."TraML"
     "FragmentCharge" integer,
     "FragmentType" text COLLATE pg_catalog."default",
     "FragmentSeriesNumber" integer,
-    quantifying_transition boolean,
-    identifying_transition boolean,
-    detecting_transition boolean,
+    quantifying_transition integer,
+    identifying_transition integer,
+    detecting_transition integer,
     "Tr_recalibrated" double precision,
     "RetentionTime" double precision,
     "PeptideGroupLabel" text COLLATE pg_catalog."default",
@@ -485,6 +485,7 @@ CREATE TABLE "XML"."TraML"
     "CompoundName" text COLLATE pg_catalog."default",
     "SMILES" text COLLATE pg_catalog."default",
     "SumFormula" text COLLATE pg_catalog."default",
+    "Internal_mzTab-ID" integer NOT NULL,
     "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT "TraML_pkey" PRIMARY KEY ("mzTab-ID")
 )
@@ -505,7 +506,8 @@ CREATE TABLE "XML"."FeatureXML"
     "Investigation_ID" integer NOT NULL,
     "Study_ID" integer NOT NULL,
     "Assay_ID" integer NOT NULL,
-    "mzTab-ID" text NOT NULL
+    "mzTab-ID" integer NOT NULL,
+    "Internal_mzTab-ID" integer NOT NULL
 )
 
 TABLESPACE pg_default;
