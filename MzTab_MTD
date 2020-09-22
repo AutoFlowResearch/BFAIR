@@ -5,8 +5,8 @@
 CREATE TABLE "MzTab"."Metadata_Proteomics"
 (
     "mzTab-version" text COLLATE pg_catalog."default" NOT NULL,
-    "mzTab-mode" enum COLLATE pg_catalog."default" NOT NULL,
-    "mzTab-type" enum COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-mode" text COLLATE pg_catalog."default" NOT NULL,
+    "mzTab-type" text COLLATE pg_catalog."default" NOT NULL,
     "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
     title text COLLATE pg_catalog."default",
     description text COLLATE pg_catalog."default",
@@ -94,6 +94,7 @@ CREATE TABLE "MzTab"."Metadata_Proteomics"
     "colunit-peptide" text COLLATE pg_catalog."default",
     "colunit-psm" text COLLATE pg_catalog."default",
     "colunit-small_molecule" text COLLATE pg_catalog."default",
+    "Internal_mzTab-ID" integer NOT NULL DEFAULT nextval('"MzTab"."Metadata_Proteomics_Internal_ID_seq"'::regclass),
     CONSTRAINT "Metadata_Proteomics_pkey" PRIMARY KEY ("mzTab-ID")
 )
 
@@ -101,8 +102,91 @@ TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."Metadata_Proteomics"
     OWNER to postgres;
-    
-    
+-- Table: MzTab.PSM Section
+
+-- DROP TABLE "MzTab"."PSM Section";
+
+CREATE TABLE "MzTab"."PSM Section"
+(
+    sequence text COLLATE pg_catalog."default" NOT NULL,
+    "PSM_ID" integer NOT NULL,
+    accession text COLLATE pg_catalog."default" NOT NULL,
+    "unique" boolean NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    database_version text COLLATE pg_catalog."default" NOT NULL,
+    search_engine_number text COLLATE pg_catalog."default" NOT NULL,
+    search_engine text COLLATE pg_catalog."default" NOT NULL,
+    search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
+    search_engine_score double precision NOT NULL,
+    reliability integer NOT NULL,
+    modifications text COLLATE pg_catalog."default" NOT NULL,
+    retention_time double precision[] NOT NULL,
+    charge integer NOT NULL,
+    exp_mass_to_charge double precision NOT NULL,
+    calc_mass_to_charge double precision NOT NULL,
+    uri text COLLATE pg_catalog."default" NOT NULL,
+    spectra_ref text COLLATE pg_catalog."default" NOT NULL,
+    pre text COLLATE pg_catalog."default" NOT NULL,
+    post text COLLATE pg_catalog."default" NOT NULL,
+    start integer NOT NULL,
+    "end" integer NOT NULL,
+    CONSTRAINT "PSM Section_pkey" PRIMARY KEY ("PSM_ID"),
+    CONSTRAINT "PSM Section_accession_fkey" FOREIGN KEY (accession)
+        REFERENCES "MzTab"."Peptide Section" (accession) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab"."PSM Section"
+    OWNER to postgres;
+-- Table: MzTab.Peptide Section
+
+-- DROP TABLE "MzTab"."Peptide Section";
+
+CREATE TABLE "MzTab"."Peptide Section"
+(
+    sequence text COLLATE pg_catalog."default" NOT NULL,
+    accession text COLLATE pg_catalog."default" NOT NULL,
+    "unique" boolean NOT NULL,
+    database text COLLATE pg_catalog."default" NOT NULL,
+    database_version text COLLATE pg_catalog."default" NOT NULL,
+    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
+    best_search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
+    best_search_engine_score double precision NOT NULL,
+    search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
+    ms_run_number text COLLATE pg_catalog."default" NOT NULL,
+    search_engine_score_ms_run double precision NOT NULL,
+    reliability integer NOT NULL,
+    modifications text COLLATE pg_catalog."default" NOT NULL,
+    retention_time double precision[] NOT NULL,
+    retention_time_window double precision[] NOT NULL,
+    charge integer NOT NULL,
+    mass_to_charge double precision NOT NULL,
+    uri text COLLATE pg_catalog."default" NOT NULL,
+    spectra_ref text COLLATE pg_catalog."default" NOT NULL,
+    peptide_abundance_assay_number text COLLATE pg_catalog."default" NOT NULL,
+    peptide_abundance_assay double precision NOT NULL,
+    peptide_abundance_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
+    peptide_abundance_study_variable double precision NOT NULL,
+    peptide_abundance_stdev_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
+    peptide_abundance_stdev_study_variable double precision NOT NULL,
+    peptide_abundance_std_error_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
+    peptide_abundance_std_error_study_variable double precision NOT NULL,
+    CONSTRAINT "Peptide Section_pkey" PRIMARY KEY (accession),
+    CONSTRAINT "Peptide Section_accession_fkey" FOREIGN KEY (accession)
+        REFERENCES "MzTab"."Protein section" (accession) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab"."Peptide Section"
+    OWNER to postgres;
 -- Table: MzTab.Protein section
 
 -- DROP TABLE "MzTab"."Protein section";
@@ -153,92 +237,6 @@ CREATE TABLE "MzTab"."Protein section"
 TABLESPACE pg_default;
 
 ALTER TABLE "MzTab"."Protein section"
-    OWNER to postgres;
-
--- Table: MzTab.Peptide Section
-
--- DROP TABLE "MzTab"."Peptide Section";
-
-CREATE TABLE "MzTab"."Peptide Section"
-(
-    sequence text COLLATE pg_catalog."default" NOT NULL,
-    accession text COLLATE pg_catalog."default" NOT NULL,
-    "unique" boolean NOT NULL,
-    database text COLLATE pg_catalog."default" NOT NULL,
-    database_version text COLLATE pg_catalog."default" NOT NULL,
-    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
-    best_search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
-    best_search_engine_score double precision NOT NULL,
-    search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
-    ms_run_number text COLLATE pg_catalog."default" NOT NULL,
-    search_engine_score_ms_run double precision NOT NULL,
-    reliability integer NOT NULL,
-    modifications text COLLATE pg_catalog."default" NOT NULL,
-    retention_time double precision[] NOT NULL,
-    retention_time_window double precision[] NOT NULL,
-    charge integer NOT NULL,
-    mass_to_charge double precision NOT NULL,
-    uri text COLLATE pg_catalog."default" NOT NULL,
-    spectra_ref text COLLATE pg_catalog."default" NOT NULL,
-    peptide_abundance_assay_number text COLLATE pg_catalog."default" NOT NULL,
-    peptide_abundance_assay double precision NOT NULL,
-    peptide_abundance_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
-    peptide_abundance_study_variable double precision NOT NULL,
-    peptide_abundance_stdev_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
-    peptide_abundance_stdev_study_variable double precision NOT NULL,
-    peptide_abundance_std_error_study_variable_number text COLLATE pg_catalog."default" NOT NULL,
-    peptide_abundance_std_error_study_variable double precision NOT NULL,
-    CONSTRAINT "Peptide Section_pkey" PRIMARY KEY (accession),
-    CONSTRAINT "Peptide Section_accession_fkey" FOREIGN KEY (accession)
-        REFERENCES "MzTab"."Protein section" (accession) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE "MzTab"."Peptide Section"
-    OWNER to postgres;
-
--- Table: MzTab.PSM Section
-
--- DROP TABLE "MzTab"."PSM Section";
-
-CREATE TABLE "MzTab"."PSM Section"
-(
-    sequence text COLLATE pg_catalog."default" NOT NULL,
-    "PSM_ID" integer NOT NULL,
-    accession text COLLATE pg_catalog."default" NOT NULL,
-    "unique" boolean NOT NULL,
-    database text COLLATE pg_catalog."default" NOT NULL,
-    database_version text COLLATE pg_catalog."default" NOT NULL,
-    search_engine text[] COLLATE pg_catalog."default" NOT NULL,
-    search_engine_score_number text COLLATE pg_catalog."default" NOT NULL,
-    search_engine_score double precision NOT NULL,
-    reliability integer NOT NULL,
-    modifications text COLLATE pg_catalog."default" NOT NULL,
-    retention_time double precision[] NOT NULL,
-    charge integer NOT NULL,
-    exp_mass_to_charge double precision NOT NULL,
-    calc_mass_to_charge double precision NOT NULL,
-    uri text COLLATE pg_catalog."default" NOT NULL,
-    spectra_ref text COLLATE pg_catalog."default" NOT NULL,
-    pre text COLLATE pg_catalog."default" NOT NULL,
-    post text COLLATE pg_catalog."default" NOT NULL,
-    start integer NOT NULL,
-    "end" integer NOT NULL,
-    CONSTRAINT "PSM Section_pkey" PRIMARY KEY ("PSM_ID"),
-    CONSTRAINT "PSM Section_accession_fkey" FOREIGN KEY (accession)
-        REFERENCES "MzTab"."Peptide Section" (accession) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE "MzTab"."PSM Section"
     OWNER to postgres;
 
 
