@@ -247,7 +247,6 @@ ALTER TABLE "MzTab"."Protein section"
 CREATE TABLE "MzTab-M"."Metadata_metabolomics"
 (
     "mzTab-version" text COLLATE pg_catalog."default" NOT NULL,
-    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
     title text COLLATE pg_catalog."default",
     description text COLLATE pg_catalog."default",
     sample_processing_number text COLLATE pg_catalog."default",
@@ -335,87 +334,14 @@ CREATE TABLE "MzTab-M"."Metadata_metabolomics"
     "colunit-small_molecule" text COLLATE pg_catalog."default",
     "colunit-small_molecule_feature" text COLLATE pg_catalog."default",
     "colunit-small_molecule_evidence" text COLLATE pg_catalog."default",
-    CONSTRAINT "Metadata_metabolomics_pkey1" PRIMARY KEY ("mzTab-ID")
+    "Internal_mzTab-ID" integer NOT NULL DEFAULT nextval('"MzTab-M"."Metadata_metabolomics_Internal_mzTab-ID_seq"'::regclass),
+    "mzTab-ID" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT "Metadata_metabolomics_pkey" PRIMARY KEY ("mzTab-ID")
 )
 
 TABLESPACE pg_default;
 
 ALTER TABLE "MzTab-M"."Metadata_metabolomics"
-    OWNER to postgres;
-
--- Table: MzTab-M.Small Molecule Section
-
--- DROP TABLE "MzTab-M"."Small Molecule Section";
-
-CREATE TABLE "MzTab-M"."Small Molecule Section"
-(
-    "mzTab-ID_REFS" text COLLATE pg_catalog."default" NOT NULL,
-    "SML_ID" integer NOT NULL,
-    "SMF_ID_REFS" integer,
-    database_identifier text[] COLLATE pg_catalog."default",
-    chemical_formula text[] COLLATE pg_catalog."default",
-    smiles text[] COLLATE pg_catalog."default",
-    inchi text[] COLLATE pg_catalog."default",
-    chemical_name text[] COLLATE pg_catalog."default",
-    uri text[] COLLATE pg_catalog."default",
-    "		theoretical_neutral_mass" double precision[],
-    adduct_ions text[] COLLATE pg_catalog."default",
-    reliability text COLLATE pg_catalog."default",
-    best_id_confidence_measure text COLLATE pg_catalog."default",
-    best_id_confidence_value double precision,
-    abundance_assay_number text COLLATE pg_catalog."default",
-    abundance_assay double precision,
-    abundance_study_variable_number text COLLATE pg_catalog."default",
-    abundance_study_variable double precision,
-    abundance_variation_study_variable_number text COLLATE pg_catalog."default",
-    abundance_variation_study_variable double precision,
-    CONSTRAINT "Small Molecule Section_pkey1" PRIMARY KEY ("SML_ID"),
-    CONSTRAINT "Small Molecule Section_SMF_ID_REFS_fkey" FOREIGN KEY ("SMF_ID_REFS")
-        REFERENCES "MzTab-M"."Small Molecule Feature (SMF) Section" ("SMF_ID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID,
-    CONSTRAINT "Small Molecule Section_mzTab-ID_REFS_fkey" FOREIGN KEY ("mzTab-ID_REFS")
-        REFERENCES "MzTab-M"."Metadata_metabolomics" ("mzTab-ID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE "MzTab-M"."Small Molecule Section"
-    OWNER to postgres;
-
--- Table: MzTab-M.Small Molecule Feature (SMF) Section
-
--- DROP TABLE "MzTab-M"."Small Molecule Feature (SMF) Section";
-
-CREATE TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
-(
-    "SMF_ID" integer NOT NULL,
-    "SME_ID_REFS" integer,
-    "SME_ID_REF_ambiguity_code" integer,
-    adduct_ion text COLLATE pg_catalog."default",
-    isotopomer text COLLATE pg_catalog."default",
-    exp_mass_to_charge double precision NOT NULL,
-    charge integer NOT NULL,
-    retention_time_in_seconds double precision,
-    retention_time_in_seconds_start double precision,
-    retention_time_in_seconds_end double precision,
-    abundance_assay_number text COLLATE pg_catalog."default",
-    abundance_assay text COLLATE pg_catalog."default",
-    CONSTRAINT "Small Molecule Feature (SMF) Section_pkey1" PRIMARY KEY ("SMF_ID"),
-    CONSTRAINT "Small Molecule Feature (SMF) Section_SME_ID_REFS_fkey" FOREIGN KEY ("SME_ID_REFS")
-        REFERENCES "MzTab-M"."Small Molecule Evidence (SME) Section" ("SME_ID") MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-        NOT VALID
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
     OWNER to postgres;
 
 -- Table: MzTab-M.Small Molecule Evidence (SME) Section
@@ -449,6 +375,76 @@ CREATE TABLE "MzTab-M"."Small Molecule Evidence (SME) Section"
 TABLESPACE pg_default;
 
 ALTER TABLE "MzTab-M"."Small Molecule Evidence (SME) Section"
+    OWNER to postgres;
+
+-- Table: MzTab-M.Small Molecule Feature (SMF) Section
+
+-- DROP TABLE "MzTab-M"."Small Molecule Feature (SMF) Section";
+
+CREATE TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
+(
+    "SMF_ID" integer NOT NULL,
+    "SME_ID_REFS" integer,
+    "SME_ID_REF_ambiguity_code" integer,
+    adduct_ion text COLLATE pg_catalog."default",
+    isotopomer text COLLATE pg_catalog."default",
+    exp_mass_to_charge double precision NOT NULL,
+    charge integer NOT NULL,
+    retention_time_in_seconds double precision,
+    retention_time_in_seconds_start double precision,
+    retention_time_in_seconds_end double precision,
+    abundance_assay_number text COLLATE pg_catalog."default",
+    abundance_assay text COLLATE pg_catalog."default",
+    CONSTRAINT "Small Molecule Feature (SMF) Section_pkey1" PRIMARY KEY ("SMF_ID"),
+    CONSTRAINT "Small Molecule Feature (SMF) Section_SME_ID_REFS_fkey" FOREIGN KEY ("SME_ID_REFS")
+        REFERENCES "MzTab-M"."Small Molecule Evidence (SME) Section" ("SME_ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Small Molecule Feature (SMF) Section"
+    OWNER to postgres;
+
+-- Table: MzTab-M.Small Molecule Section
+
+-- DROP TABLE "MzTab-M"."Small Molecule Section";
+
+CREATE TABLE "MzTab-M"."Small Molecule Section"
+(
+    "SML_ID" integer NOT NULL,
+    "SMF_ID_REFS" integer,
+    database_identifier text[] COLLATE pg_catalog."default",
+    chemical_formula text[] COLLATE pg_catalog."default",
+    smiles text[] COLLATE pg_catalog."default",
+    inchi text[] COLLATE pg_catalog."default",
+    chemical_name text[] COLLATE pg_catalog."default",
+    uri text[] COLLATE pg_catalog."default",
+    "		theoretical_neutral_mass" double precision[],
+    adduct_ions text[] COLLATE pg_catalog."default",
+    reliability text COLLATE pg_catalog."default",
+    best_id_confidence_measure text COLLATE pg_catalog."default",
+    best_id_confidence_value double precision,
+    abundance_assay_number text COLLATE pg_catalog."default",
+    abundance_assay double precision,
+    abundance_study_variable_number text COLLATE pg_catalog."default",
+    abundance_study_variable double precision,
+    abundance_variation_study_variable_number text COLLATE pg_catalog."default",
+    abundance_variation_study_variable double precision,
+    "mzTab-ID_REFS" integer NOT NULL,
+    CONSTRAINT "Small Molecule Section_pkey1" PRIMARY KEY ("SML_ID"),
+    CONSTRAINT "Small Molecule Section_SMF_ID_REFS_fkey" FOREIGN KEY ("SMF_ID_REFS")
+        REFERENCES "MzTab-M"."Small Molecule Feature (SMF) Section" ("SMF_ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE "MzTab-M"."Small Molecule Section"
     OWNER to postgres;
     
 -- Table: XML.TraML
