@@ -27,3 +27,248 @@ TABLESPACE pg_default;
 
 ALTER TABLE public."SOPs"
     OWNER to postgres;
+
+
+-- Table: public.MDVFragments_from_excel
+
+-- DROP TABLE public."MDVFragments_from_excel";
+
+CREATE TABLE public."MDVFragments_from_excel"
+(
+    met_id text COLLATE pg_catalog."default" NOT NULL,
+    formula text COLLATE pg_catalog."default" NOT NULL,
+    elements text[] COLLATE pg_catalog."default" NOT NULL,
+    positions integer[] NOT NULL,
+    id integer NOT NULL DEFAULT nextval('"MDVFragments_id_seq"'::regclass),
+    CONSTRAINT "MDVFragments_from_excel_pkey" PRIMARY KEY (met_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."MDVFragments_from_excel"
+    OWNER to postgres;
+
+-- Table: public.MFA model metabolites 
+
+-- DROP TABLE public."MFA model metabolites ";
+
+CREATE TABLE public."MFA model metabolites "
+(
+    id integer NOT NULL DEFAULT nextval('"MFA model metabolites _id_seq"'::regclass),
+    mapping_id text COLLATE pg_catalog."default" NOT NULL,
+    met_id text COLLATE pg_catalog."default" NOT NULL,
+    met_elements text[] COLLATE pg_catalog."default",
+    met_atompositions integer[],
+    met_symmetry_elements text[] COLLATE pg_catalog."default",
+    met_symmetry_atompositions integer[],
+    used boolean,
+    comment text COLLATE pg_catalog."default",
+    met_mapping json,
+    base_met_ids text[] COLLATE pg_catalog."default",
+    base_met_elements json,
+    base_met_atompositions json,
+    base_met_symmetry_elements json,
+    base_met_symmetry_atompositions json,
+    base_met_indices integer[]
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."MFA model metabolites "
+    OWNER to postgres;
+
+-- Table: public.MFA model reactions table
+
+-- DROP TABLE public."MFA model reactions table";
+
+CREATE TABLE public."MFA model reactions table"
+(
+    id integer NOT NULL DEFAULT nextval('"MFA model reactions table_id_seq"'::regclass),
+    model_id text COLLATE pg_catalog."default" NOT NULL,
+    rxn_id text COLLATE pg_catalog."default" NOT NULL,
+    rxn_name text COLLATE pg_catalog."default",
+    equation text COLLATE pg_catalog."default",
+    subsystem text COLLATE pg_catalog."default",
+    gpr text COLLATE pg_catalog."default",
+    genes text[] COLLATE pg_catalog."default",
+    reactants_stoichiometry double precision[],
+    products_stoichiometry double precision[],
+    reactants_ids text[] COLLATE pg_catalog."default",
+    products_ids text[] COLLATE pg_catalog."default",
+    lower_bound double precision,
+    upper_bound double precision,
+    objective_coefficient double precision,
+    flux_units text COLLATE pg_catalog."default",
+    fixed boolean,
+    free boolean,
+    reversibility boolean,
+    weight double precision,
+    used boolean,
+    comment text COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."MFA model reactions table"
+    OWNER to postgres;
+
+-- Table: public.measuredFluxes
+
+-- DROP TABLE public."measuredFluxes";
+
+CREATE TABLE public."measuredFluxes"
+(
+    id integer NOT NULL DEFAULT nextval('"measuredFluxes_id_seq"'::regclass),
+    experiment_id text COLLATE pg_catalog."default" NOT NULL,
+    model_id text COLLATE pg_catalog."default" NOT NULL,
+    sample_name_abbreviation text COLLATE pg_catalog."default" NOT NULL,
+    rxn_id text COLLATE pg_catalog."default" NOT NULL,
+    flux_average double precision,
+    flux_stdev double precision,
+    flux_lb double precision,
+    flux_ub double precision,
+    flux_units text COLLATE pg_catalog."default",
+    used boolean,
+    comment text COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."measuredFluxes"
+    OWNER to postgres;
+
+-- Table: public.measuredFragments
+
+-- DROP TABLE public."measuredFragments";
+
+CREATE TABLE public."measuredFragments"
+(
+    id integer NOT NULL DEFAULT nextval('"measuredFragments_id_seq"'::regclass),
+    experiment_id text COLLATE pg_catalog."default",
+    sample_name_abbreviation text COLLATE pg_catalog."default",
+    time_point text COLLATE pg_catalog."default",
+    met_id text COLLATE pg_catalog."default",
+    fragment_id text COLLATE pg_catalog."default",
+    fragment_formula text COLLATE pg_catalog."default",
+    intensity_normalized_average double precision[],
+    intensity_normalized_cv double precision[],
+    intensity_normalized_stdev double precision[],
+    intensity_normalized_units text COLLATE pg_catalog."default",
+    scan_type text COLLATE pg_catalog."default",
+    met_elements text[] COLLATE pg_catalog."default",
+    met_atompositions integer[],
+    used boolean,
+    comment text COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."measuredFragments"
+    OWNER to postgres;
+
+-- Table: public.modelMetabolites
+
+-- DROP TABLE public."modelMetabolites";
+
+CREATE TABLE public."modelMetabolites"
+(
+    id integer NOT NULL DEFAULT nextval('"modelMetabolites_id_seq"'::regclass),
+    model_id text COLLATE pg_catalog."default",
+    met_name text COLLATE pg_catalog."default",
+    met_id text COLLATE pg_catalog."default",
+    formula text COLLATE pg_catalog."default",
+    charge integer,
+    compartment text COLLATE pg_catalog."default",
+    bound double precision,
+    constraint_sense text COLLATE pg_catalog."default",
+    used boolean,
+    comment text COLLATE pg_catalog."default",
+    lower_bound double precision,
+    upper_bound double precision,
+    balanced boolean,
+    fixed boolean
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."modelMetabolites"
+    OWNER to postgres;
+
+-- Table: public.modelPathways
+
+-- DROP TABLE public."modelPathways";
+
+CREATE TABLE public."modelPathways"
+(
+    id integer NOT NULL DEFAULT nextval('"modelPathways_id_seq"'::regclass),
+    model_id text COLLATE pg_catalog."default" NOT NULL,
+    pathway_id text COLLATE pg_catalog."default" NOT NULL,
+    reactions text[] COLLATE pg_catalog."default",
+    stoichiometry double precision[],
+    used boolean,
+    comment text COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."modelPathways"
+    OWNER to postgres;
+
+-- Table: public.modelReactions
+
+-- DROP TABLE public."modelReactions";
+
+CREATE TABLE public."modelReactions"
+(
+    id integer NOT NULL DEFAULT nextval('"modelReactions_id_seq"'::regclass),
+    model_id text COLLATE pg_catalog."default" NOT NULL,
+    rxn_id text COLLATE pg_catalog."default" NOT NULL,
+    rxn_name text COLLATE pg_catalog."default",
+    equation text COLLATE pg_catalog."default",
+    subsystem text COLLATE pg_catalog."default",
+    gpr text COLLATE pg_catalog."default",
+    genes text[] COLLATE pg_catalog."default",
+    reactants_stoichiometry double precision[],
+    products_stoichiometry double precision[],
+    reactants_ids text[] COLLATE pg_catalog."default",
+    products_ids text[] COLLATE pg_catalog."default",
+    lower_bound double precision,
+    upper_bound double precision,
+    objective_coefficient double precision,
+    flux_units text COLLATE pg_catalog."default",
+    fixed boolean,
+    free boolean,
+    reversibility boolean,
+    weight double precision,
+    used boolean,
+    comment text COLLATE pg_catalog."default"
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public."modelReactions"
+    OWNER to postgres;
+
+-- Table: public.tracers
+
+-- DROP TABLE public.tracers;
+
+CREATE TABLE public.tracers
+(
+    met_id text COLLATE pg_catalog."default" NOT NULL,
+    met_name text COLLATE pg_catalog."default",
+    isotopomer_formula text[] COLLATE pg_catalog."default",
+    met_elements text[] COLLATE pg_catalog."default",
+    met_atompositions integer[],
+    ratio double precision,
+    supplier text COLLATE pg_catalog."default",
+    supplier_reference text COLLATE pg_catalog."default",
+    purity double precision,
+    comment text COLLATE pg_catalog."default",
+    id integer NOT NULL DEFAULT nextval('tracers_id_seq'::regclass)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.tracers
+    OWNER to postgres;
