@@ -70,7 +70,7 @@ jobs:
             psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
               
-  #Windows integration
+  #MacOS integration
   Integration-on-macos:
     macos:
       xcode: 11.3.0
