@@ -96,6 +96,6 @@ workflows:
   main:
     jobs:
       - unittest
-      - Integration-on-linux
-      - Integration-on-windows
-      - Integration-on-macos
+      #- Integration-on-linux
+      #- Integration-on-windows
+      #- Integration-on-macos
