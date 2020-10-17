@@ -69,7 +69,28 @@ jobs:
           command: |
             psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
+              
+  #Windows integration
+  Integration-on-macos:
+    macos:
+      xcode: 11.3.0
+    steps:
+      - checkout
+      - run:
+          name: Install PostgresSQL
 
+          environment:
+            POSTGRES_USER: circleCI
+            POSTGRES_DB: circleCI_test
+
+          command: |
+            brew install postgresql
+
+      - run:
+          name: Integrate IsaTAB.sql into the database
+          command: |
+            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
+            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
 
 workflows:
   main:
@@ -77,3 +98,4 @@ workflows:
       - unittest
       - Integration-on-UNIX
       - Integration-on-windows
+      - Integration-on-macos

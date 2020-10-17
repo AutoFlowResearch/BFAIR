@@ -7,6 +7,8 @@ __pycache__/
 *.so
 # vscode exclude
 .vscode
+.vs
+.DS_STORE
 # Distribution / packaging
 .Python
 build/
