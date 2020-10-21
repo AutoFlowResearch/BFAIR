@@ -7,7 +7,8 @@ orbs:
 jobs:
   #Linting and unit test
   unittest:
-    executor: python/default
+    executor: 
+      name: python/default
       tag: "3.7"
     steps:
       - checkout
