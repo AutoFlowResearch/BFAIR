@@ -8,6 +8,7 @@ jobs:
   #Linting and unit test
   unittest:
     executor: python/default
+      tag: "3.7"
     steps:
       - checkout
       - run:
