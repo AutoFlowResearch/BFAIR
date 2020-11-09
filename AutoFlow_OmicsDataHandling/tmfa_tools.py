@@ -5,6 +5,14 @@ from pytfa.optim import DeltaG, LogConcentration
 def get_flux(tmodel, reaction_or_id):
     """
     Returns the flux of the specified reaction.
+    
+    Parameters:
+        tmodel (pyTFA model): Model of interest
+        reaction_or_id (cobra.Reaction or String): Reaction of interest
+
+    Returns:
+        flux: Resulting flux
+
     """
     rxn = (
         reaction_or_id
@@ -16,7 +24,7 @@ def get_flux(tmodel, reaction_or_id):
 
 def get_fluxes(tmodel):
     """
-    Returns all the calculated fluxes.
+    Returns all the calculated fluxes from the pyTFA model
     """
     return pd.Series(
         {
@@ -30,6 +38,13 @@ def get_fluxes(tmodel):
 def get_free_energy(tmodel, reaction_or_id):
     """
     Returns the delta G of the specified reaction.
+
+    Parameters:
+        tmodel (pyTFA model): Model of interest
+        reaction_or_id (cobra.Reaction or String): Reaction of interest
+
+    Returns:
+        energy: Resulting Gibbs energy of the reaction
     """
     rxn_id = reaction_or_id if isinstance(reaction_or_id, str) else reaction_or_id.id
     var_id = DeltaG.prefix + rxn_id
@@ -50,6 +65,13 @@ def get_free_energies(tmodel):
 def get_log_concentration(tmodel, metabolite_or_id):
     """
     Returns the log concentration of the specified metabolite.
+
+    Parameters:
+        tmodel (pyTFA model): Model of interest
+        metabolite_or_id (cobra.Metabolite or String): Metabolite of interest
+
+    Returns:
+        log concentration
     """
     met_id = (
         metabolite_or_id if isinstance(metabolite_or_id, str) else metabolite_or_id.id
