@@ -5,7 +5,7 @@ from pytfa.optim import DeltaG, LogConcentration
 def get_flux(tmodel, reaction_or_id):
     """
     Returns the flux of the specified reaction.
-    
+
     Parameters:
         tmodel (pyTFA model): Model of interest
         reaction_or_id (cobra.Reaction or String): Reaction of interest
