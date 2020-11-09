@@ -22,7 +22,7 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python3 -m unittest tests/test_linting.py
+            python -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
   
   # The same as unittest but for Windows machine
@@ -44,7 +44,7 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python3 -m unittest tests/test_linting.py
+            python -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
   
   #Linux integration 
