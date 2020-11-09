@@ -5,7 +5,8 @@ orbs:
   win: circleci/windows@2.2.0
 
 jobs:
-  #Linting and unit test
+  
+  # Linting and unit test
   unittest:
     executor: python/default
     steps:
@@ -14,7 +15,6 @@ jobs:
           name: Install Python Dependencies
           command : |
             pip install -r requirements.txt
-
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
@@ -24,7 +24,29 @@ jobs:
           command: |
             python3 -m unittest tests/test_linting.py
             flake8 --max-line-length=120 --ignore=PT009
+  
+  # The same as unittest but for Windows machine
+  win-unittest:
+    executor:
+      name: win/default
+      shell: powershell.exe
 
+    steps:
+      - checkout
+      - run:
+          name: Install Python Dependencies
+          command : |
+            pip install -r requirements.txt
+      - save_cache:
+          key: deps2-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name : Run Unit Tests
+          command: |
+            python3 -m unittest tests/test_linting.py
+            flake8 --max-line-length=120 --ignore=PT009
+  
   #Linux integration 
   Integration-on-linux:
     executor: python/default
@@ -96,6 +118,7 @@ workflows:
   main:
     jobs:
       - unittest
+      - win-unittest
       #- Integration-on-linux
       #- Integration-on-windows
       #- Integration-on-macos
