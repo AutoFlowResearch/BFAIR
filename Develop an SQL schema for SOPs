@@ -114,7 +114,7 @@ CREATE TABLE public."A_TECHNOLOGY_MICROARRAY" (
     "Array_Data_Matrix_File" text,
     "Derived_Array_Data_Matrix_File" text,
     "Array_Design_File" text,
-    "A_Technology_Microarray_ID" integer NOT NULL
+    "id" integer NOT NULL
 );
 
 
