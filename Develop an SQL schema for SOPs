@@ -496,34 +496,34 @@ ALTER SEQUENCE public."MFA_model_reactions_id_seq" OWNED BY public."MFA_model_re
 -- Name: MzTab-M_Metadata_metabolomics; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."MzTab-M_Metadata_metabolomics" (
+CREATE TABLE public."MzTab_M_Metadata_metabolomics" (
     id integer NOT NULL,
-    "mzTab-version" text NOT NULL,
+    "mzTab_version" text NOT NULL,
     title text,
     description text,
     sample_processing_number integer,
     sample_processing text,
-    "instrument-name_number" integer,
-    "instrument-name" text,
-    "instrument-source_number" integer,
-    "instrument-source" text,
+    "instrument_name_number" integer,
+    "instrument_name" text,
+    "instrument_source_number" integer,
+    "instrument_source" text,
     instrument_number integer,
     analyzer_number integer,
-    "instrument-analyzer" text,
-    "instrument-detector_number" integer,
-    "instrument-detector" text,
+    "instrument_analyzer" text,
+    "instrument_detector_number" integer,
+    "instrument_detector" text,
     software_number integer NOT NULL,
     software text NOT NULL,
     setting_number integer,
-    "software-setting" text,
+    "software_setting" text,
     publication_number integer,
     publication text,
-    "contact-name_number" integer,
-    "contact-name" text,
-    "contact-affiliation_number" integer,
-    "contact-affiliation" text,
-    "contact-email_number" integer,
-    "contact-email" text,
+    "contact_name_number" integer,
+    "contact_name" text,
+    "contact_affiliation_number" integer,
+    "contact_affiliation" text,
+    "contact_email_number" integer,
+    "contact_email" text,
     uri_number integer,
     uri text,
     external_study_uri_number integer,
@@ -532,71 +532,71 @@ CREATE TABLE public."MzTab-M_Metadata_metabolomics" (
     sample_number integer,
     sample text,
     species_number integer,
-    "sample-species" text,
+    "sample_species" text,
     tissue_number integer,
-    "sample-tissue" text,
+    "sample_tissue" text,
     cell_type_number integer,
-    "sample-cell_type" text,
+    "sample_cell_type" text,
     disease_number integer,
-    "sample-disease" text,
-    "sample-description" text,
+    "sample_disease" text,
+    "sample_description" text,
     custom_number integer,
-    "sample-custom" text,
+    "sample_custom" text,
     ms_run integer NOT NULL,
-    "ms_run-location" text NOT NULL,
-    "ms_run-instrument_ref" integer,
-    "ms_run-format" text,
-    "ms_run-id_format" text,
+    "ms_run_location" text NOT NULL,
+    "ms_run_instrument_ref" integer,
+    "ms_run_format" text,
+    "ms_run_id_format" text,
     fragmentation_method_number integer,
-    "ms_run-fragmentation_method" text,
+    "ms_run_fragmentation_method" text,
     scan_polarity_number integer NOT NULL,
-    "ms_run-scan_polarity" text NOT NULL,
-    "ms_run-hash" text,
-    "ms_run-hash_method" text,
+    "ms_run_scan_polarity" text NOT NULL,
+    "ms_run_hash" text,
+    "ms_run_hash_method" text,
     assay_number integer NOT NULL,
     assay text NOT NULL,
-    "assay-custom" text,
-    "assay-external_uri" text,
-    "assay-sample_ref" text,
-    "assay-ms_run_ref" text NOT NULL,
+    "assay_custom" text,
+    "assay_external_uri" text,
+    "assay_sample_ref" text,
+    "assay_ms_run_ref" text NOT NULL,
     study_variable_number integer NOT NULL,
     study_variable text NOT NULL,
-    "study_variable-assay_refs" text NOT NULL,
-    "study_variable-average_function" text,
-    "study_variable-variation_function" text,
-    "study_variable-description" text NOT NULL,
-    "study_variable-factors" text,
-    "study-custom" text,
+    "study_variable_assay_refs" text NOT NULL,
+    "study_variable_average_function" text,
+    "study_variable_variation_function" text,
+    "study_variable_description" text NOT NULL,
+    "study_variable_factors" text,
+    "study_custom" text,
     cv_number integer NOT NULL,
-    "cv-label" text NOT NULL,
-    "cv-full_name" text NOT NULL,
-    "cv-version" text NOT NULL,
-    "cv-uri" text NOT NULL,
+    "cv_label" text NOT NULL,
+    "cv_full_name" text NOT NULL,
+    "cv_version" text NOT NULL,
+    "cv_uri" text NOT NULL,
     database_number integer NOT NULL,
     database text NOT NULL,
-    "database-prefix" text NOT NULL,
-    "database-version" text NOT NULL,
-    "database-uri" text NOT NULL,
+    "database_prefix" text NOT NULL,
+    "database_version" text NOT NULL,
+    "database_uri" text NOT NULL,
     derivatization_agent_number integer,
     derivatization_agent text,
-    "small_molecule-quantification_unit" text,
-    "small_molecule-identification_reliability" integer,
+    "small_molecule_quantification_unit" text,
+    "small_molecule_identification_reliability" integer,
     id_confidence_measure_number integer NOT NULL,
     id_confidence_measure text NOT NULL,
-    "colunit-small_molecule" text,
-    "colunit-small_molecule_evidence" text,
-    "mzTab-ID" text NOT NULL
+    "colunit_small_molecule" text,
+    "colunit_small_molecule_evidence" text,
+    "mzTab_ID" text NOT NULL
 );
 
 
-ALTER TABLE public."MzTab-M_Metadata_metabolomics" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_Metadata_metabolomics" OWNER TO postgres;
 
 --
 -- TOC entry 242 (class 1259 OID 18419)
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section; Type: TABLE; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section" (
+CREATE TABLE public."MzTab_M_Small_Molecule_Evidence_SME_Section" (
     "SME_ID" integer NOT NULL,
     evidence_input_id text,
     database_identifier text,
@@ -620,14 +620,14 @@ CREATE TABLE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section" (
 );
 
 
-ALTER TABLE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_Small_Molecule_Evidence_SME_Section" OWNER TO postgres;
 
 --
 -- TOC entry 241 (class 1259 OID 18417)
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq"
+CREATE SEQUENCE public."MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -636,23 +636,23 @@ CREATE SEQUENCE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq
     CACHE 1;
 
 
-ALTER TABLE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq" OWNER TO postgres;
 
 --
 -- TOC entry 3456 (class 0 OID 0)
 -- Dependencies: 241
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq" OWNED BY public."MzTab-M_Small_Molecule_Evidence_(SME)_Section"."SME_ID";
+ALTER SEQUENCE public."MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq" OWNED BY public."MzTab_M_Small_Molecule_Evidence_SME_Section"."SME_ID";
 
 
 --
 -- TOC entry 240 (class 1259 OID 18410)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section; Type: TABLE; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section" (
+CREATE TABLE public."MzTab_M_Small_Molecule_Feature_SMF_Section" (
     "SMF_ID" integer NOT NULL,
     "SME_ID_REFS_number" integer,
     "SME_ID_REFS" integer,
@@ -669,14 +669,14 @@ CREATE TABLE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section" (
 );
 
 
-ALTER TABLE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_Small_Molecule_Feature_SMF_Section" OWNER TO postgres;
 
 --
 -- TOC entry 239 (class 1259 OID 18408)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq"
+CREATE SEQUENCE public."MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -685,23 +685,23 @@ CREATE SEQUENCE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq" OWNER TO postgres;
 
 --
 -- TOC entry 3457 (class 0 OID 0)
 -- Dependencies: 239
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq" OWNED BY public."MzTab-M_Small_Molecule_Feature_(SMF)_Section"."SMF_ID";
+ALTER SEQUENCE public."MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq" OWNED BY public."MzTab_M_Small_Molecule_Feature_SMF_Section"."SMF_ID";
 
 
 --
 -- TOC entry 237 (class 1259 OID 18396)
--- Name: MzTab-M_small_molecule_section; Type: TABLE; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public."MzTab-M_small_molecule_section" (
+CREATE TABLE public."MzTab_M_small_molecule_section" (
     "SML_ID" integer NOT NULL,
     "SMF_ID_REFS_number" integer,
     "SMF_ID_REFS" integer,
