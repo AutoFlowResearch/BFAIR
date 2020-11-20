@@ -122,10 +122,10 @@ ALTER TABLE public."A_TECHNOLOGY_MICROARRAY" OWNER TO postgres;
 
 --
 -- TOC entry 224 (class 1259 OID 18268)
--- Name: A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MICROARRAY_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq"
+CREATE SEQUENCE public."A_TECHNOLOGY_MICROARRAY_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -134,15 +134,15 @@ CREATE SEQUENCE public."A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE public."A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq" OWNER TO postgres;
+ALTER TABLE public."A_TECHNOLOGY_MICROARRAY_id_seq" OWNER TO postgres;
 
 --
 -- TOC entry 3448 (class 0 OID 0)
 -- Dependencies: 224
--- Name: A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MICROARRAY_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq" OWNED BY public."A_TECHNOLOGY_MICROARRAY"."A_Technology_Microarray_ID";
+ALTER SEQUENCE public."A_TECHNOLOGY_MICROARRAY_id_seq" OWNED BY public."A_TECHNOLOGY_MICROARRAY"."A_Technology_Microarray_ID";
 
 
 --
@@ -164,7 +164,7 @@ CREATE TABLE public."A_TECHNOLOGY_MS" (
     "Post_Translational_Modification_Assignment_File" text,
     "Data_Transformation_Name" text,
     "Derived_Spectral_Data_File" text,
-    "A_Technology_MS_ID" integer NOT NULL
+    "id" integer NOT NULL
 );
 
 
@@ -172,10 +172,10 @@ ALTER TABLE public."A_TECHNOLOGY_MS" OWNER TO postgres;
 
 --
 -- TOC entry 225 (class 1259 OID 18278)
--- Name: A_TECHNOLOGY_MS_A_Technology_MS_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MS_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."A_TECHNOLOGY_MS_A_Technology_MS_ID_seq"
+CREATE SEQUENCE public."A_TECHNOLOGY_MS_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -189,10 +189,10 @@ ALTER TABLE public."A_TECHNOLOGY_MS_A_Technology_MS_ID_seq" OWNER TO postgres;
 --
 -- TOC entry 3449 (class 0 OID 0)
 -- Dependencies: 225
--- Name: A_TECHNOLOGY_MS_A_Technology_MS_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MS_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."A_TECHNOLOGY_MS_A_Technology_MS_ID_seq" OWNED BY public."A_TECHNOLOGY_MS"."A_Technology_MS_ID";
+ALTER SEQUENCE public."A_TECHNOLOGY_MS_id_seq" OWNED BY public."A_TECHNOLOGY_MS"."A_Technology_MS_ID";
 
 
 --
@@ -213,7 +213,7 @@ CREATE TABLE public."A_TECHNOLOGY_NMR" (
     "Normalization_Name" text,
     "Data_Transformation_Name" text,
     "Metabolite_Assignment_File" text,
-    "A_Technology_NMR_ID" integer NOT NULL
+    "id" integer NOT NULL
 );
 
 
@@ -221,10 +221,10 @@ ALTER TABLE public."A_TECHNOLOGY_NMR" OWNER TO postgres;
 
 --
 -- TOC entry 226 (class 1259 OID 18289)
--- Name: A_TECHNOLOGY_NMR_A_Technology_NMR_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_NMR_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."A_TECHNOLOGY_NMR_A_Technology_NMR_ID_seq"
+CREATE SEQUENCE public."A_TECHNOLOGY_NMR_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
