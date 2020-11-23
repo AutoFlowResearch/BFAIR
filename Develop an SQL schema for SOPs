@@ -730,18 +730,18 @@ CREATE TABLE public."MzTab_M_small_molecule_section" (
     abundance_study_variable double precision,
     abundance_variation_study_variable_number integer,
     abundance_variation_study_variable double precision,
-    "mzTab-ID_REFS" text
+    "mzTab_ID_REFS" text
 );
 
 
-ALTER TABLE public."MzTab-M_small_molecule_section" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_small_molecule_section" OWNER TO postgres;
 
 --
 -- TOC entry 238 (class 1259 OID 18399)
--- Name: MzTab-M_small_molecule_section_SML_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section_SML_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."MzTab-M_small_molecule_section_SML_ID_seq"
+CREATE SEQUENCE public."MzTab_M_small_molecule_section_SML_ID_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -750,15 +750,15 @@ CREATE SEQUENCE public."MzTab-M_small_molecule_section_SML_ID_seq"
     CACHE 1;
 
 
-ALTER TABLE public."MzTab-M_small_molecule_section_SML_ID_seq" OWNER TO postgres;
+ALTER TABLE public."MzTab_M_small_molecule_section_SML_ID_seq" OWNER TO postgres;
 
 --
 -- TOC entry 3458 (class 0 OID 0)
 -- Dependencies: 238
--- Name: MzTab-M_small_molecule_section_SML_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section_SML_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."MzTab-M_small_molecule_section_SML_ID_seq" OWNED BY public."MzTab-M_small_molecule_section"."SML_ID";
+ALTER SEQUENCE public."MzTab_M_small_molecule_section_SML_ID_seq" OWNED BY public."MzTab_M_small_molecule_section"."SML_ID";
 
 
 --
@@ -767,25 +767,25 @@ ALTER SEQUENCE public."MzTab-M_small_molecule_section_SML_ID_seq" OWNED BY publi
 --
 
 CREATE TABLE public."MzTab_Metadata_Proteomics" (
-    "mzTab-version" text NOT NULL,
-    "mzTab-mode" text NOT NULL,
-    "mzTab-type" text NOT NULL,
-    "mzTab-ID" text NOT NULL,
+    "mzTab_version" text NOT NULL,
+    "mzTab_mode" text NOT NULL,
+    "mzTab_type" text NOT NULL,
+    "mzTab_ID" text NOT NULL,
     title text,
     description text,
     sample_processing_number integer,
     sample_processing text,
     instrument_number integer,
     instrument text,
-    "instrument-name" text,
-    "instrument-source" text,
+    "instrument_name" text,
+    "instrument_source" text,
     analyzer_number integer,
-    "instrument-analyzer" text,
-    "instrument-detector" text,
+    "instrument_analyzer" text,
+    "instrument_detector" text,
     software_number integer NOT NULL,
     software text NOT NULL,
     setting_number integer,
-    "software-setting" text,
+    "software_setting" text,
     protein_search_engine_score_number integer,
     protein_search_engine_score double precision,
     peptide_search_engine_score_number integer,
@@ -798,65 +798,65 @@ CREATE TABLE public."MzTab_Metadata_Proteomics" (
     publication_number integer,
     publication text,
     contact_number integer,
-    "contact-name" text,
-    "contact-affiliation" text,
-    "contact-email" text,
+    "contact_name" text,
+    "contact_affiliation" text,
+    "contact_email" text,
     uri_number integer,
     uri text,
     fixed_mod_number integer,
     fixed_mod text,
-    "fixed_mod-site" text,
-    "fixed_mod-position" text,
+    "fixed_mod_site" text,
+    "fixed_mod_position" text,
     variable_mod_number integer,
     variable_mod text,
-    "variable_mod-site" text,
-    "variable_mod-position" text,
+    "variable_mod_site" text,
+    "variable_mod_position" text,
     quantification_method text NOT NULL,
-    "protein-quantification_unit" text,
-    "peptide-quantification_unit" text,
-    "small_molecule-quantification_unit" text,
+    "protein_quantification_unit" text,
+    "peptide_quantification_unit" text,
+    "small_molecule_quantification_unit" text,
     ms_run_number integer NOT NULL,
-    "ms_run-format" text,
-    "ms_run-location" text NOT NULL,
-    "ms_run-id_format" text,
+    "ms_run_format" text,
+    "ms_run_location" text NOT NULL,
+    "ms_run_id_format" text,
     fragmentation_method_number integer NOT NULL,
-    "ms_run-fragmentation_method" text NOT NULL,
-    "ms_run-hash" text,
-    "ms_run-hash_method" text,
+    "ms_run_fragmentation_method" text NOT NULL,
+    "ms_run_hash" text,
+    "ms_run_hash_method" text,
     custom_number integer,
     custom text,
     sample_number integer,
     species_number integer,
-    "sample-species" text,
+    "sample_species" text,
     tissue_number integer,
-    "sample-tissue" text,
+    "sample_tissue" text,
     cell_type_number integer,
-    "sample-cell_type" text,
+    "sample_cell_type" text,
     disease_number integer,
-    "sample-disease" text,
-    "sample-description" text,
-    "sample-custom" text,
+    "sample_disease" text,
+    "sample_description" text,
+    "sample_custom" text,
     assay_number integer NOT NULL,
-    "assay-quantification_reagent" text,
+    "assay_quantification_reagent" text,
     quantification_mod_number integer,
-    "assay-quantification_mod" text,
-    "assay-quantification_mod-site" text,
-    "assay-quantification_mod-position" text,
-    "assay-sample_ref " text,
-    "assay-ms_run_ref" text,
+    "assay_quantification_mod" text,
+    "assay_quantification_mod_site" text,
+    "assay_quantification_mod_position" text,
+    "assay_sample_ref " text,
+    "assay_ms_run_ref" text,
     study_variable_number integer NOT NULL,
-    "study_variable-assay_refs" text NOT NULL,
-    "study_variable-sample_refs" text NOT NULL,
-    "study_variable-description" text NOT NULL,
+    "study_variable_assay_refs" text NOT NULL,
+    "study_variable_sample_refs" text NOT NULL,
+    "study_variable_description" text NOT NULL,
     cv_number integer NOT NULL,
-    "cv-label" text NOT NULL,
-    "cv-full_name" text NOT NULL,
-    "cv-version" text NOT NULL,
-    "cv-url" text NOT NULL,
-    "colunit-protein" text,
-    "colunit-peptide" text,
-    "colunit-psm" text,
-    "colunit-small_molecule" text,
+    "cv_label" text NOT NULL,
+    "cv_full_name" text NOT NULL,
+    "cv_version" text NOT NULL,
+    "cv_url" text NOT NULL,
+    "colunit_protein" text,
+    "colunit_peptide" text,
+    "colunit_psm" text,
+    "colunit_small_molecule" text,
     id integer NOT NULL
 );
 
@@ -1050,7 +1050,7 @@ CREATE TABLE public."MzTab_Protein_section" (
     protein_abundance_stdev_study_variable double precision NOT NULL,
     protein_abundance_std_error_study_variable_number integer NOT NULL,
     protein_abundance_std_error_study_variable double precision NOT NULL,
-    "mzTab-ID_REFS" text NOT NULL
+    "mzTab_ID_REFS" text NOT NULL
 );
 
 
@@ -1623,7 +1623,7 @@ CREATE TABLE public."TraML" (
     "CompoundName" text,
     "SMILES" text,
     "SumFormula" text,
-    "mzTab-ID" text NOT NULL,
+    "mzTab_ID" text NOT NULL,
     id integer NOT NULL
 );
 
@@ -2799,10 +2799,10 @@ ALTER SEQUENCE public.models_id_seq OWNED BY public.models.id;
 
 --
 -- TOC entry 235 (class 1259 OID 18375)
--- Name: mzTab-M_Metadata_metabolomics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: mzTab_M_Metadata_metabolomics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public."mzTab-M_Metadata_metabolomics_id_seq"
+CREATE SEQUENCE public."mzTab_M_Metadata_metabolomics_id_seq"
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2811,15 +2811,15 @@ CREATE SEQUENCE public."mzTab-M_Metadata_metabolomics_id_seq"
     CACHE 1;
 
 
-ALTER TABLE public."mzTab-M_Metadata_metabolomics_id_seq" OWNER TO postgres;
+ALTER TABLE public."mzTab_M_Metadata_metabolomics_id_seq" OWNER TO postgres;
 
 --
 -- TOC entry 3498 (class 0 OID 0)
 -- Dependencies: 235
--- Name: mzTab-M_Metadata_metabolomics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: mzTab_M_Metadata_metabolomics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public."mzTab-M_Metadata_metabolomics_id_seq" OWNED BY public."MzTab-M_Metadata_metabolomics".id;
+ALTER SEQUENCE public."mzTab_M_Metadata_metabolomics_id_seq" OWNED BY public."MzTab_M_Metadata_metabolomics".id;
 
 
 --
@@ -3031,26 +3031,26 @@ ALTER TABLE ONLY public."ASSAY" ALTER COLUMN "Assay_ID" SET DEFAULT nextval('pub
 
 --
 -- TOC entry 3087 (class 2604 OID 18270)
--- Name: A_TECHNOLOGY_MICROARRAY A_Technology_Microarray_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MICROARRAY id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."A_TECHNOLOGY_MICROARRAY" ALTER COLUMN "A_Technology_Microarray_ID" SET DEFAULT nextval('public."A_TECHNOLOGY_MICROARRAY_A_Technology_Microarray_ID_seq"'::regclass);
+ALTER TABLE ONLY public."A_TECHNOLOGY_MICROARRAY" ALTER COLUMN "id" SET DEFAULT nextval('public."A_TECHNOLOGY_MICROARRAY_id_seq"'::regclass);
 
 
 --
 -- TOC entry 3088 (class 2604 OID 18280)
--- Name: A_TECHNOLOGY_MS A_Technology_MS_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MS id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."A_TECHNOLOGY_MS" ALTER COLUMN "A_Technology_MS_ID" SET DEFAULT nextval('public."A_TECHNOLOGY_MS_A_Technology_MS_ID_seq"'::regclass);
+ALTER TABLE ONLY public."A_TECHNOLOGY_MS" ALTER COLUMN "id" SET DEFAULT nextval('public."A_TECHNOLOGY_MS_id_seq"'::regclass);
 
 
 --
 -- TOC entry 3089 (class 2604 OID 18291)
--- Name: A_TECHNOLOGY_NMR A_Technology_NMR_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_NMR id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."A_TECHNOLOGY_NMR" ALTER COLUMN "A_Technology_NMR_ID" SET DEFAULT nextval('public."A_TECHNOLOGY_NMR_A_Technology_NMR_ID_seq"'::regclass);
+ALTER TABLE ONLY public."A_TECHNOLOGY_NMR" ALTER COLUMN "id" SET DEFAULT nextval('public."A_TECHNOLOGY_NMR_id_seq"'::regclass);
 
 
 --
@@ -3095,34 +3095,34 @@ ALTER TABLE ONLY public."MFA_model_reactions" ALTER COLUMN id SET DEFAULT nextva
 
 --
 -- TOC entry 3094 (class 2604 OID 18380)
--- Name: MzTab-M_Metadata_metabolomics id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Metadata_metabolomics id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Metadata_metabolomics" ALTER COLUMN id SET DEFAULT nextval('public."mzTab-M_Metadata_metabolomics_id_seq"'::regclass);
+ALTER TABLE ONLY public."MzTab_M_Metadata_metabolomics" ALTER COLUMN id SET DEFAULT nextval('public."mzTab_M_Metadata_metabolomics_id_seq"'::regclass);
 
 
 --
 -- TOC entry 3097 (class 2604 OID 18422)
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section SME_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section SME_ID; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Evidence_(SME)_Section" ALTER COLUMN "SME_ID" SET DEFAULT nextval('public."MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_seq"'::regclass);
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Evidence_SME_Section" ALTER COLUMN "SME_ID" SET DEFAULT nextval('public."MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_seq"'::regclass);
 
 
 --
 -- TOC entry 3096 (class 2604 OID 18413)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section SMF_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section SMF_ID; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Feature_(SMF)_Section" ALTER COLUMN "SMF_ID" SET DEFAULT nextval('public."MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_seq"'::regclass);
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Feature_SMF_Section" ALTER COLUMN "SMF_ID" SET DEFAULT nextval('public."MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_seq"'::regclass);
 
 
 --
 -- TOC entry 3095 (class 2604 OID 18401)
--- Name: MzTab-M_small_molecule_section SML_ID; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section SML_ID; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_small_molecule_section" ALTER COLUMN "SML_ID" SET DEFAULT nextval('public."MzTab-M_small_molecule_section_SML_ID_seq"'::regclass);
+ALTER TABLE ONLY public."MzTab_M_small_molecule_section" ALTER COLUMN "SML_ID" SET DEFAULT nextval('public."MzTab_M_small_molecule_section_SML_ID_seq"'::regclass);
 
 
 --
@@ -3561,65 +3561,65 @@ ALTER TABLE ONLY public."MFA_model_reactions"
 
 --
 -- TOC entry 3179 (class 2606 OID 18433)
--- Name: MzTab-M_Metadata_metabolomics MzTab-M_Metadata_metabolomics_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Metadata_metabolomics MzTab_M_Metadata_metabolomics_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Metadata_metabolomics"
-    ADD CONSTRAINT "MzTab-M_Metadata_metabolomics_id_key" UNIQUE (id);
+ALTER TABLE ONLY public."MzTab_M_Metadata_metabolomics"
+    ADD CONSTRAINT "MzTab_M_Metadata_metabolomics_id_key" UNIQUE (id);
 
 
 --
 -- TOC entry 3181 (class 2606 OID 18386)
--- Name: MzTab-M_Metadata_metabolomics MzTab-M_Metadata_metabolomics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Metadata_metabolomics MzTab_M_Metadata_metabolomics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Metadata_metabolomics"
-    ADD CONSTRAINT "MzTab-M_Metadata_metabolomics_pkey" PRIMARY KEY ("mzTab-ID");
+ALTER TABLE ONLY public."MzTab_M_Metadata_metabolomics"
+    ADD CONSTRAINT "MzTab_M_Metadata_metabolomics_pkey" PRIMARY KEY ("mzTab_ID");
 
 
 --
 -- TOC entry 3191 (class 2606 OID 18431)
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section MzTab-M_Small_Molecule_Evidence_(SME)_Section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section MzTab_M_Small_Molecule_Evidence_SME_Section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Evidence_(SME)_Section"
-    ADD CONSTRAINT "MzTab-M_Small_Molecule_Evidence_(SME)_Section_pkey" PRIMARY KEY ("SME_ID");
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Evidence_SME_Section"
+    ADD CONSTRAINT "MzTab_M_Small_Molecule_Evidence_SME_Section_pkey" PRIMARY KEY ("SME_ID");
 
 
 --
 -- TOC entry 3187 (class 2606 OID 18457)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section MzTab-M_Small_Molecule_Feature_(SMF)_Section_SME_ID_REFS_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section MzTab_M_Small_Molecule_Feature_SMF_Section_SME_ID_REFS_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Feature_(SMF)_Section"
-    ADD CONSTRAINT "MzTab-M_Small_Molecule_Feature_(SMF)_Section_SME_ID_REFS_key" UNIQUE ("SME_ID_REFS");
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Feature_SMF_Section"
+    ADD CONSTRAINT "MzTab_M_Small_Molecule_Feature_SMF_Section_SME_ID_REFS_key" UNIQUE ("SME_ID_REFS");
 
 
 --
 -- TOC entry 3189 (class 2606 OID 18429)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section MzTab-M_Small_Molecule_Feature_(SMF)_Section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section MzTab_M_Small_Molecule_Feature_SMF_Section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Feature_(SMF)_Section"
-    ADD CONSTRAINT "MzTab-M_Small_Molecule_Feature_(SMF)_Section_pkey" PRIMARY KEY ("SMF_ID");
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Feature_SMF_Section"
+    ADD CONSTRAINT "MzTab_M_Small_Molecule_Feature_SMF_Section_pkey" PRIMARY KEY ("SMF_ID");
 
 
 --
 -- TOC entry 3183 (class 2606 OID 18450)
--- Name: MzTab-M_small_molecule_section MzTab-M_small_molecule_section_SMF_ID_REFS_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section MzTab_M_small_molecule_section_SMF_ID_REFS_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_small_molecule_section"
-    ADD CONSTRAINT "MzTab-M_small_molecule_section_SMF_ID_REFS_key" UNIQUE ("SMF_ID_REFS");
+ALTER TABLE ONLY public."MzTab_M_small_molecule_section"
+    ADD CONSTRAINT "MzTab_M_small_molecule_section_SMF_ID_REFS_key" UNIQUE ("SMF_ID_REFS");
 
 
 --
 -- TOC entry 3185 (class 2606 OID 18427)
--- Name: MzTab-M_small_molecule_section MzTab-M_small_molecule_section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section MzTab_M_small_molecule_section_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_small_molecule_section"
-    ADD CONSTRAINT "MzTab-M_small_molecule_section_pkey" PRIMARY KEY ("SML_ID");
+ALTER TABLE ONLY public."MzTab_M_small_molecule_section"
+    ADD CONSTRAINT "MzTab_M_small_molecule_section_pkey" PRIMARY KEY ("SML_ID");
 
 
 --
@@ -4191,7 +4191,7 @@ ALTER TABLE ONLY public."xxxxx_MDVFragments"
 
 --
 -- TOC entry 3304 (class 2606 OID 18301)
--- Name: A_TECHNOLOGY_MICROARRAY A_TECHNOLOGY_MICROARRAY_Assay_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MICROARRAY id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."A_TECHNOLOGY_MICROARRAY"
@@ -4209,7 +4209,7 @@ ALTER TABLE ONLY public."A_TECHNOLOGY_MICROARRAY"
 
 --
 -- TOC entry 3306 (class 2606 OID 18306)
--- Name: A_TECHNOLOGY_MS A_TECHNOLOGY_MS_Assay_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_MS id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."A_TECHNOLOGY_MS"
@@ -4227,7 +4227,7 @@ ALTER TABLE ONLY public."A_TECHNOLOGY_MS"
 
 --
 -- TOC entry 3308 (class 2606 OID 18311)
--- Name: A_TECHNOLOGY_NMR A_TECHNOLOGY_NMR_Assay_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: A_TECHNOLOGY_NMR id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."A_TECHNOLOGY_NMR"
@@ -4263,29 +4263,29 @@ ALTER TABLE ONLY public."INVESTIGATION"
 
 --
 -- TOC entry 3314 (class 2606 OID 18458)
--- Name: MzTab-M_Small_Molecule_Evidence_(SME)_Section MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Evidence_SME_Section MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Evidence_(SME)_Section"
-    ADD CONSTRAINT "MzTab-M_Small_Molecule_Evidence_(SME)_Section_SME_ID_fkey" FOREIGN KEY ("SME_ID") REFERENCES public."MzTab-M_Small_Molecule_Feature_(SMF)_Section"("SME_ID_REFS") NOT VALID;
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Evidence_SME_Section"
+    ADD CONSTRAINT "MzTab_M_Small_Molecule_Evidence_SME_Section_SME_ID_fkey" FOREIGN KEY ("SME_ID") REFERENCES public."MzTab_M_Small_Molecule_Feature_SMF_Section"("SME_ID_REFS") NOT VALID;
 
 
 --
 -- TOC entry 3313 (class 2606 OID 18451)
--- Name: MzTab-M_Small_Molecule_Feature_(SMF)_Section MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_Small_Molecule_Feature_SMF_Section MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_Small_Molecule_Feature_(SMF)_Section"
-    ADD CONSTRAINT "MzTab-M_Small_Molecule_Feature_(SMF)_Section_SMF_ID_fkey" FOREIGN KEY ("SMF_ID") REFERENCES public."MzTab-M_small_molecule_section"("SMF_ID_REFS") NOT VALID;
+ALTER TABLE ONLY public."MzTab_M_Small_Molecule_Feature_SMF_Section"
+    ADD CONSTRAINT "MzTab_M_Small_Molecule_Feature_SMF_Section_SMF_ID_fkey" FOREIGN KEY ("SMF_ID") REFERENCES public."MzTab_M_small_molecule_section"("SMF_ID_REFS") NOT VALID;
 
 
 --
 -- TOC entry 3312 (class 2606 OID 18444)
--- Name: MzTab-M_small_molecule_section MzTab-M_small_molecule_section_mzTab-ID_REFS_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_M_small_molecule_section MzTab_M_small_molecule_section_mzTab_ID_REFS_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY public."MzTab-M_small_molecule_section"
-    ADD CONSTRAINT "MzTab-M_small_molecule_section_mzTab-ID_REFS_fkey" FOREIGN KEY ("mzTab-ID_REFS") REFERENCES public."MzTab-M_Metadata_metabolomics"("mzTab-ID") NOT VALID;
+ALTER TABLE ONLY public."MzTab_M_small_molecule_section"
+    ADD CONSTRAINT "MzTab_M_small_molecule_section_mzTab_ID_REFS_fkey" FOREIGN KEY ("mzTab_ID_REFS") REFERENCES public."MzTab_M_Metadata_metabolomics"("mzTab_ID") NOT VALID;
 
 
 --
@@ -4308,11 +4308,11 @@ ALTER TABLE ONLY public."MzTab_Peptide_section"
 
 --
 -- TOC entry 3310 (class 2606 OID 18360)
--- Name: MzTab_Protein_section MzTab_Protein section_mzTab-ID_REFS_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: MzTab_Protein_section MzTab_Protein section_mzTab_ID_REFS_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public."MzTab_Protein_section"
-    ADD CONSTRAINT "MzTab_Protein section_mzTab-ID_REFS_fkey" FOREIGN KEY ("mzTab-ID_REFS") REFERENCES public."MzTab_Metadata_Proteomics"("mzTab-ID") NOT VALID;
+    ADD CONSTRAINT "MzTab_Protein section_mzTab-ID_REFS_fkey" FOREIGN KEY ("mzTab_ID_REFS") REFERENCES public."MzTab_Metadata_Proteomics"("mzTab-ID") NOT VALID;
 
 
 --
