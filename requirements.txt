@@ -1,1 +1,5 @@
 flake8
+
+# INCA_MFA_tools
+pandas
+numpy
