@@ -1,0 +1,792 @@
+# -*- coding: utf-8 -*-
+"""Main module."""
+
+# Libraries
+
+import pandas as pd
+import numpy as np
+import time
+import ast
+try:
+    import matlab.engine
+except ModuleNotFoundError:
+    print('Please check the README for a guide on how to install the MATLAB engine')
+    
+__version__ = "0.0.1"
+
+
+def limit_to_one_model(data_input, model_name_column, model_name):
+    """
+    Limits the data to values that are assigned to one metabolic model
+    """
+    data_output = pd.DataFrame()
+    for i, row in data_input.iterrows():
+        if row[model_name_column] == model_name:
+            if len(data_output) == 0:
+                data_output = pd.DataFrame.transpose(row.to_frame())
+            else:
+                data_output = data_output.append(
+                    pd.DataFrame.transpose(row.to_frame()))
+    data_input = data_output
+    return data_input
+
+
+def limit_to_one_experiment(data_input, experiment_name_column,
+                            experiment_name):
+    """
+    Limits the data to values that were aquired in one experiment
+    """
+    data_output = pd.DataFrame()
+    for i, row in data_input.iterrows():
+        if row[experiment_name_column] == experiment_name:
+            if len(data_output) == 0:
+                data_output = pd.DataFrame.transpose(row.to_frame())
+            else:
+                data_output = data_output.append(
+                    pd.DataFrame.transpose(row.to_frame()))
+    data_input = data_output
+    return data_input
+
+
+def prepare_input(string,
+                  type_of_replacement=['Curly', 'Double_square']):
+    """
+    Process data that is store in strings of lists etc in the files
+    """
+    if type_of_replacement == 'Curly':
+        string = string.strip('}{').split(',')
+    elif type_of_replacement == 'Double_square':
+        string = string[1:-1]
+        string = ast.literal_eval(string)
+    return string
+
+
+def initiate_MATLAB_script():
+    """
+    Starts writing the MATLAB script
+    """
+    mat_script = 'clear functions\n\n'
+
+    return mat_script
+
+
+def reaction_mapping(atomMapping_molecules_ids,
+                     model_molecules_ids,
+                     atomMapping_molecules_stoichiometry,
+                     atomMapping_molecules_elements,
+                     atomMapping_molecules_mapping,
+                     model_molecules_stoichiometry,
+                     reaction_type='reactant'):
+    """
+    Provides the carbon mapping for metabolites in a model
+    """
+    rxn_equation = ''
+    if reaction_type == 'product':
+        rxn_equation += ' -> '
+    # This had to be added because some metabolites appear more than once
+    # in one reaction with different mappings
+    seen_molecule = {}
+    dupes_molecule = []
+    if not len(atomMapping_molecules_ids) == \
+            len(set(atomMapping_molecules_ids)):
+        for x in atomMapping_molecules_ids:
+            if x not in seen_molecule:
+                seen_molecule[x] = 1
+            else:
+                if seen_molecule[x] == 1:
+                    dupes_molecule.append(x)
+                seen_molecule[x] += 1
+
+    # Iterate through the metabolites involved in the reactions
+    for molecule_cnt, molecule in enumerate(model_molecules_ids):
+        # Indices for metabolites with multiple different mappings
+        # are being sought
+        # initiate boolean for "while" loop
+        duplicates_not_done = True
+        duplicates_counter = 0
+        while duplicates_not_done:
+            # this little bit adds +s if it's not the first molecule
+            if molecule_cnt > 0:
+                rxn_equation += ' + '
+            if molecule in atomMapping_molecules_ids:
+                if molecule in dupes_molecule:
+                    positions = [i for i, x in enumerate(
+                        atomMapping_molecules_ids) if x == molecule]
+                    molecule_index = positions[duplicates_counter]
+                    if duplicates_counter == len(positions) - 1:
+                        duplicates_not_done = False
+                    duplicates_counter += 1
+                else:
+                    molecule_index = atomMapping_molecules_ids.index(molecule)
+                    duplicates_not_done = False
+
+                # here we check if it is a tuple, i.e. there is more than one
+                # metabolite, or a a list, i.e. only one metabolite
+                rxn_equation += str(
+                    atomMapping_molecules_stoichiometry[molecule_index]) + \
+                    '*' + molecule + ' ('
+                if type(atomMapping_molecules_elements) is tuple:
+                    # here we go through the mapping, enumerate the atoms and
+                    # add the corresponding mapping
+                    for mapping_cnt, mapping in \
+                        enumerate(
+                            atomMapping_molecules_elements[molecule_index]):
+                        # to remove the final whitespace
+                        if (mapping_cnt+1) == \
+                                len(atomMapping_molecules_mapping[
+                                    molecule_index]):
+                            rxn_equation += mapping + \
+                                str(mapping_cnt+1) + ':' + \
+                                atomMapping_molecules_mapping[
+                                    molecule_index][mapping_cnt]
+                        else:
+                            rxn_equation += mapping + \
+                                str(mapping_cnt+1) + ':' + \
+                                atomMapping_molecules_mapping[
+                                    molecule_index][mapping_cnt] + ' '
+                elif type(atomMapping_molecules_elements) is list:
+                    for mapping_cnt, mapping in \
+                            enumerate(atomMapping_molecules_elements):
+                        # to remove the final whitespace
+                        if (mapping_cnt+1) == \
+                                len(atomMapping_molecules_mapping[0]):
+                            rxn_equation += mapping + \
+                                str(mapping_cnt+1) + ':' + \
+                                atomMapping_molecules_mapping[0][mapping_cnt]
+                        else:
+                            rxn_equation += mapping + \
+                                str(mapping_cnt+1) + ':' + \
+                                atomMapping_molecules_mapping[0][mapping_cnt] \
+                                + ' '
+                # close the brackets for mapping
+                rxn_equation += ')'
+
+            # Exceptions that are in the model but not tracked are added here
+            else:
+                rxn_equation += str(
+                    model_molecules_stoichiometry[molecule_cnt]) + \
+                        '*' + molecule
+                duplicates_not_done = False
+
+    return rxn_equation
+
+
+def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I):
+    """
+    Translates the model and adds mapping using reaction_mapping()
+    """
+    mat_script = 'r = reaction({... % define reactions\n'
+
+    # this is the teporary biomass function
+    # biomass_INCA_iJS2012
+    a = ('0.176*phe_DASH_L_c + 0.443*mlthf_c + 0.34*oaa_c + 0.326*lys_DASH_L_c + 33.247*atp_c + 0.205*ser_DASH_L_c + 0.129*g3p_c + 0.131*tyr_DASH_L_c + 0.051*pep_c + 0.146*met_DASH_L_c + 0.205*g6p_c + 0.087*akg_c + 0.25*glu_DASH_L_c + 0.25*gln_DASH_L_c + 0.754*r5p_c + 0.071*f6p_c + 0.083*pyr_c + 0.582*gly_c + 0.241*thr_DASH_L_c + 0.229*asp_DASH_L_c + 5.363*nadph_c + 0.087*cys_DASH_L_c + 0.619*3pg_c + 0.402*val_DASH_L_c + 0.488*ala_DASH_L_c + 0.276*ile_DASH_L_c + 0.229*asn_DASH_L_c + 0.09*his_DASH_L_c + 0.428*leu_DASH_L_c + 2.51*accoa_c + 0.281*arg_DASH_L_c + 0.21*pro_DASH_L_c + 0.054*trp_DASH_L_c -> 1.455*nadh_c + 39.68*Biomass_c')
+
+    model_rxn_ids = []
+    model_rxn_ids_exp = []
+    # First we go through the reactions in the model to make sure that
+    # we only include the ones that are actually there
+    for cnt, modelReaction_data in modelReaction_data_I.iterrows():
+        if modelReaction_data['used_']:
+            model_rxn_id = modelReaction_data['rxn_id']
+            model_rxn_ids.append(model_rxn_id)
+    model_rxn_ids = sorted(model_rxn_ids, key=str.lower)
+    for id_cnt, model_rxn_id in enumerate(model_rxn_ids):
+        for cnt, modelReaction_data in modelReaction_data_I.iterrows():
+
+            # Model
+            index_in_model = list(
+                modelReaction_data_I['rxn_id']).index(
+                    modelReaction_data['rxn_id'])
+            model_reactants_stoichiometry = prepare_input(
+                modelReaction_data_I.iloc[
+                    index_in_model].loc['reactants_stoichiometry'], 'Curly')
+            model_products_stoichiometry = prepare_input(
+                modelReaction_data_I.iloc[
+                    index_in_model].loc['products_stoichiometry'], 'Curly')
+
+            if modelReaction_data['rxn_id'] == model_rxn_id:
+                # special option for the biomass function
+                rxn_equation = "'"
+
+                # hardcoded for now, needs to be variable
+                if model_rxn_id == 'Ec_Biomass_INCA':
+                    rxn_equation += a
+                    continue
+                else:
+                    # we save the location of the row corresponding to
+                    # this reaction in the other file
+                    # "prepare_input" is a helper function to make the
+                    # entries useable, this will have to be checked with
+                    # other input
+
+                    # Atom Mapping
+                    index_in_atomMapping = list(
+                        atomMappingReactions_data_I['rxn_id']).index(
+                            modelReaction_data['rxn_id'])
+                    atomMapping_reactants_stoichiometry = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping].loc[
+                                'reactants_stoichiometry_tracked'], 'Curly')
+                    atomMapping_products_stoichiometry = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping].loc[
+                                'products_stoichiometry_tracked'], 'Curly')
+
+                    # this step makes sure that we exclude reactions that
+                    # do not have any stoichiometry annotated
+                    if atomMapping_reactants_stoichiometry[0] == '' \
+                            and atomMapping_products_stoichiometry[0] == '':
+                        print('There is no stoichimetriy given for:',
+                              model_rxn_id)
+                        # Model
+                        model_reactants_ids = prepare_input(
+                            modelReaction_data_I.iloc[
+                                index_in_model].loc['reactants_ids'], 'Curly')
+                        model_products_ids = prepare_input(
+                            modelReaction_data_I.iloc[
+                                index_in_model].loc['products_ids'], 'Curly')
+                        model_reactants_stoichiometry = [
+                            float(i) * -1 for i in
+                            model_reactants_stoichiometry]
+                        model_products_stoichiometry = [
+                            float(i) for i in
+                            model_products_stoichiometry]
+
+                        for reactant_cnt, reactant in \
+                                enumerate(model_reactants_ids):
+                            # this little bit adds +s if it's not
+                            # the first reactant
+                            if reactant_cnt > 0:
+                                rxn_equation += ' + '
+                            rxn_equation += str(
+                                model_reactants_stoichiometry[
+                                    reactant_cnt]) + '*' + reactant
+                        rxn_equation += ' -> '
+                        for product_cnt, product in \
+                                enumerate(model_products_ids):
+                            # this little bit adds +s if it's not
+                            # the first product
+                            if product_cnt > 0:
+                                rxn_equation += ' + '
+                            rxn_equation += str(
+                                model_products_stoichiometry[
+                                    product_cnt]) + '*' + product
+                    else:
+                        # process the remaining info about the metabolites.
+                        # Done here because it can throw an error if
+                        # anything is empty
+
+                        # Atom Mapping
+                        atomMapping_reactants_ids = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'reactants_ids_tracked'], 'Curly')
+                        atomMapping_products_ids = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'products_ids_tracked'], 'Curly')
+                        atomMapping_reactants_elements = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'reactants_elements_tracked'],
+                            'Double_square')
+                        atomMapping_products_elements = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'products_elements_tracked'],
+                            'Double_square')
+                        atomMapping_reactants_mapping = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'reactants_mapping'], 'Curly')
+                        atomMapping_products_mapping = prepare_input(
+                            atomMappingReactions_data_I.iloc[
+                                index_in_atomMapping].loc[
+                                    'products_mapping'], 'Curly')
+                        atomMapping_reactants_stoichiometry = [
+                            float(i) * -1 for i in
+                            atomMapping_reactants_stoichiometry]
+                        atomMapping_products_stoichiometry = [
+                            float(i) for i in
+                            atomMapping_products_stoichiometry]
+
+                        # Model
+                        model_reactants_ids = prepare_input(
+                            modelReaction_data_I.iloc[
+                                index_in_model].loc['reactants_ids'], 'Curly')
+                        model_products_ids = prepare_input(
+                            modelReaction_data_I.iloc[
+                                index_in_model].loc['products_ids'], 'Curly')
+                        model_reactants_stoichiometry = [
+                            float(i) * -1 for i in
+                            model_reactants_stoichiometry]
+                        model_products_stoichiometry = [
+                            float(i) for i in model_products_stoichiometry]
+
+                        rxn_equation = "'"
+                        # We go through the IDs to treat each
+                        # metabolite separately
+                        reactant_equation = reaction_mapping(
+                            atomMapping_reactants_ids,
+                            model_reactants_ids,
+                            atomMapping_reactants_stoichiometry,
+                            atomMapping_reactants_elements,
+                            atomMapping_reactants_mapping,
+                            model_reactants_stoichiometry,
+                            reaction_type='reactant')
+                        product_equation = reaction_mapping(
+                            atomMapping_products_ids,
+                            model_products_ids,
+                            atomMapping_products_stoichiometry,
+                            atomMapping_products_elements,
+                            atomMapping_products_mapping,
+                            model_products_stoichiometry,
+                            reaction_type='product')
+                        rxn_equation = rxn_equation + \
+                            reactant_equation + product_equation
+        # the ids of the equations are being added to the list that
+        # will be exported
+        model_rxn_ids_exp.append(model_rxn_id)
+        mat_script += rxn_equation + " ';...\n"
+    mat_script += '});\n\n'
+
+    return mat_script, model_rxn_ids_exp
+
+
+def initialize_model():
+    """
+    Previously described reactions are assigned to a model object
+    """
+    mat_script = 'm = model(r); % set up model\n\n'
+
+    return mat_script
+
+
+def symmetrical_metabolites(atomMappingMetabolite_data_I):
+    # This fix using "continue" has been inserted to have a working
+    # version and discuss it later, maybe it's correct after all
+
+    """
+    Takes care of symmetrical metabolites if not done so in the
+    reaction equations
+    """
+    tmp_script = '% take care of symmetrical metabolites\n'
+    for cnt_met, met in atomMappingMetabolite_data_I.iterrows():
+        if not pd.isna(met['met_symmetry_atompositions']):
+            tmp_script = tmp_script + "m.mets{'" + \
+                met['met_id'] + "'}.sym = list('rotate180', atommap('"
+            met_positions = [
+                int(x) for x in prepare_input(
+                    met['met_atompositions'], 'Curly')]
+            met_elements = prepare_input(
+                met['met_elements'], 'Curly')
+            met['met_symmetry_elements'] = met[
+                'met_symmetry_elements'].replace('{}', str(np.nan))
+            met_symmetry_elements = prepare_input(met[
+                'met_symmetry_elements'], 'Curly')
+            met['met_symmetry_atompositions'] = met[
+                'met_symmetry_atompositions'].replace('{}', str(np.nan))
+            met_symmetry_atompositions = [
+                int(x) for x in prepare_input(met[
+                    'met_symmetry_atompositions'], 'Curly')]
+
+            for cnt, atompositions in enumerate(met_positions):
+                tmp_script = tmp_script + met_elements[cnt] + \
+                    str(atompositions + 1) + ':' + \
+                    met_symmetry_elements[cnt] + \
+                    str(met_symmetry_atompositions[cnt] + 1) + ' '
+            tmp_script = tmp_script[:-1]
+            tmp_script = tmp_script + "'));\n"
+        else:
+            continue
+    tmp_script = tmp_script + '\n'
+    mat_script = tmp_script
+
+    return mat_script
+
+
+def unbalanced_reactions(atomMappingMetabolite_data_I):
+    # NOTE: hard-coded for now until a better workaround can be done
+
+    """
+    Adds in the metabolite state (balanced or unbalanced)
+    """
+    tmp_script = '% define unbalanced reactions\n'
+    # specify reactions that should be forcible unbalanced
+    metabolites_all = [
+        x['met_id'] for cnt, x in atomMappingMetabolite_data_I.iterrows()]
+    # unbalanced reactions:
+    for met in ['co2_e', 'h2o_e', 'h_e', 'na1_e']:
+        if met in metabolites_all:
+            tmp_script = tmp_script + \
+                "m.states{'" + met + ".EX" + "'}.bal = false;\n"
+    mat_script = tmp_script
+
+    return mat_script
+
+
+def add_reaction_parameters(modelReaction_data_I,
+                            measuredFluxes_data_I,
+                            model_rxn_ids,
+                            fluxes_present=True):
+    # Stedv stuff should be checked once more
+
+    """
+    Flux parameters are added. They correspond to the previously
+    described reactions
+    """
+    # Add in initial fluxes (lb/ub, values, on/off) and define the reaction ids
+    # NOTE: lb, ub, val = 0 for steady-state
+    # lower bounds
+    tmp_script_lb = '\n% define lower bounds\nm.rates.flx.lb = [...\n'
+    # upper bounds
+    tmp_script_ub = '\n%define upper bounds\nm.rates.flx.ub = [...\n'
+    # intial flux values
+    tmp_script_val = '\n% define flux vals\nm.rates.flx.val = [...\n'
+    # include/exclude a reaction from the simulation
+    tmp_script_on = '\n% include/exclude reactions\nm.rates.on = [...\n'
+    # rxn_ids
+    tmp_script_id = '\n% define reaction ids\nm.rates.id = {...\n'
+    for model_rxn_id in model_rxn_ids:
+        for rxn_cnt, rxn in modelReaction_data_I.iterrows():
+            if rxn['rxn_id'] == model_rxn_id and rxn['used_']:
+                if fluxes_present:
+                    if rxn['rxn_id'] in list(measuredFluxes_data_I['rxn_id']):
+                        for flux_cnt, flux in measuredFluxes_data_I.iterrows():
+                            if rxn['rxn_id'] == flux['rxn_id']:
+                                tmp_script_lb = tmp_script_lb + \
+                                    str(flux['flux_lb']) + ',...\n'
+                                tmp_script_ub = tmp_script_ub + \
+                                    str(flux['flux_ub']) + ',...\n'
+                                tmp_script_val = tmp_script_val + \
+                                    str(flux['flux_average']) + ',...\n'
+                    else:
+                        tmp_script_lb = tmp_script_lb + \
+                            str(rxn['lower_bound']) + ',...\n'
+                        tmp_script_ub = tmp_script_ub + \
+                            str(rxn['upper_bound']) + ',...\n'
+                        tmp_script_val = tmp_script_val + \
+                            str(0) + ',...\n'
+                else:
+                    tmp_script_lb = tmp_script_lb + \
+                        str(rxn['lower_bound']) + ',...\n'
+                    tmp_script_ub = tmp_script_ub + \
+                        str(rxn['upper_bound']) + ',...\n'
+                if rxn['upper_bound'] == 0.0 and \
+                        rxn['lower_bound'] == 0.0:
+                    tmp_script_on = tmp_script_on + 'false' + ',...\n'
+                else:
+                    tmp_script_on = tmp_script_on + 'true' + ',...\n'
+                tmp_script_id = tmp_script_id + "'" + rxn['rxn_id'] + "',...\n"
+    tmp_script_lb = tmp_script_lb + '];\n'
+    tmp_script_ub = tmp_script_ub + '];\n'
+    tmp_script_val = tmp_script_val + '];\n'
+    tmp_script_on = tmp_script_on + '];\n'
+    tmp_script_id = tmp_script_id + '};\n'
+
+    mat_script = tmp_script_lb + tmp_script_ub + \
+        tmp_script_val + tmp_script_on + tmp_script_id
+    return mat_script
+
+
+def verify_and_estimate():
+    # Is the second part necessary?
+
+    """
+    Adds a QC step and defines the restarts for later processing
+    """
+    mat_script = \
+        '\nm.rates.flx.val = mod2stoich(m); % make sure the fluxes are feasible\n'
+    mat_script = mat_script + \
+        'm.options.fit_starts = 10; % 10 restarts during the estimation procedure\n'
+
+    return mat_script
+
+
+def add_experimental_parameters(experimentalMS_data_I, tracer_I,
+                                measuredFluxes_data_I,
+                                atomMappingMetabolite_data_I):
+    """
+    Defines the measured fragments and adds tracer information
+    """
+    mat_script = ''
+
+    fragments_used = []
+
+    experiments_all = [
+        x['experiment_id'] for cnt, x in experimentalMS_data_I.iterrows()]
+    experiments = list(set(experiments_all))
+    experiments.sort()
+
+    fragments_all = [
+        x['fragment_id'] for cnt, x in experimentalMS_data_I.iterrows()]
+    fragments = list(set(fragments_all))
+    fragments.sort()
+
+    for experiment_cnt, experiment in enumerate(experiments):
+        tmp_script = \
+            '\n% define which fragments of molecules were measured in which experiment\nd = msdata({...\n'
+        for frg_cnt, fragment in enumerate(fragments):
+            for ms_cnt, ms_data in experimentalMS_data_I.iterrows():
+                if ms_data['fragment_id'] == \
+                        fragment and ms_data['experiment_id'] == experiment:
+                    met_positions = [
+                        int(x) for x in prepare_input(
+                            ms_data['met_atompositions'], 'Curly')]
+                    atomMapping_atompositions_row = \
+                        atomMappingMetabolite_data_I[
+                            atomMappingMetabolite_data_I['met_id']
+                            == ms_data['met_id']]
+                    if len(list(atomMapping_atompositions_row[
+                            'met_atompositions'])) > 0:
+                        atomMapping_atompositions = [
+                            int(x) for x in prepare_input(
+                                list(atomMapping_atompositions_row[
+                                    'met_atompositions'])[0], 'Curly')]
+                        if max(met_positions) <= \
+                                max(atomMapping_atompositions):
+                            fragments_used.append(
+                                ms_data['fragment_id'])
+                            tmp_script = tmp_script + "'" + \
+                                ms_data['fragment_id'] + \
+                                ': ' + ms_data['met_id'] + ' @ '
+                            met_elements = prepare_input(
+                                ms_data['met_elements'], 'Curly')
+                            for pos_cnt, pos in enumerate(met_positions):
+                                tmp_script = tmp_script + \
+                                    met_elements[pos_cnt] + str(pos+1) + ' '
+                            tmp_script = tmp_script[:-1]
+                            tmp_script = tmp_script + "';\n"
+                            break
+                    else:
+                        break
+        tmp_script = tmp_script + '});\n'
+        tmp_script = tmp_script + \
+            '\n% initialize mass distribution vector\nd.mdvs = mdv;\n'
+        mat_script = mat_script + tmp_script
+
+        # write substrate labeling (i.e. tracer) information
+        tmp_script = ''
+        tmp_script = tmp_script + \
+            '\n% define tracers used in the experiments\nt = tracer({...\n'
+        for tracer_cnt, tracer in tracer_I.iterrows():
+            if tracer['experiment_id'] == experiment:
+                tmp_script = tmp_script + "'" + tracer['met_name'] + \
+                    ': ' + tracer['met_id'] + '.EX' + ' @ '
+                tracer_met_atompositions = prepare_input(
+                    tracer['met_atompositions'], 'Curly')
+                tracer_met_elements = prepare_input(
+                    tracer['met_elements'], 'Curly')
+                for cnt, met_atompositions in \
+                        enumerate(tracer_met_atompositions):
+                    tmp_script = tmp_script + \
+                        tracer_met_elements[cnt] + str(met_atompositions) + ' '
+                # remove extra whitespace
+                tmp_script = tmp_script[:-1]
+                tmp_script = tmp_script + "';...\n"
+        tmp_script = tmp_script + '});\n'
+        tmp_script = tmp_script + \
+            '\n% define fractions of tracers used\nt.frac = [ '
+        for tracer_cnt, tracer in tracer_I.iterrows():
+            if tracer['experiment_id'] == experiment:
+                tmp_script = tmp_script + str(tracer['ratio']) + ','
+        # remove extra comma
+        tmp_script = tmp_script[:-1]
+        tmp_script = tmp_script + ' ];\n'
+        mat_script = mat_script + tmp_script
+
+        # write flux measurements
+        tmp_script = ''
+        tmp_script = tmp_script + \
+            "\n% define experiments for fit data\nf = data(' "
+        for flux_cnt, flux in measuredFluxes_data_I.iterrows():
+            if flux['experiment_id'] == experiment:
+                tmp_script = tmp_script + flux['rxn_id'] + " "
+        tmp_script = tmp_script[:-1]
+        tmp_script = tmp_script + " ');\n"
+        tmp_script = tmp_script + '\n% add fit values\nf.val = [...\n'
+        for flux_cnt, flux in measuredFluxes_data_I.iterrows():
+            if flux['experiment_id'] == experiment:
+                tmp_script = tmp_script + str(flux['flux_average']) + ',...\n'
+        tmp_script = tmp_script + '];\n'
+        tmp_script = tmp_script + '% add fit stds\nf.std = [...\n'
+        for flux_cnt, flux in measuredFluxes_data_I.iterrows():
+            if flux['experiment_id'] == experiment:
+                tmp_script = tmp_script + str(flux['flux_stdev']) + ',...\n'
+        tmp_script = tmp_script + '];\n'
+        tmp_script = tmp_script + \
+            '\n% initialize experiment with t and add f and d\nx = experiment(t);\n'
+        tmp_script = tmp_script + 'x.data_flx = f;\n'
+        tmp_script = tmp_script + 'x.data_ms = d;\n'
+        tmp_script = tmp_script + '\n% assing all the previous values to a specific experiment'
+        tmp_script = tmp_script + \
+            '\nm.expts(%d) = x;\n' % (experiment_cnt+1)
+
+        mat_script = mat_script + tmp_script
+    return mat_script, fragments_used
+
+
+def mapping(experimentalMS_data_I, fragments_used):
+    # check stedv stuff
+
+    """
+    Adds MS data to measured fragments
+    """
+    experiments_all = [
+        x['experiment_id'] for cnt, x in experimentalMS_data_I.iterrows()]
+    experiments = list(set(experiments_all))
+    experiments.sort()
+
+    fragments = fragments_used
+
+    times_all = [
+        x['time_point'] for cnt, x in experimentalMS_data_I.iterrows()]
+    times = list(set(times_all))
+    times.sort()
+
+    mat_script = ''
+    # Add in ms data or Write ms data to separate file
+    for experiment_cnt, experiment in enumerate(experiments):
+        tmp_script = '\n% add experimental data for annotated fragments\n'
+        for i, fragment in enumerate(fragments):
+            for j, time_j in enumerate(times):
+                for cnt_x, ms_data in experimentalMS_data_I.iterrows():
+                    if ms_data['fragment_id'] == fragments[i] and \
+                        ms_data['time_point'] == times[j] and \
+                            ms_data['experiment_id'] == experiment:
+                        if not pd.isna(
+                                ms_data['intensity_normalized_average']):
+                            ms_data_norm_ave_int = [
+                                float(x) for x in ms_data[
+                                    'intensity_normalized_average'].strip(
+                                        '}{').split(',')]
+                            ms_data_norm_stdev_int = [
+                                float(x) for x in ms_data[
+                                    'intensity_normalized_stdev'].strip(
+                                        '}{').split(',')]
+                            for cnt, intensity in \
+                                    enumerate(ms_data_norm_ave_int):
+                                # each column is a seperate time point
+                                # each row is a seperate mdv
+                                if cnt == 0:
+                                    # Assign names and times
+                                    name = fragment + '_' + \
+                                        str(cnt) + '_' + str(j) + '_' + \
+                                        str(experiment)
+                                    tmp_script = tmp_script + \
+                                        ("m.expts(%d).data_ms(%d).mdvs.id(%d,%d) = {'%s'};\n"
+                                            % (experiment_cnt + 1,
+                                               i + 1, cnt + 1, j + 1, name))
+                                    tmp_script = tmp_script + \
+                                        ("m.expts(%d).data_ms(%d).mdvs.time(%d,%d) = %s;\n"
+                                            % (experiment_cnt + 1,
+                                               i + 1, cnt + 1, j + 1, time_j))
+
+                                # Assign values
+                                ave = intensity
+                                stdev = ms_data_norm_stdev_int[cnt]
+                                # remove 0.0000 values and replace with NaN
+                                if ave <= 1e-6:
+                                    ave = 'NaN'
+                                    tmp_script = tmp_script + \
+                                        ('m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %s;\n'
+                                            % (experiment_cnt + 1,
+                                               i + 1, cnt + 1, j + 1, ave))
+                                else:
+                                    tmp_script = tmp_script + \
+                                        ('m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %f;\n'
+                                            % (experiment_cnt + 1,
+                                               i + 1, cnt + 1, j + 1, ave))
+                                if stdev <= 1e-3:
+                                    if stdev == 0.0:
+                                        stdev = 0.05
+                                    else:
+                                        stdev = 0.001
+                                    tmp_script = tmp_script + \
+                                        ('m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n'
+                                            % (experiment_cnt + 1,
+                                               i + 1, cnt + 1, j + 1, stdev))
+                                else:
+                                    tmp_script = tmp_script + \
+                                        ('m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %f;\n'
+                                            % (experiment_cnt + 1,
+                                            i + 1, cnt + 1, j + 1, stdev))
+                        else:
+                            ave == 'NaN'
+                            stdev = 'NaN'
+                            tmp_script = tmp_script + \
+                                ('m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n'
+                                    % (experiment_cnt + 1,
+                                       i + 1, cnt + 1, j + 1,stdev))
+        mat_script = mat_script + tmp_script
+
+    return mat_script
+
+
+def script_generator(modelReaction_data_I, atomMappingReactions_data_I,
+                     atomMappingMetabolite_data_I,
+                     measuredFluxes_data_I, experimentalMS_data_I, tracer_I):
+    """
+    Combines the functions that construct the model
+    """
+    script = ''
+    script = initiate_MATLAB_script()
+    script_temp, model_rxn_ids = add_reactions_to_script(
+        modelReaction_data_I, atomMappingReactions_data_I)
+    script += script_temp
+    script += initialize_model()
+    script += symmetrical_metabolites(atomMappingMetabolite_data_I)
+    script += unbalanced_reactions(atomMappingMetabolite_data_I)
+    script += add_reaction_parameters(
+        modelReaction_data_I, measuredFluxes_data_I, model_rxn_ids)
+    script += verify_and_estimate()
+    script_temp, fragments_used = add_experimental_parameters(
+        experimentalMS_data_I, tracer_I, measuredFluxes_data_I,
+        atomMappingMetabolite_data_I)
+    script += script_temp
+    script += mapping(experimentalMS_data_I, fragments_used)
+    return script
+
+
+def save_INCA_script(script, scriptname):
+    """
+    Writes the output file
+    """
+    file1 = open(scriptname + ".m", "w")
+    file1.write(script) 
+    file1.close()
+
+
+def runner_script_generator(output_filename, n_estimates=10):
+    """
+    Adds the functions needed to run the script and export the .mat file
+    """
+    runner = "\nf=estimate(m," + str(n_estimates) + ");\n\nf=continuate(f,m);\n\nfilename = '" \
+        + output_filename + ".mat';\nsave(filename,'f','m')"
+    return runner
+
+
+def save_runner_script(runner, scriptname):
+    file2 = open(scriptname + "_runner.m", "w")
+    file2.write(mat_script) 
+    file2.close()
+
+
+def run_INCA_in_MATLAB(INCA_base_directory, script_folder, matlab_script, runner_script):
+    """
+    Executes the script in MATLAB using INCA
+    Prints time and produces .mat file
+    """
+    start_time = time.time()
+    eng = matlab.engine.start_matlab()
+    eng.cd(r'' + INCA_base_directory, nargout=0)
+    eng.startup(nargout=0)
+    eng.setpath(nargout=0)
+    eng.cd(r'' + script_folder, nargout=0)
+    _f = getattr(eng, matlab_script)
+    _f(nargout=0)
+    _f2 = getattr(eng, runner_script)
+    _f2(nargout=0)
+    eng.quit()
+    print("--- %s seconds -" % (time.time() - start_time))
+
