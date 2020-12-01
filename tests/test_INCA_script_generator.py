@@ -3,7 +3,7 @@ import pickle
 import sys
 import pathlib
 sys.path.insert(1, '../')
-from INCA_script_generator.INCA_script_generator import *
+from AutoFlow_OmicsDataHandling.INCA_script_generator import *
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
