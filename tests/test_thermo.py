@@ -116,7 +116,7 @@ class TestUtils(TestThermo):
     def test_get_dgo_bound_change(self):
         colnames = ["lb_in", "ub_in", "lb_change", "ub_change", "lb_out", "ub_out"]
         dummy_table = pd.DataFrame.from_dict(
-            {"ACONTa": dict(zip(colnames, range(0,6)))}, orient="index"
+            {"ACONTa": dict(zip(colnames, range(0, 6)))}, orient="index"
         )
         actual = thermo.get_dgo_bound_change(self.test_model, dummy_table)
         _check_table(self, actual, ("bound_change", "subsystem"))
