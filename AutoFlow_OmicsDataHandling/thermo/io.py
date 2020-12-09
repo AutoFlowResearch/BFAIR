@@ -94,7 +94,8 @@ def create_model(model_name, thermo_data, lexicon, compartment_data) -> ThermoMo
     annotate_from_lexicon(tmodel, lexicon)
     apply_compartment_data(tmodel, compartment_data)
 
-    tmodel.solver.problem.Params.NumericFocus = 3
+    if tmodel.solver.interface.__name__ == "optlang.gurobi_interface":
+        tmodel.solver.problem.Params.NumericFocus = 3
     tmodel.solver.configuration.tolerances.feasibility = 1e-9
     tmodel.solver.configuration.presolve = True
 
