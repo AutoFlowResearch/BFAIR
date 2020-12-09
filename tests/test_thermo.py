@@ -21,7 +21,7 @@ class TestThermo(unittest.TestCase):
         # load data once
         cls.tdata = thermo.load_data("small_ecoli")
         bounds = pd.read_csv(
-            os.path.join(os.path.dirname(__file__), "data", "test_bounds.csv")
+            os.path.join(os.path.dirname(__file__), "test_data", "test_bounds.csv")
         )
         cls.rxn_bounds = bounds[bounds["bound_type"] == "flux"]
         cls.lc_bounds = bounds[bounds["bound_type"] == "log_concentration"]
