@@ -39,6 +39,8 @@ def relax_dgo(tmodel: ThermoModel, reactions_to_ignore=[]):
         A 2-column table containing bound violation magnitudes.
     """
     relaxed_model, _, relax_table = relax_dgo_(tmodel, reactions_to_ignore)
+    if relax_table is None:
+        raise Infeasible("Failed to create the feasibility relaxation!")
     relaxed_model.optimize()
     relax_table = get_dgo_bound_change(relaxed_model, relax_table)
     return relaxed_model, relax_table

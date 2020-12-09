@@ -115,7 +115,6 @@ def get_dgo_bound_change(tmodel: ThermoModel, relax_table):
         A 2-column table containing relaxation magnitudes and corresponding
         subsystem
     """
-    _check_if_solved(tmodel)
     bound_change = relax_table["ub_change"] - relax_table["lb_change"]
     relax_table.index.name = "reaction"
     return pd.DataFrame(

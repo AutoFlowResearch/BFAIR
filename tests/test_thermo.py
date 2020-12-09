@@ -73,9 +73,15 @@ class TestRelaxation(TestThermo):
         thermo.adjust_model(self.test_model, self.rxn_bounds, self.lc_bounds)
 
     def test_relax_dgo(self):
-        actual = thermo.relax_dgo(self.test_model, [])
-        self.assertEqual(len(actual), 2)
-        _check_table(self, actual[1], ("bound_change", "subsystem"))
+        from cobra.exceptions import Infeasible
+        
+        try:
+            actual = thermo.relax_dgo(self.test_model, [])
+            self.assertEqual(len(actual), 2)
+            _check_table(self, actual[1], ("bound_change", "subsystem"))
+        except Exception as exception:
+            self.assertIsInstance(exception, Infeasible)
+            self.assertEqual(str(exception), "Failed to create the feasibility relaxation!")
 
     def test_relax_lc(self):
         try:
@@ -111,6 +117,15 @@ class TestUtils(TestThermo):
 
         thermo.adjust_model(self.test_model, self.rxn_bounds, self.lc_bounds)
         relaxed_model, _, relax_table = relax_dgo_(self.test_model)
-
+        if relax_table is None:
+            colnames = [ 'lb_in',
+                        'ub_in',
+                        'lb_change',
+                        'ub_change',
+                        'lb_out',
+                        'ub_out']
+            relax_table = pd.DataFrame.from_dict(
+                { 'ACONTa': dict(zip(colnames, [0]*6)) }, orient='index'
+            )
         actual = thermo.get_dgo_bound_change(relaxed_model, relax_table)
         _check_table(self, actual, ("bound_change", "subsystem"))
