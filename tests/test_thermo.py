@@ -19,7 +19,7 @@ class TestThermo(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         # load data once
-        cls.tdata = thermo.load_data("iJO1366")
+        cls.tdata = thermo.load_data("small_ecoli")
         bounds = pd.read_csv(
             os.path.join(os.path.dirname(__file__), "data", "test_bounds.csv")
         )
@@ -29,33 +29,32 @@ class TestThermo(unittest.TestCase):
 
 class TestIO(unittest.TestCase):
     def test_load_cbm(self):
-        actual = thermo.load_cbm("iJO1366")
-        self.assertTrue(abs(actual.slim_optimize() - 0.8139991066760914) < 1e-5)
+        actual = thermo.load_cbm("small_ecoli")
+        self.assertTrue(abs(actual.slim_optimize() - 0.8109621653343296) < 1e-5)
 
     def test_load_data(self):
-        actual = thermo.load_data("iJO1366")
+        actual = thermo.load_data("small_ecoli")
         self.assertEqual(len(actual), 3)
 
         self.assertIsInstance(actual[0], dict)
         self.assertEqual(len(actual[0]), 4)
 
         self.assertIsInstance(actual[1], pd.DataFrame)
-        self.assertEqual(actual[1].shape, (1807, 1))
+        self.assertEqual(actual[1].shape, (304, 1))
 
         self.assertIsInstance(actual[2], dict)
         self.assertEqual(len(actual[2]), 3)
 
     def test_create_model(self):
-        tdata = thermo.load_data("iJO1366")
-        actual = thermo.create_model("iJO1366", *tdata)
-
-        self.assertEqual(actual.slim_optimize(), 0.0)
+        tdata = thermo.load_data("small_ecoli")
+        actual = thermo.create_model("small_ecoli", *tdata)
+        self.assertTrue(abs(actual.slim_optimize() - 0.8109972502600706) < 1e-5)
 
     def test_adjust_model(self):
         from math import log
 
-        tdata = thermo.load_data("iJO1366")
-        model = thermo.create_model("iJO1366", *tdata)
+        tdata = thermo.load_data("small_ecoli")
+        model = thermo.create_model("small_ecoli", *tdata)
 
         rxn_bounds = pd.DataFrame([{"id": "PGI", "lb": 0, "ub": 0}])
         lc_bounds = pd.DataFrame([{"id": "atp", "lb": log(5e-3), "ub": log(3e-2)}])
@@ -69,7 +68,8 @@ class TestIO(unittest.TestCase):
 
 class TestRelaxation(TestThermo):
     def setUp(self):
-        self.test_model = thermo.create_model("iJO1366", *self.tdata)
+        self.test_model = thermo.create_model("small_ecoli", *self.tdata)
+        # add constraints to require relaxation
         thermo.adjust_model(self.test_model, self.rxn_bounds, self.lc_bounds)
 
     def test_relax_dgo(self):
@@ -91,23 +91,26 @@ class TestUtils(TestThermo):
     def setUpClass(cls):
         # create one model only
         super(TestUtils, cls).setUpClass()
-        cls.test_model = thermo.create_model("iJO1366", *cls.tdata)
-        thermo.adjust_model(cls.test_model, cls.rxn_bounds, cls.lc_bounds)
+        cls.test_model = thermo.create_model("small_ecoli", *cls.tdata)
         cls.test_model.slim_optimize()
+        cls.flux_table = thermo.get_flux(cls.test_model)
+        cls.dg_table = thermo.get_delta_g(cls.test_model)
+        cls.lc_table = thermo.get_log_concentration(cls.test_model)
 
     def test_get_flux(self):
-        actual = thermo.get_flux(self.test_model)
-        _check_table(self, actual, ("flux", "subsystem"))
+        _check_table(self, self.flux_table, ("flux", "subsystem"))
 
     def test_get_delta_g(self):
-        actual = thermo.get_delta_g(self.test_model)
-        _check_table(self, actual, ("delta_g", "subsystem"))
+        _check_table(self, self.dg_table, ("delta_g", "subsystem"))
 
     def test_get_log_concentration(self):
-        actual = thermo.get_log_concentration(self.test_model)
-        _check_table(self, actual, ("log_concentration", "compartment"))
+        _check_table(self, self.lc_table, ("log_concentration", "compartment"))
 
     def test_get_dgo_bound_change(self):
+        from pytfa.optim.relaxation import relax_dgo as relax_dgo_
+
         thermo.adjust_model(self.test_model, self.rxn_bounds, self.lc_bounds)
-        actual = thermo.get_dgo_bound_change(*thermo.relax_dgo(self.test_model))
+        relaxed_model, _, relax_table = relax_dgo_(self.test_model)
+
+        actual = thermo.get_dgo_bound_change(relaxed_model, relax_table)
         _check_table(self, actual, ("bound_change", "subsystem"))
