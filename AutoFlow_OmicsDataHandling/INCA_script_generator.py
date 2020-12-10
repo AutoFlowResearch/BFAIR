@@ -22,6 +22,15 @@ __version__ = "0.0.1"
 def limit_to_one_model(data_input, model_name_column, model_name):
     """
     Limits the data to values that are assigned to one metabolic model
+
+    Parameters:
+        data_input: Input data file that needs to be processed
+        model_name_column: Column name where model names are defined
+        model_name: Name of the model the data will be limited to
+
+    Returns:
+        data_input: Limited data
+
     """
     data_output = pd.DataFrame()
     for i, row in data_input.iterrows():
@@ -41,6 +50,16 @@ def limit_to_one_experiment(
 ):
     """
     Limits the data to values that were aquired in one experiment
+
+    Parameters:
+        data_input: Input data file that needs to be processed
+        experiment_name_column: Column name where experiment names
+            are defined
+        model_name: Name of the model the data will be limited to
+
+    Returns:
+        data_input: Limited data
+
     """
     data_output = pd.DataFrame()
     for i, row in data_input.iterrows():
@@ -57,7 +76,17 @@ def limit_to_one_experiment(
 
 def prepare_input(string, type_of_replacement=["Curly", "Double_square"]):
     """
-    Process data that is store in strings of lists etc in the files
+    Process data that is stored in strings of lists etc in the files
+
+    Parameters:
+        string: Processes the data in cells in the dataframes.
+            The info is either bordered by curly or double square
+            brackets.
+        type_of_replacement: Define the type of surrounding brackets
+
+    Returns:
+        string: returns data in lists without bordering brackets
+
     """
     if type_of_replacement == "Curly":
         string = string.strip("}{").split(",")
@@ -70,6 +99,10 @@ def prepare_input(string, type_of_replacement=["Curly", "Double_square"]):
 def initiate_MATLAB_script():
     """
     Starts writing the MATLAB script
+
+    Returns:
+        mat_script: Initialized MATLAB script
+
     """
     mat_script = "clear functions\n\n"
 
@@ -86,7 +119,28 @@ def reaction_mapping(
     reaction_type="reactant",
 ):
     """
-    Provides the carbon mapping for metabolites in a model
+    Provides the carbon mapping for metabolites in a model.
+    Called within "add_reactions_to_script()"
+
+    Parameters:
+        atomMapping_molecules_ids: processed atomMappingReactions_data_I
+            reactants_ids_tracked or products_ids_tracked
+        model_molecules_ids: processed modelReaction_data_I
+            reactants_ids or products_ids
+        atomMapping_molecules_stoichiometry: processed
+            atomMappingReactions_data_I
+            reactants_stoichiometry_tracked or productss_stoichiometry_tracked
+        atomMapping_molecules_elements: processed atomMappingReactions_data_I
+            reactants_elements_tracked or products_elements_tracked
+        atomMapping_molecules_mapping: processed atomMappingReactions_data_I
+            reactants_mapping or products_mapping
+        model_molecules_stoichiometry: processed modelReaction_data_I
+            reactants_stoichiometry or products_stoichiometry
+        reaction_type: reactant or product
+
+    Returns:
+        rxn_equation: Reaction equation for the defined reaction
+
     """
     rxn_equation = ""
     if reaction_type == "product":
@@ -208,6 +262,16 @@ def reaction_mapping(
 def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I):
     """
     Translates the model and adds mapping using reaction_mapping()
+
+    Parameters:
+        modelReaction_data_I: pre-processed modelReaction_data_I input data
+        atomMappingReactions_data_I: pre-processed atomMappingReactions_data_I
+            input data
+
+    Returns:
+        mat_script: Extention to the MATLAB script under construction
+        model_rxn_ids_exp: List of reaction IDs used for the model
+
     """
     mat_script = "r = reaction({... % define reactions\n"
 
@@ -442,6 +506,10 @@ def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I):
 def initialize_model():
     """
     Previously described reactions are assigned to a model object
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     mat_script = "m = model(r); % set up model\n\n"
 
@@ -449,12 +517,17 @@ def initialize_model():
 
 
 def symmetrical_metabolites(atomMappingMetabolite_data_I):
-    # This fix using "continue" has been inserted to have a working
-    # version and discuss it later, maybe it's correct after all
-
     """
     Takes care of symmetrical metabolites if not done so in the
     reaction equations
+
+    Parameters:
+        atomMappingMetabolite_data_I: pre-processed
+            atomMappingMetabolite_data_I input data
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     tmp_script = "% take care of symmetrical metabolites\n"
     for cnt_met, met in atomMappingMetabolite_data_I.iterrows():
@@ -511,6 +584,14 @@ def unbalanced_reactions(atomMappingMetabolite_data_I):
 
     """
     Adds in the metabolite state (balanced or unbalanced)
+
+    Parameters:
+        atomMappingMetabolite_data_I: pre-processed
+            atomMappingMetabolite_data_I input data
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     tmp_script = "% define unbalanced reactions\n"
     # specify reactions that should be forcible unbalanced
@@ -539,6 +620,20 @@ def add_reaction_parameters(
     """
     Flux parameters are added. They correspond to the previously
     described reactions
+
+    Parameters:
+        modelReaction_data_I: pre-processed
+            modelReaction_data_I input data
+        measuredFluxes_data_I: pre-processed
+            measuredFluxes_data_I input data
+        model_rxn_ids: pre-processed
+            model_rxn_ids input data
+        fluxes_present: confirm if fluxes are present. If not then the
+            flux measuredFluxes_data_I file will be ignored
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     # Add in initial fluxes (lb/ub, values, on/off) and define the reaction ids
     # NOTE: lb, ub, val = 0 for steady-state
@@ -611,10 +706,12 @@ def add_reaction_parameters(
 
 
 def verify_and_estimate():
-    # Is the second part necessary?
-
     """
     Adds a QC step and defines the restarts for later processing
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     mat_script = "\nm.rates.flx.val = mod2stoich(m); % make sure the fluxes are feasible\n" # noqa E501
     mat_script = (
@@ -633,6 +730,22 @@ def add_experimental_parameters(
 ):
     """
     Defines the measured fragments and adds tracer information
+
+    Parameters:
+        experimentalMS_data_I: pre-processed
+            experimentalMS_data_I input data
+        tracer_I: pre-processed
+            tracer_I input data
+        measuredFluxes_data_I: pre-processed
+            measuredFluxes_data_I input data
+        atomMappingMetabolite_data_I: pre-processed
+            atomMappingMetabolite_data_I input data
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+        fragments_used: List of the fragments in the data that fit into
+            the defined parameters
+
     """
     mat_script = ""
 
@@ -813,6 +926,16 @@ def mapping(experimentalMS_data_I, fragments_used):
 
     """
     Adds MS data to measured fragments
+
+    Parameters:
+        experimentalMS_data_I: pre-processed
+            experimentalMS_data_I input data
+        fragments_used: List of the fragments in the data that fit into
+            the defined parameters from "add_experimental_parameters()"
+
+    Returns:
+        mat_script: addition to MATLAB script under construction
+
     """
     experiments_all = [
         x["experiment_id"] for cnt, x in experimentalMS_data_I.iterrows()
@@ -975,6 +1098,25 @@ def script_generator(
 ):
     """
     Combines the functions that construct the model
+
+    Parameters:
+        modelReaction_data_I: pre-processed
+            modelReaction_data_I input data
+        atomMappingReactions_data_I: pre-processed
+            atomMappingReactions_data_I input data
+        atomMappingMetabolite_data_I: pre-processed
+            atomMappingMetabolite_data_I input data
+        measuredFluxes_data_I: pre-processed
+            measuredFluxes_data_I input data
+        experimentalMS_data_I: pre-processed
+            experimentalMS_data_I input data
+        tracer_I: pre-processed
+            tracer_I input data
+
+    Returns:
+        script: combined parts of the MATLAB script constrcted
+            by the previously defined functions
+
     """
     script = ""
     script = initiate_MATLAB_script()
@@ -1003,6 +1145,14 @@ def script_generator(
 def save_INCA_script(script, scriptname):
     """
     Writes the output file
+
+    Parameters:
+        script: output from "script_generator()"
+        scriptname: user defined name of the .m output file
+
+    Outputs:
+        .m INCA script
+
     """
     file1 = open(scriptname + ".m", "w")
     file1.write(script)
@@ -1012,6 +1162,16 @@ def save_INCA_script(script, scriptname):
 def runner_script_generator(output_filename, n_estimates=10):
     """
     Adds the functions needed to run the script and export the .mat file
+
+    Parameters:
+        output_filename: user defined name of the .mat output file, the
+            INCA output file
+        n_estimates: number of times the fluxes will be estimated
+
+    Returns:
+        runner: MATLAB script that will run the previously created
+            INCA script
+
     """
     runner = (
         "\nf=estimate(m,"
@@ -1024,6 +1184,18 @@ def runner_script_generator(output_filename, n_estimates=10):
 
 
 def save_runner_script(runner, scriptname):
+    """
+    Writes the runner output file
+
+    Parameters:
+        runner: previously created runner script
+        scriptname: name of the runner file, can be the same as
+            the scriptname of the INCA script
+
+    Outputs:
+        .m runner script
+
+    """
     file2 = open(scriptname + "_runner.m", "w")
     file2.write(runner)
     file2.close()
@@ -1035,6 +1207,16 @@ def run_INCA_in_MATLAB(
     """
     Executes the script in MATLAB using INCA
     Prints time and produces .mat file
+
+    Parameters:
+        INCA_base_directory:
+        script_folder:
+        matlab_script:
+        runner_script:
+
+    Outputs:
+        .mat output of INCA
+
     """
     start_time = time.time()
     eng = matlab.engine.start_matlab()
