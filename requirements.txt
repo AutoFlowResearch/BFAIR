@@ -1,5 +1,2 @@
 flake8
 pytfa
-#INCA_tools
-pandas
-numpy
