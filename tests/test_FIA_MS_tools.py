@@ -38,15 +38,15 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_triplicates(self):
         intensities_triplicates = self.intensities_triplicates
-        feature_dir = "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
         sequence_triplicates = pd.read_csv(
-            "/test_data/FIA_MS_Data/sequence_EColi.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv"
         )
         sample_names_triplicates = sequence_triplicates[
             "sample_group_name"
         ].unique()
         database_triplicates = pd.read_csv(
-            "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
+            current_dir + "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
             sep="\t",
             header=None,
         )
@@ -65,7 +65,7 @@ class test_methods(unittest.TestCase):
         stats_triplicates = self.stats_triplicates
         intensities_triplicates = self.intensities_triplicates
         sequence_triplicates = pd.read_csv(
-            "/test_data/FIA_MS_Data/sequence_EColi.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv"
         )
         stats_triplicates_ = calculateMeanVarRSD(
             intensities_triplicates,
@@ -84,13 +84,13 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
-        feature_dir = "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
         sequence_single = pd.read_csv(
-            "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
         )
         sample_names_single = sequence_single["sample_group_name"].unique()
         database_single = pd.read_csv(
-            "/test_data/FIA_MS_Data/CHEMISTRY/HMDB_struct.tsv",
+            current_dir + "/test_data/FIA_MS_Data/CHEMISTRY/HMDB_struct.tsv",
             sep="\t",
             header=None,
         )
@@ -106,7 +106,7 @@ class test_methods(unittest.TestCase):
         stats_single = self.stats_single
         intensities_single = self.intensities_single
         sequence_single = pd.read_csv(
-            "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
         )
         stats_single_ = calculateMeanVarRSD(
             intensities_single,
@@ -122,9 +122,9 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
-        feature_dir = "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
         sequence_standard = pd.read_csv(
-            "/test_data/FIA_MS_Data//sequence_Standards.csv"
+            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv"
         )
         sample_names_standard = sequence_standard["sample_group_name"].unique()
         database_standard = pd.read_csv(
@@ -144,7 +144,7 @@ class test_methods(unittest.TestCase):
         stats_standard = self.stats_standard
         intensities_standard = self.intensities_standard
         sequence_standard = pd.read_csv(
-            "/test_data/FIA_MS_Data//sequence_Standards.csv"
+            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv"
         )
         stats_standard_ = calculateMeanVarRSD(
             intensities_standard,
