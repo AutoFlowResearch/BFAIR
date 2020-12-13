@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from pyopenms import FeatureMap, FeatureXMLFile
 
+__version__ = "0.0.1"
+
 
 def extractNamesAndIntensities(feature_dir, sample_names, database):
     metabolites_unique = database[0].unique()
