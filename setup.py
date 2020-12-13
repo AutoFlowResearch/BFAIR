@@ -9,14 +9,14 @@ with open("README.md", "r") as doc:
 
 version = re.search(
     r'^__version__\s*=\s*"(.*)"',
-    open("AutoFlow_OmicsDataHandling/AutoFlow_OmicsDataHandling.py").read(),
+    open("AutoFlow_OmicsDataHandling/__init__.py").read(),
     re.M,
 ).group(1)
 
 
 setup(
     name="AutoFlow_OmicsDataHandling",
-    # version=version,
+    version=version,
     author="AutoFlow",
     author_email="TBD",
     description=(
@@ -26,12 +26,11 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/Biosustain/AutoFlow-OmicsDataHandling",
     packages=setuptools.find_packages(),
-    # entry_points={
-    #     "console_scripts": [
-    #         "AutoFlow_OmicsDataHandling =
-    # AutoFlow_OmicsDataHandling.__main__:main"
-    #     ]
-    # },
+    entry_points={
+        "console_scripts": [
+            "AutoFlow_OmicsDataHandling = AutoFlow_OmicsDataHandling.__main__:main"
+        ]
+    },
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
