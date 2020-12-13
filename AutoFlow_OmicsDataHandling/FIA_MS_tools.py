@@ -15,16 +15,20 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
             feature_dir + "/" + name + ".featureXML", features
         )
         for f in features:
+            try:
+                peptideRef = f.getMetaValue("PeptideRef").decode("utf-8")
+            except AttributeError:
+                peptideRef = f.getMetaValue("PeptideRef")
             if (
-                f.getMetaValue("PeptideRef").decode("utf-8")
+                peptideRef
                 in metabolites_unique
             ):
                 formula = database[
-                    database[0] == f.getMetaValue("PeptideRef").decode("utf-8")
+                    database[0] == peptideRef
                 ][1]
                 extracted_data_dict[cnt] = {
                     "sample_group_name": name,
-                    "Metabolite": f.getMetaValue("PeptideRef").decode("utf-8"),
+                    "Metabolite": peptideRef,
                     "Formula": list(formula)[0],
                     "Intensity": f.getMetaValue("peak_apex_int"),
                 }
