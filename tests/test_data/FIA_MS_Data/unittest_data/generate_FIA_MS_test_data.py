@@ -20,21 +20,31 @@ filehandler = open("test_data.obj", "wb")
 
 # load data and assign variables needed for the functions
 feature_dir = current_dir + "/../features_AdditionalAdducts"
-sequence_triplicates = pd.read_csv(current_dir + "/../sequence_EColi.csv", sep=";")
+sequence_triplicates = pd.read_csv(
+    current_dir +
+    "/../sequence_EColi.csv", sep=";"
+    )
 print(sequence_triplicates.columns.values)
 sample_names_triplicates = sequence_triplicates["sample_group_name"].unique()
 database_triplicates = pd.read_csv(
     current_dir + "/../CHEMISTRY/iJO1366_struct.tsv", sep="\t", header=None
 )
-sequence_single = pd.read_csv(current_dir + "/../sequence_HumanSerum.csv", sep=";")
+sequence_single = pd.read_csv(
+    current_dir +
+    "/../sequence_HumanSerum.csv", sep=";"
+    )
 sample_names_single = sequence_single["sample_group_name"].unique()
 database_single = pd.read_csv(
     current_dir + "/../CHEMISTRY/HMDB_struct.tsv", sep="\t", header=None
 )
-sequence_standard = pd.read_csv(current_dir + "/../sequence_Standards.csv", sep=";")
+sequence_standard = pd.read_csv(
+    current_dir +
+    "/../sequence_Standards.csv", sep=";"
+    )
 sample_names_standard = sequence_standard["sample_group_name"].unique()
 database_standard = pd.read_csv(
-    current_dir + "/../CHEMISTRY/standard_mix_struct.tsv", sep="\t", header=None
+    current_dir +
+    "/../CHEMISTRY/standard_mix_struct.tsv", sep="\t", header=None
 )
 
 

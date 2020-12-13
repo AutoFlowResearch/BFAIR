@@ -38,15 +38,20 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_triplicates(self):
         intensities_triplicates = self.intensities_triplicates
-        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = (
+            current_dir +
+            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        )
         sequence_triplicates = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv",
+            sep=";"
         )
         sample_names_triplicates = sequence_triplicates[
             "sample_group_name"
         ].unique()
         database_triplicates = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
+            current_dir +
+            "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
             sep="\t",
             header=None,
         )
@@ -84,9 +89,13 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
-        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = (
+            current_dir +
+            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+            )
         sequence_single = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv",
+            sep=";"
         )
         sample_names_single = sequence_single["sample_group_name"].unique()
         database_single = pd.read_csv(
@@ -122,9 +131,13 @@ class test_methods(unittest.TestCase):
 
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
-        feature_dir = current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        feature_dir = (
+            current_dir +
+            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+            )
         sequence_standard = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv"
+            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv",
+            sep=";"
         )
         sample_names_standard = sequence_standard["sample_group_name"].unique()
         database_standard = pd.read_csv(
