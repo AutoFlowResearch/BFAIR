@@ -49,7 +49,7 @@ def limit_to_one_experiment(
     data_input, experiment_name_column, experiment_name
 ):
     """
-    Limits the data to values that were aquired in one experiment
+    Limits the data to values that were acquired in one experiment
 
     Parameters:
         data_input: Input data file that needs to be processed
@@ -187,7 +187,7 @@ def reaction_mapping(
                     duplicates_not_done = False
 
                 # here we check if it is a tuple, i.e. there is more than one
-                # metabolite, or a a list, i.e. only one metabolite
+                # metabolite, or a list, i.e. only one metabolite
                 rxn_equation += (
                     str(atomMapping_molecules_stoichiometry[molecule_index])
                     + "*"
@@ -275,7 +275,7 @@ def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I):
     """
     mat_script = "r = reaction({... % define reactions\n"
 
-    # this is the teporary biomass function
+    # this is the temporary biomass function
     # biomass_INCA_iJS2012
     a = "0.176*phe_DASH_L_c + 0.443*mlthf_c + 0.34*oaa_c + 0.326*lys_DASH_L_c + 33.247*atp_c + 0.205*ser_DASH_L_c + 0.129*g3p_c + 0.131*tyr_DASH_L_c + 0.051*pep_c + 0.146*met_DASH_L_c + 0.205*g6p_c + 0.087*akg_c + 0.25*glu_DASH_L_c + 0.25*gln_DASH_L_c + 0.754*r5p_c + 0.071*f6p_c + 0.083*pyr_c + 0.582*gly_c + 0.241*thr_DASH_L_c + 0.229*asp_DASH_L_c + 5.363*nadph_c + 0.087*cys_DASH_L_c + 0.619*3pg_c + 0.402*val_DASH_L_c + 0.488*ala_DASH_L_c + 0.276*ile_DASH_L_c + 0.229*asn_DASH_L_c + 0.09*his_DASH_L_c + 0.428*leu_DASH_L_c + 2.51*accoa_c + 0.281*arg_DASH_L_c + 0.21*pro_DASH_L_c + 0.054*trp_DASH_L_c -> 1.455*nadh_c + 39.68*Biomass_c" # noqa E501
 
