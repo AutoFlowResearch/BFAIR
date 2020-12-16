@@ -20,6 +20,7 @@ class test_methods(unittest.TestCase):
         (
             modelReaction_data_I,
             atomMappingReactions_data_I,
+            biomass_function,
             atomMappingMetabolite_data_I,
             measuredFluxes_data_I,
             experimentalMS_data_I,
@@ -31,6 +32,7 @@ class test_methods(unittest.TestCase):
 
         self.modelReaction_data_I = modelReaction_data_I
         self.atomMappingReactions_data_I = atomMappingReactions_data_I
+        self.biomass_function = biomass_function
         self.atomMappingMetabolite_data_I = atomMappingMetabolite_data_I
         self.measuredFluxes_data_I = measuredFluxes_data_I
         self.experimentalMS_data_I = experimentalMS_data_I
@@ -42,6 +44,7 @@ class test_methods(unittest.TestCase):
         script_ = script_generator(
             self.modelReaction_data_I,
             self.atomMappingReactions_data_I,
+            self.biomass_function,
             self.atomMappingMetabolite_data_I,
             self.measuredFluxes_data_I,
             self.experimentalMS_data_I,
