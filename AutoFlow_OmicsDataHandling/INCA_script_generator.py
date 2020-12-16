@@ -581,8 +581,7 @@ def symmetrical_metabolites(atomMappingMetabolite_data_I):
 
 
 def unbalanced_reactions(atomMappingMetabolite_data_I):
-    # NOTE: hard-coded for now until a better workaround can be done
-
+# NOTE: hard-coded for now until a better workaround can be done
     """
     Adds in the metabolite state (balanced or unbalanced)
 
@@ -610,14 +609,13 @@ def unbalanced_reactions(atomMappingMetabolite_data_I):
     return mat_script
 
 
+# Stedv stuff should be checked once more before merging to main
 def add_reaction_parameters(
     modelReaction_data_I,
     measuredFluxes_data_I,
     model_rxn_ids,
     fluxes_present=True,
 ):
-    # Stedv stuff should be checked once more
-
     """
     Flux parameters are added. They correspond to the previously
     described reactions
@@ -922,9 +920,8 @@ def add_experimental_parameters(
     return mat_script, fragments_used
 
 
+# check the stedv stuff before merging to main
 def mapping(experimentalMS_data_I, fragments_used):
-    # check stedv stuff
-
     """
     Adds MS data to measured fragments
 
