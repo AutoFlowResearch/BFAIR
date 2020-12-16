@@ -580,14 +580,19 @@ def symmetrical_metabolites(atomMappingMetabolite_data_I):
     return mat_script
 
 
-def unbalanced_reactions(atomMappingMetabolite_data_I):
 # NOTE: hard-coded for now until a better workaround can be done
+def unbalanced_reactions(atomMappingMetabolite_data_I,
+                         unbalanced_metabolites=[
+                             "co2_e", "h2o_e", "h_e", "na1_e"
+                             ]):
     """
     Adds in the metabolite state (balanced or unbalanced)
 
     Parameters:
         atomMappingMetabolite_data_I: pre-processed
             atomMappingMetabolite_data_I input data
+        unbalanced_metabolites: list of unbalanced
+            metabolites - hardcoded
 
     Returns:
         mat_script: addition to MATLAB script under construction
@@ -599,7 +604,7 @@ def unbalanced_reactions(atomMappingMetabolite_data_I):
         x["met_id"] for cnt, x in atomMappingMetabolite_data_I.iterrows()
     ]
     # unbalanced reactions:
-    for met in ["co2_e", "h2o_e", "h_e", "na1_e"]:
+    for met in unbalanced_metabolites:
         if met in metabolites_all:
             tmp_script = (
                 tmp_script + "m.states{'" + met + ".EX" + "'}.bal = false;\n"
