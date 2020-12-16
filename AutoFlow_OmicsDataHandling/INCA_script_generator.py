@@ -1180,7 +1180,7 @@ def runner_script_generator(output_filename, n_estimates=10):
 
     """
     runner = (
-        "\nf=estimate(m,"
+        "f=estimate(m,"
         + str(n_estimates)
         + ");\n\nf=continuate(f,m);\n\nfilename = '"
         + output_filename
