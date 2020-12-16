@@ -35,8 +35,7 @@ def get_flux(tmodel: ThermoModel):
     return pd.DataFrame(
         [
             {
-                "flux": tmodel.variables[rxn.id].primal
-                - tmodel.variables[rxn.reverse_id].primal,
+                "flux": tmodel.variables[rxn.id].primal - tmodel.variables[rxn.reverse_id].primal,
                 "subsystem": rxn.subsystem,
             }
             for rxn in tmodel.reactions
@@ -80,15 +79,11 @@ def get_log_concentration(tmodel: ThermoModel):
     Returns
     -------
     pandas.DataFrame
-        A 2-column table containing log concentrations and corresponding
-        compartment.
+        A 2-column table containing log concentrations and corresponding compartment.
     """
     _check_if_solved(tmodel)
     index = pd.Index(tmodel.log_concentration.list_attr("id"), name="metabolite")
-    compartment = [
-        tmodel.compartments[tmodel.metabolites.get_by_id(met_id).compartment]["name"]
-        for met_id in index
-    ]
+    compartment = [tmodel.compartments[tmodel.metabolites.get_by_id(met_id).compartment]["name"] for met_id in index]
     return pd.DataFrame(
         {
             "log_concentration": tmodel.get_primal(LogConcentration).values,
@@ -105,24 +100,23 @@ def get_dgo_bound_change(tmodel: ThermoModel, relax_table):
     Parameters
     ----------
     tmodel : pytfa.ThermoModel
-        A relaxed cobra model with thermodynamics information
+        A relaxed cobra model with thermodynamics information.
     relax_table : pandas.DataFrame
-        The output table of `pytfa.relaxation.relax_dgo`
+        The output table of `pytfa.relaxation.relax_dgo`.
 
     Returns
     -------
     pandas.DataFrame
-        A 2-column table containing relaxation magnitudes and corresponding
-        subsystem
+        A 2-column table containing relaxation magnitudes and corresponding subsystem.
     """
     bound_change = relax_table["ub_change"] - relax_table["lb_change"]
     relax_table.index.name = "reaction"
     return pd.DataFrame(
         {
             "bound_change": bound_change.values,
-            "subsystem": tmodel.reactions.query(
-                lambda rxn_id: rxn_id in relax_table.index, "id"
-            ).list_attr("subsystem"),
+            "subsystem": tmodel.reactions.query(lambda rxn_id: rxn_id in relax_table.index, "id").list_attr(
+                "subsystem"
+            ),
         },
         index=relax_table.index,
     )

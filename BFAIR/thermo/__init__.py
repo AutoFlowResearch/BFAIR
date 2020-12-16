@@ -1,7 +1,7 @@
 """Thermo.
 
-The thermo module is a collection of functions to run and analyze omics data
-with thermodynamically-consistent constraint-based models.
+The thermo module is a collection of functions to run and analyze omics data with thermodynamically-consistent
+constraint-based models.
 """
 
 from BFAIR.thermo.constants import CENTRAL_CARBON_METABOLISM

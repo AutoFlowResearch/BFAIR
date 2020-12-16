@@ -37,6 +37,11 @@ def relax_dgo(tmodel: ThermoModel, reactions_to_ignore=[]):
         The model with the relaxations applied to it.
     relax_table : pandas.DataFrame
         A 2-column table containing bound violation magnitudes.
+
+    Raises
+    ------
+    Infeasible
+        If the feasibility relaxation fails.
     """
     relaxed_model, _, relax_table = relax_dgo_(tmodel, reactions_to_ignore)
     if relax_table is None:
@@ -65,6 +70,13 @@ def relax_lc(tmodel: ThermoModel, metabolites_to_ignore=[], destructive=True):
     -------
     relax_table : pandas.DataFrame
         A 2-column table containing bound violation magnitudes.
+
+    Raises
+    ------
+    ModuleNotFoundError
+        If Gurobi is not the solver of the input model.
+    Infeasible
+        If the feasibility relaxation fails.
     """
     if tmodel.solver.interface.__name__ != "optlang.gurobi_interface":
         raise ModuleNotFoundError("Requires Gurobi.")
@@ -74,9 +86,7 @@ def relax_lc(tmodel: ThermoModel, metabolites_to_ignore=[], destructive=True):
 
     # get the Gurobi log concentration variables
     lc_vars = [
-        grb_model.getVarByName(var.name)
-        for var in tmodel.log_concentration
-        if var.id not in metabolites_to_ignore
+        grb_model.getVarByName(var.name) for var in tmodel.log_concentration if var.id not in metabolites_to_ignore
     ]
     vars_penalties = [1] * len(lc_vars)
 
@@ -123,9 +133,7 @@ def relax_lc(tmodel: ThermoModel, metabolites_to_ignore=[], destructive=True):
                 {
                     "metabolite": met_id,
                     "bound_change": lb_change + ub_change,
-                    "compartment": tmodel.compartments[
-                        tmodel.metabolites.get_by_id(met_id).compartment
-                    ]["name"],
+                    "compartment": tmodel.compartments[tmodel.metabolites.get_by_id(met_id).compartment]["name"],
                 }
             )
 

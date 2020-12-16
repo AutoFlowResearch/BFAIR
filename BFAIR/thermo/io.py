@@ -1,11 +1,11 @@
 """I/O.
 
-This module hosts functions to load cobra models, create and adjust tFBA-ready
-models.
+This module hosts functions to load cobra models, create and adjust tFBA-ready models.
 """
 
 import os.path
 
+from cobra import Model
 from cobra.io import load_json_model
 from pytfa import ThermoModel
 from pytfa.io import (
@@ -24,7 +24,7 @@ def _path(filename):
     return os.path.join(os.path.dirname(static.__file__), filename)
 
 
-def load_cbm(model_name):
+def load_cbm(model_name) -> Model:
     """
     Load a JSON cobra model stored in the static folder.
 
@@ -61,9 +61,7 @@ def load_data(model_name):
     """
     thermo_data = load_thermoDB(_path("thermo_data.thermodb"))
     lexicon = read_lexicon(_path(os.path.join(model_name, "lexicon.csv")))
-    compartment_data = read_compartment_data(
-        _path(os.path.join(model_name, "compartment_data.json"))
-    )
+    compartment_data = read_compartment_data(_path(os.path.join(model_name, "compartment_data.json")))
     return thermo_data, lexicon, compartment_data
 
 
@@ -74,21 +72,21 @@ def create_model(model_name, thermo_data, lexicon, compartment_data) -> ThermoMo
     Parameters
     ----------
     model_name : str
-        The name of a model
+        The name of a model.
     thermo_data : dict
-        A thermodynamic database
+        A thermodynamic database.
     lexicon : pandas.DataFrame
-        A dataframe linking metabolite IDs to SEED compound IDs
+        A dataframe linking metabolite IDs to SEED compound IDs.
     compartment_data : dict
-        A dictionary containing information about each compartment of the model
+        A dictionary containing information about each compartment of the model.
 
     Returns
     -------
-    pytfa.ThermoModel : dict
-        A thermodynamic database
+    pytfa.ThermoModel
+        A thermodynamic database.
     """
-    model = load_cbm(model_name)
-    tmodel = ThermoModel(thermo_data, model)
+    cmodel = load_cbm(model_name)
+    tmodel = ThermoModel(thermo_data, cmodel)
     tmodel.name = model_name
 
     annotate_from_lexicon(tmodel, lexicon)
@@ -114,12 +112,11 @@ def adjust_model(tmodel: ThermoModel, rxn_bounds, lc_bounds):
     tmodel : str
         A cobra model with thermodynamic information.
     rxn_bounds : pandas.DataFrame
-        A 3-column table containing reaction IDs and flux bounds. The table
-        must have the following columns: ``id``, ``lb``, and ``ub``.
+        A 3-column table containing reaction IDs and flux bounds. The table must have the following columns: ``id``,
+        ``lb``, and ``ub``.
     lc_bounds : pandas.DataFrame
-        A 3-column table containing metabolite IDs and log concentration
-        bounds. The table must have the following columns: ``id``, ``lb``,
-        and ``ub``.
+        A 3-column table containing metabolite IDs and log concentration bounds. The table must have the following
+        columns: ``id``, ``lb``, and ``ub``.
     """
     # constrain reactions (e.g., growth rate, uptake/secretion rates)
     for rxn_id, lb, ub in zip(rxn_bounds["id"], rxn_bounds["lb"], rxn_bounds["ub"]):
