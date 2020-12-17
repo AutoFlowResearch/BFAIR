@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 import time
 import ast
+import sys
 
 try:
     import matlab.engine
@@ -274,6 +275,11 @@ def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I,
         model_rxn_ids_exp: List of reaction IDs used for the model
 
     """
+    if len(atomMappingReactions_data_I['rxn_id']) != \
+            len(atomMappingReactions_data_I['rxn_id'].unique()):
+        sys.exit(
+            'There is a duplicate reaction in atomMappingReactions_data_I'
+            )
     mat_script = "r = reaction({... % define reactions\n"
 
     # this is the temporary biomass function
