@@ -260,8 +260,9 @@ def reaction_mapping(
     return rxn_equation
 
 
-def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I,
-                            biomass_function):
+def add_reactions_to_script(
+    modelReaction_data_I, atomMappingReactions_data_I, biomass_function
+):
     """
     Translates the model and adds mapping using reaction_mapping()
 
@@ -275,16 +276,17 @@ def add_reactions_to_script(modelReaction_data_I, atomMappingReactions_data_I,
         model_rxn_ids_exp: List of reaction IDs used for the model
 
     """
-    if len(atomMappingReactions_data_I['rxn_id']) != \
-            len(atomMappingReactions_data_I['rxn_id'].unique()):
+    if len(atomMappingReactions_data_I["rxn_id"]) != len(
+        atomMappingReactions_data_I["rxn_id"].unique()
+    ):
         sys.exit(
-            'There is a duplicate reaction in atomMappingReactions_data_I'
-            )
+            "There is a duplicate reaction in atomMappingReactions_data_I"
+        )
     mat_script = "r = reaction({... % define reactions\n"
 
     # this is the temporary biomass function
     # biomass_INCA_iJS2012
-    biomass_function = biomass_function # noqa E501
+    biomass_function = biomass_function  # noqa E501
 
     model_rxn_ids = []
     model_rxn_ids_exp = []
@@ -587,10 +589,10 @@ def symmetrical_metabolites(atomMappingMetabolite_data_I):
 
 
 # NOTE: hard-coded for now until a better workaround can be done
-def unbalanced_reactions(atomMappingMetabolite_data_I,
-                         unbalanced_metabolites=[
-                             "co2_e", "h2o_e", "h_e", "na1_e"
-                             ]):
+def unbalanced_reactions(
+    atomMappingMetabolite_data_I,
+    unbalanced_metabolites=["co2_e", "h2o_e", "h_e", "na1_e"],
+):
     """
     Adds in the metabolite state (balanced or unbalanced)
 
@@ -723,10 +725,10 @@ def verify_and_estimate():
         mat_script: addition to MATLAB script under construction
 
     """
-    mat_script = "\nm.rates.flx.val = mod2stoich(m); % make sure the fluxes are feasible\n" # noqa E501
+    mat_script = "\nm.rates.flx.val = mod2stoich(m); % make sure the fluxes are feasible\n"  # noqa E501
     mat_script = (
         mat_script
-        + "m.options.fit_starts = 10; % 10 restarts during the estimation procedure\n" # noqa E501
+        + "m.options.fit_starts = 10; % 10 restarts during the estimation procedure\n"  # noqa E501
     )
 
     return mat_script
@@ -774,7 +776,7 @@ def add_experimental_parameters(
     fragments.sort()
 
     for experiment_cnt, experiment in enumerate(experiments):
-        tmp_script = "\n% define which fragments of molecules were measured in which experiment\nd = msdata({...\n" # noqa E501
+        tmp_script = "\n% define which fragments of molecules were measured in which experiment\nd = msdata({...\n"  # noqa E501
         for frg_cnt, fragment in enumerate(fragments):
             for ms_cnt, ms_data in experimentalMS_data_I.iterrows():
                 if (
@@ -917,7 +919,7 @@ def add_experimental_parameters(
         tmp_script = tmp_script + "];\n"
         tmp_script = (
             tmp_script
-            + "\n% initialize experiment with t and add f and d\nx = experiment(t);\n" # noqa E501
+            + "\n% initialize experiment with t and add f and d\nx = experiment(t);\n"  # noqa E501
         )
         tmp_script = tmp_script + "x.data_flx = f;\n"
         tmp_script = tmp_script + "x.data_ms = d;\n"
@@ -1006,7 +1008,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                         + str(experiment)
                                     )
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.id(%d,%d) = {'%s'};\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.id(%d,%d) = {'%s'};\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1016,7 +1018,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                         )
                                     )
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.time(%d,%d) = %s;\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.time(%d,%d) = %s;\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1033,7 +1035,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                 if ave <= 1e-6:
                                     ave = "NaN"
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %s;\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %s;\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1044,7 +1046,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                     )
                                 else:
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %f;\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.val(%d,%d) = %f;\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1059,7 +1061,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                     else:
                                         stdev = 0.001
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1070,7 +1072,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                                     )
                                 else:
                                     tmp_script = tmp_script + (
-                                        "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %f;\n" # noqa E501
+                                        "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %f;\n"  # noqa E501
                                         % (
                                             experiment_cnt + 1,
                                             i + 1,
@@ -1083,7 +1085,7 @@ def mapping(experimentalMS_data_I, fragments_used):
                             ave == "NaN"
                             stdev = "NaN"
                             tmp_script = tmp_script + (
-                                "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n" # noqa E501
+                                "m.expts(%d).data_ms(%d).mdvs.std(%d,%d) = %s;\n"  # noqa E501
                                 % (
                                     experiment_cnt + 1,
                                     i + 1,
@@ -1132,8 +1134,7 @@ def script_generator(
     script = ""
     script = initiate_MATLAB_script()
     script_temp, model_rxn_ids = add_reactions_to_script(
-        modelReaction_data_I, atomMappingReactions_data_I,
-        biomass_function
+        modelReaction_data_I, atomMappingReactions_data_I, biomass_function
     )
     script += script_temp
     script += initialize_model()
