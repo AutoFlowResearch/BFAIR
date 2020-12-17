@@ -131,13 +131,13 @@ class test_methods(unittest.TestCase):
             symmetrical_metabolites_script_, symmetrical_metabolites_script
         )
 
+    # this one does not have an output in this set up, change for future
+    # version
     def test_unbalanced_reactions(self):
         """
         Tests unbalanced_reactions() function.
         Checks if the output is the same as in a previously generated instance
         """
-        # this one does not have an output in this set up, change for future
-        # version
         unbalanced_reactions_script_ = unbalanced_reactions(
             self.atomMappingMetabolite_data_I,
         )

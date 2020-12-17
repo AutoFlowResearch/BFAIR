@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 16.12.2020
+# Last date : 17.12.2020
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -114,6 +114,7 @@ experimental_parameters, fragments_used = add_experimental_parameters(
 
 mapping_script = mapping(experimentalMS_data_I, fragments_used)
 
+# Don't know how to test these two yet
 # save_INCA_script(script, scriptname) don't know how to test that
 # save_runner_script(runner, scriptname) SAME HERE
 
