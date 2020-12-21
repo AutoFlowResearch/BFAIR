@@ -322,8 +322,8 @@ def add_reactions_to_script(
                 rxn_equation = "'"
 
                 # hardcoded for now, needs to be variable
-                if model_rxn_id == "Ec_Biomass_INCA":
-                    rxn_equation += biomass_function
+                if model_rxn_id is None:  # "Ec_Biomass_INCA":
+                    print('something')  # rxn_equation += biomass_function
                     continue
                 else:
                     # we save the location of the row corresponding to
