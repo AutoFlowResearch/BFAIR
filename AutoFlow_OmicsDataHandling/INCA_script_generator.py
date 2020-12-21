@@ -261,7 +261,7 @@ def reaction_mapping(
 
 
 def add_reactions_to_script(
-    modelReaction_data_I, atomMappingReactions_data_I, biomass_function
+    modelReaction_data_I, atomMappingReactions_data_I
 ):
     """
     Translates the model and adds mapping using reaction_mapping()
@@ -283,10 +283,6 @@ def add_reactions_to_script(
             "There is a duplicate reaction in atomMappingReactions_data_I"
         )
     mat_script = "r = reaction({... % define reactions\n"
-
-    # this is the temporary biomass function
-    # biomass_INCA_iJS2012
-    biomass_function = biomass_function  # noqa E501
 
     model_rxn_ids = []
     model_rxn_ids_exp = []
@@ -318,191 +314,186 @@ def add_reactions_to_script(
             )
 
             if modelReaction_data["rxn_id"] == model_rxn_id:
-                # special option for the biomass function
+                
                 rxn_equation = "'"
 
-                # hardcoded for now, needs to be variable
-                if model_rxn_id is None:  # "Ec_Biomass_INCA":
-                    print('something')  # rxn_equation += biomass_function
-                    continue
+                # we save the location of the row corresponding to
+                # this reaction in the other file
+                # "prepare_input" is a helper function to make the
+                # entries useable, this will have to be checked with
+                # other input
+
+                # Atom Mapping
+                index_in_atomMapping = list(
+                    atomMappingReactions_data_I["rxn_id"]
+                ).index(modelReaction_data["rxn_id"])
+                atomMapping_reactants_stoichiometry = prepare_input(
+                    atomMappingReactions_data_I.iloc[
+                        index_in_atomMapping
+                    ].loc["reactants_stoichiometry_tracked"],
+                    "Curly",
+                )
+                atomMapping_products_stoichiometry = prepare_input(
+                    atomMappingReactions_data_I.iloc[
+                        index_in_atomMapping
+                    ].loc["products_stoichiometry_tracked"],
+                    "Curly",
+                )
+
+                # this step makes sure that we exclude reactions that
+                # do not have any stoichiometry annotated
+                if (
+                    atomMapping_reactants_stoichiometry[0] == ""
+                    and atomMapping_products_stoichiometry[0] == ""
+                ):
+                    print(
+                        "There is no stoichimetriy given for:",
+                        model_rxn_id,
+                    )
+                    # Model
+                    model_reactants_ids = prepare_input(
+                        modelReaction_data_I.iloc[index_in_model].loc[
+                            "reactants_ids"
+                        ],
+                        "Curly",
+                    )
+                    model_products_ids = prepare_input(
+                        modelReaction_data_I.iloc[index_in_model].loc[
+                            "products_ids"
+                        ],
+                        "Curly",
+                    )
+                    model_reactants_stoichiometry = [
+                        float(i) * -1
+                        for i in model_reactants_stoichiometry
+                    ]
+                    model_products_stoichiometry = [
+                        float(i) for i in model_products_stoichiometry
+                    ]
+
+                    for reactant_cnt, reactant in enumerate(
+                        model_reactants_ids
+                    ):
+                        # this little bit adds +s if it's not
+                        # the first reactant
+                        if reactant_cnt > 0:
+                            rxn_equation += " + "
+                        rxn_equation += (
+                            str(
+                                model_reactants_stoichiometry[reactant_cnt]
+                            )
+                            + "*"
+                            + reactant
+                        )
+                    rxn_equation += " -> "
+                    for product_cnt, product in enumerate(
+                        model_products_ids
+                    ):
+                        # this little bit adds +s if it's not
+                        # the first product
+                        if product_cnt > 0:
+                            rxn_equation += " + "
+                        rxn_equation += (
+                            str(model_products_stoichiometry[product_cnt])
+                            + "*"
+                            + product
+                        )
                 else:
-                    # we save the location of the row corresponding to
-                    # this reaction in the other file
-                    # "prepare_input" is a helper function to make the
-                    # entries useable, this will have to be checked with
-                    # other input
+                    # process the remaining info about the metabolites.
+                    # Done here because it can throw an error if
+                    # anything is empty
 
                     # Atom Mapping
-                    index_in_atomMapping = list(
-                        atomMappingReactions_data_I["rxn_id"]
-                    ).index(modelReaction_data["rxn_id"])
-                    atomMapping_reactants_stoichiometry = prepare_input(
+                    atomMapping_reactants_ids = prepare_input(
                         atomMappingReactions_data_I.iloc[
                             index_in_atomMapping
-                        ].loc["reactants_stoichiometry_tracked"],
+                        ].loc["reactants_ids_tracked"],
                         "Curly",
                     )
-                    atomMapping_products_stoichiometry = prepare_input(
+                    atomMapping_products_ids = prepare_input(
                         atomMappingReactions_data_I.iloc[
                             index_in_atomMapping
-                        ].loc["products_stoichiometry_tracked"],
+                        ].loc["products_ids_tracked"],
                         "Curly",
                     )
+                    atomMapping_reactants_elements = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping
+                        ].loc["reactants_elements_tracked"],
+                        "Double_square",
+                    )
+                    atomMapping_products_elements = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping
+                        ].loc["products_elements_tracked"],
+                        "Double_square",
+                    )
+                    atomMapping_reactants_mapping = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping
+                        ].loc["reactants_mapping"],
+                        "Curly",
+                    )
+                    atomMapping_products_mapping = prepare_input(
+                        atomMappingReactions_data_I.iloc[
+                            index_in_atomMapping
+                        ].loc["products_mapping"],
+                        "Curly",
+                    )
+                    atomMapping_reactants_stoichiometry = [
+                        float(i) * -1
+                        for i in atomMapping_reactants_stoichiometry
+                    ]
+                    atomMapping_products_stoichiometry = [
+                        float(i)
+                        for i in atomMapping_products_stoichiometry
+                    ]
 
-                    # this step makes sure that we exclude reactions that
-                    # do not have any stoichiometry annotated
-                    if (
-                        atomMapping_reactants_stoichiometry[0] == ""
-                        and atomMapping_products_stoichiometry[0] == ""
-                    ):
-                        print(
-                            "There is no stoichimetriy given for:",
-                            model_rxn_id,
-                        )
-                        # Model
-                        model_reactants_ids = prepare_input(
-                            modelReaction_data_I.iloc[index_in_model].loc[
-                                "reactants_ids"
-                            ],
-                            "Curly",
-                        )
-                        model_products_ids = prepare_input(
-                            modelReaction_data_I.iloc[index_in_model].loc[
-                                "products_ids"
-                            ],
-                            "Curly",
-                        )
-                        model_reactants_stoichiometry = [
-                            float(i) * -1
-                            for i in model_reactants_stoichiometry
-                        ]
-                        model_products_stoichiometry = [
-                            float(i) for i in model_products_stoichiometry
-                        ]
+                    # Model
+                    model_reactants_ids = prepare_input(
+                        modelReaction_data_I.iloc[index_in_model].loc[
+                            "reactants_ids"
+                        ],
+                        "Curly",
+                    )
+                    model_products_ids = prepare_input(
+                        modelReaction_data_I.iloc[index_in_model].loc[
+                            "products_ids"
+                        ],
+                        "Curly",
+                    )
+                    model_reactants_stoichiometry = [
+                        float(i) * -1
+                        for i in model_reactants_stoichiometry
+                    ]
+                    model_products_stoichiometry = [
+                        float(i) for i in model_products_stoichiometry
+                    ]
 
-                        for reactant_cnt, reactant in enumerate(
-                            model_reactants_ids
-                        ):
-                            # this little bit adds +s if it's not
-                            # the first reactant
-                            if reactant_cnt > 0:
-                                rxn_equation += " + "
-                            rxn_equation += (
-                                str(
-                                    model_reactants_stoichiometry[reactant_cnt]
-                                )
-                                + "*"
-                                + reactant
-                            )
-                        rxn_equation += " -> "
-                        for product_cnt, product in enumerate(
-                            model_products_ids
-                        ):
-                            # this little bit adds +s if it's not
-                            # the first product
-                            if product_cnt > 0:
-                                rxn_equation += " + "
-                            rxn_equation += (
-                                str(model_products_stoichiometry[product_cnt])
-                                + "*"
-                                + product
-                            )
-                    else:
-                        # process the remaining info about the metabolites.
-                        # Done here because it can throw an error if
-                        # anything is empty
-
-                        # Atom Mapping
-                        atomMapping_reactants_ids = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["reactants_ids_tracked"],
-                            "Curly",
-                        )
-                        atomMapping_products_ids = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["products_ids_tracked"],
-                            "Curly",
-                        )
-                        atomMapping_reactants_elements = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["reactants_elements_tracked"],
-                            "Double_square",
-                        )
-                        atomMapping_products_elements = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["products_elements_tracked"],
-                            "Double_square",
-                        )
-                        atomMapping_reactants_mapping = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["reactants_mapping"],
-                            "Curly",
-                        )
-                        atomMapping_products_mapping = prepare_input(
-                            atomMappingReactions_data_I.iloc[
-                                index_in_atomMapping
-                            ].loc["products_mapping"],
-                            "Curly",
-                        )
-                        atomMapping_reactants_stoichiometry = [
-                            float(i) * -1
-                            for i in atomMapping_reactants_stoichiometry
-                        ]
-                        atomMapping_products_stoichiometry = [
-                            float(i)
-                            for i in atomMapping_products_stoichiometry
-                        ]
-
-                        # Model
-                        model_reactants_ids = prepare_input(
-                            modelReaction_data_I.iloc[index_in_model].loc[
-                                "reactants_ids"
-                            ],
-                            "Curly",
-                        )
-                        model_products_ids = prepare_input(
-                            modelReaction_data_I.iloc[index_in_model].loc[
-                                "products_ids"
-                            ],
-                            "Curly",
-                        )
-                        model_reactants_stoichiometry = [
-                            float(i) * -1
-                            for i in model_reactants_stoichiometry
-                        ]
-                        model_products_stoichiometry = [
-                            float(i) for i in model_products_stoichiometry
-                        ]
-
-                        rxn_equation = "'"
-                        # We go through the IDs to treat each
-                        # metabolite separately
-                        reactant_equation = reaction_mapping(
-                            atomMapping_reactants_ids,
-                            model_reactants_ids,
-                            atomMapping_reactants_stoichiometry,
-                            atomMapping_reactants_elements,
-                            atomMapping_reactants_mapping,
-                            model_reactants_stoichiometry,
-                            reaction_type="reactant",
-                        )
-                        product_equation = reaction_mapping(
-                            atomMapping_products_ids,
-                            model_products_ids,
-                            atomMapping_products_stoichiometry,
-                            atomMapping_products_elements,
-                            atomMapping_products_mapping,
-                            model_products_stoichiometry,
-                            reaction_type="product",
-                        )
-                        rxn_equation = (
-                            rxn_equation + reactant_equation + product_equation
-                        )
+                    rxn_equation = "'"
+                    # We go through the IDs to treat each
+                    # metabolite separately
+                    reactant_equation = reaction_mapping(
+                        atomMapping_reactants_ids,
+                        model_reactants_ids,
+                        atomMapping_reactants_stoichiometry,
+                        atomMapping_reactants_elements,
+                        atomMapping_reactants_mapping,
+                        model_reactants_stoichiometry,
+                        reaction_type="reactant",
+                    )
+                    product_equation = reaction_mapping(
+                        atomMapping_products_ids,
+                        model_products_ids,
+                        atomMapping_products_stoichiometry,
+                        atomMapping_products_elements,
+                        atomMapping_products_mapping,
+                        model_products_stoichiometry,
+                        reaction_type="product",
+                    )
+                    rxn_equation = (
+                        rxn_equation + reactant_equation + product_equation
+                    )
         # the ids of the equations are being added to the list that
         # will be exported
         model_rxn_ids_exp.append(model_rxn_id)
@@ -1102,7 +1093,6 @@ def mapping(experimentalMS_data_I, fragments_used):
 def script_generator(
     modelReaction_data_I,
     atomMappingReactions_data_I,
-    biomass_function,
     atomMappingMetabolite_data_I,
     measuredFluxes_data_I,
     experimentalMS_data_I,
@@ -1116,7 +1106,6 @@ def script_generator(
             modelReaction_data_I input data
         atomMappingReactions_data_I: pre-processed
             atomMappingReactions_data_I input data
-        biomass_function: custom defined
         atomMappingMetabolite_data_I: pre-processed
             atomMappingMetabolite_data_I input data
         measuredFluxes_data_I: pre-processed
@@ -1134,7 +1123,7 @@ def script_generator(
     script = ""
     script = initiate_MATLAB_script()
     script_temp, model_rxn_ids = add_reactions_to_script(
-        modelReaction_data_I, atomMappingReactions_data_I, biomass_function
+        modelReaction_data_I, atomMappingReactions_data_I
     )
     script += script_temp
     script += initialize_model()
