@@ -314,7 +314,7 @@ def add_reactions_to_script(
             )
 
             if modelReaction_data["rxn_id"] == model_rxn_id:
-                
+
                 rxn_equation = "'"
 
                 # we save the location of the row corresponding to
