@@ -158,4 +158,4 @@ def get_mass_action_ratio(tmodel):
             ]
         )
         data.append((ratio, rxn.subsystem))
-    return pd.DataFrame(data, index=index, columns=["ratio", "subsystem"])
+    return pd.DataFrame(data, index=index, columns=["mass_action_ratio", "subsystem"])
