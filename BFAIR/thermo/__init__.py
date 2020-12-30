@@ -11,6 +11,7 @@ from BFAIR.thermo.utils import (
     get_flux,
     get_log_concentration,
     get_delta_g,
+    get_mass_action_ratio,
 )
 
 
@@ -27,4 +28,5 @@ __all__ = [
     "get_flux",
     "get_log_concentration",
     "get_delta_g",
+    "get_mass_action_ratio",
 ]
