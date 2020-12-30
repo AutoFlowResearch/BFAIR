@@ -4,8 +4,10 @@ This module hosts functions to load cobra models, create and adjust tFBA-ready m
 """
 
 import os.path
+from glob import glob
 
 from cobra import Model
+from cobra.core.singleton import Singleton
 from cobra.io import load_json_model
 from pytfa import ThermoModel
 from pytfa.io import (
@@ -17,6 +19,19 @@ from pytfa.io import (
 )
 
 from BFAIR.thermo import static
+
+
+class _ModelFactory(metaclass=Singleton):
+    def __init__(self):
+        self._list = [os.path.basename(path).split(".")[0] for path in glob(_path("*.json"))]
+
+    def __dir__(self):
+        return self._list
+
+    def __getattr__(self, item):
+        if item in self._list:
+            return create_model(item)
+        return super().__getattribute__(item)
 
 
 def _path(filename):
@@ -65,7 +80,7 @@ def load_data(model_name):
     return thermo_data, lexicon, compartment_data
 
 
-def create_model(model_name, thermo_data, lexicon, compartment_data) -> ThermoModel:
+def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=None) -> ThermoModel:
     """
     Creates a tFBA-ready model.
 
@@ -73,18 +88,30 @@ def create_model(model_name, thermo_data, lexicon, compartment_data) -> ThermoMo
     ----------
     model_name : str
         The name of a model.
-    thermo_data : dict
-        A thermodynamic database.
-    lexicon : pandas.DataFrame
-        A dataframe linking metabolite IDs to SEED compound IDs.
-    compartment_data : dict
-        A dictionary containing information about each compartment of the model.
+    thermo_data : dict, optional
+        A thermodynamic database. If specified, ``lexicon`` and ``compartment data`` are required.
+    lexicon : pandas.DataFrame, optional
+        A dataframe linking metabolite IDs to SEED compound IDs. If specified, ``thermo_data`` and ``compartment_data``
+        are required.
+    compartment_data : dict, optional
+        A dictionary containing information about each compartment of the model. If specified, ``thermo_data`` and
+        ``lexicon`` are required.
 
     Returns
     -------
     pytfa.ThermoModel
         A thermodynamic database.
+
+    Raises
+    ------
+    ValueError
+        If any (but not all) of ``thermo_data``, ``lexicon``, and ``compartment_data`` is None.
     """
+    data_is_none = [data is None for data in [thermo_data, lexicon, compartment_data]]
+    if all(data_is_none):
+        thermo_data, lexicon, compartment_data = load_data(model_name)
+    elif any(data_is_none):
+        raise ValueError("Not all required data supplied.")
     cmodel = load_cbm(model_name)
     tmodel = ThermoModel(thermo_data, cmodel)
     tmodel.name = model_name
@@ -129,3 +156,19 @@ def adjust_model(tmodel: ThermoModel, rxn_bounds, lc_bounds):
             met_id = met + "_" + compartment
             if tmodel.log_concentration.has_id(met_id):
                 (tmodel.log_concentration.get_by_id(met_id).variable.set_bounds(lb, ub))
+
+
+models = _ModelFactory()
+models.__doc__ = """A factory to create pre-curated thermodynamics-based metabolic models.
+
+Example
+-------
+>>> dir(models)
+['iJO1366', 'small_ecoli']
+
+>>> tmodel = models.small_ecoli
+>>> tmodel.slim_optimize()
+0.8109972502600706
+
+This is equivalent to ``create_model("small_ecoli")``.
+"""

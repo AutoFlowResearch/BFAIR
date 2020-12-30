@@ -49,12 +49,14 @@ class TestIO(unittest.TestCase):
         tdata = thermo.load_data("small_ecoli")
         actual = thermo.create_model("small_ecoli", *tdata)
         self.assertTrue(abs(actual.slim_optimize() - 0.8109972502600706) < 1e-5)
+        self.assertRaises(ValueError, thermo.create_model, "small_ecoli", thermo_data=tdata[0])
+        self.assertRaises(ValueError, thermo.create_model, "small_ecoli", lexicon=tdata[1])
+        self.assertRaises(ValueError, thermo.create_model, "small_ecoli", compartment_data=tdata[2])
 
     def test_adjust_model(self):
         from math import log
 
-        tdata = thermo.load_data("small_ecoli")
-        model = thermo.create_model("small_ecoli", *tdata)
+        model = thermo.create_model("small_ecoli")
 
         rxn_bounds = pd.DataFrame([{"id": "PGI", "lb": 0, "ub": 0}])
         lc_bounds = pd.DataFrame([{"id": "atp", "lb": log(5e-3), "ub": log(3e-2)}])
@@ -65,6 +67,11 @@ class TestIO(unittest.TestCase):
         self.assertEqual(model.log_concentration.atp_c.variable.lb, log(5e-3))
         self.assertEqual(model.log_concentration.atp_c.variable.ub, log(3e-2))
 
+    def test_factory(self):
+        actual = thermo.models.small_ecoli
+        expected = thermo.create_model("small_ecoli")
+        self.assertTrue(abs(actual.slim_optimize() - expected.slim_optimize()) < 1e-5)
+
 
 class TestRelaxation(TestThermo):
     def setUp(self):
@@ -73,16 +80,12 @@ class TestRelaxation(TestThermo):
         thermo.adjust_model(self.test_model, self.rxn_bounds, self.lc_bounds)
 
     def test_relax_dgo(self):
-        # from cobra.exceptions import Infeasible
-
-        # try:
-        #     actual = thermo.relax_dgo(self.test_model, [])
-        #     self.assertEqual(len(actual), 2)
-        #     _check_table(self, actual[1], ("bound_change", "subsystem"))
-        # except Exception as exception:
-        #     self.assertIsInstance(exception, Infeasible)
-        #     self.assertEqual(str(exception), "Failed to create the feasibility relaxation!")
-        pass
+        try:
+            actual = thermo.relax_lc(self.test_model, [], True)
+            _check_table(self, actual, ("bound_change", "subsystem"))
+        except Exception as exception:
+            self.assertIsInstance(exception, ModuleNotFoundError)
+            self.assertEqual(str(exception), "Requires Gurobi.")
 
     def test_relax_lc(self):
         try:
@@ -103,6 +106,7 @@ class TestUtils(TestThermo):
         cls.flux_table = thermo.get_flux(cls.test_model)
         cls.dg_table = thermo.get_delta_g(cls.test_model)
         cls.lc_table = thermo.get_log_concentration(cls.test_model)
+        cls.ratio_table = thermo.get_mass_action_ratio(cls.test_model)
 
     def test_get_flux(self):
         _check_table(self, self.flux_table, ("flux", "subsystem"))
@@ -113,10 +117,13 @@ class TestUtils(TestThermo):
     def test_get_log_concentration(self):
         _check_table(self, self.lc_table, ("log_concentration", "compartment"))
 
-    def test_get_dgo_bound_change(self):
-        colnames = ["lb_in", "ub_in", "lb_change", "ub_change", "lb_out", "ub_out"]
-        dummy_table = pd.DataFrame.from_dict(
-            {"ACONTa": dict(zip(colnames, range(0, 6)))}, orient="index"
-        )
-        actual = thermo.get_dgo_bound_change(self.test_model, dummy_table)
-        _check_table(self, actual, ("bound_change", "subsystem"))
+    def test_get_mass_action_ratio(self):
+        _check_table(self, self.ratio_table, ("mass_action_ratio", "subsystem"))
+
+    # def test_get_dgo_bound_change(self):
+    #     colnames = ["lb_in", "ub_in", "lb_change", "ub_change", "lb_out", "ub_out"]
+    #     dummy_table = pd.DataFrame.from_dict(
+    #         {"ACONTa": dict(zip(colnames, range(0, 6)))}, orient="index"
+    #     )
+    #     actual = thermo.get_dgo_bound_change(self.test_model, dummy_table)
+    #     _check_table(self, actual, ("bound_change", "subsystem"))

@@ -4,6 +4,7 @@ Functions in this module ease the extraction of calculations from solved
 models.
 """
 
+import numpy as np
 import pandas as pd
 
 from pytfa import ThermoModel
@@ -31,6 +32,7 @@ def get_flux(tmodel: ThermoModel):
         A 2-column table containing fluxes and corresponding subsystem.
     """
     _check_if_solved(tmodel)
+
     index = pd.Index(tmodel.reactions.list_attr("id"), name="reaction")
     return pd.DataFrame(
         [
@@ -59,6 +61,7 @@ def get_delta_g(tmodel: ThermoModel):
         A 2-column table containing free energies and corresponding subsystem.
     """
     _check_if_solved(tmodel)
+
     index = pd.Index(tmodel.delta_g.list_attr("id"), name="reaction")
     subsystem = [tmodel.reactions.get_by_id(rxn_id).subsystem for rxn_id in index]
     return pd.DataFrame(
@@ -82,6 +85,7 @@ def get_log_concentration(tmodel: ThermoModel):
         A 2-column table containing log concentrations and corresponding compartment.
     """
     _check_if_solved(tmodel)
+
     index = pd.Index(tmodel.log_concentration.list_attr("id"), name="metabolite")
     compartment = [tmodel.compartments[tmodel.metabolites.get_by_id(met_id).compartment]["name"] for met_id in index]
     return pd.DataFrame(
@@ -120,3 +124,38 @@ def get_dgo_bound_change(tmodel: ThermoModel, relax_table):
         },
         index=relax_table.index,
     )
+
+
+def get_mass_action_ratio(tmodel):
+    """
+    Returns calculated mass action ratios from a solved pytfa model.
+
+    Parameters
+    ----------
+    tmodel : pytfa.ThermoModel
+        A solved cobra model with thermodynamics information.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A 2-column table containing mass action ratios and corresponding subsystem.
+    """
+    _check_if_solved(tmodel)
+
+    # exclude protons and water from mass action ratio calculation
+    excl_metabolites = [f"{name}_{compartment}" for name in ["h", "h2o"] for compartment in tmodel.compartments]
+
+    index = pd.Index(tmodel.delta_g.list_attr("id"), name="reaction")
+    data = []
+    for rxn_id in index:
+        rxn = tmodel.reactions.get_by_id(rxn_id)
+        # calculate ratio as product of each metabolite's concentration to the power of its coefficient
+        ratio = np.prod(
+            [
+                np.exp(tmodel.log_concentration.get_by_id(met.id).variable.primal) ** coeff
+                for met, coeff in rxn.metabolites.items()
+                if met.id not in excl_metabolites
+            ]
+        )
+        data.append((ratio, rxn.subsystem))
+    return pd.DataFrame(data, index=index, columns=["ratio", "subsystem"])
