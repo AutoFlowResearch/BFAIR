@@ -4,6 +4,7 @@ This module hosts functions to load cobra models, create and adjust tFBA-ready m
 """
 
 import os.path
+import logging
 from glob import glob
 
 from cobra import Model
@@ -17,6 +18,7 @@ from pytfa.io import (
     annotate_from_lexicon,
     apply_compartment_data,
 )
+from pytfa.utils.logger import get_bistream_logger
 
 from BFAIR.thermo import static
 
@@ -37,6 +39,14 @@ class _ModelFactory(metaclass=Singleton):
 def _path(filename):
     # Returns the path to a file in the static folder
     return os.path.join(os.path.dirname(static.__file__), filename)
+
+
+def _silence_pytfa(logger_name):
+    # Disables the stream logs produced by the pytfa module, keeps file logs
+    logger = get_bistream_logger(logger_name)
+    for handler in logger.handlers:
+        if not isinstance(handler, logging.FileHandler):
+            handler.setLevel(logging.ERROR)
 
 
 def load_cbm(model_name) -> Model:
@@ -112,6 +122,12 @@ def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=No
         thermo_data, lexicon, compartment_data = load_data(model_name)
     elif any(data_is_none):
         raise ValueError("Not all required data supplied.")
+
+    # due to a bug on pytfa, the logger is created with "None" as name
+    _silence_pytfa(f'thermomodel_{None}')
+    # however, if the model ends up being copied the correct name will be used, so this logger should be silenced too
+    _silence_pytfa(f'thermomodel_{model_name}')
+
     cmodel = load_cbm(model_name)
     tmodel = ThermoModel(thermo_data, cmodel)
     tmodel.name = model_name
@@ -159,7 +175,7 @@ def adjust_model(tmodel: ThermoModel, rxn_bounds, lc_bounds):
 
 
 models = _ModelFactory()
-models.__doc__ = """A factory to create pre-curated thermodynamics-based metabolic models.
+models.__doc__ = """A factory class to create pre-curated thermodynamics-based metabolic models.
 
 Example
 -------
