@@ -350,7 +350,6 @@ CREATE TABLE public."INVESTIGATION" (
     "Investigation_Contacts" integer,
     "Investigation_Publications" integer,
     "Investigation_Study_Identifier" text NOT NULL,
-    id integer
 );
 
 
