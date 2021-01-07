@@ -467,7 +467,6 @@ CREATE TABLE public."MFA_model_reactions" (
 ALTER TABLE public."MFA_model_reactions" OWNER TO postgres;
 
 --
--- TOC entry 261 (class 1259 OID 18569)
 -- Name: MFA_model_reactions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -483,8 +482,6 @@ CREATE SEQUENCE public."MFA_model_reactions_id_seq"
 ALTER TABLE public."MFA_model_reactions_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3455 (class 0 OID 0)
--- Dependencies: 261
 -- Name: MFA_model_reactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -492,8 +489,38 @@ ALTER SEQUENCE public."MFA_model_reactions_id_seq" OWNED BY public."MFA_model_re
 
 
 --
+-- Name: MFA_model_reactions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MFA_model_reactions" ALTER COLUMN id SET DEFAULT nextval('public."MFA_model_reactions_id_seq"'::regclass);
+
+
+--
+-- Name: MFA_model_reactions MFA_model_reactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MFA_model_reactions"
+    ADD CONSTRAINT "MFA_model_reactions_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: MFA_model_reactions MFA_model_reactions_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MFA_model_reactions"
+    ADD CONSTRAINT "MFA_model_reactions_model_id_fkey" FOREIGN KEY (model_id) REFERENCES public.models(model_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
+
+
+--
 -- TOC entry 236 (class 1259 OID 18377)
--- Name: MzTab-M_Metadata_metabolomics; Type: TABLE; Schema: public; Owner: postgres
+-- Name: MzTab_M_Metadata_metabolomics; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public."MzTab_M_Metadata_metabolomics" (
@@ -1683,7 +1710,6 @@ CREATE TABLE public."atomMappingMetabolites" (
 ALTER TABLE public."atomMappingMetabolites" OWNER TO postgres;
 
 --
--- TOC entry 263 (class 1259 OID 18580)
 -- Name: atomMappingMetabolites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1699,12 +1725,47 @@ CREATE SEQUENCE public."atomMappingMetabolites_id_seq"
 ALTER TABLE public."atomMappingMetabolites_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3475 (class 0 OID 0)
--- Dependencies: 263
 -- Name: atomMappingMetabolites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."atomMappingMetabolites_id_seq" OWNED BY public."atomMappingMetabolites".id;
+
+
+--
+-- Name: atomMappingMetabolites id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingMetabolites" ALTER COLUMN id SET DEFAULT nextval('public."atomMappingMetabolites_id_seq"'::regclass);
+
+
+--
+-- Name: atomMappingMetabolites atomMappingMetabolites_mapping_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingMetabolites"
+    ADD CONSTRAINT "atomMappingMetabolites_mapping_id_key" UNIQUE (mapping_id);
+
+
+--
+-- Name: atomMappingMetabolites atomMappingMetabolites_met_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingMetabolites"
+    ADD CONSTRAINT "atomMappingMetabolites_met_id_key" UNIQUE (met_id);
+
+
+--
+-- Name: atomMappingMetabolites atomMappingMetabolites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingMetabolites"
+    ADD CONSTRAINT "atomMappingMetabolites_pkey" PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -1736,7 +1797,6 @@ CREATE TABLE public."atomMappingReactions" (
 ALTER TABLE public."atomMappingReactions" OWNER TO postgres;
 
 --
--- TOC entry 265 (class 1259 OID 18592)
 -- Name: atomMappingReactions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1752,12 +1812,38 @@ CREATE SEQUENCE public."atomMappingReactions_id_seq"
 ALTER TABLE public."atomMappingReactions_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3476 (class 0 OID 0)
--- Dependencies: 265
 -- Name: atomMappingReactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."atomMappingReactions_id_seq" OWNED BY public."atomMappingReactions".id;
+
+
+--
+-- Name: atomMappingReactions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingReactions" ALTER COLUMN id SET DEFAULT nextval('public."atomMappingReactions_id_seq"'::regclass);
+
+
+--
+-- Name: atomMappingReactions atomMappingReactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingReactions"
+    ADD CONSTRAINT "atomMappingReactions_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: atomMappingReactions atomMappingReactions_mapping_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."atomMappingReactions"
+    ADD CONSTRAINT "atomMappingReactions_mapping_id_fkey" FOREIGN KEY (mapping_id) REFERENCES public."atomMappingMetabolites"(mapping_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -1786,7 +1872,6 @@ CREATE TABLE public."calcFluxes" (
 ALTER TABLE public."calcFluxes" OWNER TO postgres;
 
 --
--- TOC entry 267 (class 1259 OID 18603)
 -- Name: calcFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1802,12 +1887,48 @@ CREATE SEQUENCE public."calcFluxes_id_seq"
 ALTER TABLE public."calcFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3477 (class 0 OID 0)
--- Dependencies: 267
 -- Name: calcFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."calcFluxes_id_seq" OWNED BY public."calcFluxes".id;
+
+
+--
+-- Name: calcFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFluxes" ALTER COLUMN id SET DEFAULT nextval('public."calcFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: calcFluxes calcFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFluxes"
+    ADD CONSTRAINT "calcFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: calcFluxes calcFluxes_mapping_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFluxes"
+    ADD CONSTRAINT "calcFluxes_mapping_id_fkey" FOREIGN KEY (mapping_id) REFERENCES public."atomMappingMetabolites"(mapping_id) NOT VALID;
+
+
+--
+-- Name: calcFluxes calcFluxes_rxn_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFluxes"
+    ADD CONSTRAINT "calcFluxes_rxn_id_fkey" FOREIGN KEY (rxn_id) REFERENCES public."fittedFluxes"(rxn_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -1836,7 +1957,6 @@ CREATE TABLE public."calcFragments" (
 ALTER TABLE public."calcFragments" OWNER TO postgres;
 
 --
--- TOC entry 269 (class 1259 OID 18614)
 -- Name: calcFragments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1852,13 +1972,46 @@ CREATE SEQUENCE public."calcFragments_id_seq"
 ALTER TABLE public."calcFragments_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3478 (class 0 OID 0)
--- Dependencies: 269
 -- Name: calcFragments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."calcFragments_id_seq" OWNED BY public."calcFragments".id;
 
+
+--
+-- Name: calcFragments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFragments" ALTER COLUMN id SET DEFAULT nextval('public."calcFragments_id_seq"'::regclass);
+
+
+--
+-- Name: calcFragments calcFragments_experiment_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFragments"
+    ADD CONSTRAINT "calcFragments_experiment_id_key" UNIQUE (experiment_id);
+
+
+--
+-- Name: calcFragments calcFragments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFragments"
+    ADD CONSTRAINT "calcFragments_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: calcFragments calcFragments_mapping_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."calcFragments"
+    ADD CONSTRAINT "calcFragments_mapping_id_fkey" FOREIGN KEY (mapping_id) REFERENCES public."atomMappingMetabolites"(mapping_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 --
 -- TOC entry 272 (class 1259 OID 18627)
@@ -1882,7 +2035,6 @@ CREATE TABLE public."fittedData" (
 ALTER TABLE public."fittedData" OWNER TO postgres;
 
 --
--- TOC entry 271 (class 1259 OID 18625)
 -- Name: fittedData_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1898,12 +2050,48 @@ CREATE SEQUENCE public."fittedData_id_seq"
 ALTER TABLE public."fittedData_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3479 (class 0 OID 0)
--- Dependencies: 271
 -- Name: fittedData_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedData_id_seq" OWNED BY public."fittedData".id;
+
+
+--
+-- Name: fittedData id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedData" ALTER COLUMN id SET DEFAULT nextval('public."fittedData_id_seq"'::regclass);
+
+
+--
+-- Name: fittedData fittedData_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedData"
+    ADD CONSTRAINT "fittedData_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedData fittedData_simulation_id_simulation_dateAndTime_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedData"
+    ADD CONSTRAINT "fittedData_simulation_id_simulation_dateAndTime_key" UNIQUE (simulation_id, "simulation_dateAndTime");
+
+
+--
+-- Name: fittedData fittedData_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedData"
+    ADD CONSTRAINT "fittedData_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -1931,7 +2119,6 @@ CREATE TABLE public."fittedExchangeFluxStatistics" (
 ALTER TABLE public."fittedExchangeFluxStatistics" OWNER TO postgres;
 
 --
--- TOC entry 273 (class 1259 OID 18638)
 -- Name: fittedExchangeFluxStatistics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1947,12 +2134,47 @@ CREATE SEQUENCE public."fittedExchangeFluxStatistics_id_seq"
 ALTER TABLE public."fittedExchangeFluxStatistics_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3480 (class 0 OID 0)
--- Dependencies: 273
 -- Name: fittedExchangeFluxStatistics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedExchangeFluxStatistics_id_seq" OWNED BY public."fittedExchangeFluxStatistics".id;
+
+
+--
+-- Name: fittedExchangeFluxStatistics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxStatistics" ALTER COLUMN id SET DEFAULT nextval('public."fittedExchangeFluxStatistics_id_seq"'::regclass);
+
+
+--
+-- Name: fittedExchangeFluxStatistics fittedExchangeFluxStatistics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxStatistics"
+    ADD CONSTRAINT "fittedExchangeFluxStatistics_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedExchangeFluxStatistics fittedExchangeFluxStatistics_simulation_id_simulation_dateA_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxStatistics"
+    ADD CONSTRAINT "fittedExchangeFluxStatistics_simulation_id_simulation_dateA_key" UNIQUE (simulation_id, "simulation_dateAndTime", flux_units);
+
+
+--
+-- Name: fittedExchangeFluxStatistics fittedExchangeFluxStatistics_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxStatistics"
+    ADD CONSTRAINT "fittedExchangeFluxStatistics_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -1983,7 +2205,6 @@ CREATE TABLE public."fittedExchangeFluxes" (
 ALTER TABLE public."fittedExchangeFluxes" OWNER TO postgres;
 
 --
--- TOC entry 275 (class 1259 OID 18651)
 -- Name: fittedExchangeFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1999,12 +2220,48 @@ CREATE SEQUENCE public."fittedExchangeFluxes_id_seq"
 ALTER TABLE public."fittedExchangeFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3481 (class 0 OID 0)
--- Dependencies: 275
 -- Name: fittedExchangeFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedExchangeFluxes_id_seq" OWNED BY public."fittedExchangeFluxes".id;
+
+
+--
+-- Name: fittedExchangeFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxes" ALTER COLUMN id SET DEFAULT nextval('public."fittedExchangeFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: fittedExchangeFluxes fittedExchangeFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxes"
+    ADD CONSTRAINT "fittedExchangeFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedExchangeFluxes fittedExchangeFluxes_simulation_id_simulation_dateAndTime_r_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxes"
+    ADD CONSTRAINT "fittedExchangeFluxes_simulation_id_simulation_dateAndTime_r_key" UNIQUE (simulation_id, "simulation_dateAndTime", rxn_id, flux_exchange_units);
+
+
+--
+-- Name: fittedExchangeFluxes fittedExchangeFluxes_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedExchangeFluxes"
+    ADD CONSTRAINT "fittedExchangeFluxes_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2032,7 +2289,6 @@ CREATE TABLE public."fittedFluxStatistics" (
 ALTER TABLE public."fittedFluxStatistics" OWNER TO postgres;
 
 --
--- TOC entry 277 (class 1259 OID 18664)
 -- Name: fittedFluxStatistics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2048,12 +2304,46 @@ CREATE SEQUENCE public."fittedFluxStatistics_id_seq"
 ALTER TABLE public."fittedFluxStatistics_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3482 (class 0 OID 0)
--- Dependencies: 277
 -- Name: fittedFluxStatistics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedFluxStatistics_id_seq" OWNED BY public."fittedFluxStatistics".id;
+
+
+--
+-- Name: fittedFluxStatistics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxStatistics" ALTER COLUMN id SET DEFAULT nextval('public."fittedFluxStatistics_id_seq"'::regclass);
+
+
+--
+-- Name: fittedFluxStatistics fittedFluxStatistics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxStatistics"
+    ADD CONSTRAINT "fittedFluxStatistics_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedFluxStatistics fittedFluxStatistics_simulation_id_simulation_dateAndtime_f_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxStatistics"
+    ADD CONSTRAINT "fittedFluxStatistics_simulation_id_simulation_dateAndtime_f_key" UNIQUE (simulation_id, "simulation_dateAndtime", flux_units);
+
+
+--
+-- Name: fittedFluxStatistics fittedFluxStatistics_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxStatistics"
+    ADD CONSTRAINT "fittedFluxStatistics_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2084,7 +2374,6 @@ CREATE TABLE public."fittedFluxes" (
 ALTER TABLE public."fittedFluxes" OWNER TO postgres;
 
 --
--- TOC entry 279 (class 1259 OID 18677)
 -- Name: fittedFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2100,12 +2389,55 @@ CREATE SEQUENCE public."fittedFluxes_id_seq"
 ALTER TABLE public."fittedFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3483 (class 0 OID 0)
--- Dependencies: 279
 -- Name: fittedFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedFluxes_id_seq" OWNED BY public."fittedFluxes".id;
+
+
+--
+-- Name: fittedFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxes" ALTER COLUMN id SET DEFAULT nextval('public."fittedFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: fittedFluxes fittedFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxes"
+    ADD CONSTRAINT "fittedFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedFluxes fittedFluxes_rxn_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxes"
+    ADD CONSTRAINT "fittedFluxes_rxn_id_key" UNIQUE (rxn_id);
+
+
+--
+-- Name: fittedFluxes fittedFluxes_simulation_id_simulation_dateAndTime_rxn_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxes"
+    ADD CONSTRAINT "fittedFluxes_simulation_id_simulation_dateAndTime_rxn_id_key" UNIQUE (simulation_id, "simulation_dateAndTime", rxn_id);
+
+
+--
+-- Name: fittedFluxes fittedFluxes_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFluxes"
+    ADD CONSTRAINT "fittedFluxes_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -2137,7 +2469,6 @@ CREATE TABLE public."fittedFragments" (
 ALTER TABLE public."fittedFragments" OWNER TO postgres;
 
 --
--- TOC entry 281 (class 1259 OID 18692)
 -- Name: fittedFragments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2153,12 +2484,62 @@ CREATE SEQUENCE public."fittedFragments_id_seq"
 ALTER TABLE public."fittedFragments_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3484 (class 0 OID 0)
--- Dependencies: 281
 -- Name: fittedFragments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedFragments_id_seq" OWNED BY public."fittedFragments".id;
+
+
+--
+-- Name: fittedFragments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments" ALTER COLUMN id SET DEFAULT nextval('public."fittedFragments_id_seq"'::regclass);
+
+
+--
+-- Name: fittedFragments fittedFragments_fragment_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments"
+    ADD CONSTRAINT "fittedFragments_fragment_id_key" UNIQUE (fragment_id);
+
+
+--
+-- Name: fittedFragments fittedFragments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments"
+    ADD CONSTRAINT "fittedFragments_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedFragments fittedFragments_simulation_id_simulation_dateAndTime_time_p_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments"
+    ADD CONSTRAINT "fittedFragments_simulation_id_simulation_dateAndTime_time_p_key" UNIQUE (simulation_id, "simulation_dateAndTime", time_point, fragment_id, fragment_mass);
+
+
+--
+-- Name: fittedFragments fittedFragments_experiment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments"
+    ADD CONSTRAINT "fittedFragments_experiment_id_fkey" FOREIGN KEY (experiment_id) REFERENCES public."calcFragments"(experiment_id) NOT VALID;
+
+
+--
+-- Name: fittedFragments fittedFragments_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedFragments"
+    ADD CONSTRAINT "fittedFragments_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2189,7 +2570,6 @@ CREATE TABLE public."fittedMeasuredFluxResiduals" (
 ALTER TABLE public."fittedMeasuredFluxResiduals" OWNER TO postgres;
 
 --
--- TOC entry 283 (class 1259 OID 18705)
 -- Name: fittedMeasuredFluxResiduals_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2205,12 +2585,46 @@ CREATE SEQUENCE public."fittedMeasuredFluxResiduals_id_seq"
 ALTER TABLE public."fittedMeasuredFluxResiduals_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3485 (class 0 OID 0)
--- Dependencies: 283
 -- Name: fittedMeasuredFluxResiduals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedMeasuredFluxResiduals_id_seq" OWNED BY public."fittedMeasuredFluxResiduals".id;
+
+
+--
+-- Name: fittedMeasuredFluxResiduals id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxResiduals" ALTER COLUMN id SET DEFAULT nextval('public."fittedMeasuredFluxResiduals_id_seq"'::regclass);
+
+
+--
+-- Name: fittedMeasuredFluxResiduals fittedMeasuredFluxResiduals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxResiduals"
+    ADD CONSTRAINT "fittedMeasuredFluxResiduals_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedMeasuredFluxResiduals s; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxResiduals"
+    ADD CONSTRAINT s UNIQUE (simulation_id, "simulation_dateAndTime", time_point, rxn_id);
+
+
+--
+-- Name: fittedMeasuredFluxResiduals fittedMeasuredFluxResiduals_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxResiduals"
+    ADD CONSTRAINT "fittedMeasuredFluxResiduals_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2234,7 +2648,6 @@ CREATE TABLE public."fittedMeasuredFluxes" (
 ALTER TABLE public."fittedMeasuredFluxes" OWNER TO postgres;
 
 --
--- TOC entry 285 (class 1259 OID 18718)
 -- Name: fittedMeasuredFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2250,13 +2663,46 @@ CREATE SEQUENCE public."fittedMeasuredFluxes_id_seq"
 ALTER TABLE public."fittedMeasuredFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3486 (class 0 OID 0)
--- Dependencies: 285
 -- Name: fittedMeasuredFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedMeasuredFluxes_id_seq" OWNED BY public."fittedMeasuredFluxes".id;
 
+
+--
+-- Name: fittedMeasuredFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxes" ALTER COLUMN id SET DEFAULT nextval('public."fittedMeasuredFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: fittedMeasuredFluxes fittedMeasuredFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxes"
+    ADD CONSTRAINT "fittedMeasuredFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedMeasuredFluxes fittedMeasuredFluxes_simulation_id_simulation_dateAndTime_r_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxes"
+    ADD CONSTRAINT "fittedMeasuredFluxes_simulation_id_simulation_dateAndTime_r_key" UNIQUE (simulation_id, "simulation_dateAndTime", rxn_id);
+
+
+--
+-- Name: fittedMeasuredFluxes fittedMeasuredFluxes_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFluxes"
+    ADD CONSTRAINT "fittedMeasuredFluxes_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 --
 -- TOC entry 288 (class 1259 OID 18734)
@@ -2287,7 +2733,6 @@ CREATE TABLE public."fittedMeasuredFragmentResiduals" (
 ALTER TABLE public."fittedMeasuredFragmentResiduals" OWNER TO postgres;
 
 --
--- TOC entry 287 (class 1259 OID 18732)
 -- Name: fittedMeasuredFragmentResiduals_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2303,12 +2748,48 @@ CREATE SEQUENCE public."fittedMeasuredFragmentResiduals_id_seq"
 ALTER TABLE public."fittedMeasuredFragmentResiduals_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3487 (class 0 OID 0)
--- Dependencies: 287
 -- Name: fittedMeasuredFragmentResiduals_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedMeasuredFragmentResiduals_id_seq" OWNED BY public."fittedMeasuredFragmentResiduals".id;
+
+
+--
+-- Name: fittedMeasuredFragmentResiduals id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragmentResiduals" ALTER COLUMN id SET DEFAULT nextval('public."fittedMeasuredFragmentResiduals_id_seq"'::regclass);
+
+
+--
+-- Name: fittedMeasuredFragmentResiduals fittedMeasuredFragmentResidua_simulation_id_simulation_date_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragmentResiduals"
+    ADD CONSTRAINT "fittedMeasuredFragmentResidua_simulation_id_simulation_date_key" UNIQUE (simulation_id, "simulation_dateAndTime", time_point, fragment_id, fragment_mass);
+
+
+--
+-- Name: fittedMeasuredFragmentResiduals fittedMeasuredFragmentResiduals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragmentResiduals"
+    ADD CONSTRAINT "fittedMeasuredFragmentResiduals_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedMeasuredFragmentResiduals fittedMeasuredFragmentResiduals_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragmentResiduals"
+    ADD CONSTRAINT "fittedMeasuredFragmentResiduals_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2332,7 +2813,6 @@ CREATE TABLE public."fittedMeasuredFragments" (
 ALTER TABLE public."fittedMeasuredFragments" OWNER TO postgres;
 
 --
--- TOC entry 289 (class 1259 OID 18756)
 -- Name: fittedMeasuredFragments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2348,12 +2828,48 @@ CREATE SEQUENCE public."fittedMeasuredFragments_id_seq"
 ALTER TABLE public."fittedMeasuredFragments_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3488 (class 0 OID 0)
--- Dependencies: 289
 -- Name: fittedMeasuredFragments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedMeasuredFragments_id_seq" OWNED BY public."fittedMeasuredFragments".id;
+
+
+--
+-- Name: fittedMeasuredFragments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragments" ALTER COLUMN id SET DEFAULT nextval('public."fittedMeasuredFragments_id_seq"'::regclass);
+
+
+--
+-- Name: fittedMeasuredFragments fittedMeasuredFragments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragments"
+    ADD CONSTRAINT "fittedMeasuredFragments_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedMeasuredFragments fittedMeasuredFragments_simulation_id_simulation_dateAndTim_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragments"
+    ADD CONSTRAINT "fittedMeasuredFragments_simulation_id_simulation_dateAndTim_key" UNIQUE (simulation_id, "simulation_dateAndTime", fragment_id);
+
+
+--
+-- Name: fittedMeasuredFragments fittedMeasuredFragments_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedMeasuredFragments"
+    ADD CONSTRAINT "fittedMeasuredFragments_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2381,7 +2897,6 @@ CREATE TABLE public."fittedNetFluxStatistics" (
 ALTER TABLE public."fittedNetFluxStatistics" OWNER TO postgres;
 
 --
--- TOC entry 291 (class 1259 OID 18769)
 -- Name: fittedNetFluxStatistics_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2397,12 +2912,47 @@ CREATE SEQUENCE public."fittedNetFluxStatistics_id_seq"
 ALTER TABLE public."fittedNetFluxStatistics_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3489 (class 0 OID 0)
--- Dependencies: 291
 -- Name: fittedNetFluxStatistics_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedNetFluxStatistics_id_seq" OWNED BY public."fittedNetFluxStatistics".id;
+
+
+--
+-- Name: fittedNetFluxStatistics id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxStatistics" ALTER COLUMN id SET DEFAULT nextval('public."fittedNetFluxStatistics_id_seq"'::regclass);
+
+
+--
+-- Name: fittedNetFluxStatistics fittedNetFluxStatistics_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxStatistics"
+    ADD CONSTRAINT "fittedNetFluxStatistics_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedNetFluxStatistics fittedNetFluxStatistics_simulation_id_simulation_dateAndTim_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxStatistics"
+    ADD CONSTRAINT "fittedNetFluxStatistics_simulation_id_simulation_dateAndTim_key" UNIQUE (simulation_id, "simulation_dateAndTime", flux_units);
+
+
+--
+-- Name: fittedNetFluxStatistics fittedNetFluxStatistics_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxStatistics"
+    ADD CONSTRAINT "fittedNetFluxStatistics_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -2428,7 +2978,6 @@ CREATE TABLE public."fittedNetFluxes" (
 ALTER TABLE public."fittedNetFluxes" OWNER TO postgres;
 
 --
--- TOC entry 293 (class 1259 OID 18782)
 -- Name: fittedNetFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2444,12 +2993,47 @@ CREATE SEQUENCE public."fittedNetFluxes_id_seq"
 ALTER TABLE public."fittedNetFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3490 (class 0 OID 0)
--- Dependencies: 293
 -- Name: fittedNetFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."fittedNetFluxes_id_seq" OWNED BY public."fittedNetFluxes".id;
+
+
+--
+-- Name: fittedNetFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxes" ALTER COLUMN id SET DEFAULT nextval('public."fittedNetFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: fittedNetFluxes fittedNetFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxes"
+    ADD CONSTRAINT "fittedNetFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: fittedNetFluxes fittedNetFluxes_simulation_id_simulation_dateAndTime_rxn_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxes"
+    ADD CONSTRAINT "fittedNetFluxes_simulation_id_simulation_dateAndTime_rxn_id_key" UNIQUE (simulation_id, "simulation_dateAndTime", rxn_id, flux_units);
+
+
+--
+-- Name: fittedNetFluxes fittedNetFluxes_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."fittedNetFluxes"
+    ADD CONSTRAINT "fittedNetFluxes_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -2476,7 +3060,6 @@ CREATE TABLE public."measuredFluxes" (
 ALTER TABLE public."measuredFluxes" OWNER TO postgres;
 
 --
--- TOC entry 295 (class 1259 OID 18795)
 -- Name: measuredFluxes_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2492,12 +3075,46 @@ CREATE SEQUENCE public."measuredFluxes_id_seq"
 ALTER TABLE public."measuredFluxes_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3491 (class 0 OID 0)
--- Dependencies: 295
 -- Name: measuredFluxes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."measuredFluxes_id_seq" OWNED BY public."measuredFluxes".id;
+
+
+--
+-- Name: measuredFluxes id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFluxes" ALTER COLUMN id SET DEFAULT nextval('public."measuredFluxes_id_seq"'::regclass);
+
+
+--
+-- Name: measuredFluxes measuredFluxes_experiment_id_model_id_sample_name_abbreviat_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFluxes"
+    ADD CONSTRAINT "measuredFluxes_experiment_id_model_id_sample_name_abbreviat_key" UNIQUE (experiment_id, model_id, sample_name_abbreviation, rxn_id);
+
+
+--
+-- Name: measuredFluxes measuredFluxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFluxes"
+    ADD CONSTRAINT "measuredFluxes_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: measuredFluxes measuredFluxes_rxn_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFluxes"
+    ADD CONSTRAINT "measuredFluxes_rxn_id_fkey" FOREIGN KEY (rxn_id) REFERENCES public."fittedFluxes"(rxn_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2528,7 +3145,6 @@ CREATE TABLE public."measuredFragments" (
 ALTER TABLE public."measuredFragments" OWNER TO postgres;
 
 --
--- TOC entry 297 (class 1259 OID 18808)
 -- Name: measuredFragments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2544,12 +3160,38 @@ CREATE SEQUENCE public."measuredFragments_id_seq"
 ALTER TABLE public."measuredFragments_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3492 (class 0 OID 0)
--- Dependencies: 297
 -- Name: measuredFragments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."measuredFragments_id_seq" OWNED BY public."measuredFragments".id;
+
+
+--
+-- Name: measuredFragments id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFragments" ALTER COLUMN id SET DEFAULT nextval('public."measuredFragments_id_seq"'::regclass);
+
+
+--
+-- Name: measuredFragments measuredFragments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFragments"
+    ADD CONSTRAINT "measuredFragments_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: measuredFragments measuredFragments_fragment_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredFragments"
+    ADD CONSTRAINT "measuredFragments_fragment_id_fkey" FOREIGN KEY (fragment_id) REFERENCES public."fittedFragments"(fragment_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2578,7 +3220,6 @@ CREATE TABLE public."measuredPools" (
 ALTER TABLE public."measuredPools" OWNER TO postgres;
 
 --
--- TOC entry 299 (class 1259 OID 18819)
 -- Name: measuredPools_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2594,12 +3235,40 @@ CREATE SEQUENCE public."measuredPools_id_seq"
 ALTER TABLE public."measuredPools_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3493 (class 0 OID 0)
--- Dependencies: 299
 -- Name: measuredPools_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."measuredPools_id_seq" OWNED BY public."measuredPools".id;
+
+
+--
+-- Name: measuredPools id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredPools" ALTER COLUMN id SET DEFAULT nextval('public."measuredPools_id_seq"'::regclass);
+
+
+--
+-- Name: measuredPools measuredPools_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredPools"
+    ADD CONSTRAINT "measuredPools_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: measuredPools measuredPools_met_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."measuredPools"
+    ADD CONSTRAINT "measuredPools_met_id_fkey" FOREIGN KEY (met_id) REFERENCES public."atomMappingMetabolites"(met_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2629,7 +3298,6 @@ CREATE TABLE public."modelMetabolites" (
 ALTER TABLE public."modelMetabolites" OWNER TO postgres;
 
 --
--- TOC entry 301 (class 1259 OID 18830)
 -- Name: modelMetabolites_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2645,12 +3313,40 @@ CREATE SEQUENCE public."modelMetabolites_id_seq"
 ALTER TABLE public."modelMetabolites_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3494 (class 0 OID 0)
--- Dependencies: 301
 -- Name: modelMetabolites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."modelMetabolites_id_seq" OWNED BY public."modelMetabolites".id;
+
+
+--
+-- Name: modelMetabolites id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelMetabolites" ALTER COLUMN id SET DEFAULT nextval('public."modelMetabolites_id_seq"'::regclass);
+
+
+--
+-- Name: modelMetabolites modelMetabolites_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelMetabolites"
+    ADD CONSTRAINT "modelMetabolites_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: modelMetabolites modelMetabolites_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelMetabolites"
+    ADD CONSTRAINT "modelMetabolites_model_id_fkey" FOREIGN KEY (model_id) REFERENCES public.models(model_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2672,7 +3368,6 @@ CREATE TABLE public."modelPathways" (
 ALTER TABLE public."modelPathways" OWNER TO postgres;
 
 --
--- TOC entry 303 (class 1259 OID 18841)
 -- Name: modelPathways_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2688,12 +3383,38 @@ CREATE SEQUENCE public."modelPathways_id_seq"
 ALTER TABLE public."modelPathways_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3495 (class 0 OID 0)
--- Dependencies: 303
 -- Name: modelPathways_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."modelPathways_id_seq" OWNED BY public."modelPathways".id;
+
+
+--
+-- Name: modelPathways id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelPathways" ALTER COLUMN id SET DEFAULT nextval('public."modelPathways_id_seq"'::regclass);
+
+
+--
+-- Name: modelPathways modelPathways_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelPathways"
+    ADD CONSTRAINT "modelPathways_pkey" PRIMARY KEY (id, model_id, pathway_id);
+
+
+--
+-- Name: modelPathways modelPathways_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelPathways"
+    ADD CONSTRAINT "modelPathways_model_id_fkey" FOREIGN KEY (model_id) REFERENCES public.models(model_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2730,7 +3451,6 @@ CREATE TABLE public."modelReactions" (
 ALTER TABLE public."modelReactions" OWNER TO postgres;
 
 --
--- TOC entry 305 (class 1259 OID 18852)
 -- Name: modelReactions_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2746,12 +3466,38 @@ CREATE SEQUENCE public."modelReactions_id_seq"
 ALTER TABLE public."modelReactions_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3496 (class 0 OID 0)
--- Dependencies: 305
 -- Name: modelReactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."modelReactions_id_seq" OWNED BY public."modelReactions".id;
+
+
+--
+-- Name: modelReactions id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelReactions" ALTER COLUMN id SET DEFAULT nextval('public."modelReactions_id_seq"'::regclass);
+
+
+--
+-- Name: modelReactions modelReactions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelReactions"
+    ADD CONSTRAINT "modelReactions_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: modelReactions modelReactions_model_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."modelReactions"
+    ADD CONSTRAINT "modelReactions_model_id_fkey" FOREIGN KEY (model_id) REFERENCES public.models(model_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
 
 
 --
@@ -2773,7 +3519,6 @@ CREATE TABLE public.models (
 ALTER TABLE public.models OWNER TO postgres;
 
 --
--- TOC entry 307 (class 1259 OID 18863)
 -- Name: models_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2789,12 +3534,40 @@ CREATE SEQUENCE public.models_id_seq
 ALTER TABLE public.models_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3497 (class 0 OID 0)
--- Dependencies: 307
 -- Name: models_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.models_id_seq OWNED BY public.models.id;
+
+
+--
+-- Name: models id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.models ALTER COLUMN id SET DEFAULT nextval('public.models_id_seq'::regclass);
+
+
+--
+-- Name: models models_model_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.models
+    ADD CONSTRAINT models_model_id_key UNIQUE (model_id);
+
+
+--
+-- Name: models models_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.models
+    ADD CONSTRAINT models_pkey PRIMARY KEY (id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2843,6 +3616,55 @@ CREATE TABLE public.simulation (
 ALTER TABLE public.simulation OWNER TO postgres;
 
 --
+-- Name: simulation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.simulation_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.simulation_id_seq OWNER TO postgres;
+
+--
+-- Name: simulation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.simulation_id_seq OWNED BY public.simulation.id;
+
+
+--
+-- Name: simulation id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.simulation ALTER COLUMN id SET DEFAULT nextval('public.simulation_id_seq'::regclass);
+
+
+--
+-- Name: simulation simulation_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.simulation
+    ADD CONSTRAINT simulation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: simulation simulation_simulation_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.simulation
+    ADD CONSTRAINT simulation_simulation_id_key UNIQUE (simulation_id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+--
 -- TOC entry 312 (class 1259 OID 18887)
 -- Name: simulationParameters; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -2884,7 +3706,6 @@ CREATE TABLE public."simulationParameters" (
 ALTER TABLE public."simulationParameters" OWNER TO postgres;
 
 --
--- TOC entry 311 (class 1259 OID 18885)
 -- Name: simulationParameters_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -2900,8 +3721,6 @@ CREATE SEQUENCE public."simulationParameters_id_seq"
 ALTER TABLE public."simulationParameters_id_seq" OWNER TO postgres;
 
 --
--- TOC entry 3499 (class 0 OID 0)
--- Dependencies: 311
 -- Name: simulationParameters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -2909,28 +3728,41 @@ ALTER SEQUENCE public."simulationParameters_id_seq" OWNED BY public."simulationP
 
 
 --
--- TOC entry 309 (class 1259 OID 18874)
--- Name: simulation_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: simulationParameters id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE public.simulation_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+ALTER TABLE ONLY public."simulationParameters" ALTER COLUMN id SET DEFAULT nextval('public."simulationParameters_id_seq"'::regclass);
 
-
-ALTER TABLE public.simulation_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3500 (class 0 OID 0)
--- Dependencies: 309
--- Name: simulation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: simulationParameters simulationParameters_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER SEQUENCE public.simulation_id_seq OWNED BY public.simulation.id;
+ALTER TABLE ONLY public."simulationParameters"
+    ADD CONSTRAINT "simulationParameters_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: simulationParameters simulationParameters_simulation_id_simulation_dateAndTime_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."simulationParameters"
+    ADD CONSTRAINT "simulationParameters_simulation_id_simulation_dateAndTime_key" UNIQUE (simulation_id, "simulation_dateAndTime");
+
+
+--
+-- Name: simulationParameters simulationParameters_simulation_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."simulationParameters"
+    ADD CONSTRAINT "simulationParameters_simulation_id_fkey" FOREIGN KEY (simulation_id) REFERENCES public.simulation(simulation_id) NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 
 --
@@ -2972,12 +3804,55 @@ CREATE SEQUENCE public.tracers_id_seq
 ALTER TABLE public.tracers_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3501 (class 0 OID 0)
+-- TOC entry 3158 (class 0 OID 0)
 -- Dependencies: 313
 -- Name: tracers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.tracers_id_seq OWNED BY public.tracers.id;
+
+
+--
+-- TOC entry 3021 (class 2604 OID 18904)
+-- Name: tracers id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tracers ALTER COLUMN id SET DEFAULT nextval('public.tracers_id_seq'::regclass);
+
+
+--
+-- TOC entry 3023 (class 2606 OID 18911)
+-- Name: tracers tracers_met_id_met_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tracers
+    ADD CONSTRAINT tracers_met_id_met_name_key UNIQUE (met_id, met_name);
+
+
+--
+-- TOC entry 3025 (class 2606 OID 18909)
+-- Name: tracers tracers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tracers
+    ADD CONSTRAINT tracers_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3026 (class 2606 OID 19027)
+-- Name: tracers tracers_met_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.tracers
+    ADD CONSTRAINT tracers_met_id_fkey FOREIGN KEY (met_id) REFERENCES public."atomMappingMetabolites"(met_id) NOT VALID;
+
+
+-- Completed on 2021-01-05 14:23:01
+
+--
+-- PostgreSQL database dump complete
+--
+
 
 
 --
@@ -4383,4 +5258,3 @@ ALTER TABLE ONLY public."STUDY"
 --
 -- PostgreSQL database dump complete
 --
-
