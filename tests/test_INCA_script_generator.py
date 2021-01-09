@@ -5,6 +5,8 @@ import pathlib
 
 sys.path.insert(1, "../")
 from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator import (  # noqa E402
+    INCA_script
+    """
     limit_to_one_model,
     limit_to_one_experiment,
     # prepare_input,
@@ -23,6 +25,7 @@ from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator import (  # noqa E402
     runner_script_generator,
     # save_runner_script,
     # run_INCA_in_MATLAB,
+    """
 )
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
