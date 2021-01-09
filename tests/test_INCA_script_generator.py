@@ -6,26 +6,6 @@ import pathlib
 sys.path.insert(1, "../")
 from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator import (  # noqa E402
     INCA_script
-    """
-    limit_to_one_model,
-    limit_to_one_experiment,
-    # prepare_input,
-    initiate_MATLAB_script,
-    # reaction_mapping,
-    add_reactions_to_script,
-    initialize_model,
-    symmetrical_metabolites,
-    unbalanced_reactions,
-    add_reaction_parameters,
-    verify_and_estimate,
-    add_experimental_parameters,
-    mapping,
-    script_generator,
-    # save_INCA_script,
-    runner_script_generator,
-    # save_runner_script,
-    # run_INCA_in_MATLAB,
-    """
 )
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
@@ -89,7 +69,7 @@ class test_methods(unittest.TestCase):
         Tests initiate_MATLAB_script() function.
         Checks if the output is the same as in a previously generated instance
         """
-        initiated_MATLAB_script_ = initiate_MATLAB_script()
+        initiated_MATLAB_script_ = INCA_script.initiate_MATLAB_script()
         initiated_MATLAB_script = self.initiated_MATLAB_script
         self.assertEqual(initiated_MATLAB_script_, initiated_MATLAB_script)
 
@@ -100,7 +80,7 @@ class test_methods(unittest.TestCase):
         This test also serves as a test for them.
         Checks if the output is the same as in a previously generated instance
         """
-        model_reactions_, model_rxn_ids_ = add_reactions_to_script(
+        model_reactions_, model_rxn_ids_ = INCA_script.add_reactions_to_script(
             self.modelReaction_data_I,
             self.atomMappingReactions_data_I,
         )
@@ -114,7 +94,7 @@ class test_methods(unittest.TestCase):
         Tests  function.
         Checks if the output is the same as in a previously generated instance
         """
-        initialized_model_ = initialize_model()
+        initialized_model_ = INCA_script.initialize_model()
         initialized_model = self.initialized_model
         self.assertEqual(initialized_model_, initialized_model)
 
@@ -123,7 +103,7 @@ class test_methods(unittest.TestCase):
         Tests symmetrical_metabolites() function.
         Checks if the output is the same as in a previously generated instance
         """
-        symmetrical_metabolites_script_ = symmetrical_metabolites(
+        symmetrical_metabolites_script_ = INCA_script.symmetrical_metabolites(
             self.atomMappingMetabolite_data_I
         )
         symmetrical_metabolites_script = self.symmetrical_metabolites_script
@@ -138,7 +118,7 @@ class test_methods(unittest.TestCase):
         Tests unbalanced_reactions() function.
         Checks if the output is the same as in a previously generated instance
         """
-        unbalanced_reactions_script_ = unbalanced_reactions(
+        unbalanced_reactions_script_ = INCA_script.unbalanced_reactions(
             self.atomMappingMetabolite_data_I,
         )
         unbalanced_reactions_script = self.unbalanced_reactions_script
@@ -151,7 +131,7 @@ class test_methods(unittest.TestCase):
         Tests add_reaction_parameters() function.
         Checks if the output is the same as in a previously generated instance
         """
-        reaction_parameters_ = add_reaction_parameters(
+        reaction_parameters_ = INCA_script.add_reaction_parameters(
             self.modelReaction_data_I,
             self.measuredFluxes_data_I,
             self.model_rxn_ids,
@@ -165,7 +145,7 @@ class test_methods(unittest.TestCase):
         Tests verify_and_estimate() function.
         Checks if the output is the same as in a previously generated instance
         """
-        verify_and_estimate_script_ = verify_and_estimate()
+        verify_and_estimate_script_ = INCA_script.verify_and_estimate()
         verify_and_estimate_script = self.verify_and_estimate_script
         self.assertEqual(
             verify_and_estimate_script_, verify_and_estimate_script
@@ -179,7 +159,7 @@ class test_methods(unittest.TestCase):
         (
             experimental_parameters_,
             fragments_used_,
-        ) = add_experimental_parameters(
+        ) = INCA_script.add_experimental_parameters(
             self.experimentalMS_data_I,
             self.tracer_I,
             self.measuredFluxes_data_I,
@@ -195,7 +175,7 @@ class test_methods(unittest.TestCase):
         Tests mapping() function.
         Checks if the output is the same as in a previously generated instance
         """
-        mapping_script_ = mapping(
+        mapping_script_ = INCA_script.mapping(
             self.experimentalMS_data_I, self.fragments_used
         )
         mapping_script = self.mapping_script
@@ -207,7 +187,7 @@ class test_methods(unittest.TestCase):
         Compares the output of the generated script with the manually curated
         one.
         """
-        script_ = script_generator(
+        script_ = INCA_script.script_generator(
             self.modelReaction_data_I,
             self.atomMappingReactions_data_I,
             self.atomMappingMetabolite_data_I,
@@ -223,6 +203,6 @@ class test_methods(unittest.TestCase):
         Compares the output of the generated runner script with the manually
         curated one.
         """
-        runner_ = runner_script_generator("TestFile", n_estimates=10)
+        runner_ = INCA_script.runner_script_generator("TestFile", n_estimates=10)
         runner = self.runner
         self.assertEqual(runner_, runner)
