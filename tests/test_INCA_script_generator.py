@@ -4,7 +4,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from AutoFlow_OmicsDataHandling.INCA_script_generator import (  # noqa E402
+from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator import (  # noqa E402
     limit_to_one_model,
     limit_to_one_experiment,
     # prepare_input,
