@@ -69,7 +69,7 @@ class test_methods(unittest.TestCase):
         Tests initiate_MATLAB_script() function.
         Checks if the output is the same as in a previously generated instance
         """
-        initiated_MATLAB_script_ = INCA_script.initiate_MATLAB_script()
+        initiated_MATLAB_script_ = INCA_script.initiate_MATLAB_script(self)
         initiated_MATLAB_script = self.initiated_MATLAB_script
         self.assertEqual(initiated_MATLAB_script_, initiated_MATLAB_script)
 
@@ -81,6 +81,7 @@ class test_methods(unittest.TestCase):
         Checks if the output is the same as in a previously generated instance
         """
         model_reactions_, model_rxn_ids_ = INCA_script.add_reactions_to_script(
+            self,
             self.modelReaction_data_I,
             self.atomMappingReactions_data_I,
         )
@@ -94,7 +95,7 @@ class test_methods(unittest.TestCase):
         Tests  function.
         Checks if the output is the same as in a previously generated instance
         """
-        initialized_model_ = INCA_script.initialize_model()
+        initialized_model_ = INCA_script.initialize_model(self)
         initialized_model = self.initialized_model
         self.assertEqual(initialized_model_, initialized_model)
 
@@ -104,6 +105,7 @@ class test_methods(unittest.TestCase):
         Checks if the output is the same as in a previously generated instance
         """
         symmetrical_metabolites_script_ = INCA_script.symmetrical_metabolites(
+            self,
             self.atomMappingMetabolite_data_I
         )
         symmetrical_metabolites_script = self.symmetrical_metabolites_script
@@ -119,6 +121,7 @@ class test_methods(unittest.TestCase):
         Checks if the output is the same as in a previously generated instance
         """
         unbalanced_reactions_script_ = INCA_script.unbalanced_reactions(
+            self,
             self.atomMappingMetabolite_data_I,
         )
         unbalanced_reactions_script = self.unbalanced_reactions_script
@@ -132,6 +135,7 @@ class test_methods(unittest.TestCase):
         Checks if the output is the same as in a previously generated instance
         """
         reaction_parameters_ = INCA_script.add_reaction_parameters(
+            self,
             self.modelReaction_data_I,
             self.measuredFluxes_data_I,
             self.model_rxn_ids,
@@ -145,7 +149,7 @@ class test_methods(unittest.TestCase):
         Tests verify_and_estimate() function.
         Checks if the output is the same as in a previously generated instance
         """
-        verify_and_estimate_script_ = INCA_script.verify_and_estimate()
+        verify_and_estimate_script_ = INCA_script.verify_and_estimate(self)
         verify_and_estimate_script = self.verify_and_estimate_script
         self.assertEqual(
             verify_and_estimate_script_, verify_and_estimate_script
@@ -160,6 +164,7 @@ class test_methods(unittest.TestCase):
             experimental_parameters_,
             fragments_used_,
         ) = INCA_script.add_experimental_parameters(
+            self,
             self.experimentalMS_data_I,
             self.tracer_I,
             self.measuredFluxes_data_I,
@@ -176,6 +181,7 @@ class test_methods(unittest.TestCase):
         Checks if the output is the same as in a previously generated instance
         """
         mapping_script_ = INCA_script.mapping(
+            self,
             self.experimentalMS_data_I, self.fragments_used
         )
         mapping_script = self.mapping_script
@@ -188,6 +194,7 @@ class test_methods(unittest.TestCase):
         one.
         """
         script_ = INCA_script.script_generator(
+            self,
             self.modelReaction_data_I,
             self.atomMappingReactions_data_I,
             self.atomMappingMetabolite_data_I,
@@ -203,6 +210,10 @@ class test_methods(unittest.TestCase):
         Compares the output of the generated runner script with the manually
         curated one.
         """
-        runner_ = INCA_script.runner_script_generator("TestFile", n_estimates=10)
+        runner_ = INCA_script.runner_script_generator(
+            self,
+            "TestFile",
+            n_estimates=10
+        )
         runner = self.runner
         self.assertEqual(runner_, runner)
