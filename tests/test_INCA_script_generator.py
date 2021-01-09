@@ -1,10 +1,10 @@
 import unittest
 import pickle
-# import sys
+import sys
 import pathlib
 
-# sys.path.insert(1, "../")
-from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator.INCA_script import (  # noqa E402
+sys.path.insert(1, "../")
+from AutoFlow_OmicsDataHandling.INCA.INCA_script_generator import (  # noqa E402
     limit_to_one_model,
     limit_to_one_experiment,
     # prepare_input,
