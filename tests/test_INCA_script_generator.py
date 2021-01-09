@@ -70,7 +70,7 @@ class test_methods(unittest.TestCase):
         Tests initiate_MATLAB_script() function.
         Checks if the output is the same as in a previously generated instance
         """
-        initiated_MATLAB_script_ = INCA_script.initiate_MATLAB_script()
+        initiated_MATLAB_script_ = self.INCA_script.initiate_MATLAB_script()
         initiated_MATLAB_script = self.initiated_MATLAB_script
         self.assertEqual(initiated_MATLAB_script_, initiated_MATLAB_script)
 
