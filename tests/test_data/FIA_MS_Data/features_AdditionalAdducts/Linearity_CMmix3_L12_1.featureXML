@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<featureMap version="1.9" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/OpenMS/OpenMS/develop/share/OpenMS/SCHEMAS/FeatureXML_1_9.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<featureList count="92">
+		<feature id="f_14485996961536477676">
+			<position dim="0">0.0</position>
+			<position dim="1">439.9327392578125</position>
+			<intensity>48.472473</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="23dpg"/>
+			<UserParam type="float" name="peak_apex_int" value="1.47495390625e04"/>
+		</feature>
+		<feature id="f_10402586164280447667">
+			<position dim="0">0.0</position>
+			<position dim="1">486.669891357421875</position>
+			<intensity>21.540875</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="3pg_c"/>
+			<UserParam type="float" name="peak_apex_int" value="7248.751953125"/>
+		</feature>
+		<feature id="f_481086921731514364">
+			<position dim="0">0.0</position>
+			<position dim="1">107.191818237304688</position>
+			<intensity>117.536491</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="5oxpro"/>
+			<UserParam type="float" name="peak_apex_int" value="1.523895e05"/>
+		</feature>
+		<feature id="f_3000880563559525039">
+			<position dim="0">0.0</position>
+			<position dim="1">147.104293823242188</position>
+			<intensity>3.629617</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="6pgc_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2087.201171875"/>
+		</feature>
+		<feature id="f_16052813505816368463">
+			<position dim="0">0.0</position>
+			<position dim="1">217.411422729492188</position>
+			<intensity>8.526789</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="AICAr"/>
+			<UserParam type="float" name="peak_apex_int" value="3314.720947265625"/>
+		</feature>
+		<feature id="f_7014936824401447813">
+			<position dim="0">0.0</position>
+			<position dim="1">247.979400634765625</position>
+			<intensity>883.703308</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="Lcystin"/>
+			<UserParam type="float" name="peak_apex_int" value="3.9291515625e05"/>
+		</feature>
+		<feature id="f_2514041651386581932">
+			<position dim="0">0.0</position>
+			<position dim="1">581.82415771484375</position>
+			<intensity>72.031906</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="acac_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.8752197265625e04"/>
+		</feature>
+		<feature id="f_13066440175238518059">
+			<position dim="0">0.0</position>
+			<position dim="1">1011.94390869140625</position>
+			<intensity>23.451712</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="accoa_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2210.301513671875"/>
+		</feature>
+		<feature id="f_13901879022257941212">
+			<position dim="0">0.0</position>
+			<position dim="1">291.4735107421875</position>
+			<intensity>34.619522</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="acon_C_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.8042287109375e04"/>
+		</feature>
+		<feature id="f_2998332180052746804">
+			<position dim="0">0.0</position>
+			<position dim="1">404.196624755859375</position>
+			<intensity>2729.636231</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="actp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.1023025e06"/>
+		</feature>
+		<feature id="f_15619817514092219548">
+			<position dim="0">0.0</position>
+			<position dim="1">417.00360107421875</position>
+			<intensity>4325.36084</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ade_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.95256225e06"/>
+		</feature>
+		<feature id="f_5882726496988853785">
+			<position dim="0">0.0</position>
+			<position dim="1">271.355010986328125</position>
+			<intensity>3.47304e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="adn_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.3339989e07"/>
+		</feature>
+		<feature id="f_6055105243769693887">
+			<position dim="0">0.0</position>
+			<position dim="1">705.86981201171875</position>
+			<intensity>418.342834</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="adp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="7.26623515625e04"/>
+		</feature>
+		<feature id="f_6241698431407792182">
+			<position dim="0">0.0</position>
+			<position dim="1">621.070556640625</position>
+			<intensity>8.702488</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="adpglc_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1240.717041015625"/>
+		</feature>
+		<feature id="f_12082284490340248649">
+			<position dim="0">0.0</position>
+			<position dim="1">584.657958984375</position>
+			<intensity>632.449768</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="akg_c"/>
+			<UserParam type="float" name="peak_apex_int" value="6.693226875e05"/>
+		</feature>
+		<feature id="f_3786293206425816244">
+			<position dim="0">0.0</position>
+			<position dim="1">92.273033142089844</position>
+			<intensity>2456.411621</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ala__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.775814e06"/>
+		</feature>
+		<feature id="f_3270252697828045664">
+			<position dim="0">0.0</position>
+			<position dim="1">622.46588134765625</position>
+			<intensity>23.630499</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="amp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4341.32177734375"/>
+		</feature>
+		<feature id="f_356794727436689016">
+			<position dim="0">0.0</position>
+			<position dim="1">451.39404296875</position>
+			<intensity>77.690796</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="arg__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.54760390625e04"/>
+		</feature>
+		<feature id="f_979749375046881844">
+			<position dim="0">0.0</position>
+			<position dim="1">279.98919677734375</position>
+			<intensity>2016.355347</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="asn__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.05134725e06"/>
+		</feature>
+		<feature id="f_2164665731401047112">
+			<position dim="0">0.0</position>
+			<position dim="1">412.9696044921875</position>
+			<intensity>6.719385</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="atp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1347.7427978515625"/>
+		</feature>
+		<feature id="f_8884921517657820747">
+			<position dim="0">0.0</position>
+			<position dim="1">385.34033203125</position>
+			<intensity>5.102626</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="btn_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1529.03369140625"/>
+		</feature>
+		<feature id="f_17076355957803387918">
+			<position dim="0">0.0</position>
+			<position dim="1">369.99517822265625</position>
+			<intensity>56.36158</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="camp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.664958203125e04"/>
+		</feature>
+		<feature id="f_3980292254183361947">
+			<position dim="0">0.0</position>
+			<position dim="1">286.601318359375</position>
+			<intensity>1503.601318</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="chor_c"/>
+			<UserParam type="float" name="peak_apex_int" value="9.261979999999999e05"/>
+		</feature>
+		<feature id="f_7723410912345205185">
+			<position dim="0">0.0</position>
+			<position dim="1">150.968231201171875</position>
+			<intensity>31.179037</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="cit_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.1496970703125e04"/>
+		</feature>
+		<feature id="f_11523455962447204318">
+			<position dim="0">0.0</position>
+			<position dim="1">356.576263427734375</position>
+			<intensity>553.435669</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="citr__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.986496875e05"/>
+		</feature>
+		<feature id="f_15041015463117468110">
+			<position dim="0">0.0</position>
+			<position dim="1">127.331512451171875</position>
+			<intensity>9295.085938</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="cmp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4.6181885e06"/>
+		</feature>
+		<feature id="f_231920030623222306">
+			<position dim="0">0.0</position>
+			<position dim="1">923.1488037109375</position>
+			<intensity>10.390671</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="coa_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2152.452392578125"/>
+		</feature>
+		<feature id="f_17858930852655514445">
+			<position dim="0">0.0</position>
+			<position dim="1">543.3013916015625</position>
+			<intensity>32.049625</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ctp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4906.15185546875"/>
+		</feature>
+		<feature id="f_17170163885664581191">
+			<position dim="0">0.0</position>
+			<position dim="1">274.273101806640625</position>
+			<intensity>39.698547</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="cytd_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.762224609375e04"/>
+		</feature>
+		<feature id="f_13167466924494408216">
+			<position dim="0">0.0</position>
+			<position dim="1">477.95025634765625</position>
+			<intensity>5.374078</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dadp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1143.5201416015625"/>
+		</feature>
+		<feature id="f_18290094877822378539">
+			<position dim="0">0.0</position>
+			<position dim="1">248.466644287109375</position>
+			<intensity>78.460381</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="damp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.303897265625e04"/>
+		</feature>
+		<feature id="f_15098386673067269105">
+			<position dim="0">0.0</position>
+			<position dim="1">348.48974609375</position>
+			<intensity>449.934265</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dcdp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.14406359375e05"/>
+		</feature>
+		<feature id="f_18122814640457179601">
+			<position dim="0">0.0</position>
+			<position dim="1">482.05303955078125</position>
+			<intensity>6.610065</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dcmp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2730.22021484375"/>
+		</feature>
+		<feature id="f_17242369533364168265">
+			<position dim="0">0.0</position>
+			<position dim="1">752.64837646484375</position>
+			<intensity>8.770657</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dctp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1636.445556640625"/>
+		</feature>
+		<feature id="f_15388122410095340306">
+			<position dim="0">0.0</position>
+			<position dim="1">607.97406005859375</position>
+			<intensity>2.431248e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dhap_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.6949464e07"/>
+		</feature>
+		<feature id="f_12327891330327041503">
+			<position dim="0">0.0</position>
+			<position dim="1">366.10443115234375</position>
+			<intensity>3724.608887</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dimp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.01688925e06"/>
+		</feature>
+		<feature id="f_11635531890834172190">
+			<position dim="0">0.0</position>
+			<position dim="1">375.8885498046875</position>
+			<intensity>187.860458</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dtmp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5.4606484375e04"/>
+		</feature>
+		<feature id="f_14935268585396877937">
+			<position dim="0">0.0</position>
+			<position dim="1">913.74169921875</position>
+			<intensity>12.0938</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dttp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1245.099365234375"/>
+		</feature>
+		<feature id="f_2229947545701640284">
+			<position dim="0">0.0</position>
+			<position dim="1">230.156524658203125</position>
+			<intensity>222.659287</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dump_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.003355546875e05"/>
+		</feature>
+		<feature id="f_16066256620838890508">
+			<position dim="0">0.0</position>
+			<position dim="1">809.7025146484375</position>
+			<intensity>23.574184</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="dutp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2665.837890625"/>
+		</feature>
+		<feature id="f_17008592230020428131">
+			<position dim="0">0.0</position>
+			<position dim="1">133.92041015625</position>
+			<intensity>52.108498</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="f1p_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4.082053515625e04"/>
+		</feature>
+		<feature id="f_6048746022381456876">
+			<position dim="0">0.0</position>
+			<position dim="1">926.76336669921875</position>
+			<intensity>39.846184</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="fad_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3154.826416015625"/>
+		</feature>
+		<feature id="f_14874973331107565234">
+			<position dim="0">0.0</position>
+			<position dim="1">594.9637451171875</position>
+			<intensity>13.063992</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="fdp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2440.6640625"/>
+		</feature>
+		<feature id="f_5599650917381886578">
+			<position dim="0">0.0</position>
+			<position dim="1">508.48297119140625</position>
+			<intensity>13.758086</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="fol"/>
+			<UserParam type="float" name="peak_apex_int" value="2553.70556640625"/>
+		</feature>
+		<feature id="f_10735065012457128010">
+			<position dim="0">0.0</position>
+			<position dim="1">159.670486450195313</position>
+			<intensity>34.283279</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="fum_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.38443125e04"/>
+		</feature>
+		<feature id="f_15857163773069408956">
+			<position dim="0">0.0</position>
+			<position dim="1">288.2884521484375</position>
+			<intensity>5.40308</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gam6p_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2167.09423828125"/>
+		</feature>
+		<feature id="f_17505266487752608079">
+			<position dim="0">0.0</position>
+			<position dim="1">509.938812255859375</position>
+			<intensity>5.739452</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gdp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1240.210693359375"/>
+		</feature>
+		<feature id="f_9504421498734472306">
+			<position dim="0">0.0</position>
+			<position dim="1">313.35333251953125</position>
+			<intensity>3256.793701</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glc__D_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.838895e06"/>
+		</feature>
+		<feature id="f_586694100807123111">
+			<position dim="0">0.0</position>
+			<position dim="1">318.5223388671875</position>
+			<intensity>2930.958008</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gln__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.38127175e06"/>
+		</feature>
+		<feature id="f_14221724148207730471">
+			<position dim="0">0.0</position>
+			<position dim="1">397.95037841796875</position>
+			<intensity>1067.805664</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glu__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="7.29964875e05"/>
+		</feature>
+		<feature id="f_17622739101236602718">
+			<position dim="0">0.0</position>
+			<position dim="1">698.83917236328125</position>
+			<intensity>518.763794</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glutacon"/>
+			<UserParam type="float" name="peak_apex_int" value="3.7631778125e05"/>
+		</feature>
+		<feature id="f_10494189626879377465">
+			<position dim="0">0.0</position>
+			<position dim="1">743.9415283203125</position>
+			<intensity>23.135029</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glx_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.30111337890625e04"/>
+		</feature>
+		<feature id="f_3121625102063325144">
+			<position dim="0">0.0</position>
+			<position dim="1">713.74639892578125</position>
+			<intensity>6.07138e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glyc3p_c"/>
+			<UserParam type="float" name="peak_apex_int" value="9.074284799999999e07"/>
+		</feature>
+		<feature id="f_8934729515793849840">
+			<position dim="0">0.0</position>
+			<position dim="1">235.07745361328125</position>
+			<intensity>705.441711</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="glyclt_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5.5925e05"/>
+		</feature>
+		<feature id="f_1553659855323480605">
+			<position dim="0">0.0</position>
+			<position dim="1">598.94464111328125</position>
+			<intensity>7.322471</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gmp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1388.0855712890625"/>
+		</feature>
+		<feature id="f_1560033448782168719">
+			<position dim="0">0.0</position>
+			<position dim="1">292.02783203125</position>
+			<intensity>86.496323</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gsn_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.200059375e04"/>
+		</feature>
+		<feature id="f_5505769979278749424">
+			<position dim="0">0.0</position>
+			<position dim="1">879.9864501953125</position>
+			<intensity>12.076619</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gthox_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1406.0889892578125"/>
+		</feature>
+		<feature id="f_14199723947238930628">
+			<position dim="0">0.0</position>
+			<position dim="1">304.276885986328125</position>
+			<intensity>110.832954</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gthrd_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.717348046875e04"/>
+		</feature>
+		<feature id="f_16048639808784771129">
+			<position dim="0">0.0</position>
+			<position dim="1">399.411346435546875</position>
+			<intensity>1406.430054</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="gua_c"/>
+			<UserParam type="float" name="peak_apex_int" value="9.971649375e05"/>
+		</feature>
+		<feature id="f_16987231459717866719">
+			<position dim="0">0.0</position>
+			<position dim="1">316.2779541015625</position>
+			<intensity>7.305367e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="his__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5.667612e07"/>
+		</feature>
+		<feature id="f_15664715454843724154">
+			<position dim="0">0.0</position>
+			<position dim="1">351.343505859375</position>
+			<intensity>39.515015</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="hxan_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.3910625e04"/>
+		</feature>
+		<feature id="f_9044086838236143718">
+			<position dim="0">0.0</position>
+			<position dim="1">378.02874755859375</position>
+			<intensity>920.531921</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="imp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.38424328125e05"/>
+		</feature>
+		<feature id="f_3331605044332790232">
+			<position dim="0">0.0</position>
+			<position dim="1">317.008544921875</position>
+			<intensity>68.721191</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ins_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.48727578125e04"/>
+		</feature>
+		<feature id="f_18236872462975589427">
+			<position dim="0">0.0</position>
+			<position dim="1">537.9544677734375</position>
+			<intensity>7.872008</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="itp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1208.6881103515625"/>
+		</feature>
+		<feature id="f_10945839282148663278">
+			<position dim="0">0.0</position>
+			<position dim="1">804.9178466796875</position>
+			<intensity>585.34729</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="lac__D_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4.1651509375e05"/>
+		</feature>
+		<feature id="f_3578419118858214965">
+			<position dim="0">0.0</position>
+			<position dim="1">501.495086669921875</position>
+			<intensity>2.425285e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="mal__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.6849108e07"/>
+		</feature>
+		<feature id="f_15353075583876427264">
+			<position dim="0">0.0</position>
+			<position dim="1">159.051132202148438</position>
+			<intensity>61.524937</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="met__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5.313366015625e04"/>
+		</feature>
+		<feature id="f_15536661279604722559">
+			<position dim="0">0.0</position>
+			<position dim="1">709.09027099609375</position>
+			<intensity>223.436523</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="nadh_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.33490546875e04"/>
+		</feature>
+		<feature id="f_16434038046574385539">
+			<position dim="0">0.0</position>
+			<position dim="1">411.8568115234375</position>
+			<intensity>33.755493</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="oaa_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.28711611328125e04"/>
+		</feature>
+		<feature id="f_7188240584013528307">
+			<position dim="0">0.0</position>
+			<position dim="1">204.74322509765625</position>
+			<intensity>24.089823</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="orn_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.703090234375e04"/>
+		</feature>
+		<feature id="f_3536990851156133169">
+			<position dim="0">0.0</position>
+			<position dim="1">629.69451904296875</position>
+			<intensity>587.984924</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="oxa_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.85435734375e05"/>
+		</feature>
+		<feature id="f_17118444725970833566">
+			<position dim="0">0.0</position>
+			<position dim="1">118.814979553222656</position>
+			<intensity>6.026139</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="pep_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4766.31494140625"/>
+		</feature>
+		<feature id="f_386183367772058982">
+			<position dim="0">0.0</position>
+			<position dim="1">338.533447265625</position>
+			<intensity>1.50935e04</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="phe__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.0625914e07"/>
+		</feature>
+		<feature id="f_15426692260828442671">
+			<position dim="0">0.0</position>
+			<position dim="1">479.499664306640625</position>
+			<intensity>3.967268</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="phpyr_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1307.9522705078125"/>
+		</feature>
+		<feature id="f_10871785641512255660">
+			<position dim="0">0.0</position>
+			<position dim="1">497.798126220703125</position>
+			<intensity>91.637527</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="pyr_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.0872689453125e04"/>
+		</feature>
+		<feature id="f_17100814621525755195">
+			<position dim="0">0.0</position>
+			<position dim="1">486.885345458984375</position>
+			<intensity>2888.326172</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="r5p_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.37577125e06"/>
+		</feature>
+		<feature id="f_2400985790683801661">
+			<position dim="0">0.0</position>
+			<position dim="1">385.149261474609375</position>
+			<intensity>1279.640137</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ribflv_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.1431315625e05"/>
+		</feature>
+		<feature id="f_8782098462433598603">
+			<position dim="0">0.0</position>
+			<position dim="1">702.1229248046875</position>
+			<intensity>1.562264e05</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ser__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1.53544688e08"/>
+		</feature>
+		<feature id="f_9834112597896689208">
+			<position dim="0">0.0</position>
+			<position dim="1">155.7926025390625</position>
+			<intensity>6229.969238</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="succ_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5.9993235e06"/>
+		</feature>
+		<feature id="f_10228131356989959756">
+			<position dim="0">0.0</position>
+			<position dim="1">93.303558349609375</position>
+			<intensity>6228.34082</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="thr__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="7.413822e06"/>
+		</feature>
+		<feature id="f_1793062610555839028">
+			<position dim="0">0.0</position>
+			<position dim="1">114.570816040039063</position>
+			<intensity>693.45459</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="thym_c"/>
+			<UserParam type="float" name="peak_apex_int" value="7.269845e05"/>
+		</feature>
+		<feature id="f_2750375935976532284">
+			<position dim="0">0.0</position>
+			<position dim="1">202.694488525390625</position>
+			<intensity>58.354767</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="trp__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3.2235107421875e04"/>
+		</feature>
+		<feature id="f_18412195110913539082">
+			<position dim="0">0.0</position>
+			<position dim="1">352.12042236328125</position>
+			<intensity>4422.875977</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="tyr__L_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.737288e06"/>
+		</feature>
+		<feature id="f_4864994618799213657">
+			<position dim="0">0.0</position>
+			<position dim="1">482.001922607421875</position>
+			<intensity>26.372581</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="udp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5885.767578125"/>
+		</feature>
+		<feature id="f_5399625336280926053">
+			<position dim="0">0.0</position>
+			<position dim="1">562.02490234375</position>
+			<intensity>17.247902</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="udpg_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2589.81640625"/>
+		</feature>
+		<feature id="f_11130365058130674663">
+			<position dim="0">0.0</position>
+			<position dim="1">633.75469970703125</position>
+			<intensity>10.772505</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="udpglcur_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1306.8021240234375"/>
+		</feature>
+		<feature id="f_8516537001789148084">
+			<position dim="0">0.0</position>
+			<position dim="1">393.9112548828125</position>
+			<intensity>17.36265</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ump_c"/>
+			<UserParam type="float" name="peak_apex_int" value="5107.81787109375"/>
+		</feature>
+		<feature id="f_8558814670010029196">
+			<position dim="0">0.0</position>
+			<position dim="1">527.07550048828125</position>
+			<intensity>7565.427246</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="ura_c"/>
+			<UserParam type="float" name="peak_apex_int" value="8.856871999999999e06"/>
+		</feature>
+		<feature id="f_7249860236365015038">
+			<position dim="0">0.0</position>
+			<position dim="1">184.98516845703125</position>
+			<intensity>608.425659</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="urate_c"/>
+			<UserParam type="float" name="peak_apex_int" value="4.535053125e05"/>
+		</feature>
+		<feature id="f_15964010509802451093">
+			<position dim="0">0.0</position>
+			<position dim="1">290.047943115234375</position>
+			<intensity>69.320549</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="uri_c"/>
+			<UserParam type="float" name="peak_apex_int" value="2.8060037109375e04"/>
+		</feature>
+		<feature id="f_3420466164482435008">
+			<position dim="0">0.0</position>
+			<position dim="1">517.5009765625</position>
+			<intensity>7.917883</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="utp_c"/>
+			<UserParam type="float" name="peak_apex_int" value="1305.0948486328125"/>
+		</feature>
+		<feature id="f_7687878116732810563">
+			<position dim="0">0.0</position>
+			<position dim="1">311.383880615234375</position>
+			<intensity>6.585426</intensity>
+			<quality dim="0">0.0</quality>
+			<quality dim="1">0.0</quality>
+			<overallquality>0.0</overallquality>
+			<charge>0</charge>
+			<UserParam type="string" name="PeptideRef" value="xan_c"/>
+			<UserParam type="float" name="peak_apex_int" value="3249.8349609375"/>
+		</feature>
+	</featureList>
+</featureMap>

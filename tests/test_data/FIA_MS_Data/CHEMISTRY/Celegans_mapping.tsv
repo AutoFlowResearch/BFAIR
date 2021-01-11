@@ -1,0 +1,613 @@
+database_name	elegans
+database_version	elegans
+0	C4H9NO2	3aib__D_m	4abut_m	4abut_e	4abut_c	3aib_D_c	3aib_D_e	3aib_D_m
+0	C25H46N7O18P3S1	3hbcoa_R_c	3hbcoa_R_m	3hbcoa_c	3hbcoa_m
+0	C6H18O10P2	5dpmev_c
+0	C6H16O7P1	5pmev_c
+0	C8H15O2S2	lipoate_c	lipoate_e
+0	C25H45N7O19P3S1	mmcoa_R_m	mmcoa_R_c	mmcoa_S_c	mmcoa_S_m	succoa_c	succoa_m
+0	C6H13O4	mev_R_c
+0	C9H18N1O5	pnto_R_e	pnto_R_c
+0	C13H22N3O8S1	lgt_S_m
+0	C30H50O	Ssq23epx_c
+0	C13H23N4O12P1	25aics_c
+0	C5H10O5	2hglut_c	2hglut_e	2hglut_m	rib_D_m	rib_D_c	rib_D_e	xyl_D_e	xyl_D_c	xylu_D_c	xylu_D_n	arab_L_c	arab_L_e	xylu_L_n	xylu_L_c
+0	C26H48N7O18P3S1	3hmbcoa_m	3hmbcoa_c	3hivcoa_c	3hivcoa_m
+0	C4H9O3	S3hb_c	S3hb_e	S3hb_m	2hb_c	2hb_e
+0	C31H58N7O18P3S1	3hdcoa_c	3hdcoa_m
+0	C33H62N7O18P3S1	3hddcoa_c	3hddcoa_m
+0	C37H70N7O18P3S1	3hhdcoa_c	3hhdcoa_m
+0	C27H50N7O18P3S1	3hhcoa_c	3hhcoa_m
+0	C25H42N7O18P3S	3hibutcoa_c	3hibutcoa_m	3hibutcoa_n
+0	C39H74N7O18P3S1	3hodcoa_c	3hodcoa_m
+0	C29H54N7O18P3S1	3hocoa_c	3hocoa_m
+0	C35H66N7O18P3S1	3htdcoa_c	3htdcoa_m
+0	C6H11O3	3mop_c	3mop_m	4mop_c	4mop_m
+0	C5H7N2O4	dhor_S_c
+0	C4H8O5	mal_L_m	mal_L_c	mal_L_e
+0	C6H11O3S1	dhmtp_c
+0	C20H23N7O7	10fthf_c	10fthf_m	5fthf_c	5fthf_e	5fthf_m
+0	C10H19O3	oxdca_c
+0	C20H35O4	dhet_c
+0	C20H33O3	eet_c	20HETE_c	5HETE_c
+0	C36H60O2	retpalm_cis_11_c	retpalm_c
+0	C6H31O27P7	dpminol_n	dpminol_c
+0	C6H27O21P5	mi13456p_n	mi13456p_c
+0	C6H24O18P4	mi1345p_n	mi1345p_c	mi1346p_c	mi1456p_c	mi1456p_n
+0	C6H21O15P3	mi134p_c	mi145p_n	mi145p_c	mi145p_m
+0	C6H18O12P2	mi14p_c	fdp_c	fdp_n	f26bp_n	f26bp_c
+0	C6H15O9P1	mi1p_D_c	mi3p_D_c	mi4p_D_c	g1p_n	g1p_c	g1p_m	man1p_n	man1p_c	man1p_m	man6p_n	man6p_c	man6p_m	f1p_c	f1p_n
+0	C7H8N2O1	1mncam_n	1mncam_c	1mncam_e
+0	C5H8N1O2	1pyr5c_m	1pyr5c_c
+0	C8H17N3O8P1	fpram_c
+0	C6H13O6P1S1	dkmpp_c
+0	C27H46O2	xol25oh_c	xol27oh_c	xol27oh_m	xol7a_c
+0	C7H9N1O5	cmusa_c
+0	C9H19N5O13P3	ahdt_n	ahdt_c
+0	C6H9N1O4	amuco_c
+0	C6H8N1O3	am6sa_c
+0	C10H13N5O3	dad_2_n	dad_2_c	dad_5_c	dad_2_e
+0	C5H11O7P	2dr1p_c	2dr1p_n	2dr5p_m	2dr5p_c
+0	C5H10O4	2doxrib_m	2doxrib_c	drib_c	drib_e
+0	C8H9O3	2hyoxplac_c	2hyoxplac_e	4hphac_c	4hphac_e
+0	C5H9O3S1	2kmb_c	2kmb_m
+0	C6H11N3O3	5g2oxpt_c
+0	C26H46N7O18P3S1	2maacoa_m	2maacoa_c
+0	C4H7O3	2mop_m	2obut_c	2obut_m	acac_c	acac_m	acac_e	mmtsa_m	mmtsa_c	sucsal_c	sucsal_m
+0	C26H48N7O17P3S1	2mbcoa_m	2mbcoa_c	ivcoa_m	ivcoa_c
+0	C25H44N7O17P3S1	2mp2coa_c	2mp2coa_m	b2coa_n	b2coa_c	b2coa_m
+0	C58H82O3	npmmoxbq_m
+0	C6H10O5	2oxoadp_m	2oxoadp_c
+0	C5H8O5	akg_e	akg_c	akg_m	akg_n
+0	C8H9NO	pad_c	pad_e
+0	C2H8O6P1	2pglyc_c
+0	C16H30O	2thexd_c	hxdcenal_c
+0	C9H11O4	34hpl_c	34hpl_m	homoval_c
+0	C9H9O4	34hpp_n	34hpp_c	34hpp_m
+0	C9H11NO4	34dhphe_c	34dhphe_e
+0	C8H8O4	34dhmald_c
+0	C8H8O3	34dhpac_c
+0	C8H9O4	34dhpha_c	hgentis_n	hgentis_c
+0	C8H10O4	34dhoxpeg_c	34dhoxpeg_e
+0	C10H12N5O7P1	35cgmp_n	35cgmp_c	35cgmp_m	35cgmp_e	guar_n	guar_c	guar_m
+0	C9H9I2NO3	35diotyr_c
+0	C27H48O4	xoltetrol_c	xoltetrol_m
+0	C48H78N7O21P3S1	cholcoaone_c
+0	C48H78N7O20P3S1	cholcoads_c
+0	C27H46O4	thcholst_c	thcholst_m
+0	C27H48O3	xoltriol_c	xoltriol_m
+0	C27H47O5	thcholstoic_c	thcholstoic_m
+0	C48H84N7O20P3S1	cholcoar_c	cholcoas_c
+0	C6H10O7	3dhguln_c
+0	C18H36N1O2	3dsphgn_c	sphings_c
+0	C4H8O3	3hmp_n	3hmp_m	3hmp_c
+0	C7H8N1O3	3hanthrn_c
+0	C43H78N7O18P3S1	hoxdcoa_c	hoxdcoa_m
+0	C41H74N7O18P3S1	hoxiccoa_c	hoxiccoa_m
+0	C10H12N2O4	hLkynr_c
+0	C9H20N2O3	3htmelys_c	3htmelys_n	3htmelys_m
+0	C3H7O3	3hpp_n	3hpp_m	3hpp_c	lac_D_n	lac_D_m	lac_D_c	lac_D_e	lac_L_c	lac_L_e	lac_L_m
+0	C24H44N7O18P3S1	3hpcoa_n	3hpcoa_m	3hpcoa_c
+0	C45H82N7O18P3S1	CE2249_c	CE2249_m
+0	C3H7O3S1	mercplac_c
+0	C6H12N1O5S2	mercplaccys_c	mercplaccys_e
+0	C5H9O3	3mob_c	3mob_m
+0	C26H42N7O17P3S1	3mb2coa_c	3mb2coa_m
+0	C27H42N7O19P3S1	3mgcoa_c	3mgcoa_m
+0	C6H8N2O	3mldz_c
+0	C6H9N2O2	3mlda_c	3mlda_e
+0	C52H78O4	npddhoxb_m	3npdhb_m
+0	C53H80O4	nhoxmox_m	3npdhb_me_m
+0	C52H79O3	3nphb_m	npr4hben_m
+0	C43H82N7O17P3S1	3oxbcoa_m	3oxbcoa_c	docoscoa_c	docoscoa_m
+0	C31H56N7O18P3S1	3odcoa_m	3odcoa_c
+0	C33H60N7O18P3S1	3oddcoa_m	3oddcoa_c
+0	C47H84N7O18P3S1	3oxhcoa_m	3oxhcoa_c
+0	C37H64N7O18P3S1	3ohdcoa_m	3ohdcoa_c
+0	C27H48N7O18P3S1	3ohcoa_c	3ohcoa_m
+0	C39H68N7O18P3S1	3oodcoa_c	3ohodcoa_m	3ohodcoa_c
+0	C29H48N7O18P3S1	3oocoa_m	3oocoa_c
+0	C45H80N7O18P3S1	CE2253_m	CE2253_c
+0	C35H64N7O18P3S1	3otdcoa_m	3otdcoa_c
+0	C10H19N5O13P2S1	paps_m	paps_c
+0	C10H15N5O13P2Se1	3padsel_c
+0	C3H7O7P1	3pg_c	3pg_m
+0	C3H9O10P2	13dpg_c
+0	C3H8O7P1	3php_c
+0	C4H9O2S1	mtpp_c
+0	C3H5N1O3S1	3sala_c	3sala_m
+0	C3H6O5S1	3snpyr_c	3snpyr_m
+0	C3H6O6S1	3spyr_m
+0	C5H11N2O3	3uib_c
+0	C10H10N1O5	42A3HP24DB_c
+0	C10H10N1O4	4aphdob_c
+0	C6H12N1O3	4aabutn_m	4aabutn_c	L2aadp6sa_c	L2aadp6sa_m
+0	C28H48O	amchb_c	lphol_c
+0	C30H46N7O18P3S1	4cmcoa_c	4cmcoa_m
+0	C8H10O6	4fumacac_c	4mlacac_c	4mlacac_n
+0	C5H8O6	4h2oglt_c	4h2oglt_m
+0	C10H8N1O3	kynate_c
+0	C28H40N7O18P3S1	4hbzcoa_m
+0	C7H7O3	4hbz_m	4hbz_c
+0	C5H9NO3	4hpro_LT_c	glu5sa_c	glu5sa_m	4hpro_LT_m
+0	C8H8O2	4hoxpacd_c
+0	C6H9N2O3	4izp_c
+0	C5H8N1O4	4ogm_c	akgm_c	akgm_e
+0	C7H15N1O1	4tmeabut_c
+0	C7H16NO2	4tmeabutn_c
+0	C20H21N7O6	methf_m	methf_c
+0	C20H23N7O6	mlthf_n	mlthf_c	mlthf_m
+0	C20H28N10O19P4	ap4a_n	ap4a_c
+0	C19H23N7O6	thf_n	thf_c	thf_m	thf_e
+0	C5H8N2O2	56dthm_c
+0	C4H6N2O2	56dura_c
+0	C19H30O2	5adtststerone_c	5adtststerone_e	andrstrn_c	andrstrn_e
+0	C8H15N3O7P1	air_c
+0	C9H17N4O8P1	aicar_c
+0	C9H17N3O9P1	5aizc_c
+0	C6H32O27P7	ppmi12346p_n	ppmi12346p_c
+0	C10H15N4O9P1	fprica_c	xmp_c
+0	C20H33O4	5HPET_c	leuktrB4_c
+0	C10H9NO2	5hoxindact_c
+0	C10H10N1O3	5hoxindoa_c	5hoxindoa_e
+0	C11H12N2O3	5htrp_c	5htrp_e
+0	C8H15N2O5	gluala_c	LgluDala_c
+0	C7H15N2O6S1	glutaur_c
+0	C20H25N7O6	5mthf_n	5mthf_c
+0	C20H26N7O6	5mthf_e	5mthf_m
+0	C30H39N9O12	mhpglu_c
+0	C6H15O7P1S1	5mdr1p_c	5mdru1p_c
+0	C11H15N5O3S	5mta_c
+0	C5H8N1O3	5oxpro_c	1p3h5c_c	1p3h5c_m
+0	C5H18O14P3	prpp_n	prpp_c	prpp_m
+0	C5H13N1O7P1	pram_c
+0	C9H13N5O3	dhbpt_c	dhbpt_m
+0	C6H16O10P1	6pgc_c	6pgc_m
+0	C6H13O9P1	6pgl_n	6pgl_c	gal1p_c	gal1p_m	g6p_A_c	g6p_A_m	g6p_A_n	g1p_B_c	g6p_B_n	g6p_B_c	g6p_B_m	f6p_m	f6p_n	f6p_c
+0	C9H11N5O3	6pthp_n	6pthp_c
+0	C19H21N7O6	dhf_c	dhf_m	dhf_n	fol_c	fol_e
+0	C14H14N6O3	dhpt_c	dhpt_m
+0	C27H46O3	xoldioloneh_c	xoltri25_c	xoltri25_e	xoltri27_c	xoltri27_e
+0	C27H44O3	xoldiolone_c	xoldiolone_m	xol25one_c	xol27one_c	3aOHd7da_c	d0da_c
+0	C27H43O4	7a3o4chlstnt_c	7a3o4chlstnt_e	7a3o4chlstnt_m
+0	C27H44O2	xol7aone_c
+0	C27H44O	7dhchsterol_lum3_c	chlstol_c	dsmsterol_c	lthstrone_c	chstenone_c
+0	C20H30O	retinol_9_cis_c	retinolCRBP_c	retinol_c	retinol_n	retinol_e	retinol_cis_11_c
+0	C2H4O	acald_c	acald_m	acald_e
+0	C2H5O2	ac_c	ac_n	ac_m	ac_e
+0	C25H44N7O18P3S1	aacoa_m	aacoa_c
+0	C7H15N1O2	ach_c	ach_n	ach_e
+0	C23H42N7O17P3S1	accoa_c	accoa_n
+0	C23H38N7O17P3S1	accoa_m
+0	C5H5N5	ade_n	ade_c	ade_e	ade_m
+0	C10H13N5O4	adn_n	adn_c	adn_m	adn_e	dgsn_n	dgsn_c	dgsn_e	dgsn_m
+0	C10H19N5O10P2	pap_c	pap_e	pap_m
+0	C10H16N5O10P1S1	aps_c	aps_m
+0	C10H12N5O6P1	adnr_m	dguar_n	dguar_m	adnr_n	adnr_c
+0	C72H100CoN18O17P	adocbl_c	adocbl_e	adocbl_m
+0	C58H83Co1N16O11	adocbi_c
+0	C20H26N10O12P2S2	mptamp_n	mptamp_c
+0	C10H16N5O10P1Se1	adsel_c
+0	C10H18N5O10P2	adp_c	adp_n	adp_m	dgdp_n	dgdp_c	dgdp_m
+0	C16H25N5O15P2	adpglc_n	adpman_n	gdpddman_c	gdpddman_m
+0	C15H25N5O14P2	adprib_c	adprib_e
+0	C20H39O7P2	ggdp_c
+0	C30H55O7P2	hexdp_c	psqldp_c
+0	C45H79O7P2	nprdp_m	nprdp_c	nonadp_c	nonadp_m
+0	C12H25O14P1	tre6p_c
+0	C3H5N2	aprop_c
+0	C6H12O6	adgal_m	adgal_c	adgal_n	glc_aD_n	glc_aD_c	glc_aD_m	fru_B_n	fru_B_c	glc_bD_n	glc_bD_c	glc_bD_m	glc_bD_e	fru_m	fru_c	fru_n	fru_e	gal_c	gal_n	gal_m	gal_e	man_e	man_n	man_m	man_c	inost_c	inost_n	inost_e
+0	C5H13O8P1	r1p_n	r1p_c	r5p_c	r5p_m	r5p_n	ru5p_D_c	ru5p_D_m	xu5p_D_c	xu5p_D_m	xu5p_D_n
+0	C39H68N7O17P3S1	lnlncacoa_c	lnlncgcoa_c
+0	C3H6N1O1	aact_c	aact_m
+0	NH3	nh3_c	nh3_n	nh3_m	nh3_e
+0	N1H2	nh4_c	nh4_e	nh4_m
+0	C10H16N5O7P1	amp_c	amp_n	amp_m	amp_e	dgmp_m	dgmp_n
+0	C25H38O8	andrstrnglc_c	andrstrnglc_e
+0	C7H8N1O2	anth_c	4abz_c	4abz_e
+0	C20H41O2	arach_c	arach_m	arach_e
+0	C20H33O2	arachd_e	arachd_c
+0	C41H74N7O17P3S	arachcoa_c	archcoa_m	archcoa_c
+0	H5As1O4	aso4_c
+0	AsO3	aso3_c
+0	C12H21N3O8	acetln_c	acetln_m	acBgamamAsn_c
+0	C10H15N5O13P3	atp_m	atp_n	atp_c
+0	C22H45O2	docosac_c	docosac_m
+0	C4H7N2O2	cyanala_c	cyanala_e	cyanala_m
+0	C3H7NO2	ala_B_m	ala_B_c	ala_B_e	ala_D_c	ala_D_e	ala_L_c	ala_L_e	ala_L_m	ala_L_n	sarcs_m	sarcs_c
+0	C6H13NO2	balab_c	ile_L_m	ile_L_c	ile_L_e	leu_L_m	leu_L_c	leu_L_e
+0	C40H56	caro_c	caro_n	caro_e
+0	C5H11N1O1	betald_m
+0	C6H13O8P	fuc1p_L_n	fuc1p_L_c
+0	H2C1O3	hco3_c	hco3_n	hco3_m	hco3_e
+0	C33H38N4O6	bilirub_c	bilirub_e
+0	C45H54N4O18	bildglcur_c	bildglcur_e
+0	C10H17N2O3S1	btn_c	btn_e
+0	C25H46N7O17P3S1	btcoa_m	btcoa_c	ibcoa_m	ibcoa_c
+0	C4H9O2	but_c	but_m
+0	C20H32O2	arachdcrn_c	arachdcrn_m
+0	C41H70N7O17P3S1	arachdcoa_c	arachdcoa_m	eicostetcoa_c	eicostetcoa_m
+0	Ca	ca2_e	ca2_c
+0	C10H13N5O6P1	camp_n	camp_c	camp_m	camp_e
+0	C10H21O2	dca_c	dca_m	octa_c	octa_m
+0	C1H4N1O5P1	cbp_c
+0	CO	co_c
+0	H2CO3	h2co3_n	h2co3_c	h2co3_m
+0	C9H18N3O11P2	cdp_c	cdp_m	cdp_n
+0	C14H27N4O11P2	cdpchol_c
+0	C11H21N4O11P2	cdpea_c
+0	C12H22O11	clb_c	clb_e	lcts_c	lcts_e	malt_c	malt_e	melib_c	melib_e	sucr_c	sucr_e	tre_c	tre_m	tre_e
+0	Cl	cl_c	cl_e
+0	C24H41O5	cholate_c	cholate_e
+0	C27H42O	ddsmsterol_c
+0	C27H46O	chsterol_c	chsterol_e	chsterol_m	lthstrl_c
+0	C5H13N1O1	chol_c	chol_e	chol_m	chol_n
+0	C5H16N1O4P1	cholp_c	cholp_m	cholp_n
+0	C20H28O	retinal_cis_9_c	retinal_c	retinal_n
+0	C6H6O6	acon_C_c	acon_C_m
+0	C6H11O7	cit_c	cit_m	cit_e	glcur_c	glcur_n	glcur_e	icit_m	icit_c	icit_n
+0	C9H16N3O8P1	cmp_n	cmp_c	cmp_m
+0	CO2	co2_e	co2_n	co2_c	co2_m
+0	C62H89CoN13O14P	cbl1_c	cbl1_e	cbl1_m
+0	C48H70Co1N11O8	cbi_c
+0	C21H36N7O16P3S1	coa_c	coa_m
+0	C21H40N7O16P3S1	coa_n
+0	C9H20N3O14P3	ctp_c	ctp_n	ctp_m
+0	Cu	cu2_e	fattyald_c
+0	C5H10N2O3S	cgly_c	cgly_e	cgly_m
+0	C9H13N3O5	cytd_e	cytd_c	cytd_n	cytd_m
+0	C4H5N3O	csn_c
+0	C9H21N1O8P1	4ppan_c
+0	C10H18N5O9P2	dadp_n	dadp_c	dadp_m
+0	C18H38N1O5P1	sphs1p_c	sphs1p_e
+0	C10H16N5O6P1	damp_m	damp_c	damp_n
+0	C6H14N4O2	arg_D_c
+0	C4H8N1O4	asp_D_c	asp_D_e	asp_L_c	asp_L_e	asp_L_m
+0	C10H19N5O12P3	datp_m	datp_c	datp_n
+0	C9H18N3O10P2	dcdp_n	dcdp_c	dcdp_m
+0	C9H16N3O7P1	dcmp_c	dcmp_n
+0	C9H20N3O13P3	dctp_m	dctp_n	dctp_c
+0	C21H29N6O15P2	dnad_m	dnad_c	dnad_n
+0	C31H58N7O17P3S1	dcacoa_c	dcacoa_m
+0	C6H7O6	dhdascb_c	dhdascb_e
+0	C6H10N1O2	thp2c_m	thp2c_c
+0	C9H13N3O4	dcyt_c	dcyt_e
+0	C10H12N4O4	din_n	din_c	din_e
+0	C9H12N2O5	duri_c	duri_n	duri_e
+0	C21H37N7O13P2S1	dpcoa_c	dpcoa_m
+0	C4H11O7P1	e4p_c	e4p_m	e4p_n
+0	C6H12O8	glcr_c	glcr_e
+0	C6H13O7	glcn_c	glcn_e	guln_c
+0	C6H12N1O5	gam_c	gam_e
+0	C6H15N1O8P1	gam6p_c	gam6p_m	gam6p_n	gam6p_e
+0	C6H8O6	glac_c	lxhexll_c	mdascb_c
+0	C3H6O3	glyald_m	glyald_n	glyald_c	dha_c	dha_n
+0	C3H7O4	glyc_R_c	glyc_R_m
+0	C3H10O7P1	2pg_m	2pg_c
+0	C10H14N5O7P1	dgmp_c
+0	C10H20N5O13P3	dgtp_n	dgtp_m
+0	C10H16N5O13P3	dgtp_c
+0	C10H17N4O10P2	didp_c	didp_n
+0	C41H72N7O17P3S1	dlnlcgcoa_c	dlnlcgcoa_m
+0	C9H13N5O4	dhnpt_c	dhnpt_m	thbpt4acam_c	thbpt4acam_m	thbpt4acam_n
+0	C3H9O6P1	dhap_m	dhap_n	dhap_c	g3p_c	g3p_m	g3p_n
+0	C5H15O7P2	dmpp_c
+0	C10H13N4O7P	dimp_n	dimp_c
+0	H7P2O7	ppi_n	ppi_m
+0	H4O7P2	ppi_c
+0	C6H18O24P6	ppmi1346p_n	ppmi1346p_c
+0	C4H10O2S2	dtt_n	dtt_c
+0	C10H19N4O13P3	ditp_n	ditp_c
+0	C3H6O2	lald_D_c
+0	C12H25O2	ddca_c	ddca_m
+0	C17H33NO4	ddcrn_c	ddcrn_m
+0	C33H62N7O17P3S1	ddcacoa_c	ddcacoa_m
+0	C8H10N1O2	dopa_e	dopa_c	octpam_c	octpmn_c	octpmn_e
+0	C9H9NO4	dopaqn_c
+0	C6H14O6	sorbitol_m	sorbitol_c	sorbitol_n	sbt_D_e	galt_c	galt_e
+0	C10H19N2O11P2	dtdp_m	dtdp_n	dtdp_c
+0	C10H17N2O8P1	dtmp_n	dtmp_c
+0	C10H21N2O14P3	dttp_m	dttp_n	dttp_c	dttp_e
+0	C9H17N2O11P2	dudp_n	dudp_c	dudp_m
+0	C9H15N2O8P1	dump_n	dump_m
+0	C9H13N2O8P1	dump_c
+0	C9H19N2O14P3	dutp_m	dutp_n
+0	C9H15N2O14P3	dutp_c
+0	C9H9O3	enphpyr_c	enphpyr_e	phpyr_c	phpyr_m	T4hcinnm_c	T4hcinnm_m
+0	C2H6O	etoh_c	etoh_e	etoh_m
+0	C2H6N1O1	etha_c
+0	C2H9N1O4P1	ethamp_c
+0	C15H28O7P2	frdp_c	frdp_n	ct_frdp_c
+0	C13H27O2	fa13p0iso_c
+0	Fe	fe2_e	fe2_c	fe2_m	fe3_c	fe3_m
+0	C27H36N9O15P2	fad_m	fad_n	fad_c	fad_e
+0	C27H37N9O15P2	fadh2_m	fadh2_n	fadh2_c
+0	C17H24N4O9P1	fmn_c	fmn_e	fmn_m
+0	CH2O	fald_m	fald_c	fald_n
+0	C1H3O2	for_m	for_c	for_e	for_n
+0	C6H11N2O4	for_isogln_c	forglu_c
+0	C29H48O	fecost_c
+0	C4H6O4	fum_m	fum_c	fum_e
+0	C19H25O5	ga51_c
+0	C9H14N3O5	gcynala_c
+0	C9H16N2O5Se	gglsmsc_c
+0	C8H15N2O5S1	glucys_c
+0	C10H18N5O11P2	gdp_m	gdp_n	gdp_c
+0	C16H27N5O16P2	gdpg_c	gdpmann_n	gdpmann_c	gdpmann_m
+0	C16H27N5O15P2	gdpfuc_c	gdpfuc_m	gdpfuc_n
+0	C10H23O7P2	grdp_c
+0	C26H47N7O19P3S1	glutcoa_c	glutcoa_n	glutcoa_m
+0	C3H8O3	glyc_m	glyc_c	glyc_e
+0	C3H11O6P1	glyc3p_c	glyc3p_m
+0	C2H5NO2	gly_m	gly_c	gly_e
+0	C5H11NO2	glyb_m	glyb_c	glyb_e	val_L_m	val_L_c	val_L_e
+0	C26H43NO6	gchola_c	gchola_e
+0	C24H42O21	glygn3_c	glygn3_m	glycogen_c	stachyose_c	stachyose_e
+0	C2H4O2	gcald_c	gcald_e	gcald_m
+0	C2H5O3	glyclt_n	glyclt_c	glyclt_e
+0	C2H3O3	glx_c	glx_m	glx_n
+0	C10H16N5O8P1	gmp_n	gmp_c	gmp_m
+0	C10H20N5O14P3	gtp_c	gtp_n	gtp_m
+0	C5H5N5O	gua_n	gua_c	gua_e	gua_m
+0	C10H13N5O5	gsn_n	gsn_c	gsn_e	gsn_m
+0	H0	h_n	h_c	h_m	h_e
+0	H2O	h2o_c	h2o_e	h2o_n	h2o_m
+0	C49H56FeN4O6	hemea_m
+0	C49H58FeN4O5	hemeo_m
+0	C16H32O	hxdcal_c
+0	C16H33O2	hdca_n	hdca_m	hdca_e
+0	C16H32O2	hdca_c	hexadec_c	hexadec_m	C13iso_c	C13iso_m
+0	C6H13O2	hxa_c	hxa_m
+0	C27H50N7O17P3S1	hxcoa_m	hxcoa_c
+0	C5H8N3	hista_c	hista_e
+0	CHN	cyan_c	cyan_m	cyan_e
+0	H2O2	h2o2_n	h2o2_c	h2o2_m	h2o2_e
+0	H2S	h2s_c	h2s_m
+0	O1H2	oh1_c	oh1_e
+0	C27H49N7O20P3S1	hmgcoa_c	hmgcoa_m
+0	C3H5O4	hpyr_c	hpyr_m
+0	C2H8N1O2S1	hyptaur_c
+0	C5H4N4O	hxan_c	hxan_n	hxan_e
+0	C10H17N4O11P2	idp_c	idp_n
+0	C10H15N4O8P1	imp_n
+0	C10H13N4O8P1	imp_c
+0	C10H9NO	id3acald_c	id3acald_m
+0	C10H10N1O2	ind3ac_c	ind3ac_e	ind3ac_m
+0	C8H5NO2	ind56qn_c
+0	H10P3O10	pppi_c	pppi_n
+0	H9P3O10	pppi_m
+0	C10H12N4O5	ins_n	ins_c	ins_e	ins_m
+0	I	i_c	i_e
+0	C5H12O7P2	ipdp_n	ipdp_c
+0	C10H19N4O14P3	itp_n
+0	C10H15N4O14P3	itp_c
+0	C4H8N1O3	2aobut_m
+0	C6H12N1O4	L2aadp_m	L2aadp_c
+0	C4H10N1O2	3aib_m	3aib_c	3aib_e
+0	C5H9NO4	4hglusa_c	4hglusa_m	acser_c	acser_e
+0	C8H14N2O5	LalaLglu_c
+0	C4H9NO3	athr_L_m	athr_L_c	athr_L_e	thr_L_c	thr_L_e
+0	C5H12O5	abt_c	abt_e	xylt_n	xylt_c	xylt_e
+0	C6H13N4O2	arg_L_c	arg_L_e	arg_L_m
+0	C6H10O6	ascb_L_c	ascb_L_e	gullac_c
+0	C4H8N2O3	asn_L_c	asn_L_e	asn_L_m
+0	C7H15NO3	crn_m	crn_c	crn_e
+0	C6H13N3O3	citr_L_c	citr_L_m
+0	C7H14N2O4S	cyst_L_c
+0	C3H8N1O5S1	Lcyst_c	Lcyst_m
+0	C3H7NO2S	cys_L_c	cys_L_m	cys_L_e
+0	C9H8N1O4	L_dpchrm_c
+0	C5H10N1O5	e4hglu_c	e4hglu_m
+0	C9H10N1O4	2c23dh56dhoxin_c
+0	C20H31O3	leuktrA4_c
+0	C11H12N2O4	Lfmkynr_c
+0	C6H12O5	fuc_L_c
+0	C5H10N1O4	glu_L_c	glu_L_m	glu_L_e
+0	C5H12N1O7P1	glu5p_c	glu5p_m
+0	C5H10N2O3	gln_L_c	gln_L_m	gln_L_e	isogln_L_c
+0	C6H9N3O2	his_L_c	his_L_e	his_L_m
+0	C4H9NO2S	hcys_L_n	hcys_L_c
+0	C24H49O2	ttc_c	ttc_m	ttc_e
+0	C18H33O2	lnlc_c	lnlc_e
+0	C39H70N7O17P3S1	lnlccoa_c	lnlccoa_m
+0	C10H12N2O3	Lkynr_c
+0	C6H13N2O2	lys_L_c	lys_L_n	lys_L_m	lys_L_e
+0	C5H11NO2S	met_L_m	met_L_n	met_L_c	met_L_e
+0	C15H29NO4	c8crn_c	c8crn_m	occrn_c	occrn_m
+0	C23H45NO4	pmtcrn_c	pmtcrn_m
+0	C5H9NO2	pro_L_e	pro_L_c	pro_L_m
+0	C11H17N2O6	saccrp_L_m	saccrp_L_c
+0	C7H14N2O4Se	selcyst_c
+0	C5H11NO2Se	selmeth_c	selmeth_m	selmeth_e
+0	C3H7NO3	ser_L_c	ser_L_m	ser_L_e
+0	C3H8O6S1	sl_L_c	sl_L_e	sl_L_m
+0	C11H12N2O2	trp_L_c	trp_L_e	trp_L_m
+0	C9H11NO3	tyr_L_c	tyr_L_n	tyr_L_m	tyr_L_e
+0	C3H5O3	msa_m	msa_c	pyr_m	pyr_c	pyr_e
+0	C24H43N7O19P3S1	malcoa_c	malcoa_m
+0	C18H32O16	maltr_c	raffin_c
+0	C3H5O3S1	mercppyr_c	mercppyr_m
+0	CH4O	meoh_c	meoh_e
+0	C3H4O2	mthgxl_c	mthgxl_e	mthgxl_m
+0	C4H8O4	mm_m	mm_c	succ_c	succ_m	succ_n	succ_e
+0	C1H5Se1	metsel_c
+0	Mg	mg2_e
+0	Mn	mn2_e
+0	H2MoO4	mobd_n	mobd_c	mobd_e
+0	C10H12MoN5O8PS2	moco_n	moco_c
+0	C10H14N5O6PS2	mpt_n	mpt_c
+0	C12H26N2O9P1S1	4ppcys_c
+0	C16H28N2O11	chtbs_c
+0	C7H16N2O8P1	gar_c
+0	C8H17N2O9P1	fgam_c
+0	C6H11NO2	n4abutn_m	n4abutn_c
+0	C14H22N5O11P1	dcamp_c
+0	C9H19N2O2	tmlys_c	tmlys_n	tmlys_m
+0	C11H13N5O3	m6adnr_m
+0	C8H16N2O5	acBgamam_c	acgamam_m
+0	C8H15NO6	acgal_c	acgal_e	acgam_n	acgam_c	acgam_m	acgam_e
+0	C8H18N1O9P1	acgam1p_n	acgam1p_c	acgam6p_n	acgam6p_c	acgam6p_m
+0	C7H14N2O3	acorn_n	acorn_c	acorn_e
+0	C6H13N2O1	aprut_c
+0	C4H9N2O3	cala_c
+0	C5H10N2O5	cbasp_c
+0	C4H13N1O4P1	dmeap_c	dmeap_m
+0	C8H8N1O3	nformanth_c
+0	C6H9NO5	Nforglu_c
+0	C6H6N2O	ncam_c	ncam_e	ncam_n
+0	C21H29N7O14P2	nad_c	nad_n	nadh_m
+0	C21H27N7O14P2	nad_m
+0	C21H31N7O14P2	nadh_n	nadh_c
+0	C21H32N7O17P3	nadp_c	nadp_m	nadp_n
+0	C21H34N7O17P3	nadph_c	nadph_m	nadph_n
+0	C6H6N1O2	nac_c	nac_e	nac_m
+0	C11H14NO6	nicrns_c
+0	C11H17N1O9P1	nicrnt_m	nicrnt_c	nicrnt_n
+0	C3H11N1O4P1	nmlamp_c	nmlamp_m	methamp_c
+0	C6H10N3	mhista_c	mhista_e
+0	C11H16N2O8P1	nmn_c	nmn_n	nmn_e	nmn_m
+0	C8H10N1O3	nrpphr_c	nrpphr_e
+0	C11H14N2O5	rnam_n	rnam_c
+0	O2	o2_n	o2_c	o2_m	o2_e	o2s_m	o2s_n	o2s_c	o2s_e
+0	C17H27N5O15P2	ac_adprib_c
+0	C9H18NO4	acrn_m	acrn_c
+0	C11H21NO4	obcar_m	obcar_c
+0	C18H37O2	ocdca_c	ocdca_m	ocdca_e
+0	C39H72N7O17P3S1	odecoa_c	odecoa_m	od2coa_c	od2coa_m
+0	C29H54N7O17P3S1	occoa_m	occoa_c
+0	C18H35O2	ocdce9a_c
+0	C10H21O3	ohdca_c
+0	C3H8N1O6P1	pser_L_c
+0	C5H11N2O2	orn_c	orn_n	orn_m	orn_e
+0	C5H5N2O4	orot_c
+0	C10H16N2O11P1	orot5p_c
+0	C2H2O4	oxa_c	oxa_m	oxa_e
+0	C4H6O5	oaa_c	oaa_m
+0	C20H34N6O12S2	gthox_c	gthox_m	gthox_e
+0	C37H64N7O17P3S1	fa16p1n7coa_c	fa16p1n7coa_m
+0	C37H70N7O17P3S1	pmtcoa_n	pmtcoa_m
+0	C37H66N7O17P3S1	pmtcoa_c
+0	C11H25N2O7P1S1	pan4p_c	pan4p_m
+0	C8H10N1	peamn_c	peamn_e
+0	C9H11NO2	phe_L_n	phe_L_c	phe_L_m	phe_L_e
+0	H3O4P1	pi_c
+0	H5P1O4	pi_e	pi_n	pi_m
+0	C3H8O6P1	pep_m	pep_c
+0	C6H30O24P6	minohp_n	minohp_c
+0	K	k_e	k_c
+0	C24H44N7O17P3S1	ppcoa_c	ppcoa_m	ppcoa_n
+0	C24H42N7O17P3S1	prpncoa_m	prpncoa_n	prpncoa_c
+0	C3H7O2	ppa_c	ppa_n	ppa_e	ppa_m
+0	C3H8O2	12ppd_R_c	12ppd_R_e
+0	C20H33O5	prostgd2_c	prostgd2_e	prostge2_c	prostge2_m	prostge2_e	leuktrB4woh_c
+0	C20H32O5	prostgh2_c	prostgh2_m
+0	C34H32FeN4O4	pheme_e	pheme_c	pheme_m
+0	C9H12N2O6	psduri_c	uri_e	uri_n	uri_c	uri_m
+0	C9H15N2O9P1	psd5p_c	ump_n	ump_c	ump_m
+0	C4H10N2	ptrc_c	ptrc_e
+0	C8H9NO3	pydx_c	pydx_m	pydx_e
+0	C8H12N1O6P1	pydx5p_c	pydx5p_m
+0	C8H12N2O2	pydam_c	pydam_m	pydam_e
+0	C8H14N2O5P1	pyam5p_m	pyam5p_c
+0	C8H11NO3	pydxn_c	pydxn_m	pydxn_e
+0	C8H14N1O6P1	pdx5p_m	pdx5p_c
+0	C7H7N1O4	quln_c	quln_m
+0	C10H18N3O6S1	gthrd_e	gthrd_n	gthrd_c	gthrd_m
+0	C20H29O2	retn_c	retn_e
+0	C26H37O8	retnglc_c	retnglc_e
+0	C17H21N4O6	ribflv_c	ribflv_e	ribflv_m
+0	C14H20N6O5S	ahcys_c	ahcys_n	ahcys_m
+0	C15H21N6O5S1	amet_n	amet_c	amet_m	amet_e
+0	C14H21N6O3S1	ametam_c
+0	C14H20N6O5Se	asehcys_c
+0	C15H22N6O5Se1	seasmet_c
+0	C7H14O7	sedh_c	sedh_e
+0	C7H20O13P2	s17bp_c
+0	C7H17O10P1	s7p_c	s7p_m	s7p_n
+0	H4Se1O4	sel_c	sel_e
+0	H2Se	seln_n	seln_c
+0	SeO3	selnt_c	selnt_e
+0	C3H7NO2Se	selcys_n	selcys_c	selcys_e
+0	C4H9NO2Se	selhcys_c	smscys_c
+0	H5P1O3Se1	selnp_c	selnp_m
+0	C10H11N2O1	srtn_c	srtn_e
+0	C11H18N3O7S1	Sfglutth_c
+0	C11H20N3O7S1	hmgth_c
+0	C29H50O	sstol_c	sstol_e
+0	C13H21N3O8S	lgt_S_n	lgt_S_c
+0	C8H21NO6P	g3pc_c
+0	C5H14NO6P	g3pe_c
+0	Na	na1_e	na1_c
+0	C7H16N3	spmd_c	spmd_e
+0	C10H22N4	sprm_c	sprm_e
+0	C18H39NO2	sphgn_c
+0	C18H41N1O5P1	sph1p_c	sph1p_e
+0	C30H50	sql_c
+0	C39H66N7O17P3S1	strdnccoa_c
+0	C25H49NO4	stcrn_c	stcrn_m
+0	C39H74N7O17P3S1	stcoa_c	stcoa_m
+0	H4S1O4	so4_c	so4_m	so4_e	s2_c
+0	H4S1O3	so3_c	so3_m
+0	S	s_m
+0	C2H7NO3S	taur_c	taur_e
+0	C26H45NO7S	tchola_c	tchola_e
+0	C19H28O2	tststerone_c	tststerone_e
+0	C45H86N7O17P3S1	lgnccoa_c	lgnccoa_m
+0	C14H29O2	ttdca_c	ttdca_m	ttdca_e
+0	C35H66N7O17P3S1	tdcoa_c	tdcoa_m
+0	C9H15N5O3	thbpt_n	thbpt_c
+0	C29H37N9O12	hpglu_c
+0	C12H16N4O1S1	thm_c	thm_e	thm_m
+0	C12H21N4O7P2S1	thmpp_c	thmpp_e	thmpp_m
+0	C1H2N1S1	tcynt_c	tcynt_m	tcynt_e
+0	H2S2O3	tsul_c	tsul_m	tsul_e
+0	C10H14N2O5	thymd_e	thymd_c	thymd_m
+0	C5H6N2O2	thym_c	thym_e
+0	C26H46N7O17P3S1	2mb2coa_c	2mb2coa_m
+0	C27H43NO4	tmndnccrn_c	tmndnccrn_m
+0	C41H68N7O17P3S1	tmndnccoa_c	tmndnccoa_m
+0	C20H36O7P2	ttc_ggdp_c
+0	C4H8O2S2	dttOX_n	dttOX_c
+0	C43H76N7O17P3S1	tdencoa_m	tdencoa_c
+0	C31H56N7O17P3S1	dc2coa_m	dc2coa_c
+0	C33H60N7O17P3S1	dd2coa_m	dd2coa_c
+0	C27H48N7O17P3S1	hx2coa_m	hx2coa_c
+0	C37H68N7O17P3S1	hdd2coa_c	hdd2coa_m
+0	C29H52N7O17P3S1	oc2coa_m	oc2coa_c
+0	C23H49N2O5P1	spc_c	spc_e
+0	C45H84N7O17P3S1	CE2245_m	CE2245_c
+0	C35H64N7O17P3S1	td2coa_m	td2coa_c
+0	C3H8N1	tma_c	tma_e
+0	C3H9NO	tmao_c
+0	C10H11N2	trypta_c
+0	C8H10N1O1	tym_c
+0	C49H76O4	q8h2_m
+0	C54H84O4	q9h2_m
+0	C9H17N2O12P2	udp_m	udp_n	udp_c
+0	C15H24N2O16P2	udp4k6dg_c
+0	C15H25N2O18P2	udpglcur_c	udpglcur_m	udpglcur_n
+0	C14H22N2O16P2	udpxyl_c
+0	C15H26N2O17P2	udpgal_c	udpgal_m
+0	C15H24N2O17P2	udpg_n	udpg_c	udpg_m
+0	C17H27N3O17P2	udpacgal_c	udpacgal_m
+0	C17H29N3O17P2	uacgam_c	uacgam_m	uacgam_n
+0	C4H4N2O2	ura_n	ura_c	ura_m	ura_e
+0	C5H6N4O3	urate_c	urate_e
+0	CH4N2O	urea_m	urea_e	urea_c
+0	C6H6N2O2	urcan_c
+0	C9H19N2O15P3	utp_m	utp_c	utp_n
+0	C5H4N4O2	xan_c	xan_n	xan_e
+0	C10H12N4O6	xtsn_n	xtsn_c	xtsn_e
+0	C10H9N1O4	xanate_c	xanate_e
+0	Zn	zn2_e
+0	C10H11N5O5P	dadnr_n
+0	C11H13N5O5P	mdadnr_n
+0	C9H12N3O7P1	cytr_n	cytr_m	cytr_c
+0	C10H14N3O7P1	m5cytr_n
+0	C27H40O3	d1d7da_c
+0	C27H42O3	d7da_c	d4da_c
+0	C19H26O2	astndione_c
+0	C10H13N2O7P1	dthyr_n	dthyr_m
+0	C9H12N3O6P1	dcytr_n	dcytr_m
+0	C10H12N5O5P1	dadnr_m
+0	C9H11N2O8P1	urir_n	urir_c	urir_m
