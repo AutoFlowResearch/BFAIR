@@ -5,7 +5,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from AutoFlow_OmicsDataHandling.FIA_MS_tools import (  # noqa E402
+from AutoFlow_OmicsDataHandling.FIA_MS.FIA_MS_tools import (  # noqa E402
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )
