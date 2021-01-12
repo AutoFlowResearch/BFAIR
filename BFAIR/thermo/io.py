@@ -16,7 +16,7 @@ from pytfa.io import (
     apply_compartment_data,
 )
 
-from AutoFlow_OmicsDataHandling.thermo import static
+from BFAIR.thermo import static
 
 
 def _path(filename):
