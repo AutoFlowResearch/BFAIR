@@ -136,12 +136,12 @@ class test_methods(unittest.TestCase):
             "/test_data/FIA_MS_Data/features_AdditionalAdducts"
             )
         sequence_standard = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv",
+            current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv",
             sep=";"
         )
         sample_names_standard = sequence_standard["sample_group_name"].unique()
         database_standard = pd.read_csv(
-            "/test_data/FIA_MS_Data//CHEMISTRY/standard_mix_struct.tsv",
+            "/test_data/FIA_MS_Data/CHEMISTRY/standard_mix_struct.tsv",
             sep="\t",
             header=None,
         )
@@ -157,7 +157,7 @@ class test_methods(unittest.TestCase):
         stats_standard = self.stats_standard
         intensities_standard = self.intensities_standard
         sequence_standard = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data//sequence_Standards.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv"
         )
         stats_standard_ = calculateMeanVarRSD(
             intensities_standard,
