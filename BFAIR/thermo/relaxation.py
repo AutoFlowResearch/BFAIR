@@ -16,7 +16,7 @@ try:
 except ModuleNotFoundError:
     pass
 
-from AutoFlow_OmicsDataHandling.thermo.utils import get_dgo_bound_change
+from BFAIR.thermo.utils import get_dgo_bound_change
 
 
 def relax_dgo(tmodel: ThermoModel, reactions_to_ignore=[]):
