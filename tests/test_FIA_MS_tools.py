@@ -63,7 +63,7 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(
             len(intensities_triplicates[0]),
-            len(intensities_triplicates_.loc[0]),
+            len(intensities_triplicates_[0]),
         )
 
     def test_calculateMeanVarRSD_triplicates(self):
@@ -84,7 +84,7 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(
             len(stats_triplicates[0]),
-            len(stats_triplicates_.loc[0]),
+            len(stats_triplicates_[0]),
         )
 
     def test_extractNamesAndIntensities_single(self):
@@ -108,7 +108,7 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(intensities_single), len(intensities_single_))
         self.assertEqual(
-            len(intensities_single[0]), len(intensities_single_.loc[0])
+            len(intensities_single[0]), len(intensities_single_[0])
         )
 
     def test_calculateMeanVarRSD_single(self):
@@ -126,7 +126,7 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(stats_single), len(stats_single_))
         self.assertEqual(
-            len(stats_single[0]), len(stats_single_.loc[0])
+            len(stats_single[0]), len(stats_single_[0])
         )
 
     def test_extractNamesAndIntensities_standard(self):
@@ -150,7 +150,7 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(intensities_standard), len(intensities_standard_))
         self.assertEqual(
-            len(intensities_standard[0]), len(intensities_standard_.loc[0])
+            len(intensities_standard[0]), len(intensities_standard_[0])
         )
 
     def test_calculateMeanVarRSD_standard(self):
@@ -168,5 +168,5 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(stats_standard), len(stats_standard_))
         self.assertEqual(
-            len(stats_standard[0]), len(stats_standard_.loc[0])
+            len(stats_standard[0]), len(stats_standard_[0])
         )
