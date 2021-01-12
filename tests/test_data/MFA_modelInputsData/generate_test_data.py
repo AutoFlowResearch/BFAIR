@@ -6,7 +6,7 @@
 # INCA_script_generator using unit testing.
 import pickle
 import pandas as pd
-from AutoFlow_OmicsDataHandling.INCA_script_generator import (
+from BFAIR.INCA_script_generator import (
     limit_to_one_model,
     limit_to_one_experiment,
     # prepare_input,
