@@ -379,11 +379,68 @@ ALTER TABLE public."INVESTIGATION_Investigation_ID_seq" OWNER TO postgres;
 
 ALTER SEQUENCE public."INVESTIGATION_Investigation_ID_seq" OWNED BY public."INVESTIGATION"."Investigation_ID";
 
+--
+-- Name: ISA_model_graph_structure; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."ISA_model_graph_structure" (
+    id integer NOT NULL,
+    isa_json json NOT NULL,
+    "Investigation_id_REF" integer NOT NULL
+);
+
+
+ALTER TABLE public."ISA_model_graph_structure" OWNER TO postgres;
+
+--
+-- Name: ISA_model_graph_structure_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."ISA_model_graph_structure_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."ISA_model_graph_structure_id_seq" OWNER TO postgres;
+
+--
+-- Name: ISA_model_graph_structure_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."ISA_model_graph_structure_id_seq" OWNED BY public."ISA_model_graph_structure".id;
+
+
+--
+-- Name: ISA_model_graph_structure id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ISA_model_graph_structure" ALTER COLUMN id SET DEFAULT nextval('public."ISA_model_graph_structure_id_seq"'::regclass);
+
+
+--
+-- Name: ISA_model_graph_structure ISA_model_graph_structure_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ISA_model_graph_structure"
+    ADD CONSTRAINT "ISA_model_graph_structure_pkey" PRIMARY KEY (id);
+
+
+--
+-- Name: ISA_model_graph_structure ISA_model_graph_structure_Investigation_id_REF_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."ISA_model_graph_structure"
+    ADD CONSTRAINT "ISA_model_graph_structure_Investigation_id_REF_fkey" FOREIGN KEY ("Investigation_id_REF") REFERENCES public."INVESTIGATION"("Investigation_ID") NOT VALID;
+
 
 --
 -- TOC entry 260 (class 1259 OID 18560)
 -- Name: MFA_model_metabolites ; Type: TABLE; Schema: public; Owner: postgres
---
+
 
 CREATE TABLE public."MFA_model_metabolites " (
     id integer NOT NULL,
@@ -513,9 +570,63 @@ ALTER TABLE ONLY public."MFA_model_reactions"
 --
 -- PostgreSQL database dump complete
 --
+-- Name: MS_raw_data_files; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."MS_raw_data_files" (
+    id integer NOT NULL,
+    "Sample_Name_REF" text NOT NULL,
+    filename text NOT NULL,
+    file_extension text NOT NULL,
+    raw_data_xml xml NOT NULL
+);
 
 
+ALTER TABLE public."MS_raw_data_files" OWNER TO postgres;
 
+--
+-- Name: MS_raw_data_files_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public."MS_raw_data_files_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."MS_raw_data_files_id_seq" OWNER TO postgres;
+
+--
+-- Name: MS_raw_data_files_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public."MS_raw_data_files_id_seq" OWNED BY public."MS_raw_data_files".id;
+
+
+--
+-- Name: MS_raw_data_files id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MS_raw_data_files" ALTER COLUMN id SET DEFAULT nextval('public."MS_raw_data_files_id_seq"'::regclass);
+
+
+--
+-- Name: MS_raw_data_files MS_raw_data_files_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MS_raw_data_files"
+    ADD CONSTRAINT "MS_raw_data_files_pkey" PRIMARY KEY ("Sample_Name_REF");
+
+
+--
+-- Name: MS_raw_data_files MS_raw_data_files_Sample_Name_REF_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."MS_raw_data_files"
+    ADD CONSTRAINT "MS_raw_data_files_Sample_Name_REF_fkey" FOREIGN KEY ("Sample_Name_REF") REFERENCES public."STUDY_SAMPLES"("Sample_Name") NOT VALID;
 
 --
 -- TOC entry 236 (class 1259 OID 18377)
@@ -1587,9 +1698,34 @@ CREATE TABLE public."STUDY_SAMPLES" (
 ALTER TABLE public."STUDY_SAMPLES" OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 17538)
--- Name: STUDY_Study_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: STUDY_SAMPLES STUDY_SAMPLES_Sample_Name_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
+
+ALTER TABLE ONLY public."STUDY_SAMPLES"
+    ADD CONSTRAINT "STUDY_SAMPLES_Sample_Name_key" UNIQUE ("Sample_Name");
+
+
+--
+-- Name: STUDY_SAMPLES STUDY_SAMPLES_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."STUDY_SAMPLES"
+    ADD CONSTRAINT "STUDY_SAMPLES_pkey" PRIMARY KEY ("Sample_Name");
+
+
+--
+-- Name: STUDY_SAMPLES STUDY_SAMPLES_Study_ID_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."STUDY_SAMPLES"
+    ADD CONSTRAINT "STUDY_SAMPLES_Study_ID_fkey" FOREIGN KEY ("Study_ID") REFERENCES public."STUDY"("Study_ID") NOT VALID;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
 
 CREATE SEQUENCE public."STUDY_Study_ID_seq"
     AS integer
