@@ -69,10 +69,11 @@ jobs:
             cd main
             sudo sed -i "s/^\(\#listen_addresses\s*=\s*\).*$/\1'*'/" postgresql.conf
             sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
+            sudo echo "host  all  all 0.0.0.0/0 md5" >> pg_hba.conf
             sudo /etc/init.d/postgresql restart
             cd ..
-            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
+            sudo -u postgres psql -c "create database Isatab_DB"
+            sudo -u postgres psql -f AutoFlow-OmicsDataHandling/IsaTab.sql isatab_db
 
   # Windows integration
   Integration-on-windows:
