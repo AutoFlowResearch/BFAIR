@@ -69,7 +69,6 @@ jobs:
             cd main
             sudo sed -i "s/^\(\#listen_addresses\s*=\s*\).*$/\1'*'/" postgresql.conf
             sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
-            sudo echo "host  all  all 0.0.0.0/0 md5" >> pg_hba.conf
             sudo /etc/init.d/postgresql restart
             cd ..
             sudo -u postgres psql -c "create database Isatab_DB"
