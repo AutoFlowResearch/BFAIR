@@ -139,6 +139,6 @@ workflows:
     jobs:
 #      - unittest
 #      - win-unittest
-#      - Integration-on-linux
+      - Integration-on-linux
       - Integration-on-windows
 #      - Integration-on-macos
