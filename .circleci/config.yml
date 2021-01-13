@@ -67,7 +67,7 @@ jobs:
             cd /etc/postgresql/
             cd *
             cd main
-            sudo sed -i 's/^\(\#listen_addresses\s*=\s*\).*$/\1"*"/' postgresql.conf
+            sudo sed -i "s/^\(\#listen_addresses\s*=\s*\).*$/\1'*'/" postgresql.conf
             sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
             sudo /etc/init.d/postgresql restart
             cd ..
