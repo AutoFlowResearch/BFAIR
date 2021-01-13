@@ -53,7 +53,6 @@ jobs:
   # Linux integration 
   Integration-on-linux:
     executor: python/default
-    tag: "3.7"
     steps:
       - checkout
       - run:
@@ -61,9 +60,9 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            wget ftp://ftp.gnu.org/gnu/glpk/glpk-4.55.tar.gz
-            tar -xzvf glpk-4.55.tar.gz
-            cd glpk-4.55
+            wget https://ftp.gnu.org/gnu/glpk/glpk-4.65.tar.gz
+            tar -xzvf glpk-4.65.tar.gz
+            cd glpk-4.65
             sudo ./configure
             sudo make install
             cd ..
