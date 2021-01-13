@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Install Python dependencies and postgresql installation
           command: |
-            python3 -m venv venv
+            python3.7 -m venv venv
             . venv/bin/activate
             wget ftp://ftp.gnu.org/gnu/glpk/glpk-4.55.tar.gz
             tar -xzvf glpk-4.55.tar.gz
