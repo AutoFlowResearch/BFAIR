@@ -63,8 +63,8 @@ jobs:
             wget ftp://ftp.gnu.org/gnu/glpk/glpk-4.55.tar.gz
             tar -xzvf glpk-4.55.tar.gz
             cd glpk-4.55
-            ./configure
-            make install
+            sudo ./configure
+            sudo make install
             pip install -r requirements.txt
             sudo apt install -y postgresql-client || true
             sudo apt install postgresql
