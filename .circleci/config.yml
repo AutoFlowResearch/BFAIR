@@ -60,6 +60,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
+            sudo apt install -y libglpk-dev
             pip install -r requirements.txt
             sudo apt install -y postgresql-client || true
             sudo apt install postgresql
@@ -120,8 +121,8 @@ jobs:
 workflows:
   main:
     jobs:
-      - unittest
-      - win-unittest
+#      - unittest
+#      - win-unittest
       - Integration-on-linux
-      - Integration-on-windows
+#      - Integration-on-windows
 #      - Integration-on-macos
