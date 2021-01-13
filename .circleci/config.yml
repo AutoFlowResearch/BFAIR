@@ -123,5 +123,5 @@ workflows:
       - unittest
       - win-unittest
       - Integration-on-linux
-      #- Integration-on-windows
-      - Integration-on-macos
+      - Integration-on-windows
+#      - Integration-on-macos
