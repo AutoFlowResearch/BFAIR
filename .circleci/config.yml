@@ -66,7 +66,7 @@ jobs:
             sudo ./configure
             sudo make install
             cd ..
-            apt-get install glpk-utils libglpk-dev swig
+            sudo apt-get install glpk-utils libglpk-dev swig
             pip install -r requirements.txt
             sudo apt install -y postgresql-client || true
             sudo apt install postgresql
