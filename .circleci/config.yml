@@ -60,7 +60,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            sudo apt install -y libglpk-dev
+            sudo apt install -y glpk-utils
             pip install -r requirements.txt
             sudo apt install -y postgresql-client || true
             sudo apt install postgresql
