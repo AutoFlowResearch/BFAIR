@@ -90,8 +90,9 @@ jobs:
             sudo echo "host  all  all 0.0.0.0/0 md5" | sudo tee -a pg_hba.conf
             sudo /etc/init.d/postgresql restart
             cd
-            sudo -u postgres psql -c "create database Isatab_DB"
-            sudo -u postgres psql -f AutoFlow-OmicsDataHandling/IsaTab.sql isatab_db
+
+
+
 
   # Windows integration
   Integration-on-windows:
@@ -146,5 +147,5 @@ workflows:
 #      - unittest
 #      - win-unittest
       - Integration-on-linux
-#      - Integration-on-windows
+#     - Integration-on-windows
 #      - Integration-on-macos
