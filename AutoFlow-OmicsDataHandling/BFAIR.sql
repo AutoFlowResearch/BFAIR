@@ -1,4 +1,3 @@
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -1532,14 +1531,14 @@ CREATE TABLE public."SOPs" (
     sop_appendix text NOT NULL,
     sop_timeline text NOT NULL,
     sop_deviations_from_procedure text NOT NULL,
-    "sop_ID" integer NOT NULL
+    "sop_ID" integer NOT NULL,
+    "Protocol_id_REF" integer NOT NULL
 );
 
 
 ALTER TABLE public."SOPs" OWNER TO postgres;
 
 --
--- TOC entry 253 (class 1259 OID 18519)
 -- Name: SOPs_sop_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -1555,12 +1554,33 @@ CREATE SEQUENCE public."SOPs_sop_ID_seq"
 ALTER TABLE public."SOPs_sop_ID_seq" OWNER TO postgres;
 
 --
--- TOC entry 3470 (class 0 OID 0)
--- Dependencies: 253
 -- Name: SOPs_sop_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public."SOPs_sop_ID_seq" OWNED BY public."SOPs"."sop_ID";
+
+
+--
+-- Name: SOPs sop_ID; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."SOPs" ALTER COLUMN "sop_ID" SET DEFAULT nextval('public."SOPs_sop_ID_seq"'::regclass);
+
+
+--
+-- Name: SOPs SOPs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."SOPs"
+    ADD CONSTRAINT "SOPs_pkey" PRIMARY KEY ("sop_ID");
+
+
+--
+-- Name: SOPs SOPs_Protocol_id_REF_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."SOPs"
+    ADD CONSTRAINT "SOPs_Protocol_id_REF_fkey" FOREIGN KEY ("Protocol_id_REF") REFERENCES public."PROTOCOLS"("Protocol_ID") NOT VALID;
 
 
 --
