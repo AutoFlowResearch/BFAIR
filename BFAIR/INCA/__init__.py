@@ -1,1 +1,1 @@
-from INCA_script_generator.INCA.INCA_script_generator import INCA_script
+from BFAIR.INCA.INCA_script_generator import INCA_script

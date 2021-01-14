@@ -4,9 +4,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from BFAIR.INCA.INCA_script_generator import (  # noqa E402
-    INCA_script
-)
+import BFAIR.INCA.INCA_script_generator import as INCA_script # noqa E402
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
@@ -58,7 +56,7 @@ class test_methods(unittest.TestCase):
         self.mapping_script = mapping_script
         self.script = script
         self.runner = runner
-        self.INCA_script = INCA_script()
+        self.INCA_script = INCA_script.INCA_script()
 
     """
     For now, all the tests are based on comparing the output of the custom
