@@ -22,19 +22,19 @@ class test_methods(unittest.TestCase):
         (
             intensities_triplicates,
             stats_triplicates,
-            intensities_single,
-            stats_single,
-            intensities_standard,
-            stats_standard,
+            # intensities_single,
+            # stats_single,
+            # intensities_standard,
+            # stats_standard,
         ) = pickle.load(file_obj)
         file_obj.close()
 
         self.intensities_triplicates = intensities_triplicates
         self.stats_triplicates = stats_triplicates
-        self.intensities_single = intensities_single
-        self.stats_single = stats_single
-        self.intensities_standard = intensities_standard
-        self.stats_standard = stats_standard
+        # self.intensities_single = intensities_single
+        # self.stats_single = stats_single
+        # self.intensities_standard = intensities_standard
+        # self.stats_standard = stats_standard
 
     def test_extractNamesAndIntensities_triplicates(self):
         intensities_triplicates = self.intensities_triplicates
