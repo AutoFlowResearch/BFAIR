@@ -39,19 +39,17 @@ class test_methods(unittest.TestCase):
     def test_extractNamesAndIntensities_triplicates(self):
         intensities_triplicates = self.intensities_triplicates
         feature_dir = (
-            current_dir +
-            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+            current_dir + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
         )
         sequence_triplicates = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv",
-            sep=";"
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv", sep=";"
         )
         sample_names_triplicates = sequence_triplicates[
             "sample_group_name"
         ].unique()
         database_triplicates = pd.read_csv(
-            current_dir +
-            "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
+            current_dir
+            + "/test_data/FIA_MS_Data/CHEMISTRY/iJO1366_struct.tsv",
             sep="\t",
             header=None,
         )
@@ -70,8 +68,7 @@ class test_methods(unittest.TestCase):
         stats_triplicates = self.stats_triplicates
         intensities_triplicates = self.intensities_triplicates
         sequence_triplicates = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv",
-            sep=';'
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv", sep=";"
         )
         stats_triplicates_ = calculateMeanVarRSD(
             intensities_triplicates,
@@ -80,9 +77,7 @@ class test_methods(unittest.TestCase):
             ),
             min_reps=3,
         )
-        self.assertEqual(
-            len(stats_triplicates), len(stats_triplicates_)
-        )
+        self.assertEqual(len(stats_triplicates), len(stats_triplicates_))
         self.assertEqual(
             len(stats_triplicates.columns),
             len(stats_triplicates_.columns),
