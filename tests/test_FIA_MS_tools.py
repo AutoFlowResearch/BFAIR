@@ -22,10 +22,10 @@ class test_methods(unittest.TestCase):
         (
             intensities_triplicates,
             stats_triplicates,
-            # intensities_single,
-            # stats_single,
-            # intensities_standard,
-            # stats_standard,
+            intensities_single,
+            stats_single,
+            intensities_standard,
+            stats_standard,
         ) = pickle.load(file_obj)
         file_obj.close()
 
