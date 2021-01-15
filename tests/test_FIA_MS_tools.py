@@ -88,6 +88,8 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates_.columns),
         )
 
+
+"""
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
         feature_dir = (
@@ -177,3 +179,4 @@ class test_methods(unittest.TestCase):
             len(stats_standard.columns),
             len(stats_standard_.columns)
         )
+"""
