@@ -62,15 +62,16 @@ class test_methods(unittest.TestCase):
             len(intensities_triplicates), len(intensities_triplicates_)
         )
         self.assertEqual(
-            len(intensities_triplicates[0]),
-            len(intensities_triplicates_[0]),
+            len(intensities_triplicates.columns),
+            len(intensities_triplicates_.columns),
         )
 
     def test_calculateMeanVarRSD_triplicates(self):
         stats_triplicates = self.stats_triplicates
         intensities_triplicates = self.intensities_triplicates
         sequence_triplicates = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv",
+            sep=';'
         )
         stats_triplicates_ = calculateMeanVarRSD(
             intensities_triplicates,
@@ -83,8 +84,8 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates), len(stats_triplicates_)
         )
         self.assertEqual(
-            len(stats_triplicates[0]),
-            len(stats_triplicates_[0]),
+            len(stats_triplicates.columns),
+            len(stats_triplicates_.columns),
         )
 
     def test_extractNamesAndIntensities_single(self):
@@ -108,14 +109,16 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(intensities_single), len(intensities_single_))
         self.assertEqual(
-            len(intensities_single[0]), len(intensities_single_[0])
+            len(intensities_single.columns),
+            len(intensities_single_.columns)
         )
 
     def test_calculateMeanVarRSD_single(self):
         stats_single = self.stats_single
         intensities_single = self.intensities_single
         sequence_single = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv",
+            sep=';'
         )
         stats_single_ = calculateMeanVarRSD(
             intensities_single,
@@ -126,7 +129,8 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(stats_single), len(stats_single_))
         self.assertEqual(
-            len(stats_single[0]), len(stats_single_[0])
+            len(stats_single.columns),
+            len(stats_single_.columns)
         )
 
     def test_extractNamesAndIntensities_standard(self):
@@ -150,14 +154,16 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(intensities_standard), len(intensities_standard_))
         self.assertEqual(
-            len(intensities_standard[0]), len(intensities_standard_[0])
+            len(intensities_standard.columns),
+            len(intensities_standard_.columns)
         )
 
     def test_calculateMeanVarRSD_standard(self):
         stats_standard = self.stats_standard
         intensities_standard = self.intensities_standard
         sequence_standard = pd.read_csv(
-            current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv"
+            current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv",
+            sep=';'
         )
         stats_standard_ = calculateMeanVarRSD(
             intensities_standard,
@@ -168,5 +174,6 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(len(stats_standard), len(stats_standard_))
         self.assertEqual(
-            len(stats_standard[0]), len(stats_standard_[0])
+            len(stats_standard.columns),
+            len(stats_standard_.columns)
         )
