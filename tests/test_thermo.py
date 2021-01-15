@@ -3,7 +3,7 @@ import os.path
 import unittest
 import pandas as pd
 
-import AutoFlow_OmicsDataHandling.thermo as thermo
+import BFAIR.thermo as thermo
 
 
 def _check_table(test: unittest.TestCase, table: pd.DataFrame, colnames):
