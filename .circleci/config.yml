@@ -52,7 +52,6 @@ jobs:
   
   # Linux integration 
   Integration-on-linux:
-    executor: python/default
     docker:
       - image: circleci/postgres:9.6.2-alpine
         auth:
@@ -61,6 +60,7 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
+    executor: python/default
 
     steps:
       - checkout
