@@ -59,10 +59,28 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
+    steps:
+      - checkout
+      - run:
+          name: Install Python dependencies and postgresql installation
+          command: |
+            sudo apt install -y postgresql-client || true
+            sudo apt install postgresql
+      - run:
+          name: Integrate IsaTAB.sql into the database
+          command: |
+            cd /etc/postgresql/
+            cd *
+            cd main
+            sudo sed -i "s/^\(\#listen_addresses\s*=\s*\).*$/\1'*'/" postgresql.conf
+            sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
+            sudo echo "host  all  all 0.0.0.0/0 md5" | sudo tee -a pg_hba.conf
+            sudo /etc/init.d/postgresql restart
+            cd
 
   # Linux integration 
   Integration-on-linux:
-    executor: docker-executor
+x    executor: docker-executor
     steps:
       - checkout
       - run:
