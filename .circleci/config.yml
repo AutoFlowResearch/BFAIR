@@ -62,7 +62,7 @@ jobs:
 
   # Linux integration 
   Integration-on-linux:
-    executor: python/default
+#    executor: python/default
     executor: docker-executor
     steps:
       - checkout
