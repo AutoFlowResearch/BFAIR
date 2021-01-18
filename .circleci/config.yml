@@ -53,7 +53,7 @@ jobs:
   # Linux integration 
   Integration-on-linux:
     docker:
-      - image: circleci/python:3.6.2-stretch-browsers
+      - image: circleci/python:3.7.2-stretch-browsers
         auth:
           username: mydockerhub-user
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
