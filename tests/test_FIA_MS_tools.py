@@ -5,7 +5,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from AutoFlow_OmicsDataHandling.FIA_MS.FIA_MS_tools import (  # noqa E402
+from BFAIR.FIA_MS.FIA_MS_tools import (  # noqa E402
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )
@@ -83,8 +83,6 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates_.columns),
         )
 
-
-"""
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
         feature_dir = (
@@ -174,4 +172,3 @@ class test_methods(unittest.TestCase):
             len(stats_standard.columns),
             len(stats_standard_.columns)
         )
-"""

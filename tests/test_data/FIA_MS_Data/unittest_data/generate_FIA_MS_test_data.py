@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 13.12.2020
+# Last date : 18.01.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -7,7 +7,7 @@
 import pickle
 import pandas as pd
 import pathlib
-from AutoFlow_OmicsDataHandling.FIA_MS_tools import (
+from BFAIR.FIA_MS_tools import (
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )
