@@ -86,9 +86,9 @@ class test_methods(unittest.TestCase):
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
         feature_dir = (
-            current_dir +
-            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
-            )
+            current_dir
+            + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        )
         sequence_single = pd.read_csv(
             current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv",
             sep=";"
@@ -131,9 +131,9 @@ class test_methods(unittest.TestCase):
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
         feature_dir = (
-            current_dir +
-            "/test_data/FIA_MS_Data/features_AdditionalAdducts"
-            )
+            current_dir
+            + "/test_data/FIA_MS_Data/features_AdditionalAdducts"
+        )
         sequence_standard = pd.read_csv(
             current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv",
             sep=";"
