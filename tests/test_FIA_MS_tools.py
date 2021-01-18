@@ -140,7 +140,8 @@ class test_methods(unittest.TestCase):
         )
         sample_names_standard = sequence_standard["sample_group_name"].unique()
         database_standard = pd.read_csv(
-            "/test_data/FIA_MS_Data/CHEMISTRY/standard_mix_struct.tsv",
+            current_dir
+            + "/test_data/FIA_MS_Data/CHEMISTRY/standard_mix_struct.tsv",
             sep="\t",
             header=None,
         )

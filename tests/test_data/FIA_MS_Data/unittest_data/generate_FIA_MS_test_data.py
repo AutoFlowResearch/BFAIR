@@ -7,7 +7,7 @@
 import pickle
 import pandas as pd
 import pathlib
-from BFAIR.FIA_MS_tools import (
+from BFAIR.FIA_MS.FIA_MS_tools import (
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )
@@ -23,7 +23,6 @@ feature_dir = current_dir + "/../features_AdditionalAdducts"
 sequence_triplicates = pd.read_csv(
     current_dir + "/../sequence_EColi.csv", sep=";"
 )
-print(sequence_triplicates.columns.values)
 sample_names_triplicates = sequence_triplicates["sample_group_name"].unique()
 database_triplicates = pd.read_csv(
     current_dir + "/../CHEMISTRY/iJO1366_struct.tsv", sep="\t", header=None
@@ -62,19 +61,19 @@ stats_triplicates = calculateMeanVarRSD(
     intensities_triplicates,
     sequence_triplicates.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]
-    ),
+    ), min_reps=3,
 )
 stats_single = calculateMeanVarRSD(
     intensities_single,
     sequence_single.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]
-    ),
+    ), min_reps=1,
 )
 stats_standard = calculateMeanVarRSD(
     intensities_standard,
     sequence_standard.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]
-    ),
+    ), min_reps=1,
 )
 
 pickle.dump(
