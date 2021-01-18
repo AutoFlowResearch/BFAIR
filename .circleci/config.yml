@@ -52,14 +52,7 @@ jobs:
 
   # Linux integration 
   Integration-on-linux:
-    docker:
-      - image: circleci/python:3.7.2-stretch-browsers
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-        environment:
-          FLASK_CONFIG: testing
-          TEST_DATABASE_URL: postgresql://ubuntu@localhost/circle_test?sslmode=disable
+    executor: python/default
     steps:
       - checkout
       - run:
@@ -79,6 +72,7 @@ jobs:
             sudo echo "host  all  all 0.0.0.0/0 md5" | sudo tee -a pg_hba.conf
             sudo /etc/init.d/postgresql restart
             cd
+            nc -z localhost 5432
             sudo -u postgres psql -c "create database Isatab_DB"
 
 
