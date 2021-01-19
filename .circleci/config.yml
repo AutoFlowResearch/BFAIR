@@ -60,8 +60,7 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
-      docker: # executor type
-        - image: buildpack-deps:trusty
+      - image: buildpack-deps:trusty
     steps:
       - checkout
       - run:
