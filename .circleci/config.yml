@@ -71,6 +71,7 @@ jobs:
             sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
             sudo echo "host  all  all 0.0.0.0/0 md5" | sudo tee -a pg_hba.conf
             sudo /etc/init.d/postgresql restart
+            netstat -an | grep -i "listen "
             cd
             nc -z localhost 5432
             sudo -u circleci psql -c "create database Isatab_DB"
