@@ -60,6 +60,8 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
+      docker: # executor type
+        - image: buildpack-deps:trusty
     steps:
       - checkout
       - run:
@@ -70,7 +72,7 @@ jobs:
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            sudo -u root psql -c "create database Isatab_DB"
+            psql -c "create database Isatab_DB" -U root
 
 
 
