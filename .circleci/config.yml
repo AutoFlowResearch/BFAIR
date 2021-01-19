@@ -60,10 +60,10 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
-      - image: buildpack-deps:trusty
     steps:
       - checkout
       - run:
+          shell: /bin/sh
           name: Install Python dependencies and postgresql installation
           command: |
             sudo apt install -y postgresql-client || true
@@ -72,8 +72,6 @@ jobs:
           name: Integrate IsaTAB.sql into the database
           command: |
             psql -c "create database Isatab_DB" -U root
-
-
 
 
   # Windows integration
