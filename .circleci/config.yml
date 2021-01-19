@@ -66,7 +66,7 @@ jobs:
           shell: /bin/sh
           name: Install Python dependencies and postgresql installation
           command: |
-            sudo apt install -y postgresql-client || true
+            apt install -y postgresql-client || true
 
       - run:
           name: Integrate IsaTAB.sql into the database
