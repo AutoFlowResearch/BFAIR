@@ -52,29 +52,25 @@ jobs:
 
   # Linux integration 
   Integration-on-linux:
-    executor: python/default
+    docker:
+      - image: circleci/postgres:9.6.2-alpine
+        auth:
+          username: mydockerhub-user
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: circle-test_test
     steps:
       - checkout
       - run:
           name: Install Python dependencies and postgresql installation
           command: |
             sudo apt install -y postgresql-client || true
-            sudo apt install postgresql
 
       - run:
           name: Integrate IsaTAB.sql into the database
           command: |
-            cd /etc/postgresql/
-            cd *
-            cd main
-            sudo sed -i "s/^\(\#listen_addresses\s*=\s*\).*$/\1'*'/" postgresql.conf
-            sudo sed -i '/#listen_addresses/s/^#//g' postgresql.conf
-            sudo echo "host  all  all 0.0.0.0/0 md5" | sudo tee -a pg_hba.conf
-            sudo pg_ctlcluster 11 main start
-            netstat -an | grep -i "listen "
-            cd
-            nc -z localhost 5432
-            sudo -u circleci psql -c "create database Isatab_DB"
+            sudo -u root psql -c "create database Isatab_DB"
 
 
 
