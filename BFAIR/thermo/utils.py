@@ -126,7 +126,7 @@ def get_dgo_bound_change(tmodel: ThermoModel, relax_table):
     )
 
 
-def get_mass_action_ratio(tmodel):
+def get_mass_action_ratio(tmodel: ThermoModel):
     """
     Returns calculated mass action ratios from a solved pytfa model.
 

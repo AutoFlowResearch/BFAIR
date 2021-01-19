@@ -3,9 +3,8 @@
 This module hosts functions to load cobra models, create and adjust tFBA-ready models.
 """
 
-import os.path
 import logging
-from glob import glob
+from pathlib import Path
 
 from cobra import Model
 from cobra.core.singleton import Singleton
@@ -25,7 +24,7 @@ from BFAIR.thermo import static
 
 class _ModelFactory(metaclass=Singleton):
     def __init__(self):
-        self._list = [os.path.basename(path).split(".")[0] for path in glob(_path("*.json"))]
+        self._list = [path.stem for path in Path(_static_path()).glob("*.json")]
 
     def __dir__(self):
         return self._list
@@ -36,9 +35,10 @@ class _ModelFactory(metaclass=Singleton):
         return super().__getattribute__(item)
 
 
-def _path(filename):
-    # Returns the path to a file in the static folder
-    return os.path.join(os.path.dirname(static.__file__), filename)
+def _static_path(*args):
+    # Returns the path (as str) to the static folder
+    # Output must be str to be compatible with cobra/pytfa
+    return str(Path(static.__file__).parent.joinpath(*args))
 
 
 def _silence_pytfa(logger_name):
@@ -63,7 +63,7 @@ def load_cbm(model_name) -> Model:
     cobra.Model
         The loaded cobra model.
     """
-    return load_json_model(_path(model_name + ".json"))
+    return load_json_model(_static_path(model_name + ".json"))
 
 
 def load_data(model_name):
@@ -84,9 +84,9 @@ def load_data(model_name):
     compartment_data : dict
         A dictionary with information about each compartment of the model.
     """
-    thermo_data = load_thermoDB(_path("thermo_data.thermodb"))
-    lexicon = read_lexicon(_path(os.path.join(model_name, "lexicon.csv")))
-    compartment_data = read_compartment_data(_path(os.path.join(model_name, "compartment_data.json")))
+    thermo_data = load_thermoDB(_static_path("thermo_data.thermodb"))
+    lexicon = read_lexicon(_static_path(model_name, "lexicon.csv"))
+    compartment_data = read_compartment_data(_static_path(model_name, "compartment_data.json"))
     return thermo_data, lexicon, compartment_data
 
 
@@ -124,9 +124,9 @@ def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=No
         raise ValueError("Not all required data supplied.")
 
     # due to a bug on pytfa, the logger is created with "None" as name
-    _silence_pytfa(f'thermomodel_{None}')
+    _silence_pytfa(f"thermomodel_{None}")
     # however, if the model ends up being copied the correct name will be used, so this logger should be silenced too
-    _silence_pytfa(f'thermomodel_{model_name}')
+    _silence_pytfa(f"thermomodel_{model_name}")
 
     cmodel = load_cbm(model_name)
     tmodel = ThermoModel(thermo_data, cmodel)
