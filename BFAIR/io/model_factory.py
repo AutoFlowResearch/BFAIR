@@ -10,13 +10,7 @@ from cobra import Model
 from cobra.core.singleton import Singleton
 from cobra.io import load_json_model
 from pytfa import ThermoModel
-from pytfa.io import (
-    load_thermoDB,
-    read_lexicon,
-    read_compartment_data,
-    annotate_from_lexicon,
-    apply_compartment_data,
-)
+from pytfa.io import load_thermoDB, read_lexicon, read_compartment_data, annotate_from_lexicon, apply_compartment_data
 from pytfa.utils.logger import get_bistream_logger
 
 from BFAIR.io._path import static_path

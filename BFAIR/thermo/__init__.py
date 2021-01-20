@@ -6,13 +6,7 @@ constraint-based models.
 
 from BFAIR.thermo.constants import CENTRAL_CARBON_METABOLISM
 from BFAIR.thermo.relaxation import relax, relax_dgo, relax_lc
-from BFAIR.thermo.utils import (
-    adjust_model,
-    get_flux,
-    get_log_concentration,
-    get_delta_g,
-    get_mass_action_ratio,
-)
+from BFAIR.thermo.utils import adjust_model, get_flux, get_log_concentration, get_delta_g, get_mass_action_ratio
 
 
 __all__ = [
