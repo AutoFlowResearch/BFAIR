@@ -7,7 +7,7 @@
 import pickle
 import pandas as pd
 import pathlib
-from BFAIR.FIA_MS.FIA_MS_tools import (
+from BFAIR.FIA_MS.import_statistics import (
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )

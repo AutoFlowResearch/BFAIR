@@ -5,7 +5,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from BFAIR.FIA_MS.FIA_MS_tools import (  # noqa E402
+from BFAIR.FIA_MS.import_statistics import (  # noqa E402
     extractNamesAndIntensities,
     calculateMeanVarRSD,
 )
