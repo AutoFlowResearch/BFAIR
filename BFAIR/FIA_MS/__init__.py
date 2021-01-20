@@ -3,6 +3,8 @@ from BFAIR.FIA_MS.FIA_MS_tools import (
     calculateMeanVarRSD
 )
 
+__version__ = "0.0.1"
+
 __all__ = [
     "extractNamesAndIntensities",
     "calculateMeanVarRSD",
