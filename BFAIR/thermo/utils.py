@@ -17,6 +17,34 @@ def _check_if_solved(tmodel: ThermoModel):
         raise ValueError("Model must be solved first.")
 
 
+def adjust_model(tmodel: ThermoModel, rxn_bounds, lc_bounds):
+    """
+    Adjusts the flux bounds and log concentration of a tFBA-ready model.
+
+    Parameters
+    ----------
+    tmodel : str
+        A cobra model with thermodynamic information.
+    rxn_bounds : pandas.DataFrame
+        A 3-column table containing reaction IDs and flux bounds. The table must have the following columns: ``id``,
+        ``lb``, and ``ub``.
+    lc_bounds : pandas.DataFrame
+        A 3-column table containing metabolite IDs and log concentration bounds. The table must have the following
+        columns: ``id``, ``lb``, and ``ub``.
+    """
+    # constrain reactions (e.g., growth rate, uptake/secretion rates)
+    for rxn_id, lb, ub in zip(rxn_bounds["id"], rxn_bounds["lb"], rxn_bounds["ub"]):
+        if tmodel.reactions.has_id(rxn_id):
+            tmodel.parent.reactions.get_by_id(rxn_id).bounds = lb, ub
+            tmodel.reactions.get_by_id(rxn_id).bounds = lb, ub
+    # constrain log concentrations
+    for met, lb, ub in zip(lc_bounds["id"], lc_bounds["lb"], lc_bounds["ub"]):
+        for compartment in tmodel.compartments:
+            met_id = met + "_" + compartment
+            if tmodel.log_concentration.has_id(met_id):
+                (tmodel.log_concentration.get_by_id(met_id).variable.set_bounds(lb, ub))
+
+
 def get_flux(tmodel: ThermoModel):
     """
     Returns calculated fluxes from a solved pytfa model.

@@ -19,26 +19,33 @@ from pytfa.io import (
 )
 from pytfa.utils.logger import get_bistream_logger
 
-from BFAIR.thermo import static
+from BFAIR.io._path import static_path
 
 
-class _ModelFactory(metaclass=Singleton):
-    def __init__(self):
-        self._list = [path.stem for path in Path(_static_path()).glob("*.json")]
+class _BaseFactory:
+    def __init__(self, factory_method):
+        self._factory_method = factory_method
+        self._list = []
 
     def __dir__(self):
         return self._list
 
     def __getattr__(self, item):
         if item in self._list:
-            return create_model(item)
+            return self._factory_method(item)
         return super().__getattribute__(item)
 
 
-def _static_path(*args):
-    # Returns the path (as str) to the static folder
-    # Output must be str to be compatible with cobra/pytfa
-    return str(Path(static.__file__).parent.joinpath(*args))
+class _ModelFactory(_BaseFactory, metaclass=Singleton):
+    def __init__(self):
+        super().__init__(load_cbm)
+        self._list = [path.stem for path in Path(static_path()).glob("*.json")]
+
+
+class _ThermoModelFactory(_BaseFactory, metaclass=Singleton):
+    def __init__(self):
+        super().__init__(create_model)
+        self._list = [path.stem for path in Path(static_path()).glob("*.json") if path.with_suffix("").exists()]
 
 
 def _silence_pytfa(logger_name):
@@ -63,7 +70,7 @@ def load_cbm(model_name) -> Model:
     cobra.Model
         The loaded cobra model.
     """
-    return load_json_model(_static_path(model_name + ".json"))
+    return load_json_model(static_path(model_name + ".json"))
 
 
 def load_data(model_name):
@@ -84,9 +91,9 @@ def load_data(model_name):
     compartment_data : dict
         A dictionary with information about each compartment of the model.
     """
-    thermo_data = load_thermoDB(_static_path("thermo_data.thermodb"))
-    lexicon = read_lexicon(_static_path(model_name, "lexicon.csv"))
-    compartment_data = read_compartment_data(_static_path(model_name, "compartment_data.json"))
+    thermo_data = load_thermoDB(static_path("thermo_data.thermodb"))
+    lexicon = read_lexicon(static_path(model_name, "lexicon.csv"))
+    compartment_data = read_compartment_data(static_path(model_name, "compartment_data.json"))
     return thermo_data, lexicon, compartment_data
 
 
@@ -146,45 +153,33 @@ def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=No
     return tmodel
 
 
-def adjust_model(tmodel: ThermoModel, rxn_bounds, lc_bounds):
-    """
-    Adjusts the flux bounds and log concentration of a tFBA-ready model.
-
-    Parameters
-    ----------
-    tmodel : str
-        A cobra model with thermodynamic information.
-    rxn_bounds : pandas.DataFrame
-        A 3-column table containing reaction IDs and flux bounds. The table must have the following columns: ``id``,
-        ``lb``, and ``ub``.
-    lc_bounds : pandas.DataFrame
-        A 3-column table containing metabolite IDs and log concentration bounds. The table must have the following
-        columns: ``id``, ``lb``, and ``ub``.
-    """
-    # constrain reactions (e.g., growth rate, uptake/secretion rates)
-    for rxn_id, lb, ub in zip(rxn_bounds["id"], rxn_bounds["lb"], rxn_bounds["ub"]):
-        if tmodel.reactions.has_id(rxn_id):
-            tmodel.parent.reactions.get_by_id(rxn_id).bounds = lb, ub
-            tmodel.reactions.get_by_id(rxn_id).bounds = lb, ub
-    # constrain log concentrations
-    for met, lb, ub in zip(lc_bounds["id"], lc_bounds["lb"], lc_bounds["ub"]):
-        for compartment in tmodel.compartments:
-            met_id = met + "_" + compartment
-            if tmodel.log_concentration.has_id(met_id):
-                (tmodel.log_concentration.get_by_id(met_id).variable.set_bounds(lb, ub))
-
-
 models = _ModelFactory()
-models.__doc__ = """A factory class to create pre-curated thermodynamics-based metabolic models.
+models.__doc__ = """A factory class to load metabolic models.
+
+Example
+-------
+>>> dir(models)
+['iJO1366', 'small_ecoli', 'yeastGEM']
+
+>>> model = models.small_ecoli
+>>> model.slim_optimize()
+0.8109621653343296
+
+This is equivalent to ``BFAIR.io.load_cbm("small_ecoli")``.
+"""
+
+
+thermo_models = _ThermoModelFactory()
+thermo_models.__doc__ = """A factory class to create pre-curated thermodynamics-based metabolic models.
 
 Example
 -------
 >>> dir(models)
 ['iJO1366', 'small_ecoli']
 
->>> tmodel = models.small_ecoli
+>>> tmodel = thermo_models.small_ecoli
 >>> tmodel.slim_optimize()
 0.8109972502600706
 
-This is equivalent to ``create_model("small_ecoli")``.
+This is equivalent to ``BFAIR.io.create_model("small_ecoli")``.
 """
