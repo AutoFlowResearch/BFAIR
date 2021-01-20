@@ -17,13 +17,8 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
                 peptideRef = f.getMetaValue("PeptideRef").decode("utf-8")
             except AttributeError:
                 peptideRef = f.getMetaValue("PeptideRef")
-            if (
-                peptideRef
-                in metabolites_unique
-            ):
-                formula = database[
-                    database[0] == peptideRef
-                ][1]
+            if peptideRef in metabolites_unique:
+                formula = database[database[0] == peptideRef][1]
                 extracted_data_dict[cnt] = {
                     "sample_group_name": name,
                     "Metabolite": peptideRef,
