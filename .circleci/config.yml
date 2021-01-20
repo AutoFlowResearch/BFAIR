@@ -8,7 +8,9 @@ jobs:
   
   # Linting and unit test
   unittest:
-    executor: python/default
+    executor: 
+      name: python/default
+      tag: "3.7"
     steps:
       - checkout
       - run:
@@ -22,8 +24,8 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python -m unittest tests/test_linting.py
-            flake8 --max-line-length=120 --ignore=PT009
+            pytest --disable-warnings
+            flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
   # The same as unittest but for Windows machine
   win-unittest:
@@ -44,10 +46,10 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            python -m unittest tests/test_linting.py
-            flake8 --max-line-length=120 --ignore=PT009
+            pytest --disable-warnings
+            flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
-  #Linux integration 
+  # Linux integration 
   Integration-on-linux:
     executor: python/default
     steps:
@@ -67,7 +69,7 @@ jobs:
             psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
 
-  #Windows integration
+  # Windows integration
   Integration-on-windows:
     executor:
       name: win/default
@@ -92,7 +94,7 @@ jobs:
             psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
             psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
               
-  #MacOS integration
+  # MacOS integration
   Integration-on-macos:
     macos:
       xcode: 11.3.0
