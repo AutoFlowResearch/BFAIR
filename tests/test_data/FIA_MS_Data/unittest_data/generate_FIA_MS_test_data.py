@@ -7,10 +7,7 @@
 import pickle
 import pandas as pd
 import pathlib
-from BFAIR.FIA_MS.import_statistics import (
-    extractNamesAndIntensities,
-    calculateMeanVarRSD,
-)
+import BFAIR.FIA_MS as fia_ms
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
@@ -46,30 +43,30 @@ database_standard = pd.read_csv(
 
 
 # extractNamesAndIntensities, triplicates
-intensities_triplicates = extractNamesAndIntensities(
+intensities_triplicates = fia_ms.extractNamesAndIntensities(
     feature_dir, sample_names_triplicates, database_triplicates
 )
-intensities_single = extractNamesAndIntensities(
+intensities_single = fia_ms.extractNamesAndIntensities(
     feature_dir, sample_names_single, database_single
 )
-intensities_standard = extractNamesAndIntensities(
+intensities_standard = fia_ms.extractNamesAndIntensities(
     feature_dir, sample_names_standard, database_standard
 )
 
 # calculateMeanVarRSD
-stats_triplicates = calculateMeanVarRSD(
+stats_triplicates = fia_ms.calculateMeanVarRSD(
     intensities_triplicates,
     sequence_triplicates.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]
     ), min_reps=3,
 )
-stats_single = calculateMeanVarRSD(
+stats_single = fia_ms.calculateMeanVarRSD(
     intensities_single,
     sequence_single.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]
     ), min_reps=1,
 )
-stats_standard = calculateMeanVarRSD(
+stats_standard = fia_ms.calculateMeanVarRSD(
     intensities_standard,
     sequence_standard.drop_duplicates(
         ["sample_group_name", "replicate_group_name"]

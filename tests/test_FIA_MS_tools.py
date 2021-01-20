@@ -5,10 +5,7 @@ import sys
 import pathlib
 
 sys.path.insert(1, "../")
-from BFAIR.FIA_MS.import_statistics import (  # noqa E402
-    extractNamesAndIntensities,
-    calculateMeanVarRSD,
-)
+import BFAIR.FIA_MS as fia_ms
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
@@ -53,7 +50,7 @@ class test_methods(unittest.TestCase):
             sep="\t",
             header=None,
         )
-        intensities_triplicates_ = extractNamesAndIntensities(
+        intensities_triplicates_ = fia_ms.extractNamesAndIntensities(
             feature_dir, sample_names_triplicates, database_triplicates
         )
         self.assertEqual(
@@ -70,7 +67,7 @@ class test_methods(unittest.TestCase):
         sequence_triplicates = pd.read_csv(
             current_dir + "/test_data/FIA_MS_Data/sequence_EColi.csv", sep=";"
         )
-        stats_triplicates_ = calculateMeanVarRSD(
+        stats_triplicates_ = fia_ms.calculateMeanVarRSD(
             intensities_triplicates,
             sequence_triplicates.drop_duplicates(
                 ["sample_group_name", "replicate_group_name"]
@@ -99,7 +96,7 @@ class test_methods(unittest.TestCase):
             sep="\t",
             header=None,
         )
-        intensities_single_ = extractNamesAndIntensities(
+        intensities_single_ = fia_ms.extractNamesAndIntensities(
             feature_dir, sample_names_single, database_single
         )
         self.assertEqual(len(intensities_single), len(intensities_single_))
@@ -115,7 +112,7 @@ class test_methods(unittest.TestCase):
             current_dir + "/test_data/FIA_MS_Data/sequence_HumanSerum.csv",
             sep=';'
         )
-        stats_single_ = calculateMeanVarRSD(
+        stats_single_ = fia_ms.calculateMeanVarRSD(
             intensities_single,
             sequence_single.drop_duplicates(
                 ["sample_group_name", "replicate_group_name"]
@@ -145,7 +142,7 @@ class test_methods(unittest.TestCase):
             sep="\t",
             header=None,
         )
-        intensities_standard_ = extractNamesAndIntensities(
+        intensities_standard_ = fia_ms.extractNamesAndIntensities(
             feature_dir, sample_names_standard, database_standard
         )
         self.assertEqual(len(intensities_standard), len(intensities_standard_))
@@ -161,7 +158,7 @@ class test_methods(unittest.TestCase):
             current_dir + "/test_data/FIA_MS_Data/sequence_Standards.csv",
             sep=';'
         )
-        stats_standard_ = calculateMeanVarRSD(
+        stats_standard_ = fia_ms.calculateMeanVarRSD(
             intensities_standard,
             sequence_standard.drop_duplicates(
                 ["sample_group_name", "replicate_group_name"]
