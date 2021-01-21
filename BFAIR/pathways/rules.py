@@ -5,14 +5,44 @@ This module contains functions to apply reaction rules to chemical compounds.
 
 import json
 from functools import reduce
+from concurrent.futures import ThreadPoolExecutor, TimeoutError
 
 import numpy as np
 import pandas as pd
 
 from cobra.core.singleton import Singleton
+from rdkit import Chem
+from rdkit.Chem import AllChem
 
 from BFAIR.logger import get_logger
-from BFAIR.pathways.utils import get_molecular_fingerprint, calculate_similarity
+from BFAIR.pathways.standardization import standardize
+from BFAIR.pathways.utils import get_compound, get_molecular_fingerprint, calculate_similarity
+
+
+class _RuleSimulator():
+    def __init__(self, compound: AllChem.Mol, reaction: AllChem.ChemicalReaction):
+        self._compound = compound
+        self._reaction = reaction
+        self._interrupted = False
+
+    def __call__(self):
+        # can_run = any([compound.HasSubstructMatch(substrate) for substrate in reaction.GetReactants()])
+        results = {}
+        for products in self._reaction.RunReactants((self._compound,)):
+            if self._interrupted:
+                break
+            products = [
+                standardize(frag)
+                for product in products for frag in Chem.GetMolFrags(product, asMols=True, sanitizeFrags=False)
+            ]
+            inchis = [Chem.MolToInchi(product) for product in products]
+            inchikeys = '.'.join([Chem.InchiToInchiKey(inchi) for inchi in inchis])
+            if inchikeys not in results:
+                results[inchikeys] = inchis
+        return [*results.values()]
+
+    def interrupt(self):
+        self._interrupted = True
 
 
 class RuleLibrary(metaclass=Singleton):
@@ -42,7 +72,7 @@ class RuleLibrary(metaclass=Singleton):
         else:
             return self._data
 
-    def apply_to(self, input_compound, input_type):
+    def apply_to(self, input_compound, input_type="inchi", timeout=60, **kwargs):
         """
         Applies the available rules to the input compound.
 
@@ -52,13 +82,31 @@ class RuleLibrary(metaclass=Singleton):
             String representation of a chemical compound.
         input_type : {'inchi', 'smiles'}
             Type of notation describing the input compound.
+        timeout : int
+            Number of seconds after which a rule simulation will be stopped.
+        **kwargs
+            Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.
+            Thorough standardization is enforced.
 
-        Returns
-        -------
-        list
-            List of rule IDs and resulting products from reactions.
+        Yields
+        ------
+        tuple
+            A tuple containing the applied rule ID and a list of InChI and SMILES depictions of the obtained products.
         """
-        raise NotImplementedError()
+        # Force thorough standardization
+        kwargs["thorough"] = True
+        compound = get_compound(input_compound, input_type, **kwargs)
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            tasks = [
+                _RuleSimulator(compound, reaction) for reaction in self.available["rule_smarts"]
+            ]
+            for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
+                try:
+                    yield (self.available.index[i], future.result(timeout))
+                except TimeoutError:
+                    self._logger.warn(f"Timed out processing rule '{self.available.index[i]}'.")
+                    task.interrupt()
+            del tasks
 
     def filter_by_diameter(self, cutoff):
         """

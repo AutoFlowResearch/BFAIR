@@ -56,12 +56,12 @@ def _neutralize_charge(compound):
 
 def _count_non_hs_atoms(compound):
     # counts the number of non-hydrogen atoms in a compound
-    return len([atom for atom in compound.GetAtoms() if atom.getAtomicNum() > 1])
+    return len([atom for atom in compound.GetAtoms() if atom.GetAtomicNum() > 1])
 
 
 def _strip_small_fragments(compound):
     # returns the biggest disconnected fragment from a molecule
-    frags = Chem.GetMolFrags(compound, asMols=True, sanitizeFlags=False)
+    frags = Chem.GetMolFrags(compound, asMols=True, sanitizeFrags=False)
     if len(frags) > 1:
         # sort by number of non-hydrogen atoms and molecular weight
         biggest_frag = sorted(
@@ -72,7 +72,7 @@ def _strip_small_fragments(compound):
     return compound
 
 
-def standardize(compound: Chem.Mol, add_hs=True, remove_stereo=True, thorough=False):
+def standardize(compound: AllChem.Mol, add_hs=True, remove_stereo=True, thorough=False) -> AllChem.Mol:
     """
     Standardizes an RDKit molecule by running various cleanup and sanitization operations.
 
@@ -100,7 +100,7 @@ def standardize(compound: Chem.Mol, add_hs=True, remove_stereo=True, thorough=Fa
     # remove isotopes, neutralize charge
     if thorough:
         for atom in compound.GetAtoms():
-            atom.setIsotope(0)
+            atom.SetIsotope(0)
         compound = _neutralize_charge(compound)
         Chem.SanitizeMol(compound, sanitizeOps=Chem.SanitizeFlags.SANITIZE_ALL, catchErrors=False)
 

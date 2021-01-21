@@ -1,7 +1,41 @@
+
+
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
 from BFAIR.pathways.standardization import standardize
+
+
+def get_compound(input_compound, input_type="inchi", **kwargs) -> AllChem.Mol:
+    """
+    Returns a standardized chemical compound.
+
+    Parameters
+    ----------
+    input_compound : str
+        String representation of a chemical compound.
+    input_type : {'inchi', 'smiles'}
+        Type of notation describing the input compound.
+    **kwargs
+        Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.
+
+    Returns
+    -------
+    rdkit.Chem.rdchem.Mol
+        A chemical compound.
+
+    Raises
+    ------
+    ValueError
+        If an unsupported input type is supplied.
+    """
+    if input_type == "inchi":
+        compound = Chem.MolFromInchi(input_compound, sanitize=False)
+    elif input_type == "smiles":
+        compound = Chem.MolFromSmiles(input_compound, sanitize=False)
+    else:
+        raise ValueError(f"Unsupported input type: {input_type}. Must be InChI or SMILES.")
+    return standardize(compound, **kwargs)
 
 
 def get_molecular_fingerprint(input_compound, input_type="inchi", **kwargs):
@@ -21,19 +55,8 @@ def get_molecular_fingerprint(input_compound, input_type="inchi", **kwargs):
     -------
     list of int
         A molecular fingerprint, represented as a list of indexes corresponding to present substructural features.
-
-    Raises
-    ------
-    ValueError
-        If an unsupported input type is supplied.
     """
-    if input_type == "inchi":
-        compound = Chem.MolFromInchi(input_compound, sanitize=False)
-    elif input_type == "smiles":
-        compound = Chem.MolFromSmiles(input_compound, sanitize=False)
-    else:
-        raise ValueError(f"Unsupported input type: {input_type}. Must be InChI or SMILES.")
-    compound = standardize(compound, **kwargs)
+    compound = get_compound(input_compound, input_type, **kwargs)
     return [
         *AllChem.GetMorganFingerprintAsBitVect(compound, 2, 1024, useFeatures=False, useChirality=False).GetOnBits()
     ]
