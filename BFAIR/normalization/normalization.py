@@ -35,11 +35,11 @@ def min_max_norm(
     return output_df
 
 
-def tmi_norm(
+def tsi_norm(
     df, columnname="Intensity", groupname_colname="sample_group_name"
 ):
     """
-    Applies Total Mean Intensity normalization; all values will be divided by
+    Applies Total Sum Intensity normalization; all values will be divided by
     the sum of all values. Like that, summing all the values up would
     amout to '1'.
     Parameters:
@@ -57,8 +57,8 @@ def tmi_norm(
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        tmi = new_df[columnname].sum(skipna=True)
-        new_df[columnname] = new_df[columnname].div(tmi)
+        tsi = new_df[columnname].sum(skipna=True)
+        new_df[columnname] = new_df[columnname].div(tsi)
         if i == 0:
             output_df = new_df
         else:
@@ -66,14 +66,14 @@ def tmi_norm(
     return output_df
 
 
-def biomass_tmi_norm(
+def biomass_tsi_norm(
     biomass_substrate_df,
     df,
     columnname="Intensity",
     groupname_colname="sample_group_name",
 ):
     """
-    Applies a modified version of Total Mean Intensity normalization; all
+    Applies a modified version of Total Sum Intensity normalization; all
     values will be divided by the sum of all all the values of metabolites
     that are part of the biomass function of a model of the organism of
     interest. Like that, summing all the values for the metabolites
@@ -92,17 +92,17 @@ def biomass_tmi_norm(
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
-    bm_tmi = 0
+    bm_tsi = 0
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
         for biomass_met in biomass_substrate_df["Metabolite"]:
-            met_tmi = sum(
+            met_tsi = sum(
                 new_df[new_df["Metabolite"] == biomass_met][columnname]
             )
-            bm_tmi += met_tmi
-        norm_vals = new_df[columnname].div(bm_tmi)
+            bm_tsi += met_tsi
+        norm_vals = new_df[columnname].div(bm_tsi)
         new_df[columnname] = norm_vals
         if i == 0:
             output_df = new_df
@@ -111,7 +111,7 @@ def biomass_tmi_norm(
     return output_df
 
 
-def biomass_formula_tmi_norm(
+def biomass_formula_tsi_norm(
     biomass_substrate_df,
     biomass_product_df,
     biomass_value,
@@ -120,7 +120,7 @@ def biomass_formula_tmi_norm(
     groupname_colname="sample_group_name",
 ):
     """
-    Applies a modified version of Total Mean Intensity normalization; all
+    Applies a modified version of Total Sum Intensity normalization; all
     values will be divided by the sum of all all the values of metabolites
     that are part of the biomass function of a model of the organism of
     interest weighted by their multipliers in said model. Like that,
@@ -145,32 +145,32 @@ def biomass_formula_tmi_norm(
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
-    bm_tmi = 0
+    bm_tsi = 0
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
         for cnt, biomass_met in enumerate(biomass_substrate_df["Metabolite"]):
-            met_tmi = sum(
+            met_tsi = sum(
                 new_df[new_df["Metabolite"] == biomass_met][columnname]
             )
-            norm_met_tmi = met_tmi * (
+            norm_met_tsi = met_tsi * (
                 biomass_substrate_df["Value"][cnt] / biomass_value
             )
-            bm_tmi += norm_met_tmi
+            bm_tsi += norm_met_tsi
         for cnt_p, biomass_mets_product in enumerate(
             biomass_product_df["Metabolite"]
         ):
-            met_tmi = sum(
+            met_tsi = sum(
                 new_df[new_df["Metabolite"] == biomass_mets_product][
                     columnname
                 ]
             )
-            norm_met_tmi = met_tmi * (
+            norm_met_tsi = met_tsi * (
                 biomass_product_df["Value"][cnt_p] / biomass_value
             )
-            bm_tmi -= norm_met_tmi
-        norm_vals = df[columnname].div(bm_tmi)
+            bm_tsi -= norm_met_tsi
+        norm_vals = df[columnname].div(bm_tsi)
         new_df[columnname] = norm_vals
         if i == 0:
             output_df = new_df
@@ -179,14 +179,14 @@ def biomass_formula_tmi_norm(
     return output_df
 
 
-def amino_acid_tmi_norm(
+def amino_acid_tsi_norm(
     amino_acids,
     df,
     columnname="Intensity",
     groupname_colname="sample_group_name",
 ):
     """
-    Applies a modified version of Total Mean Intensity normalization; all
+    Applies a modified version of Total Sum Intensity normalization; all
     values will be divided by the sum of all all the values of amino acids.
     Like that, summing all the values for the metabolites contributing to the
     biomass function up would amout to '1'.
@@ -203,15 +203,15 @@ def amino_acid_tmi_norm(
         output_df: the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    aa_tmi = 0
+    aa_tsi = 0
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
         for amino_acid in amino_acids:
-            met_tmi = sum(df[df["Metabolite"] == amino_acid][columnname])
-            aa_tmi += met_tmi
-        norm_vals = df[columnname].div(aa_tmi)
+            met_tsi = sum(df[df["Metabolite"] == amino_acid][columnname])
+            aa_tsi += met_tsi
+        norm_vals = df[columnname].div(aa_tsi)
         new_df[columnname] = norm_vals
         if i == 0:
             output_df = new_df
@@ -230,7 +230,7 @@ def pqn_norm(
     """
     Probabilistic Quotient Normalization: This method adjusts for dilutions so
     we would use it to compare different dilutions of the same sample. This is
-    a modified version of Total Mean Intensity normalization taking the
+    a modified version of Total Sum Intensity normalization taking the
     calculated dilution factor into account to ameliorate comparisons between
     differently diluted samples.
     Walkthrough:
@@ -238,7 +238,7 @@ def pqn_norm(
     architecture I'd say columns correspond to sample, rows to metabolites.
     That one is 0 because it's still pre-processing. Here is the logic
     of the method:
-    1) TMI correct each sample separately
+    1) TSI correct each sample separately
     2) Set up a QC vector (or additional column) with the mean/median for each
     metabolite over all samples
     3) Divide each value for each sample with the correscponding QC value
@@ -281,26 +281,26 @@ def pqn_norm(
                 new_col.append(None)
         grouped_df[sample_group_name] = new_col
     # 1)
-    tmi_df = copy.deepcopy(grouped_df)
+    tsi_df = copy.deepcopy(grouped_df)
     for colname in grouped_df.columns[1:]:
         new_df = copy.deepcopy(grouped_df)
-        tmi = grouped_df[colname].sum(skipna=True)
-        new_col = new_df[colname].div(tmi)
-        tmi_df[colname] = new_col
+        tsi = grouped_df[colname].sum(skipna=True)
+        new_col = new_df[colname].div(tsi)
+        tsi_df[colname] = new_col
     # 2)
     if qc_vector is not None:
         qc_vector = qc_vector
     else:
         qc_vector = []
-        for x, row in tmi_df.iterrows():
+        for x, row in tsi_df.iterrows():
             if corr_type == "median":
                 qc_vector.append(row[1:].median(skipna=True))
             elif corr_type == "mean":
                 qc_vector.append(row[1:].mean(skipna=True))
     # 3)
     dilution_factor_list = []
-    for colname in tmi_df.columns[1:]:
-        new_col = np.array(tmi_df[colname])
+    for colname in tsi_df.columns[1:]:
+        new_col = np.array(tsi_df[colname])
         new_col_div = list(new_col / np.array(qc_vector))
         # 4)
         if corr_type == "median":
@@ -310,9 +310,9 @@ def pqn_norm(
         dilution_factor_list.append(dilution_factor)
     print(dilution_factor_list)
     # 5)
-    norm_df = copy.deepcopy(tmi_df)
-    for position, colname in enumerate(tmi_df.columns[1:]):
-        norm_col = tmi_df[colname] * dilution_factor_list[position]
+    norm_df = copy.deepcopy(tsi_df)
+    for position, colname in enumerate(tsi_df.columns[1:]):
+        norm_col = tsi_df[colname] * dilution_factor_list[position]
         norm_df[colname] = norm_col
     # 6)
     output_df = copy.deepcopy(df)
