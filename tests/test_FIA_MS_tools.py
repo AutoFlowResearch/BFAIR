@@ -68,7 +68,6 @@ class test_methods(unittest.TestCase):
             len(intensities_triplicates_.columns),
         )
         self.assertDataframeEqual(
-            self,
             intensities_triplicates,
             intensities_triplicates_
         )
@@ -91,7 +90,7 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates.columns),
             len(stats_triplicates_.columns),
         )
-        self.assertDataframeEqual(self, stats_triplicates, stats_triplicates_)
+        self.assertDataframeEqual(stats_triplicates, stats_triplicates_)
 
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
@@ -118,7 +117,6 @@ class test_methods(unittest.TestCase):
             len(intensities_single_.columns)
         )
         self.assertDataframeEqual(
-            self,
             intensities_single,
             intensities_single_
         )
@@ -142,7 +140,7 @@ class test_methods(unittest.TestCase):
             len(stats_single.columns),
             len(stats_single_.columns)
         )
-        self.assertDataframeEqual(self, stats_single, stats_single_)
+        self.assertDataframeEqual(stats_single, stats_single_)
 
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
@@ -170,7 +168,6 @@ class test_methods(unittest.TestCase):
             len(intensities_standard_.columns)
         )
         self.assertDataframeEqual(
-            self,
             intensities_standard,
             intensities_standard_
         )
@@ -194,4 +191,4 @@ class test_methods(unittest.TestCase):
             len(stats_standard.columns),
             len(stats_standard_.columns)
         )
-        self.assertDataframeEqual(self, stats_standard, stats_standard_)
+        self.assertDataframeEqual(stats_standard, stats_standard_)
