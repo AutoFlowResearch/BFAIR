@@ -4,6 +4,24 @@ from pyopenms import FeatureMap, FeatureXMLFile
 
 
 def extractNamesAndIntensities(feature_dir, sample_names, database):
+    """
+    This function take .featureXML files, the output of SmartPeak
+    pre-processing, and extracts the metabolite's reference and it's measured
+    intensity. Furthermore, the peptide references are compared with a
+    database, that has also been used for SmartPeak processing. Only
+    metabolites that appear in the database are being used. Their formula is
+    added to the output dataframe. The names of the files that should be
+    processed are added via a SmartPeak sequence file.
+    Parameters:
+        feature_dir: the path to the directory holding the .featureXML files
+        sample_names: the extracted information from a sequence file
+        database: the organism specific database with the metabolite mapping
+    Returns:
+        extracted_data_all: a dataframe containing the extracted information,
+            the 4 columns include the sample name, the peptide reference for
+            the metabolites, their corresponding formulas and the measured
+            intensity
+    """
     metabolites_unique = database[0].unique()
     extracted_data_dict = {}
     cnt = 0
@@ -26,12 +44,29 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
                     "Intensity": f.getMetaValue("peak_apex_int"),
                 }
                 cnt = cnt + 1
-    return pd.DataFrame.from_dict(extracted_data_dict, "index")
+    extracted_data_all = pd.DataFrame.from_dict(extracted_data_dict, "index")
+    return extracted_data_all
 
 
 def calculateMeanVarRSD(
     extracted_data_all, sample_name_2_replicate_groups, min_reps=3
 ):
+    """
+    The output of the extractNamesAndIntensities() function (or its output
+    after normalization) is processed here to produce a dataframe that
+    includes some basic statistics.
+    Parameters:
+        extracted_data_all: the output of the extractNamesAndIntensities()
+            function (or its output after normalization)
+        sample_name_2_replicate_groups: the extracted information from a
+            sequence file reduced to one entry per "sample_group_name"
+        min_reps: the number of replicates for each sample, correspond to the
+            file naming (replicated should end with the replicate number)
+    Returns:
+        stats_all_df: a dataframe with some base statistics. The 6 columns
+            include the sample group name, the metabolite reference, its
+            formula and the mean, variance and relative stdev.
+    """
     stats_all_dict = {}
     cnt = 0
     for replicate_group in sample_name_2_replicate_groups[
@@ -84,4 +119,5 @@ def calculateMeanVarRSD(
                     "RSD": rsd,
                 }
                 cnt = cnt + 1
-    return pd.DataFrame.from_dict(stats_all_dict, "index")
+    stats_all_df = pd.DataFrame.from_dict(stats_all_dict, "index")
+    return stats_all_df
