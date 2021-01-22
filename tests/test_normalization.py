@@ -1,12 +1,21 @@
 import unittest
 import pickle
 import pathlib
+import pandas as pd
 import BFAIR.normlization as normalization
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
 
 class test_methods(unittest.TestCase):
+
+    # Create method to compare dataframes
+    def assertDataframeEqual(self, a, b, msg):
+        try:
+            pd.testing.assert_frame_equal(a, b)
+        except AssertionError as e:
+            raise self.failureException(msg) from e
+
     def setUp(self):
         file_obj = open(
             current_dir + "/test_data/normalization_Data/test_data.obj", "rb"
@@ -44,6 +53,7 @@ class test_methods(unittest.TestCase):
         min_max_ = normalization.min_max_norm(
             df, columnname="Intensity", groupname_colname="sample_group_name"
         )
+        self.assertEqual(min_max, min_max_)
 
     def test_tsi(self):
         tsi = self.tsi
@@ -51,6 +61,15 @@ class test_methods(unittest.TestCase):
         tsi_ = normalization.tsi_norm(
             df, columnname="Intensity", groupname_colname="sample_group_name"
         )
+        self.assertEqual(tsi, tsi_)
+
+    # test that the values for one sample all sum up to 1
+    # def test_tsi_logic(self):
+    #     columnname = "Intensity"
+    #     tsi_ = normalization.tsi_norm(
+    #         df, columnname, groupname_colname="sample_group_name"
+    #     )
+    #     assertEqual(sum(tis_[columnname]), 1)
 
     def test_biomass_tsi(self):
         biomass_tsi = self.biomass_tsi
@@ -62,6 +81,7 @@ class test_methods(unittest.TestCase):
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
+        self.assertEqual(biomass_tsi, biomass_tsi_)
 
     def test_biomass_formula_tsi(self):
         biomass_formula_tsi = self.biomass_formula_tsi
@@ -77,6 +97,7 @@ class test_methods(unittest.TestCase):
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
+        self.assertEqual(biomass_formula_tsi, biomass_formula_tsi_)
 
     def test_amino_acid_tsi(self):
         amino_acid_tsi = self.amino_acid_tsi
@@ -88,6 +109,7 @@ class test_methods(unittest.TestCase):
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
+        self.assertEqual(amino_acid_tsi, amino_acid_tsi_)
 
     def test_pqn(self):
         pqn = self.pqn
@@ -99,3 +121,4 @@ class test_methods(unittest.TestCase):
             corr_type="median",
             qc_vector=None,
         )
+        self.assertEqual(pqn, pqn_)
