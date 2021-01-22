@@ -15,6 +15,9 @@ pd.set_option("mode.chained_assignment", None)
 # Use pickle to save python variables
 filehandler = open("test_data.obj", "wb")
 
+
+
+
 min_max = normalization.min_max_norm(
     df, columnname="Intensity", groupname_colname="sample_group_name"
 )
@@ -51,7 +54,12 @@ pqn = normalization.pqn_norm(
 
 pickle.dump(
     [
-
+        min_max,
+        tsi,
+        biomass_tsi,
+        biomass_formula_tsi,
+        amino_acid_tsi,
+        pqn,
     ],
     filehandler,
 )
