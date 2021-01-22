@@ -1,4 +1,4 @@
-from BFAIR.normalization import (
+from BFAIR.normalization.normalization import (
     min_max_norm,
     tmi_norm,
     biomass_tmi_norm,
