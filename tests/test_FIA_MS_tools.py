@@ -40,6 +40,9 @@ class test_methods(unittest.TestCase):
         self.intensities_standard = intensities_standard
         self.stats_standard = stats_standard
 
+        # Add the method to compare dataframes in the class
+        self.addTypeEqualityFunc(pd.DataFrame, self.assertDataframeEqual)
+
     def test_extractNamesAndIntensities_triplicates(self):
         intensities_triplicates = self.intensities_triplicates
         feature_dir = (
@@ -67,7 +70,7 @@ class test_methods(unittest.TestCase):
             len(intensities_triplicates.columns),
             len(intensities_triplicates_.columns),
         )
-        self.assertDataframeEqual(
+        self.assertEqual(
             intensities_triplicates,
             intensities_triplicates_
         )
@@ -90,7 +93,7 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates.columns),
             len(stats_triplicates_.columns),
         )
-        self.assertDataframeEqual(stats_triplicates, stats_triplicates_)
+        self.assertEqual(stats_triplicates, stats_triplicates_)
 
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
@@ -116,7 +119,7 @@ class test_methods(unittest.TestCase):
             len(intensities_single.columns),
             len(intensities_single_.columns)
         )
-        self.assertDataframeEqual(
+        self.assertEqual(
             intensities_single,
             intensities_single_
         )
@@ -140,7 +143,7 @@ class test_methods(unittest.TestCase):
             len(stats_single.columns),
             len(stats_single_.columns)
         )
-        self.assertDataframeEqual(stats_single, stats_single_)
+        self.assertEqual(stats_single, stats_single_)
 
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
@@ -167,7 +170,7 @@ class test_methods(unittest.TestCase):
             len(intensities_standard.columns),
             len(intensities_standard_.columns)
         )
-        self.assertDataframeEqual(
+        self.assertEqual(
             intensities_standard,
             intensities_standard_
         )
@@ -191,4 +194,4 @@ class test_methods(unittest.TestCase):
             len(stats_standard.columns),
             len(stats_standard_.columns)
         )
-        self.assertDataframeEqual(stats_standard, stats_standard_)
+        self.assertEqual(stats_standard, stats_standard_)
