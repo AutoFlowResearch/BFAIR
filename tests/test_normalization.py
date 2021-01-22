@@ -2,7 +2,7 @@ import unittest
 import pickle
 import pathlib
 import pandas as pd
-import BFAIR.normlization as normalization
+import BFAIR.normalization as normalization
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
