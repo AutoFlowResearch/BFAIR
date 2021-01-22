@@ -59,7 +59,7 @@ class test_methods(unittest.TestCase):
             len(intensities_triplicates.columns),
             len(intensities_triplicates_.columns),
         )
-        self.assertAlmostEqual(intensities_triplicates, intensities_triplicates_)
+        self.assertTrue(intensities_triplicates == intensities_triplicates_)
 
     def test_calculateMeanVarRSD_triplicates(self):
         stats_triplicates = self.stats_triplicates
@@ -79,7 +79,7 @@ class test_methods(unittest.TestCase):
             len(stats_triplicates.columns),
             len(stats_triplicates_.columns),
         )
-        self.assertAlmostEqual(stats_triplicates, stats_triplicates_)
+        self.assertTrue(stats_triplicates == stats_triplicates_)
 
     def test_extractNamesAndIntensities_single(self):
         intensities_single = self.intensities_single
@@ -105,7 +105,7 @@ class test_methods(unittest.TestCase):
             len(intensities_single.columns),
             len(intensities_single_.columns)
         )
-        self.assertAlmostEqual(intensities_single, intensities_single_)
+        self.assertTrue(intensities_single == intensities_single_)
 
     def test_calculateMeanVarRSD_single(self):
         stats_single = self.stats_single
@@ -126,7 +126,7 @@ class test_methods(unittest.TestCase):
             len(stats_single.columns),
             len(stats_single_.columns)
         )
-        self.assertAlmostEqual(stats_single, stats_single_)
+        self.assertTrue(stats_single == stats_single_)
 
     def test_extractNamesAndIntensities_standard(self):
         intensities_standard = self.intensities_standard
@@ -153,7 +153,7 @@ class test_methods(unittest.TestCase):
             len(intensities_standard.columns),
             len(intensities_standard_.columns)
         )
-        self.assertAlmostEqual(intensities_standard, intensities_standard_)
+        self.assertTrue(intensities_standard == intensities_standard_)
 
     def test_calculateMeanVarRSD_standard(self):
         stats_standard = self.stats_standard
@@ -174,4 +174,4 @@ class test_methods(unittest.TestCase):
             len(stats_standard.columns),
             len(stats_standard_.columns)
         )
-        self.assertAlmostEqual(stats_standard, stats_standard_)
+        self.assertTrue(stats_standard == stats_standard_)
