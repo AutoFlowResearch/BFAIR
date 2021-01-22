@@ -67,7 +67,11 @@ class test_methods(unittest.TestCase):
             len(intensities_triplicates.columns),
             len(intensities_triplicates_.columns),
         )
-        self.assertDataframeEqual(self, intensities_triplicates, intensities_triplicates_)
+        self.assertDataframeEqual(
+            self,
+            intensities_triplicates,
+            intensities_triplicates_
+        )
 
     def test_calculateMeanVarRSD_triplicates(self):
         stats_triplicates = self.stats_triplicates
@@ -113,7 +117,11 @@ class test_methods(unittest.TestCase):
             len(intensities_single.columns),
             len(intensities_single_.columns)
         )
-        self.assertDataframeEqual(self, intensities_single, intensities_single_)
+        self.assertDataframeEqual(
+            self,
+            intensities_single,
+            intensities_single_
+        )
 
     def test_calculateMeanVarRSD_single(self):
         stats_single = self.stats_single
@@ -161,7 +169,11 @@ class test_methods(unittest.TestCase):
             len(intensities_standard.columns),
             len(intensities_standard_.columns)
         )
-        self.assertDataframeEqual(self, intensities_standard, intensities_standard_)
+        self.assertDataframeEqual(
+            self,
+            intensities_standard,
+            intensities_standard_
+        )
 
     def test_calculateMeanVarRSD_standard(self):
         stats_standard = self.stats_standard
