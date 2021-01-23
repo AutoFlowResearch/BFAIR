@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 22.01.2021
+# Last date : 23.01.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -84,6 +84,11 @@ pqn = normalization.pqn_norm(
 
 pickle.dump(
     [
+        df,
+        biomass_substrate_df,
+        biomass_product_df,
+        biomass_value,
+        amino_acids,
         min_max,
         tsi,
         biomass_tsi,
