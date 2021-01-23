@@ -47,6 +47,9 @@ class test_methods(unittest.TestCase):
         self.amino_acid_tsi = amino_acid_tsi
         self.pqn = pqn
 
+    # Add the method to compare dataframes in the class
+    self.addTypeEqualityFunc(pd.DataFrame, self.assertDataframeEqual)
+
     def test_min_max(self):
         min_max = self.min_max
         df = self.df
