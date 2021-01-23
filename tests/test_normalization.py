@@ -75,7 +75,7 @@ class test_methods(unittest.TestCase):
         biomass_tsi = self.biomass_tsi
         biomass_substrate_df = self.biomass_substrate_df
         df = self.df
-        biomass_tsi_ = normalization.biomass_tmi_norm(
+        biomass_tsi_ = normalization.biomass_tsi_norm(
             biomass_substrate_df,
             df,
             columnname="Intensity",
@@ -89,7 +89,7 @@ class test_methods(unittest.TestCase):
         biomass_product_df = self.biomass_product_df
         biomass_value = self.biomass_value
         df = self.df
-        biomass_formula_tsi_ = normalization.biomass_formula_tmi_norm(
+        biomass_formula_tsi_ = normalization.biomass_formula_tsi_norm(
             biomass_substrate_df,
             biomass_product_df,
             biomass_value,
@@ -103,7 +103,7 @@ class test_methods(unittest.TestCase):
         amino_acid_tsi = self.amino_acid_tsi
         amino_acids = self.amino_acids
         df = self.df
-        amino_acid_tsi_ = normalization.amino_acid_tmi_norm(
+        amino_acid_tsi_ = normalization.amino_acid_tsi_norm(
             amino_acids,
             df,
             columnname="Intensity",
