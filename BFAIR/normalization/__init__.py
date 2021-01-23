@@ -1,5 +1,3 @@
-# change to tsi
-
 from BFAIR.normalization.normalization import (
     min_max_norm,
     tsi_norm,

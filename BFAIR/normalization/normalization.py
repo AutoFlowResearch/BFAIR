@@ -308,7 +308,7 @@ def pqn_norm(
         elif corr_type == "mean":
             dilution_factor = pd.Series(new_col_div).mean(skipna=True)
         dilution_factor_list.append(dilution_factor)
-    print(dilution_factor_list)
+    # print(dilution_factor_list)
     # 5)
     norm_df = copy.deepcopy(tsi_df)
     for position, colname in enumerate(tsi_df.columns[1:]):
@@ -318,7 +318,6 @@ def pqn_norm(
     output_df = copy.deepcopy(df)
     for x, row in norm_df.iterrows():
         for sample_num, sample in enumerate(row.index[1:]):
-            # print(row[0], sample, row[sample_num+1])
             if not pd.isna(row[sample_num + 1]):
                 orig_df_reduced = df[df[groupname_colname] == sample]
                 index_pos = orig_df_reduced[
