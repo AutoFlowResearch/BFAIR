@@ -11,12 +11,15 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
     database, that has also been used for SmartPeak processing. Only
     metabolites that appear in the database are being used. Their formula is
     added to the output dataframe. The names of the files that should be
-    processed are added via a SmartPeak sequence file.
-    Parameters:
+    processed are added via a SmartPeak sequence file
+
+    Parameters
+    ----------
         feature_dir: the path to the directory holding the .featureXML files
         sample_names: the extracted information from a sequence file
         database: the organism specific database with the metabolite mapping
-    Returns:
+    Returns
+    -------
         extracted_data_all: a dataframe containing the extracted information,
             the 4 columns include the sample name, the peptide reference for
             the metabolites, their corresponding formulas and the measured
@@ -54,15 +57,19 @@ def calculateMeanVarRSD(
     """
     The output of the extractNamesAndIntensities() function (or its output
     after normalization) is processed here to produce a dataframe that
-    includes some basic statistics.
-    Parameters:
+    includes some basic statistics
+
+    Parameters
+    ----------
         extracted_data_all: the output of the extractNamesAndIntensities()
             function (or its output after normalization)
         sample_name_2_replicate_groups: the extracted information from a
             sequence file reduced to one entry per "sample_group_name"
         min_reps: the number of replicates for each sample, correspond to the
             file naming (replicated should end with the replicate number)
-    Returns:
+
+    Returns
+    -------
         stats_all_df: a dataframe with some base statistics. The 6 columns
             include the sample group name, the metabolite reference, its
             formula and the mean, variance and relative stdev.

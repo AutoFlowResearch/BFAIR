@@ -1,9 +1,7 @@
 import unittest
 import pandas as pd
 import pickle
-# import sys
 import pathlib
-# sys.path.insert(1, "../")
 import BFAIR.FIA_MS as fia_ms  # noqa E402
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
