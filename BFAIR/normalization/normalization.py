@@ -8,15 +8,19 @@ def min_max_norm(
 ):
     """
     Function that applies min/max scaling to the input dataframe; the data
-    will range from 0 for the min- to 1 for the max value.
-    Parameters:
+    will range from 0 for the min- to 1 for the max value
+    
+    Parameters
+    ----------
         df: input dataframe, output of either the extractNamesAndIntensities()
             or the calculateMeanVarRSD() function
         columnname: the name of the column with the data that needs to be
             normalized, defaults to 'Intensity'
         groupname_colname: the name of the column with the sample group names,
             defaults to 'sample_group_name'
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
@@ -41,15 +45,19 @@ def tsi_norm(
     """
     Applies Total Sum Intensity normalization; all values will be divided by
     the sum of all values. Like that, summing all the values up would
-    amout to '1'.
-    Parameters:
+    amout to '1'
+    
+    Parameters
+    ----------
         df: input dataframe, output of either the extractNamesAndIntensities()
             or the calculateMeanVarRSD() function
         columnname: the name of the column with the data that needs to be
             normalized, defaults to 'Intensity'
         groupname_colname: the name of the column with the sample group names,
             defaults to 'sample_group_name'
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
@@ -77,8 +85,10 @@ def biomass_tsi_norm(
     values will be divided by the sum of all all the values of metabolites
     that are part of the biomass function of a model of the organism of
     interest. Like that, summing all the values for the metabolites
-    contributing to the biomass function up would amout to '1'.
-    Parameters:
+    contributing to the biomass function up would amout to '1'
+    
+    Parameters
+    ----------
         biomass_substrate_df: a dataframe with one column denoting the
             metabolites that are part of the biomass function and one
             column with their corresponding multipliers
@@ -88,7 +98,9 @@ def biomass_tsi_norm(
             normalized, defaults to 'Intensity'
         groupname_colname: the name of the column with the sample group names,
             defaults to 'sample_group_name'
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
@@ -125,8 +137,10 @@ def biomass_formula_tsi_norm(
     that are part of the biomass function of a model of the organism of
     interest weighted by their multipliers in said model. Like that,
     summing all the values for these metabolites contributing to the
-    biomass function up would amout to '1'.
-    Parameters:
+    biomass function up would amout to '1'
+    
+    Parameters
+    ----------
         biomass_substrate_df: a dataframe with one column denoting the
             metabolites that are part of the biomass function and one
             column with their corresponding multipliers
@@ -141,7 +155,9 @@ def biomass_formula_tsi_norm(
             normalized, defaults to 'Intensity'
         groupname_colname: the name of the column with the sample group names,
             defaults to 'sample_group_name'
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
@@ -189,8 +205,10 @@ def amino_acid_tsi_norm(
     Applies a modified version of Total Sum Intensity normalization; all
     values will be divided by the sum of all all the values of amino acids.
     Like that, summing all the values for the metabolites contributing to the
-    biomass function up would amout to '1'.
-    Parameters:
+    biomass function up would amout to '1'
+    
+    Parameters
+    ----------
         amino_acids: a list containing the metabolite names of all proteogenic
             amino acids
         df: input dataframe, output of either the extractNamesAndIntensities()
@@ -199,7 +217,9 @@ def amino_acid_tsi_norm(
             normalized, defaults to 'Intensity'
         groupname_colname: the name of the column with the sample group names,
             defaults to 'sample_group_name'
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
@@ -228,27 +248,11 @@ def pqn_norm(
     qc_vector=None,
 ):
     """
-    Probabilistic Quotient Normalization: This method adjusts for dilutions so
-    we would use it to compare different dilutions of the same sample. This is
-    a modified version of Total Sum Intensity normalization taking the
-    calculated dilution factor into account to ameliorate comparisons between
-    differently diluted samples.
-    Walkthrough:
-    0) Put all the corresponding samples into one dataframe. Because of the
-    architecture I'd say columns correspond to sample, rows to metabolites.
-    That one is 0 because it's still pre-processing. Here is the logic
-    of the method:
-    1) TSI correct each sample separately
-    2) Set up a QC vector (or additional column) with the mean/median for each
-    metabolite over all samples
-    3) Divide each value for each sample with the correscponding QC value
-    4) Get the mean/median over all metabolites for each sample -> This is
-    your dilution factor for this sample
-    5) Take the values from 1) and multiply each value with the dilution
-    factor corresponding to this sample
-    And to finish that things export it like the input
-    6) Copy the input df and insert the new values
-    Parameters:
+    Probabilistic Quotient Normalization: This method adjusts for dilutions.
+    This is a modified version of Total Sum Intensity normalization
+    
+    Parameters
+    ----------
         df: input dataframe, output of either the extractNamesAndIntensities()
             or the calculateMeanVarRSD() function
         groupname_colname: the name of the column with the sample group names,
@@ -257,7 +261,9 @@ def pqn_norm(
             normalized, defaults to 'Intensity'
         corr_type: type of midpoint finding, 'median' or 'mean'
         qc_vector: an optional QC vector that can be provided
-    Returns:
+    
+    Returns
+    -------
         output_df: the output dataframe. It follows the same architecture as
             the input dataframe, just with normalized values
     """
