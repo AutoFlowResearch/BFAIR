@@ -15,16 +15,20 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
 
     Parameters
     ----------
-        feature_dir: the path to the directory holding the .featureXML files
-        sample_names: the extracted information from a sequence file
-        database: the organism specific database with the metabolite mapping
+    feature_dir: path
+        the path to the directory holding the .featureXML files
+    sample_names: string
+        the extracted information from a sequence file
+    database: pandas.DataFrame
+        the organism specific database with the metabolite mapping
 
     Returns
     -------
-        extracted_data_all: a dataframe containing the extracted information,
-            the 4 columns include the sample name, the peptide reference for
-            the metabolites, their corresponding formulas and the measured
-            intensity
+    extracted_data_all: pandas.DataFrame
+        a dataframe containing the extracted information,
+        the 4 columns include the sample name, the peptide reference for
+        the metabolites, their corresponding formulas and the measured
+        intensity
     """
     metabolites_unique = database[0].unique()
     extracted_data_dict = {}
@@ -62,18 +66,22 @@ def calculateMeanVarRSD(
 
     Parameters
     ----------
-        extracted_data_all: the output of the extractNamesAndIntensities()
-            function (or its output after normalization)
-        sample_name_2_replicate_groups: the extracted information from a
-            sequence file reduced to one entry per "sample_group_name"
-        min_reps: the number of replicates for each sample, corresponds to the
-            file names (replicates should end with the replicate number)
+    extracted_data_all: pandas.DataFrame
+        the output of the extractNamesAndIntensities()
+        function (or its output after normalization)
+    sample_name_2_replicate_groups: pandas.DataFrame
+        the extracted information from a
+        sequence file reduced to one entry per "sample_group_name"
+    min_reps: int
+        the number of replicates for each sample, corresponds to the
+        file names (replicates should end with the replicate number)
 
     Returns
     -------
-        stats_all_df: a dataframe with some base statistics. The 6 columns
-            include the sample group name, the metabolite reference, its
-            formula and the mean, variance and relative stdev.
+    stats_all_df: pandas.DataFrame
+        a dataframe with some base statistics. The 6 columns
+        include the sample group name, the metabolite reference, its
+        formula and the mean, variance and relative stdev.
     """
     stats_all_dict = {}
     cnt = 0
