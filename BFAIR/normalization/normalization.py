@@ -12,17 +12,21 @@ def min_max_norm(
 
     Parameters
     ----------
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        columnname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    columnname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
-            the input dataframe, just with normalized values
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
+        the input dataframe, just with normalized values
     """
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
@@ -49,17 +53,21 @@ def tsi_norm(
 
     Parameters
     ----------
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        columnname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    columnname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
-            the input dataframe, just with normalized values
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
+        the input dataframe, just with normalized values
     """
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
@@ -89,20 +97,25 @@ def biomass_tsi_norm(
 
     Parameters
     ----------
-        biomass_substrate_df: a dataframe with one column denoting the
-            metabolites that are part of the biomass function and one
-            column with their corresponding multipliers
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        columnname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
+    biomass_substrate_df: pandas.DataFrame
+        a dataframe with one column denoting the
+        metabolites that are part of the biomass function and one
+        column with their corresponding multipliers
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    columnname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
-            the input dataframe, just with normalized values
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
+        the input dataframe, just with normalized values
     """
     bm_tsi = 0
     output_df = pd.DataFrame()
@@ -141,25 +154,32 @@ def biomass_formula_tsi_norm(
 
     Parameters
     ----------
-        biomass_substrate_df: a dataframe with one column denoting the
-            metabolites that are part of the biomass function and one
-            column with their corresponding multipliers
-        biomass_product_df: a dataframe with one column denoting the
-            metabolites that are on the product side of the biomass
-            function and one column with their corresponding multipliers
-        biomass_value: the multiplier of biomass on the product side of the
-            biomass function in the corresponding metabolic model
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        columnname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
+    biomass_substrate_df: pandas.DataFrame
+        a dataframe with one column denoting the
+        metabolites that are part of the biomass function and one
+        column with their corresponding multipliers
+    biomass_product_df: pandas.DataFrame
+        a dataframe with one column denoting the
+        metabolites that are on the product side of the biomass
+        function and one column with their corresponding multipliers
+    biomass_value: float
+        the multiplier of biomass on the product side of the
+        biomass function in the corresponding metabolic model
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    columnname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
-            the input dataframe, just with normalized values
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
+        the input dataframe, just with normalized values
     """
     bm_tsi = 0
     output_df = pd.DataFrame()
@@ -209,18 +229,23 @@ def amino_acid_tsi_norm(
 
     Parameters
     ----------
-        amino_acids: a list containing the metabolite names of all proteogenic
-            amino acids
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        columnname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
+    amino_acids: list
+        a list containing the metabolite names of all proteogenic
+        amino acids
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    columnname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
     aa_tsi = 0
@@ -253,19 +278,25 @@ def pqn_norm(
 
     Parameters
     ----------
-        df: input dataframe, output of either the extractNamesAndIntensities()
-            or the calculateMeanVarRSD() function
-        groupname_colname: the name of the column with the sample group names,
-            defaults to 'sample_group_name'
-        value_colname: the name of the column with the data that needs to be
-            normalized, defaults to 'Intensity'
-        corr_type: type of midpoint finding, 'median' or 'mean'
-        qc_vector: an optional QC vector that can be provided
+    df: pandas.DataFrame
+        input dataframe, output of either the extractNamesAndIntensities()
+        or the calculateMeanVarRSD() function
+    groupname_colname: string
+        the name of the column with the sample group names,
+        defaults to 'sample_group_name'
+    value_colname: string
+        the name of the column with the data that needs to be
+        normalized, defaults to 'Intensity'
+    corr_type: string
+        type of midpoint finding, 'median' or 'mean'
+    qc_vector: list
+        an optional QC vector that can be provided
 
     Returns
     -------
-        output_df: the output dataframe. It follows the same architecture as
-            the input dataframe, just with normalized values
+    output_df: pandas.DataFrame
+        the output dataframe. It follows the same architecture as
+        the input dataframe, just with normalized values
     """
     # 0)
     grouped_df = pd.DataFrame()
