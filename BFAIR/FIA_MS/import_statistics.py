@@ -18,6 +18,7 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
         feature_dir: the path to the directory holding the .featureXML files
         sample_names: the extracted information from a sequence file
         database: the organism specific database with the metabolite mapping
+
     Returns
     -------
         extracted_data_all: a dataframe containing the extracted information,
