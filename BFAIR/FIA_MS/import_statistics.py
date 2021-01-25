@@ -5,10 +5,10 @@ from pyopenms import FeatureMap, FeatureXMLFile
 
 def extractNamesAndIntensities(feature_dir, sample_names, database):
     """
-    This function take .featureXML files, the output of SmartPeak
-    pre-processing, and extracts the metabolite's reference and it's measured
+    This function takes .featureXML files, the output of SmartPeak
+    pre-processing, and extracts the metabolite's reference and its measured
     intensity. Furthermore, the peptide references are compared with a
-    database, that has also been used for SmartPeak processing. Only
+    database that has also been used for SmartPeak processing. Only
     metabolites that appear in the database are being used. Their formula is
     added to the output dataframe. The names of the files that should be
     processed are added via a SmartPeak sequence file
@@ -65,8 +65,8 @@ def calculateMeanVarRSD(
             function (or its output after normalization)
         sample_name_2_replicate_groups: the extracted information from a
             sequence file reduced to one entry per "sample_group_name"
-        min_reps: the number of replicates for each sample, correspond to the
-            file naming (replicated should end with the replicate number)
+        min_reps: the number of replicates for each sample, corresponds to the
+            file names (replicates should end with the replicate number)
 
     Returns
     -------
