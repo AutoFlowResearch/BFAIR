@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 23.01.2021
+# Last date : 26.01.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -54,25 +54,25 @@ min_max = normalization.min_max_norm(
 tsi = normalization.tsi_norm(
     df, columnname="Intensity", groupname_colname="sample_group_name"
 )
-biomass_tsi = normalization.biomass_tsi_norm(
+biomass_tsi = normalization.lim_tsi_norm(
     biomass_substrate_df,
     df,
-    columnname="Intensity",
-    groupname_colname="sample_group_name",
+    lim_type='biomass',
+    columnname='Intensity'
 )
-biomass_formula_tsi = normalization.biomass_formula_tsi_norm(
+biomass_formula_tsi = normalization.lim_tsi_norm(
     biomass_substrate_df,
-    biomass_product_df,
-    biomass_value,
     df,
-    columnname="Intensity",
-    groupname_colname="sample_group_name",
+    lim_type='bm_function',
+    product_df=biomass_product_df,
+    biomass_value=biomass_value,
+    columnname='Intensity'
 )
-amino_acid_tsi = normalization.amino_acid_tsi_norm(
+amino_acid_tsi = normalization.lim_tsi_norm(
     amino_acids,
     df,
-    columnname="Intensity",
-    groupname_colname="sample_group_name",
+    lim_type='amino_acid',
+    columnname='Intensity'
 )
 pqn = normalization.pqn_norm(
     df,

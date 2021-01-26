@@ -66,13 +66,13 @@ class test_methods(unittest.TestCase):
         )
         self.assertEqual(tsi, tsi_)
 
-    # test that the values for one sample all sum up to 1
-    # def test_tsi_logic(self):
-    #     columnname = "Intensity"
-    #     tsi_ = normalization.tsi_norm(
-    #         df, columnname, groupname_colname="sample_group_name"
-    #     )
-    #     assertEqual(sum(tis_[columnname]), 1)
+    def test_tsi_logic(self):
+        columnname = "Intensity"
+        tsi_ = normalization.tsi_norm(
+            df, columnname, groupname_colname="sample_group_name"
+        )
+        num_samples = len(tsi_['sample_group_name'].unique())
+        assertAlmostEqual(sum(tis_[columnname]), num_samples)
 
     def test_biomass_tsi(self):
         biomass_tsi = self.biomass_tsi
