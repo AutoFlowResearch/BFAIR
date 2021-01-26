@@ -48,8 +48,8 @@ def tsi_norm(
 ):
     """
     Applies Total Sum Intensity normalization; all values will be divided by
-    the sum of all values. Like that, summing all the values up would
-    amout to '1'
+    the sum of all values. Like that, summing up all the values would
+    amount to '1'
 
     Parameters
     ----------
@@ -93,12 +93,12 @@ def lim_tsi_norm(
 ):
     """
     Applies a modified version of Total Sum Intensity normalization; all
-    values will be divided by the sum of all all the values of metabolites
+    values will be divided by the sum of all the values of metabolites
     that are a) amino acids, b) part of the biomass function of a model of the
     organism of interest or c) are part of the biomass function of a model of
     the organism of interest weighted by their multipliers in said model.
-    Like that, summing all the values for the metabolites
-    contributing to the biomass function up would amout to '1'
+    Like that, summing up all the values for the metabolites
+    contributing to the biomass function would amount to '1'
 
     Parameters
     ----------
@@ -111,7 +111,7 @@ def lim_tsi_norm(
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
     lim_type: string
-        which type of notmalization should be run, based on a) amino acids,
+        which type of notmalization should be run; a) amino acids,
         b) metabolites of the biomass function or c) metabolites of the
         biomass function weighted by their multipliers
     product_df: pandas.DataFrame
@@ -221,7 +221,7 @@ def pqn_norm(
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
     corr_type: string
-        type of midpoint finding, 'median' or 'mean'
+        type of midpoint determination, 'median' or 'mean'
     qc_vector: list
         an optional QC vector that can be provided
 
