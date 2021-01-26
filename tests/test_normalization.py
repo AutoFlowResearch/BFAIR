@@ -68,12 +68,12 @@ class test_methods(unittest.TestCase):
 
     def test_tsi_logic(self):
         df = self.df
-        columnname = "Intensity"
         tsi_ = normalization.tsi_norm(
-            df, columnname, groupname_colname="sample_group_name"
+            df, columnname="Intensity", groupname_colname="sample_group_name"
         )
         num_samples = len(tsi_["sample_group_name"].unique())
-        self.assertAlmostEqual(sum(tis_[columnname]), num_samples)
+        sum_samples = sum(tsi_["Intensity"])
+        self.assertAlmostEqual(sum_samples, num_samples)
 
     def test_biomass_tsi(self):
         biomass_tsi = self.biomass_tsi
