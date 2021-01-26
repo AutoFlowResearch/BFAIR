@@ -71,16 +71,17 @@ class test_methods(unittest.TestCase):
         tsi_ = normalization.tsi_norm(
             df, columnname, groupname_colname="sample_group_name"
         )
-        num_samples = len(tsi_['sample_group_name'].unique())
+        num_samples = len(tsi_["sample_group_name"].unique())
         assertAlmostEqual(sum(tis_[columnname]), num_samples)
 
     def test_biomass_tsi(self):
         biomass_tsi = self.biomass_tsi
         biomass_substrate_df = self.biomass_substrate_df
         df = self.df
-        biomass_tsi_ = normalization.biomass_tsi_norm(
+        biomass_tsi_ = normalization.lim_tsi_norm(
             biomass_substrate_df,
             df,
+            lim_type="biomass",
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
@@ -92,11 +93,12 @@ class test_methods(unittest.TestCase):
         biomass_product_df = self.biomass_product_df
         biomass_value = self.biomass_value
         df = self.df
-        biomass_formula_tsi_ = normalization.biomass_formula_tsi_norm(
+        biomass_formula_tsi_ = normalization.lim_tsi_norm(
             biomass_substrate_df,
-            biomass_product_df,
-            biomass_value,
             df,
+            lim_type="bm_function",
+            product_df=biomass_product_df,
+            biomass_value=biomass_value,
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
@@ -106,9 +108,10 @@ class test_methods(unittest.TestCase):
         amino_acid_tsi = self.amino_acid_tsi
         amino_acids = self.amino_acids
         df = self.df
-        amino_acid_tsi_ = normalization.amino_acid_tsi_norm(
+        amino_acid_tsi_ = normalization.lim_tsi_norm(
             amino_acids,
             df,
+            lim_type="amino_acid",
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )

@@ -99,7 +99,7 @@ def lim_tsi_norm(
     the organism of interest weighted by their multipliers in said model.
     Like that, summing all the values for the metabolites
     contributing to the biomass function up would amout to '1'
-    
+
     Parameters
     ----------
     metabolite_input: pandas.DataFrame or list
@@ -110,7 +110,7 @@ def lim_tsi_norm(
     df: pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    lim_type: string 
+    lim_type: string
         which type of notmalization should be run, based on a) amino acids,
         b) metabolites of the biomass function or c) metabolites of the
         biomass function weighted by their multipliers
@@ -149,17 +149,17 @@ def lim_tsi_norm(
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        if lim_type == 'amino_acid':
+        if lim_type == "amino_acid":
             for amino_acid in metabolite_input:
                 met_tsi = sum(df[df["Metabolite"] == amino_acid][columnname])
                 lim_tsi += met_tsi
-        elif lim_type == 'biomass':
+        elif lim_type == "biomass":
             for biomass_met in metabolite_input["Metabolite"]:
                 met_tsi = sum(
                     new_df[new_df["Metabolite"] == biomass_met][columnname]
                 )
                 lim_tsi += met_tsi
-        elif lim_type == 'bm_function':
+        elif lim_type == "bm_function":
             if product_df is None:
                 raise ValueError("'product_df' is missing!")
             if biomass_value is None:
@@ -187,8 +187,7 @@ def lim_tsi_norm(
         else:
             raise ValueError(
                 "'lim_type' must be either 'amino_acid', "
-                "'biomass' or 'bm_function', not '" + lim_type
-                + "'"
+                "'biomass' or 'bm_function', not '" + lim_type + "'"
             )
         norm_vals = new_df[columnname].div(lim_tsi)
         new_df[columnname] = norm_vals
