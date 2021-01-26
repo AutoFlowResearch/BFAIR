@@ -67,6 +67,7 @@ class test_methods(unittest.TestCase):
         self.assertEqual(tsi, tsi_)
 
     def test_tsi_logic(self):
+        df = self.df
         columnname = "Intensity"
         tsi_ = normalization.tsi_norm(
             df, columnname, groupname_colname="sample_group_name"
