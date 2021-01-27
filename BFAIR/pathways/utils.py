@@ -12,9 +12,9 @@ def get_compound(input_compound, input_type="inchi", **kwargs) -> AllChem.Mol:
 
     Parameters
     ----------
-    input_compound : str
-        String representation of a chemical compound.
-    input_type : {'inchi', 'smiles'}
+    input_compound : str or rdkit.Chem.rdchem.Mol
+        String representation of a chemical compound or a RDKit molecule object.
+    input_type : {'inchi', 'smiles', 'rdkit'}
         Type of notation describing the input compound.
     **kwargs
         Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.
@@ -33,8 +33,13 @@ def get_compound(input_compound, input_type="inchi", **kwargs) -> AllChem.Mol:
         compound = Chem.MolFromInchi(input_compound, sanitize=False)
     elif input_type == "smiles":
         compound = Chem.MolFromSmiles(input_compound, sanitize=False)
+    elif input_type == "rdkit":
+        if kwargs:
+            compound = input_compound
+        else:
+            return input_compound
     else:
-        raise ValueError(f"Unsupported input type: {input_type}. Must be InChI or SMILES.")
+        raise ValueError(f"Unsupported input type: {input_type}. Must be InChI, SMILES or an RDKit molecule object.")
     return standardize(compound, **kwargs)
 
 
@@ -44,9 +49,9 @@ def get_molecular_fingerprint(input_compound, input_type="inchi", **kwargs):
 
     Parameters
     ----------
-    input_compound : str
-        String representation of a chemical compound.
-    input_type : {'inchi', 'smiles'}
+    input_compound : str or rdkit.Chem.rdchem.Mol
+        String representation of a chemical compound or a RDKit molecule object.
+    input_type : {'inchi', 'smiles', 'rdkit'}
         Type of notation describing the input compound.
     **kwargs
         Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.

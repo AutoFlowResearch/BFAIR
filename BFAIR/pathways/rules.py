@@ -145,9 +145,9 @@ class RuleLibrary(metaclass=Singleton):
 
         Parameters
         ----------
-        input_compound : str
-            String representation of a compound.
-        input_type : {'inchi', 'smiles'}
+        input_compound : str or rdkit.Chem.rdchem.Mol
+            String representation of a compound or a RDKit molecule object.
+        input_type : {'inchi', 'smiles', 'rdkit'}
             Type of notation describing the input compound.
         bio_score_cutoff : float
             Biochemical uncertainty score below which reaction rules are filtered out. Each reaction rule has an
