@@ -85,8 +85,6 @@ def tsi_norm(
 def lim_tsi_norm(
     metabolite_input,
     df,
-    lim_type,
-    product_df=None,
     biomass_value=None,
     columnname="Intensity",
     groupname_colname="sample_group_name",
@@ -102,23 +100,15 @@ def lim_tsi_norm(
 
     Parameters
     ----------
-    metabolite_input: pandas.DataFrame or list
-        either a dataframe with one column denoting the
-        metabolites that are part of the biomass function and one
-        column with their corresponding multipliers or a list
-        with the metabolites of interest (e.g. amino acids)
+    metabolite_input: list, pandas.Series, np.ndarray or
+        pandas.DataFrame
+        either an object listing the metabolites of interest, e.g
+        metabolites that are part of the biomass function, or a
+        dataframe with the metabolties in one columns and another
+        column with their corresponding multipliers
     df: pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    lim_type: string
-        which type of notmalization should be run; a) amino acids,
-        b) metabolites of the biomass function or c) metabolites of the
-        biomass function weighted by their multipliers
-    product_df: pandas.DataFrame
-        a dataframe with one column denoting the
-        metabolites that are on the product side of the biomass
-        function and one column with their corresponding multipliers.
-        Defaults to 'None'
     biomass_value: float
         the multiplier of biomass on the product side of the
         biomass function in the corresponding metabolic model.
@@ -141,27 +131,22 @@ def lim_tsi_norm(
     Raises
     ------
     ValueError
-        Either if the wrong 'lim_type' is used or 'product_df' or
-        'biomass_value' is missing
+        Alerts user if 'biomass_value' is needed but missing
+    ValueError
+        Wrong type of input
     """
     lim_tsi = 0
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        if lim_type == "amino_acid":
-            for amino_acid in metabolite_input:
-                met_tsi = sum(df[df["Metabolite"] == amino_acid][columnname])
+        if isinstance(metabolite_input,
+                      (list, pd.core.series.Series, np.ndarray)):
+            for metabolite in metabolite_input:
+                met_tsi = sum(new_df[new_df["Metabolite"] == metabolite][columnname])
                 lim_tsi += met_tsi
-        elif lim_type == "biomass":
-            for biomass_met in metabolite_input["Metabolite"]:
-                met_tsi = sum(
-                    new_df[new_df["Metabolite"] == biomass_met][columnname]
-                )
-                lim_tsi += met_tsi
-        elif lim_type == "bm_function":
-            if product_df is None:
-                raise ValueError("'product_df' is missing!")
+        elif type(metabolite_input) == pd.core.frame.DataFrame:
+
             if biomass_value is None:
                 raise ValueError("'biomass_value' is missing!")
             for cnt, biomass_met in enumerate(metabolite_input["Metabolite"]):
@@ -172,22 +157,12 @@ def lim_tsi_norm(
                     metabolite_input["Value"][cnt] / biomass_value
                 )
                 lim_tsi += norm_met_tsi
-            for cnt_p, biomass_mets_product in enumerate(
-                product_df["Metabolite"]
-            ):
-                met_tsi = sum(
-                    new_df[new_df["Metabolite"] == biomass_mets_product][
-                        columnname
-                    ]
-                )
-                norm_met_tsi = met_tsi * (
-                    product_df["Value"][cnt_p] / biomass_value
-                )
-                lim_tsi -= norm_met_tsi
         else:
             raise ValueError(
-                "'lim_type' must be either 'amino_acid', "
-                "'biomass' or 'bm_function', not '" + lim_type + "'"
+                "Wrong type of input! Input must be either "
+                "'list', 'pd.core.series.Series', 'np.ndarray' or "
+                "'pd.core.frame.DataFrame', not '"
+                + type(metabolite_input) + "'"
             )
         norm_vals = new_df[columnname].div(lim_tsi)
         new_df[columnname] = norm_vals

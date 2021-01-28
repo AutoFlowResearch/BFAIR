@@ -53,8 +53,8 @@ biomass_mets = [
     "arg__L_c",
     "pro__L_c",
     "trp__L_c",
+    "nadh_c",
 ]
-biomass_mets_products = ["nadh_c"]
 bm_vals = [
     0.176,
     0.443,
@@ -89,15 +89,12 @@ bm_vals = [
     0.281,
     0.21,
     0.054,
+    -1.455,
 ]
-bm_vals_products = [1.455]
 biomass_value = 39.68
-biomass_substrate_df = pd.DataFrame()
-biomass_product_df = pd.DataFrame()
-biomass_substrate_df["Metabolite"] = biomass_mets
-biomass_substrate_df["Value"] = bm_vals
-biomass_product_df["Metabolite"] = biomass_mets_products
-biomass_product_df["Value"] = bm_vals_products
+biomass_df = pd.DataFrame()
+biomass_df["Metabolite"] = biomass_mets
+biomass_df["Value"] = bm_vals
 amino_acids = [
     "ala__L_c",
     "arg__L_c",
@@ -129,18 +126,16 @@ tsi = normalization.tsi_norm(
     df, columnname="Intensity", groupname_colname="sample_group_name"
 )
 biomass_tsi = normalization.lim_tsi_norm(
-    biomass_substrate_df, df, lim_type="biomass", columnname="Intensity"
+    biomass_df['Metabolite'], df, columnname="Intensity"
 )
 biomass_formula_tsi = normalization.lim_tsi_norm(
-    biomass_substrate_df,
+    biomass_df,
     df,
-    lim_type="bm_function",
-    product_df=biomass_product_df,
     biomass_value=biomass_value,
     columnname="Intensity",
 )
 amino_acid_tsi = normalization.lim_tsi_norm(
-    amino_acids, df, lim_type="amino_acid", columnname="Intensity"
+    amino_acids, df, columnname="Intensity"
 )
 pqn = normalization.pqn_norm(
     df,
@@ -153,8 +148,7 @@ pqn = normalization.pqn_norm(
 pickle.dump(
     [
         df,
-        biomass_substrate_df,
-        biomass_product_df,
+        biomass_df,
         biomass_value,
         amino_acids,
         min_max,

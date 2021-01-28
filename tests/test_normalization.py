@@ -22,8 +22,7 @@ class test_methods(unittest.TestCase):
         )
         (
             df,
-            biomass_substrate_df,
-            biomass_product_df,
+            biomass_df,
             biomass_value,
             amino_acids,
             min_max,
@@ -36,8 +35,7 @@ class test_methods(unittest.TestCase):
         file_obj.close()
 
         self.df = df
-        self.biomass_substrate_df = biomass_substrate_df
-        self.biomass_product_df = biomass_product_df
+        self.biomass_df = biomass_df
         self.biomass_value = biomass_value
         self.amino_acids = amino_acids
         self.min_max = min_max
@@ -77,12 +75,11 @@ class test_methods(unittest.TestCase):
 
     def test_biomass_tsi(self):
         biomass_tsi = self.biomass_tsi
-        biomass_substrate_df = self.biomass_substrate_df
+        biomass_df = self.biomass_df
         df = self.df
         biomass_tsi_ = normalization.lim_tsi_norm(
-            biomass_substrate_df,
+            biomass_df['Metabolite'],
             df,
-            lim_type="biomass",
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
@@ -90,15 +87,12 @@ class test_methods(unittest.TestCase):
 
     def test_biomass_formula_tsi(self):
         biomass_formula_tsi = self.biomass_formula_tsi
-        biomass_substrate_df = self.biomass_substrate_df
-        biomass_product_df = self.biomass_product_df
+        biomass_df = self.biomass_df
         biomass_value = self.biomass_value
         df = self.df
         biomass_formula_tsi_ = normalization.lim_tsi_norm(
-            biomass_substrate_df,
+            biomass_df,
             df,
-            lim_type="bm_function",
-            product_df=biomass_product_df,
             biomass_value=biomass_value,
             columnname="Intensity",
             groupname_colname="sample_group_name",
@@ -112,7 +106,6 @@ class test_methods(unittest.TestCase):
         amino_acid_tsi_ = normalization.lim_tsi_norm(
             amino_acids,
             df,
-            lim_type="amino_acid",
             columnname="Intensity",
             groupname_colname="sample_group_name",
         )
