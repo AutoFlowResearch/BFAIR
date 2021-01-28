@@ -47,7 +47,6 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            set -eo pipefail
             pytest --disable-warnings
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
