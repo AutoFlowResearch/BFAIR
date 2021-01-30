@@ -8,11 +8,11 @@ from pypika.terms import AggregateFunction
 from BFAIR.pathways.utils import calculate_similarity
 
 rules, reactions, metabolites, classification, stoichiometry, thesaurus = Tables(
-    'rules', 'reactions', 'metabolites', 'classification', 'stoichiometry', 'thesaurus'
+    "rules", "reactions", "metabolites", "classification", "stoichiometry", "thesaurus"
 )
 
 
-class ChemicalSimilarity():
+class ChemicalSimilarity:
     """Function to aggregate inputs by chemical similarity. To be used in SQL statements."""
 
     @classmethod
@@ -46,8 +46,7 @@ def select_by(filters) -> str:
         SQL SELECT statement.
     """
     return (
-        Query
-        .from_(rules)
+        Query.from_(rules)
         .select(rules.rule_id, rules.reaction_id, rules.smarts)
         .where(Criterion.all(filters))
         .get_sql()
@@ -71,8 +70,7 @@ def select_by_reaction_id(reaction_ids, filters=[]) -> str:
         SQL SELECT statement.
     """
     return (
-        Query
-        .from_(rules)
+        Query.from_(rules)
         .left_join(thesaurus)
         .on(rules.reaction_id == thesaurus.synonym)
         .select(rules.rule_id)
@@ -98,8 +96,7 @@ def select_by_synonymous_id(reaction_ids, filters=[]) -> str:
         SQL SELECT statement.
     """
     return (
-        Query
-        .from_(rules)
+        Query.from_(rules)
         .left_join(thesaurus)
         .on(rules.reaction_id == thesaurus.id)
         .select(rules.rule_id)
@@ -125,8 +122,7 @@ def select_by_ec_number(ec_numbers, filters=[]) -> str:
         SQL SELECT statement.
     """
     return (
-        Query
-        .from_(rules)
+        Query.from_(rules)
         .left_join(classification)
         .on(classification.reaction_id == rules.reaction_id)
         .select(rules.rule_id)
@@ -156,8 +152,7 @@ def select_by_similarity(input_fingerprint, cutoff, filters=[]) -> str:
         SQL SELECT statement.
     """
     return (
-        Query
-        .from_(rules)
+        Query.from_(rules)
         .join(stoichiometry)
         .on(rules.reaction_id == stoichiometry.reaction_id)
         .join(metabolites)

@@ -1,4 +1,7 @@
+"""Utils.
 
+Toolbox of functions to parse chemical compounds and calculate similarity scores between them.
+"""
 
 from rdkit import Chem
 from rdkit.Chem import AllChem

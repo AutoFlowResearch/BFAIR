@@ -21,7 +21,7 @@ from BFAIR.pathways.utils import get_compound, get_molecular_fingerprint
 from BFAIR.pathways import _queries as q
 
 
-class _RuleSimulator():
+class _RuleSimulator:
     # simulates a reaction
 
     def __init__(self, compound: AllChem.Mol, reaction: AllChem.ChemicalReaction):
@@ -37,10 +37,11 @@ class _RuleSimulator():
                 break
             products = [
                 standardize(frag)
-                for product in products for frag in Chem.GetMolFrags(product, asMols=True, sanitizeFrags=False)
+                for product in products
+                for frag in Chem.GetMolFrags(product, asMols=True, sanitizeFrags=False)
             ]
             inchis = [Chem.MolToInchi(product) for product in products]
-            inchikeys = '.'.join([Chem.InchiToInchiKey(inchi) for inchi in inchis])
+            inchikeys = ".".join([Chem.InchiToInchiKey(inchi) for inchi in inchis])
             if inchikeys not in results:
                 results[inchikeys] = inchis
         return [*results.values()]
@@ -73,10 +74,10 @@ class RuleLibrary(metaclass=Singleton):
     """
 
     def __init__(self, **kwargs):
-        kwargs.setdefault('add_hs', True)
+        kwargs.setdefault("add_hs", True)
         kwargs["remove_stereo"] = True
         kwargs["thorough"] = True
-        if not kwargs['add_hs']:
+        if not kwargs["add_hs"]:
             raise NotImplementedError()
         self._logger = get_logger(__name__)
         self._conn = sql.connect(static_path(f"rules_{'' if kwargs['add_hs'] else 'no'}hs.db"))
@@ -105,7 +106,7 @@ class RuleLibrary(metaclass=Singleton):
         # Returns a set of unique rules obtained by executing the specified SQL statement
         return set(chain.from_iterable(self._cursor.execute(query)))
 
-    def apply_to(self, input_compound, input_type="inchi", timeout=60.) -> Generator:
+    def apply_to(self, input_compound, input_type="inchi", timeout=60.0) -> Generator:
         """
         Applies the available rules to the input compound.
 
@@ -125,9 +126,7 @@ class RuleLibrary(metaclass=Singleton):
         """
         compound = get_compound(input_compound, input_type, **self._std_args)
         with ThreadPoolExecutor(max_workers=1) as executor:
-            tasks = [
-                _RuleSimulator(compound, reaction) for reaction in self.available["rule_smarts"]
-            ]
+            tasks = [_RuleSimulator(compound, reaction) for reaction in self.available["rule_smarts"]]
             for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
                 try:
                     yield (self.available.index[i], future.result(timeout))
@@ -184,10 +183,10 @@ class RuleLibrary(metaclass=Singleton):
         reaction_ids = set(additional_identifiers)
         ec_numbers = set(additional_ec_numbers)
         for rxn in model.reactions:
-            reaction_id = rxn.annotation.get('metanetx.reaction', None)
+            reaction_id = rxn.annotation.get("metanetx.reaction", None)
             if reaction_id:
                 reaction_ids.add(reaction_id)
-            ec_num = rxn.annotation.get('ec-code', [])
+            ec_num = rxn.annotation.get("ec-code", [])
             if isinstance(ec_num, str):
                 ec_numbers.add(ec_num)
             else:
