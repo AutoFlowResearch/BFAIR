@@ -6,7 +6,7 @@ This module borrows from the `rpchemtools <https://github.com/brsynth/rpchemtool
 
 from lazy_object_proxy import Proxy
 from rdkit import Chem
-from rdkit.Chem import AllChem
+from rdkit.Chem import AllChem, Descriptors
 
 
 _NEUTRALIZE_PATTERNS = Proxy(
@@ -65,7 +65,7 @@ def _strip_small_fragments(compound):
     if len(frags) > 1:
         # sort by number of non-hydrogen atoms and molecular weight
         biggest_frag = sorted(
-            frags, key=lambda frag: (_count_non_hs_atoms(frag), Chem.Descriptors.MolWt(frag)), reverse=True
+            frags, key=lambda frag: (_count_non_hs_atoms(frag), Descriptors.MolWt(frag)), reverse=True
         )[0]
         _transfer_props(compound, biggest_frag)
         return biggest_frag
