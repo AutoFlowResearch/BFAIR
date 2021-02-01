@@ -177,7 +177,7 @@ def select_rules_by_similarity(input_fingerprint, cutoff, filters=None) -> str:
     )
 
 
-def select_metabolites_by_inchi(inchi):
+def select_metabolites_by_inchi(inchi, filters=None):
     """
     Returns a SQL statement that selects metabolites based on their InChI depiction.
 
@@ -185,20 +185,24 @@ def select_metabolites_by_inchi(inchi):
     ----------
     inchi : str
         InChI depiction of a chemical compound.
+    filters : list of pypika.terms.Criterion
+        Criteria that the metabolites should also satisfy. Feeds the WHERE statement.
 
     Returns
     -------
     str
         SQL SELECT statement.
     """
+    if filters is None:
+        filters = []
     # Join 'metabolites' to 'thesaurus' on 'thesaurus.synonym' to account for internal synonymous IDs
     # Select 'thesaurus.id' if exists, otherwise 'metabolites.metabolite_id' (meaning no synonym was found)
     return (
         Query.from_(metabolites)
         .left_join(thesaurus)
         .on(metabolites.metabolite_id == thesaurus.synonym)
-        .select(Case().when(thesaurus.id, thesaurus.id).else_(metabolites.metabolite_id).as_("metabolite_id"))
+        .select(Case().when(thesaurus.id.notnull(), thesaurus.id).else_(metabolites.metabolite_id).as_("metabolite_id"))
         .distinct()
-        .where(metabolites.inchi == inchi)
+        .where(Criterion.all([metabolites.inchi == inchi, *filters]))
         .get_sql()
     )

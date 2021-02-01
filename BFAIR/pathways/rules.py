@@ -7,16 +7,17 @@ import json
 import sqlite3 as sql
 from collections import namedtuple
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
+from contextlib import AbstractContextManager
 from itertools import chain
 from typing import Generator
 
 import pandas as pd
-from cobra.core.singleton import Singleton
 from rdkit import Chem
 from rdkit.Chem import AllChem
 from BFAIR import models
 from BFAIR.io._path import static_path
 from BFAIR.logger import get_logger
+from BFAIR.pathways.constants import CURRENCY_METABOLITES
 from BFAIR.pathways.standardization import standardize
 from BFAIR.pathways.utils import get_compound, get_molecular_fingerprint
 from BFAIR.pathways import _queries as q
@@ -53,7 +54,7 @@ class _RuleSimulator:
         self._interrupted = True
 
 
-class RuleLibrary(metaclass=Singleton):
+class RuleLibrary(metaclass=AbstractContextManager):
     """Rule Library.
 
     The Rule Library object connects to the reaction rules database and exposes functions to filter the reaction rules
@@ -70,19 +71,17 @@ class RuleLibrary(metaclass=Singleton):
     available : pandas.DataFrame
         A dataframe with the available rules (after filters applied). It has columns for rule ID, associated MetaNetX
         ID, and SMARTS expression.
-
-    Notes
-    -----
-    The Rule Library class is a singleton, meaning only one instance of it exists at any time.
     """
 
     def __init__(self, **kwargs):
+        self._logger = get_logger(__name__)
         kwargs.setdefault("add_hs", True)
-        kwargs["remove_stereo"] = True
-        kwargs["thorough"] = True
         if not kwargs["add_hs"]:
             raise NotImplementedError()
-        self._logger = get_logger(__name__)
+        kwargs["remove_stereo"] = True
+        if "thorough" in kwargs:
+            self._logger.info("Thorough standardization will be enforced. Changing 'thorough' to True.")
+        kwargs["thorough"] = True
         self._conn = sql.connect(static_path(f"rules_{'' if kwargs['add_hs'] else 'no'}hs.db"))
         self._conn.create_aggregate(q.ChemicalSimilarity.__name__, 2, q.ChemicalSimilarity)
         self._cursor = self._conn.cursor()
@@ -101,12 +100,15 @@ class RuleLibrary(metaclass=Singleton):
     def _repr_html_(self):
         return self.available._repr_html_()
 
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self._conn.close()
+
     @property
     def available(self) -> pd.DataFrame:
         return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
 
-    def _fetch_rules(self, query):
-        # Returns a set of unique rules obtained by executing the specified SQL statement
+    def _fetch_results(self, query) -> set:
+        # Returns a set of unique results obtained by executing the specified SQL statement
         return set(chain.from_iterable(self._cursor.execute(query)))
 
     def apply_to(self, input_compound, input_type="inchi", timeout=60.0) -> Generator:
@@ -131,7 +133,7 @@ class RuleLibrary(metaclass=Singleton):
         available_rules = self.available
         compound = get_compound(input_compound, input_type, **self._std_args)
         with ThreadPoolExecutor(max_workers=1) as executor:
-            tasks = [_RuleSimulator(compound, reaction) for reaction in available_rules["smarts"]]
+            tasks = [_RuleSimulator(compound, reaction_smarts) for reaction_smarts in available_rules["smarts"]]
             for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
                 try:
                     product_sets = future.result(timeout)
@@ -145,6 +147,38 @@ class RuleLibrary(metaclass=Singleton):
                     self._logger.warn(f"Timed out processing rule '{available_rules.index[i]}'.")
                     task.interrupt()
             del tasks
+
+    def list_offtargets(self, reaction_results: Generator):
+        """
+        Processes reaction results into a dictionary that maps the InChI depictions of products to reaction identifiers.
+
+        Parameters
+        ----------
+        reaction_results : Generator
+            Reaction results from `RuleLibrary.apply_to`.
+
+        Returns
+        -------
+        dict
+            A dictionary with InChI depictions as keys and tuples as values. Each tuple contains a reaction rule ID and
+            its associated MetaNetX ID.
+
+        Notes
+        -----
+        Currency metabolites (such as CoA and NADH) are omitted from the output.
+        """
+        offtargets = {}
+        for result in reaction_results:
+            for products in result.product_sets:
+                for inchi in products:
+                    # Check if the InChi matches that of a currency metabolite
+                    is_currency_metabolite = q.select_metabolites_by_inchi(
+                        inchi, [q.metabolites.metabolite_id.isin(CURRENCY_METABOLITES)]
+                    )
+                    if self._fetch_results(is_currency_metabolite):
+                        continue
+                    offtargets.setdefault(inchi, []).append([result.rule_id, result.reaction_id])
+        return offtargets
 
     def filter_by_diameter(self, cutoff):
         """
@@ -205,15 +239,19 @@ class RuleLibrary(metaclass=Singleton):
 
         fetched_rules = set()
         if reaction_ids:
-            fetched_rules.update(self._fetch_rules(q.select_rules_by_reaction_id(reaction_ids, self._filters)))
+            fetched_rules.update(self._fetch_results(q.select_rules_by_reaction_id(reaction_ids, self._filters)))
             # because internal or external reaction IDs can be deprecated, we should look for synonyms in the thesaurus
-            fetched_rules.update(self._fetch_rules(q.select_rules_by_synonymous_id(reaction_ids, self._filters)))
+            fetched_rules.update(self._fetch_results(q.select_rules_by_synonymous_id(reaction_ids, self._filters)))
 
         if ec_numbers:
-            fetched_rules.update(self._fetch_rules(q.select_rules_by_ec_number(ec_numbers, self._filters)))
+            fetched_rules.update(self._fetch_results(q.select_rules_by_ec_number(ec_numbers, self._filters)))
 
         if not fetched_rules:
             self._logger.error("The model has no identifiable reactions.")
+        else:
+            self._logger.debug(
+                f"Filtered rules based on {len(reaction_ids)} MetaNetX IDs and {len(ec_numbers)} E.C. numbers."
+            )
 
         self._filters.append(q.rules.rule_id.isin(fetched_rules))
 
@@ -221,7 +259,7 @@ class RuleLibrary(metaclass=Singleton):
 
     def filter_by_compound(self, input_compound, input_type="inchi", cutoff=0.7):
         """
-        Applies a filter to excludes rules that cannot be applied to an input compound. Applicability is based on
+        Applies a filter to exclude rules that cannot be applied to an input compound. Applicability is based on
         chemical similarity.
 
         Parameters
@@ -241,9 +279,9 @@ class RuleLibrary(metaclass=Singleton):
         """
         input_fp = json.dumps(get_molecular_fingerprint(input_compound, input_type, **self._std_args))
 
-        # execute query and create new criterion for rules matching the resulting IDs
-        # we use this new criterion instead of a sub-query to avoid overhead costs of fingerprint calculation
-        fetched_rules = self._fetch_rules(q.select_rules_by_similarity(input_fp, cutoff, self._filters))
+        # Execute query and create new criterion for rules matching the resulting IDs
+        # We use this new criterion instead of a sub-query to avoid overhead costs of fingerprint calculation
+        fetched_rules = self._fetch_results(q.select_rules_by_similarity(input_fp, cutoff, self._filters))
 
         if not fetched_rules:
             self._logger.warn(f"No reaction rules match the given compound:\n{input_compound}")
