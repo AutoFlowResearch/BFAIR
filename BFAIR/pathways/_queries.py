@@ -53,9 +53,9 @@ def select_rules_where(filters) -> str:
     )
 
 
-def select_rules_by_reaction_id(reaction_ids, filters=[]) -> str:
+def select_rules_by_reaction_id(reaction_ids, filters=None) -> str:
     """
-    Returns a SQL statement that selects reaction rules based on their MetaNetX ID.
+    Returns a SQL statement that selects reaction rules based on their associated MetaNetX ID.
 
     Parameters
     ----------
@@ -69,6 +69,10 @@ def select_rules_by_reaction_id(reaction_ids, filters=[]) -> str:
     str
         SQL SELECT statement.
     """
+    if filters is None:
+        filters = []
+    # Join 'rules' to 'thesaurus' on 'thesaurus.synonym' to account for internal synonymous IDs
+    # Select rules by 'rules.reaction_id' or 'thesaurus.id'
     return (
         Query.from_(rules)
         .left_join(thesaurus)
@@ -79,9 +83,9 @@ def select_rules_by_reaction_id(reaction_ids, filters=[]) -> str:
     )
 
 
-def select_rules_by_synonymous_id(reaction_ids, filters=[]) -> str:
+def select_rules_by_synonymous_id(reaction_ids, filters=None) -> str:
     """
-    Returns a SQL statement that selects reaction rules based on a synonym of their MetaNetX ID.
+    Returns a SQL statement that selects reaction rules based on a synonym of their associated MetaNetX ID.
 
     Parameters
     ----------
@@ -95,6 +99,10 @@ def select_rules_by_synonymous_id(reaction_ids, filters=[]) -> str:
     str
         SQL SELECT statement.
     """
+    if filters is None:
+        filters = []
+    # Join 'rules' to 'thesaurus' on 'thesaurus.id' to account for external (i.e., user-input) synonymous IDs
+    # Select rules by 'thesaurus.synonym'
     return (
         Query.from_(rules)
         .left_join(thesaurus)
@@ -105,9 +113,9 @@ def select_rules_by_synonymous_id(reaction_ids, filters=[]) -> str:
     )
 
 
-def select_rules_by_ec_number(ec_numbers, filters=[]) -> str:
+def select_rules_by_ec_number(ec_numbers, filters=None) -> str:
     """
-    Returns a SQL statement that selects reaction rules based on their E.C. number.
+    Returns a SQL statement that selects reaction rules based on their associated E.C. numbers.
 
     Parameters
     ----------
@@ -121,6 +129,8 @@ def select_rules_by_ec_number(ec_numbers, filters=[]) -> str:
     str
         SQL SELECT statement.
     """
+    if filters is None:
+        filters = []
     return (
         Query.from_(rules)
         .left_join(classification)
@@ -131,7 +141,7 @@ def select_rules_by_ec_number(ec_numbers, filters=[]) -> str:
     )
 
 
-def select_rules_by_similarity(input_fingerprint, cutoff, filters=[]) -> str:
+def select_rules_by_similarity(input_fingerprint, cutoff, filters=None) -> str:
     """
     Returns a SQL statement that selects reaction rules whose substrates have a minimum chemical similarity with the
     input.
@@ -151,6 +161,8 @@ def select_rules_by_similarity(input_fingerprint, cutoff, filters=[]) -> str:
     str
         SQL SELECT statement.
     """
+    if filters is None:
+        filters = []
     return (
         Query.from_(rules)
         .join(stoichiometry)
@@ -179,11 +191,14 @@ def select_metabolites_by_inchi(inchi):
     str
         SQL SELECT statement.
     """
+    # Join 'metabolites' to 'thesaurus' on 'thesaurus.synonym' to account for internal synonymous IDs
+    # Select 'thesaurus.id' if exists, otherwise 'metabolites.metabolite_id' (meaning no synonym was found)
     return (
         Query.from_(metabolites)
         .left_join(thesaurus)
         .on(metabolites.metabolite_id == thesaurus.synonym)
-        .select(Case().when(thesaurus.id, thesaurus.id).else_(metabolites.metabolite_id))
+        .select(Case().when(thesaurus.id, thesaurus.id).else_(metabolites.metabolite_id).as_("metabolite_id"))
+        .distinct()
         .where(metabolites.inchi == inchi)
         .get_sql()
     )

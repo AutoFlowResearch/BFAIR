@@ -22,4 +22,5 @@ def get_logger(name):
         handler = logging.StreamHandler()
         handler.setLevel(logging.DEBUG)
         handler.setFormatter(logging.Formatter("[%(levelname)s]: %(message)s"))
+        logger.addHandler(handler)
     return logger

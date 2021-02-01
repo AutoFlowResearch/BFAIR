@@ -22,15 +22,16 @@ from BFAIR.pathways.utils import get_compound, get_molecular_fingerprint
 from BFAIR.pathways import _queries as q
 
 
-_ReactionResult = namedtuple("ReactionResult", ["rule_id", "reaction_id", "products"])
+_ReactionResult = namedtuple("ReactionResult", ["rule_id", "reaction_id", "product_sets"])
 
 
 class _RuleSimulator:
     # Simulates a reaction
 
-    def __init__(self, compound: AllChem.Mol, reaction: AllChem.ChemicalReaction):
+    def __init__(self, compound: AllChem.Mol, reaction_smarts: str):
         self._compound = compound
-        self._reaction = reaction
+        self._reaction = AllChem.ReactionFromSmarts(reaction_smarts)
+        self._reaction.Initialize()
         self._interrupted = False
 
     def __call__(self):
@@ -45,9 +46,7 @@ class _RuleSimulator:
                 for frag in Chem.GetMolFrags(product, asMols=True, sanitizeFrags=False)
             ]
             inchis = [Chem.MolToInchi(product) for product in products]
-            inchikeys = ".".join([Chem.InchiToInchiKey(inchi) for inchi in inchis])
-            if inchikeys not in results:
-                results[inchikeys] = inchis
+            results.setdefault(".".join(inchis), inchis)
         return [*results.values()]
 
     def interrupt(self):
@@ -126,7 +125,8 @@ class RuleLibrary(metaclass=Singleton):
         Yields
         ------
         tuple
-            A tuple containing the applied rule ID and a list of InChI and SMILES depictions of the obtained products.
+            A tuple containing the applied rule ID, its associated MetaNetX ID, and a list of product sets. Note that a
+            reaction may output more than one set of products.
         """
         available_rules = self.available
         compound = get_compound(input_compound, input_type, **self._std_args)
@@ -134,8 +134,12 @@ class RuleLibrary(metaclass=Singleton):
             tasks = [_RuleSimulator(compound, reaction) for reaction in available_rules["smarts"]]
             for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
                 try:
+                    product_sets = future.result(timeout)
+                    if not product_sets:
+                        # Sometimes the reaction does not return any products
+                        continue
                     yield _ReactionResult(
-                        available_rules.index[i], available_rules.iloc[i]["reaction_id"], future.result(timeout)
+                        available_rules.index[i], available_rules.iloc[i]["reaction_id"], product_sets
                     )
                 except TimeoutError:
                     self._logger.warn(f"Timed out processing rule '{available_rules.index[i]}'.")
@@ -187,8 +191,8 @@ class RuleLibrary(metaclass=Singleton):
         same type as caller
         """
         model = getattr(models, model_name)
-        reaction_ids = set(additional_identifiers)
-        ec_numbers = set(additional_ec_numbers)
+        reaction_ids = set(additional_identifiers) if additional_identifiers is not None else set()
+        ec_numbers = set(additional_ec_numbers) if additional_ec_numbers is not None else set()
         for rxn in model.reactions:
             reaction_id = rxn.annotation.get("metanetx.reaction", None)
             if reaction_id:
@@ -280,7 +284,7 @@ class RuleLibrary(metaclass=Singleton):
         -------
         same type as caller
         """
-        self._filters.pop()
+        self._filters.pop(index)
         return self
 
     def reset(self):
