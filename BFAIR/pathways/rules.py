@@ -5,6 +5,7 @@ This module contains functions to apply reaction rules to chemical compounds.
 
 import json
 import sqlite3 as sql
+from collections import namedtuple
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from itertools import chain
 from typing import Generator
@@ -21,8 +22,11 @@ from BFAIR.pathways.utils import get_compound, get_molecular_fingerprint
 from BFAIR.pathways import _queries as q
 
 
+_ReactionResult = namedtuple("ReactionResult", ["rule_id", "reaction_id", "products"])
+
+
 class _RuleSimulator:
-    # simulates a reaction
+    # Simulates a reaction
 
     def __init__(self, compound: AllChem.Mol, reaction: AllChem.ChemicalReaction):
         self._compound = compound
@@ -100,7 +104,7 @@ class RuleLibrary(metaclass=Singleton):
 
     @property
     def available(self) -> pd.DataFrame:
-        return pd.read_sql(q.select_by(self._filters), self._conn, index_col="rule_id")
+        return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
 
     def _fetch_rules(self, query):
         # Returns a set of unique rules obtained by executing the specified SQL statement
@@ -124,14 +128,17 @@ class RuleLibrary(metaclass=Singleton):
         tuple
             A tuple containing the applied rule ID and a list of InChI and SMILES depictions of the obtained products.
         """
+        available_rules = self.available
         compound = get_compound(input_compound, input_type, **self._std_args)
         with ThreadPoolExecutor(max_workers=1) as executor:
-            tasks = [_RuleSimulator(compound, reaction) for reaction in self.available["rule_smarts"]]
+            tasks = [_RuleSimulator(compound, reaction) for reaction in available_rules["smarts"]]
             for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
                 try:
-                    yield (self.available.index[i], future.result(timeout))
+                    yield _ReactionResult(
+                        available_rules.index[i], available_rules.iloc[i]["reaction_id"], future.result(timeout)
+                    )
                 except TimeoutError:
-                    self._logger.warn(f"Timed out processing rule '{self.available.index[i]}'.")
+                    self._logger.warn(f"Timed out processing rule '{available_rules.index[i]}'.")
                     task.interrupt()
             del tasks
 
@@ -194,12 +201,12 @@ class RuleLibrary(metaclass=Singleton):
 
         fetched_rules = set()
         if reaction_ids:
-            fetched_rules.update(self._fetch_rules(q.select_by_reaction_id(reaction_ids, self._filters)))
+            fetched_rules.update(self._fetch_rules(q.select_rules_by_reaction_id(reaction_ids, self._filters)))
             # because internal or external reaction IDs can be deprecated, we should look for synonyms in the thesaurus
-            fetched_rules.update(self._fetch_rules(q.select_by_synonymous_id(reaction_ids, self._filters)))
+            fetched_rules.update(self._fetch_rules(q.select_rules_by_synonymous_id(reaction_ids, self._filters)))
 
         if ec_numbers:
-            fetched_rules.update(self._fetch_rules(q.select_by_ec_number(ec_numbers, self._filters)))
+            fetched_rules.update(self._fetch_rules(q.select_rules_by_ec_number(ec_numbers, self._filters)))
 
         if not fetched_rules:
             self._logger.error("The model has no identifiable reactions.")
@@ -232,7 +239,7 @@ class RuleLibrary(metaclass=Singleton):
 
         # execute query and create new criterion for rules matching the resulting IDs
         # we use this new criterion instead of a sub-query to avoid overhead costs of fingerprint calculation
-        fetched_rules = self._fetch_rules(q.select_by_similarity(input_fp, cutoff, self._filters))
+        fetched_rules = self._fetch_rules(q.select_rules_by_similarity(input_fp, cutoff, self._filters))
 
         if not fetched_rules:
             self._logger.warn(f"No reaction rules match the given compound:\n{input_compound}")
