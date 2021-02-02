@@ -1,4 +1,7 @@
 # Module used to build SQL statements to interact with the reaction rules database
+
+__all__ = []
+
 import json
 
 import numpy as np

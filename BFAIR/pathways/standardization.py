@@ -4,10 +4,11 @@ With this module, chemical compounds from varying formats can be standardized fo
 This module borrows from the `rpchemtools <https://github.com/brsynth/rpchemtools>` toolbox by Jean-Loup Faulon's Lab.
 """
 
+__all__ = ["standardize"]
+
 from lazy_object_proxy import Proxy
 from rdkit import Chem
 from rdkit.Chem import AllChem, Descriptors
-
 
 _NEUTRALIZE_PATTERNS = Proxy(
     lambda: [

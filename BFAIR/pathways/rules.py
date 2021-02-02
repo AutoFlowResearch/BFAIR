@@ -3,6 +3,8 @@
 This module contains functions to apply reaction rules to chemical compounds.
 """
 
+__all__ = ["RuleLibrary"]
+
 import json
 import sqlite3 as sql
 from collections import namedtuple

@@ -3,6 +3,8 @@
 Toolbox of functions to parse chemical compounds and calculate similarity scores between them.
 """
 
+__all__ = ["get_compound", "get_molecular_fingerprint", "calculate_similarity", "standardize"]
+
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
