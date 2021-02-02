@@ -65,7 +65,9 @@ class test_methods(unittest.TestCase):
     """
 
     def test_extract_file_info(self):
-        info = self.INCA_reimport.extract_file_info(self.filename)
+        info = self.INCA_reimport.extract_file_info(
+            '/test_data/MFA_modelInputsData/' + self.filename
+            )
         info_ = self.info
         self.assertEqual(info, info_)
 
@@ -79,7 +81,9 @@ class test_methods(unittest.TestCase):
         self.assertEqual(non_stationary, non_stationary_)
 
     def test_data_extraction(self):
-        m, f = self.INCA_reimport.data_extraction(self.filename)
+        m, f = self.INCA_reimport.data_extraction(
+            '/test_data/MFA_modelInputsData/' + self.filename
+            )
         m_ = self.m
         f_ = self.f
         self.assertEqual(m, m_)
@@ -99,7 +103,7 @@ class test_methods(unittest.TestCase):
 
     def test_simulationParameters_testdata(self):
         simulationParameters_ = self.simulationParameters
-        print(len(simulationParameters_))
+        self.assertTrue(len(simulationParameters_) > 0)
 
     def test_extract_base_stats(self):
         fittedData = self.INCA_reimport.extract_base_stats(
@@ -110,7 +114,7 @@ class test_methods(unittest.TestCase):
 
     def test_fittedData_testdata(self):
         fittedData_ = self.fittedData
-        print(len(fittedData_))
+        self.assertTrue(len(fittedData_) > 0)
 
     def test_get_fit_info(self):
         f_mnt_info = self.INCA_reimport.get_fit_info(self.f)
@@ -131,11 +135,11 @@ class test_methods(unittest.TestCase):
 
     def test_fittedMeasuredFluxes_testdata(self):
         fittedMeasuredFluxes_ = self.fittedMeasuredFluxes
-        print(len(fittedMeasuredFluxes_))
+        self.assertTrue(len(fittedMeasuredFluxes_) > 0)
 
     def test_fittedMeasuredFragments_testdata(self):
         fittedMeasuredFragments_ = self.fittedMeasuredFragments
-        print(len(fittedMeasuredFragments_))
+        self.assertTrue(len(fittedMeasuredFragments_) > 0)
 
     def test_get_residuals_info(self):
         f_mnt_res_info = self.INCA_reimport.get_residuals_info(
@@ -162,11 +166,11 @@ class test_methods(unittest.TestCase):
 
     def test_fittedMeasuredFluxResiduals_testdata(self):
         fittedMeasuredFluxResiduals_ = self.fittedMeasuredFluxResiduals
-        print(len(fittedMeasuredFluxResiduals_))
+        self.assertTrue(len(fittedMeasuredFluxResiduals_) > 0)
 
     def test_fittedMeasuredFragmentResiduals_testdata(self):
         fittedMeasuredFragmentResiduals_ = self.fittedMeasuredFragmentResiduals
-        print(len(fittedMeasuredFragmentResiduals_))
+        self.assertTrue(len(fittedMeasuredFragmentResiduals_) > 0)
 
     def test_get_fitted_parameters(self):
         f_par_info = self.INCA_reimport.get_fitted_parameters(
@@ -186,11 +190,11 @@ class test_methods(unittest.TestCase):
 
     def test_fittedFluxes_testdata(self):
         fittedFluxes_ = self.fittedFluxes
-        print(len(fittedFluxes_))
+        self.assertTrue(len(fittedFluxes_) > 0)
 
     def test_fittedFragments_testdata(self):
         fittedFragments_ = self.fittedFragments
-        print(len(fittedFragments_))
+        self.assertTrue(len(fittedFragments_) > 0)
 
     def test_reimport(self):
         (
@@ -203,7 +207,9 @@ class test_methods(unittest.TestCase):
             fittedMeasuredFragmentResiduals,
             simulationParameters,
         ) = self.INCA_reimport.reimport(
-            self.filename, self.simulation_info, self.simulation_id
+            '/test_data/MFA_modelInputsData/' + self.filename,
+            self.simulation_info,
+            self.simulation_id
         )
         fittedData_ = self.fittedData
         fittedFluxes_ = self.fittedFluxes
