@@ -23,7 +23,6 @@ class test_methods(unittest.TestCase):
             m,
             f,
             model_info,
-            simulationParameters,
             f_mnt_info,
             f_mnt_res_info,
             f_par_info,
