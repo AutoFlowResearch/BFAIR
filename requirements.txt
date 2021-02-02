@@ -10,4 +10,4 @@ freezegun == 1.1.0
 openpyxl == 3.0.6
 lazy_object_proxy
 pypika
-lazy_object_proxy
+networkx
