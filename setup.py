@@ -45,6 +45,7 @@ setup(
         "sympy == 1.5.1",
         "pyopenms == 2.6.0",
         "molmass == 2020.6.10",
+        "escher == 1.6.0",
     ],
     # dependency_links=
     include_package_data=True,
