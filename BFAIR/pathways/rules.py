@@ -54,7 +54,7 @@ class _RuleSimulator:
         self._interrupted = True
 
 
-class RuleLibrary(metaclass=AbstractContextManager):
+class RuleLibrary(AbstractContextManager):
     """Rule Library.
 
     The Rule Library object connects to the reaction rules database and exposes functions to filter the reaction rules
