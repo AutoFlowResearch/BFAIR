@@ -963,7 +963,10 @@ class INCA_reimport:
         parallel, non_stationary = self.det_simulation_type(simulation_info)
         m, f = self.data_extraction(filename)
         # model_info = self.extract_model_info(m)
-        simulationParameters = self.extract_sim_params(simulation_id, info, m,
+        simulationParameters = self.extract_sim_params(
+            simulation_id,
+            info,
+            m,
             filename
         )
         fittedData = self.extract_base_stats(f, simulation_id, info)
