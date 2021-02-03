@@ -69,8 +69,7 @@ class test_methods(unittest.TestCase):
     def test_extract_file_info(self):
         with freeze_time("2021-01-15 19:24:19"):
             info = self.INCA_reimport.extract_file_info(
-                current_dir
-                + '/test_data/MFA_modelInputsData/' + self.filename
+                '/test_data/MFA_modelInputsData/' + self.filename
             )
         info_ = self.info
         self.assertEqual(info, info_)
@@ -86,8 +85,7 @@ class test_methods(unittest.TestCase):
 
     def test_data_extraction(self):
         m, f = self.INCA_reimport.data_extraction(
-            current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename
+            '/test_data/MFA_modelInputsData/' + self.filename
         )
         m_ = self.m
         f_ = self.f
@@ -101,8 +99,8 @@ class test_methods(unittest.TestCase):
 
     def test_extract_sim_params(self):
         simulationParameters = self.INCA_reimport.extract_sim_params(
-            self.simulation_id, self.info, self.m, current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename
+            self.simulation_id, self.info, self.m,
+            '/test_data/MFA_modelInputsData/' + self.filename
         )
         simulationParameters_ = self.simulationParameters
         self.assertEqual(simulationParameters, simulationParameters_)
@@ -214,8 +212,7 @@ class test_methods(unittest.TestCase):
             fittedMeasuredFragmentResiduals,
             simulationParameters,
         ) = self.INCA_reimport.reimport(
-            current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename,
+            '/test_data/MFA_modelInputsData/' + self.filename,
             self.simulation_info,
             self.simulation_id
         )
