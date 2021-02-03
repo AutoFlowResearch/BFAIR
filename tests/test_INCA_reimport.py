@@ -7,6 +7,7 @@ from BFAIR.INCA import INCA_reimport
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
 
+@freeze_time("2021-01-15 19:24:19")
 class test_methods(unittest.TestCase):
     def setUp(self):
         file_obj = open(
@@ -84,15 +85,17 @@ class test_methods(unittest.TestCase):
         self.assertEqual(non_stationary, non_stationary_)
 
     def test_data_extraction(self):
-        with freeze_time("2021-01-15 19:24:19"):
-            m, f = self.INCA_reimport.data_extraction(
-                current_dir
-                + '/test_data/MFA_modelInputsData/' + self.filename
-            )
+        """
+        assertEqual does not work on MATLAB objects
+        """
+        m, f = self.INCA_reimport.data_extraction(
+            current_dir
+            + '/test_data/MFA_modelInputsData/' + self.filename
+        )
         m_ = self.m
         f_ = self.f
-        self.assertEqual(m, m_)
-        self.assertEqual(f, f_)
+        self.assertTrue(m == m_)
+        self.assertTrue(f == f_)
 
     def test_extract_model_info(self):
         model_info = self.INCA_reimport.extract_model_info(self.m)
@@ -100,11 +103,10 @@ class test_methods(unittest.TestCase):
         self.assertEqual(model_info, model_info_)
 
     def test_extract_sim_params(self):
-        with freeze_time("2021-01-15 19:24:19"):
-            simulationParameters = self.INCA_reimport.extract_sim_params(
-                self.simulation_id, self.info, self.m, current_dir
-                + '/test_data/MFA_modelInputsData/' + self.filename
-            )
+        simulationParameters = self.INCA_reimport.extract_sim_params(
+            self.simulation_id, self.info, self.m, current_dir
+            + '/test_data/MFA_modelInputsData/' + self.filename
+        )
         simulationParameters_ = self.simulationParameters
         self.assertEqual(simulationParameters, simulationParameters_)
 
@@ -205,22 +207,21 @@ class test_methods(unittest.TestCase):
     #     self.assertTrue(len(fittedFragments_) > 0)
 
     def test_reimport(self):
-        with freeze_time("2021-01-15 19:24:19"):
-            (
-                fittedData,
-                fittedFluxes,
-                fittedFragments,
-                fittedMeasuredFluxes,
-                fittedMeasuredFragments,
-                fittedMeasuredFluxResiduals,
-                fittedMeasuredFragmentResiduals,
-                simulationParameters,
-            ) = self.INCA_reimport.reimport(
-                current_dir
-                + '/test_data/MFA_modelInputsData/' + self.filename,
-                self.simulation_info,
-                self.simulation_id
-            )
+        (
+            fittedData,
+            fittedFluxes,
+            fittedFragments,
+            fittedMeasuredFluxes,
+            fittedMeasuredFragments,
+            fittedMeasuredFluxResiduals,
+            fittedMeasuredFragmentResiduals,
+            simulationParameters,
+        ) = self.INCA_reimport.reimport(
+            current_dir
+            + '/test_data/MFA_modelInputsData/' + self.filename,
+            self.simulation_info,
+            self.simulation_id
+        )
         fittedData_ = self.fittedData
         fittedFluxes_ = self.fittedFluxes
         fittedFragments_ = self.fittedFragments
