@@ -2,7 +2,7 @@ import unittest
 import pickle
 import pathlib
 import os
-# import numpy as np
+import numpy as np
 from freezegun import freeze_time
 from BFAIR.INCA import INCA_reimport
 
