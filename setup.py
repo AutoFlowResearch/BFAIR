@@ -44,6 +44,8 @@ setup(
         "pandas == 1.1.5",
         "sympy == 1.5.1",
         "pyopenms == 2.6.0",
+        "seaborn == 0.11.1",
+        "matplotlib == 3.3.4",
     ],
     # dependency_links=
     include_package_data=True,
