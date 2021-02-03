@@ -96,10 +96,9 @@ class test_methods(unittest.TestCase):
         m, f = self.INCA_reimport.data_extraction(
             self.filename
         )
-        """m_ = self.m"""
+        m_ = self.m
         f_ = self.f
-        # self.assertEqual(m.tolist(), m_.tolist())
-        np.testing.assert_array_equal(m, m_)
+        """np.testing.assert_array_equal(m, m_)"""
         self.assertEqual(f, f_)
 
     """
