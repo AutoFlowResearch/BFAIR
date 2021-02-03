@@ -32,13 +32,19 @@ class INCA_script:
         """
         Limits the data to values that are assigned to one metabolic model
 
-        Parameters:
-            data_input: Input data file that needs to be processed
-            model_name_column: Column name where model names are defined
-            model_name: Name of the model the data will be limited to
+        Parameters
+        ----------
+        data_input: pandas.DataFrame
+            Input data file that needs to be processed
+        model_name_column: string
+            Column name where model names are defined
+        model_name: string
+            Name of the model the data will be limited to
 
-        Returns:
-            data_input: Limited data
+        Returns
+        -------
+        data_input: pandas.DataFrame
+            Limited data
 
         """
         data_output = pd.DataFrame()
@@ -59,14 +65,20 @@ class INCA_script:
         """
         Limits the data to values that were acquired in one experiment
 
-        Parameters:
-            data_input: Input data file that needs to be processed
-            experiment_name_column: Column name where experiment names
-                are defined
-            model_name: Name of the model the data will be limited to
+        Parameters
+        ----------
+        data_input: pandas.DataFrame
+            Input data file that needs to be processed
+        experiment_name_column: string
+            Column name where experiment names
+            are defined
+        model_name: string
+            Name of the model the data will be limited to
 
-        Returns:
-            data_input: Limited data
+        Returns
+        -------
+        data_input: pandas.DataFrame
+            Limited data
 
         """
         data_output = pd.DataFrame()
@@ -87,14 +99,19 @@ class INCA_script:
         """
         Process data that is stored in strings of lists etc in the files
 
-        Parameters:
-            string: Processes the data in cells in the dataframes.
+        Parameters
+        ----------
+        string: string, in this set up a single cell in a pandas.DataFrame
+            Processes the data in cells in the dataframes.
                 The info is either bordered by curly or double square
                 brackets.
-            type_of_replacement: Define the type of surrounding brackets
+        type_of_replacement: string
+            Define the type of surrounding brackets
 
-        Returns:
-            string: returns data in lists without bordering brackets
+        Returns
+        -------
+        string: list
+            returns data in lists without bordering brackets
 
         """
         if type_of_replacement == "Curly":
@@ -108,8 +125,10 @@ class INCA_script:
         """
         Starts writing the MATLAB script
 
-        Returns:
-            mat_script: Initialized MATLAB script
+        Returns
+        -------
+        mat_script: string
+            Initialized MATLAB script
 
         """
         mat_script = "clear functions\n\n"
@@ -130,27 +149,37 @@ class INCA_script:
         Provides the carbon mapping for metabolites in a model.
         Called within "add_reactions_to_script()"
 
-        Parameters:
-            atomMapping_molecules_ids: processed atomMappingReactions_data_I
-                reactants_ids_tracked or products_ids_tracked
-            model_molecules_ids: processed modelReaction_data_I
-                reactants_ids or products_ids
-            atomMapping_molecules_stoichiometry: processed
-                atomMappingReactions_data_I
-                reactants_stoichiometry_tracked or
-                productss_stoichiometry_tracked
-            atomMapping_molecules_elements: processed
-                atomMappingReactions_data_I
-                reactants_elements_tracked or products_elements_tracked
-            atomMapping_molecules_mapping: processed
-                atomMappingReactions_data_I
-                reactants_mapping or products_mapping
-            model_molecules_stoichiometry: processed modelReaction_data_I
-                reactants_stoichiometry or products_stoichiometry
-            reaction_type: reactant or product
+        Parameters
+        ----------
+        atomMapping_molecules_ids: list
+            processed atomMappingReactions_data_I
+            reactants_ids_tracked or products_ids_tracked
+        model_molecules_ids: list
+            processed modelReaction_data_I
+            reactants_ids or products_ids
+        atomMapping_molecules_stoichiometry: list
+            processed
+            atomMappingReactions_data_I
+            reactants_stoichiometry_tracked or
+            productss_stoichiometry_tracked
+        atomMapping_molecules_elements: list
+            processed
+            atomMappingReactions_data_I
+            reactants_elements_tracked or products_elements_tracked
+        atomMapping_molecules_mapping: list
+            processed
+            atomMappingReactions_data_I
+            reactants_mapping or products_mapping
+        model_molecules_stoichiometry: list
+            processed modelReaction_data_I
+            reactants_stoichiometry or products_stoichiometry
+        reaction_type: string
+            reactant or product
 
-        Returns:
-            rxn_equation: Reaction equation for the defined reaction
+        Returns
+        -------
+        rxn_equation: string
+            Reaction equation for the defined reaction
 
         """
         rxn_equation = ""
@@ -284,14 +313,20 @@ class INCA_script:
         """
         Translates the model and adds mapping using reaction_mapping()
 
-        Parameters:
-            modelReaction_data_I: pre-processed modelReaction_data_I input data
-            atomMappingReactions_data_I: pre-processed
-                atomMappingReactions_data_I input data
+        Parameters
+        ----------
+        modelReaction_data_I: pandas.DataFrame
+            pre-processed modelReaction_data_I input data
+        atomMappingReactions_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingReactions_data_I input data
 
-        Returns:
-            mat_script: Extention to the MATLAB script under construction
-            model_rxn_ids_exp: List of reaction IDs used for the model
+        Returns
+        -------
+        mat_script: string
+            Extention to the MATLAB script under construction
+        model_rxn_ids_exp: list
+            List of reaction IDs used for the model
 
         """
         if len(atomMappingReactions_data_I["rxn_id"]) != len(
@@ -524,8 +559,10 @@ class INCA_script:
         """
         Previously described reactions are assigned to a model object
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
 
         """
         mat_script = "m = model(r); % set up model\n\n"
@@ -537,12 +574,16 @@ class INCA_script:
         Takes care of symmetrical metabolites if not done so in the
         reaction equations
 
-        Parameters:
-            atomMappingMetabolite_data_I: pre-processed
-                atomMappingMetabolite_data_I input data
+        Parameters
+        ----------
+        atomMappingMetabolite_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingMetabolite_data_I input data
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
 
         """
         tmp_script = "% take care of symmetrical metabolites\n"
@@ -604,14 +645,19 @@ class INCA_script:
         """
         Adds in the metabolite state (balanced or unbalanced)
 
-        Parameters:
-            atomMappingMetabolite_data_I: pre-processed
-                atomMappingMetabolite_data_I input data
-            unbalanced_metabolites: list of unbalanced
-                metabolites - hardcoded
+        Parameters
+        ----------
+        atomMappingMetabolite_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingMetabolite_data_I input data
+        unbalanced_metabolites: list of string elements
+            list of unbalanced
+            metabolites - hardcoded
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
 
         """
         tmp_script = "% define unbalanced reactions\n"
@@ -645,18 +691,25 @@ class INCA_script:
         Flux parameters are added. They correspond to the previously
         described reactions
 
-        Parameters:
-            modelReaction_data_I: pre-processed
-                modelReaction_data_I input data
-            measuredFluxes_data_I: pre-processed
-                measuredFluxes_data_I input data
-            model_rxn_ids: pre-processed
-                model_rxn_ids input data
-            fluxes_present: confirm if fluxes are present. If not then the
-                flux measuredFluxes_data_I file will be ignored
+        Parameters
+        ----------
+            modelReaction_data_I: pandas.DataFrame
+            pre-processed
+            modelReaction_data_I input data
+        measuredFluxes_data_I: pandas.DataFrame
+            pre-processed
+            measuredFluxes_data_I input data
+        model_rxn_ids: list
+            pre-processed
+            model_rxn_ids input data
+        fluxes_present: pandas.DataFrame
+            confirm if fluxes are present. If not then the
+            flux measuredFluxes_data_I file will be ignored
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
 
         """
         # Add in initial fluxes (lb/ub, values, on/off) and define the
@@ -744,8 +797,10 @@ class INCA_script:
         """
         Adds a QC step and defines the restarts for later processing
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script:
+            addition to MATLAB script under construction
 
         """
         mat_script = "\nm.rates.flx.val = mod2stoich(m); % make sure the fluxes are feasible\n"  # noqa E501
@@ -766,20 +821,28 @@ class INCA_script:
         """
         Defines the measured fragments and adds tracer information
 
-        Parameters:
-            experimentalMS_data_I: pre-processed
-                experimentalMS_data_I input data
-            tracer_I: pre-processed
-                tracer_I input data
-            measuredFluxes_data_I: pre-processed
-                measuredFluxes_data_I input data
-            atomMappingMetabolite_data_I: pre-processed
-                atomMappingMetabolite_data_I input data
+        Parameters
+        ----------
+        experimentalMS_data_I: pandas.DataFrame
+            pre-processed
+            experimentalMS_data_I input data
+        tracer_I: pandas.DataFrame
+            pre-processed
+            tracer_I input data
+        measuredFluxes_data_I: pandas.DataFrame
+            pre-processed
+            measuredFluxes_data_I input data
+        atomMappingMetabolite_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingMetabolite_data_I input data
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
-            fragments_used: List of the fragments in the data that fit into
-                the defined parameters
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
+        fragments_used: list
+            List of the fragments in the data that fit into
+            the defined parameters
 
         """
         mat_script = ""
@@ -967,14 +1030,19 @@ class INCA_script:
         """
         Adds MS data to measured fragments
 
-        Parameters:
-            experimentalMS_data_I: pre-processed
-                experimentalMS_data_I input data
-            fragments_used: List of the fragments in the data that fit into
-                the defined parameters from "add_experimental_parameters()"
+        Parameters
+        ----------
+        experimentalMS_data_I: pandas.DataFrame
+            pre-processed
+            experimentalMS_data_I input data
+        fragments_used: list
+            List of the fragments in the data that fit into
+            the defined parameters from "add_experimental_parameters()"
 
-        Returns:
-            mat_script: addition to MATLAB script under construction
+        Returns
+        -------
+        mat_script: string
+            addition to MATLAB script under construction
 
         """
         experiments_all = [
@@ -1141,23 +1209,32 @@ class INCA_script:
         """
         Combines the functions that construct the model
 
-        Parameters:
-            modelReaction_data_I: pre-processed
-                modelReaction_data_I input data
-            atomMappingReactions_data_I: pre-processed
-                atomMappingReactions_data_I input data
-            atomMappingMetabolite_data_I: pre-processed
-                atomMappingMetabolite_data_I input data
-            measuredFluxes_data_I: pre-processed
-                measuredFluxes_data_I input data
-            experimentalMS_data_I: pre-processed
-                experimentalMS_data_I input data
-            tracer_I: pre-processed
-                tracer_I input data
+        Parameters
+        ----------
+        modelReaction_data_I: pandas.DataFrame
+            pre-processed
+            modelReaction_data_I input data
+        atomMappingReactions_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingReactions_data_I input data
+        atomMappingMetabolite_data_I: pandas.DataFrame
+            pre-processed
+            atomMappingMetabolite_data_I input data
+        measuredFluxes_data_I: pandas.DataFrame
+            pre-processed
+            measuredFluxes_data_I input data
+        experimentalMS_data_I: pandas.DataFrame
+            pre-processed
+            experimentalMS_data_I input data
+        tracer_I: pandas.DataFrame
+            pre-processed
+            tracer_I input data
 
-        Returns:
-            script: combined parts of the MATLAB script constrcted
-                by the previously defined functions
+        Returns
+        -------
+        script: string
+            combined parts of the MATLAB script constrcted
+            by the previously defined functions
 
         """
         script = ""
@@ -1187,12 +1264,16 @@ class INCA_script:
         """
         Writes the output file
 
-        Parameters:
-            script: output from "script_generator()"
-            scriptname: user defined name of the .m output file
+        Parameters
+        ----------
+        script: string
+            output from "script_generator()"
+        scriptname: string
+            user defined name of the .m output file
 
-        Outputs:
-            .m INCA script
+        Outputs
+        -------
+            INCA script: .m file
 
         """
         file1 = open(scriptname + ".m", "w")
@@ -1203,14 +1284,19 @@ class INCA_script:
         """
         Adds the functions needed to run the script and export the .mat file
 
-        Parameters:
-            output_filename: user defined name of the .mat output file, the
-                INCA output file
-            n_estimates: number of times the fluxes will be estimated
+        Parameters
+        ----------
+        output_filename: string
+            user defined name of the .mat output file, the
+            INCA output file
+        n_estimates: int
+            number of times the fluxes will be estimated
 
-        Returns:
-            runner: MATLAB script that will run the previously created
-                INCA script
+        Returns
+        -------
+        runner: string
+            MATLAB script that will run the previously created
+            INCA script
 
         """
         runner = (
@@ -1226,13 +1312,17 @@ class INCA_script:
         """
         Writes the runner output file
 
-        Parameters:
-            runner: previously created runner script
-            scriptname: name of the runner file, can be the same as
-                the scriptname of the INCA script
+        Parameters
+        ----------
+        runner: string
+            previously created runner script
+        scriptname: string
+            name of the runner file, can be the same as
+            the scriptname of the INCA script
 
-        Outputs:
-            .m runner script
+        Outputs
+        -------
+            runner script: .m file
 
         """
         file2 = open(scriptname + "_runner.m", "w")
@@ -1246,14 +1336,21 @@ class INCA_script:
         Executes the script in MATLAB using INCA
         Prints time and produces .mat file
 
-        Parameters:
-            INCA_base_directory:
-            script_folder:
-            matlab_script:
-            runner_script:
+        Parameters
+        ----------
+        INCA_base_directory: path
+            the path to the base folder of your INCA installation
+        script_folder: path
+            the path to the location of the file you're working on
+        matlab_script: string
+            name of the .m file (without suffix)
+        runner_script: string
+            name of the runner file (usually matlab_script name +
+                '_runner')
 
-        Outputs:
-            .mat output of INCA
+        Outputs
+        -------
+            output of INCA: .mat file
 
         """
         start_time = time.time()
