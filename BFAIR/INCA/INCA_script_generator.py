@@ -13,8 +13,8 @@ try:
     import matlab.engine
 except ModuleNotFoundError:
     print(
-        "Please check the README for a guide on how to install the MATLAB \
-            engine"
+        "Please check the README for a guide on how to "
+        "install the MATLAB engine"
     )
 
 __version__ = "0.0.1"
