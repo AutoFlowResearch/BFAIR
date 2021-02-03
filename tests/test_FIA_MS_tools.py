@@ -193,3 +193,7 @@ class test_methods(unittest.TestCase):
             len(stats_standard_.columns)
         )
         self.assertEqual(stats_standard, stats_standard_)
+
+
+if __name__ == "__main__":
+    unittest.main()

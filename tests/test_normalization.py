@@ -122,3 +122,7 @@ class test_methods(unittest.TestCase):
             qc_vector=None,
         )
         self.assertEqual(pqn, pqn_)
+
+
+if __name__ == "__main__":
+    unittest.main()
