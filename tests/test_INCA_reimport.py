@@ -1,10 +1,13 @@
 import unittest
 import pickle
 import pathlib
+import os
 from freezegun import freeze_time
 from BFAIR.INCA import INCA_reimport
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
+
+os.chdir(current_dir + "/test_data/MFA_modelInputsData")
 
 
 @freeze_time("2021-01-15 19:24:19")
