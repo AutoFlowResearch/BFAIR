@@ -6,6 +6,7 @@
 # INCA_reimport using unit testing.
 import pickle
 import pandas as pd
+
 # import pathlib
 # import os
 from BFAIR.INCA import INCA_reimport
@@ -18,11 +19,9 @@ filehandler = open("reimport_test_data.obj", "wb")
 INCA_reimport = INCA_reimport()
 
 # Load the data
-filename = 'TestFile.mat'
-simulation_info = pd.read_csv(
-    'data-1604345289079.csv'
-    )
-simulation_id = 'WTEColi_113C80_U13C20_01'
+filename = "TestFile.mat"
+simulation_info = pd.read_csv("data-1604345289079.csv")
+simulation_id = "WTEColi_113C80_U13C20_01"
 
 
 # Generate variables to save
@@ -33,45 +32,47 @@ m, f = INCA_reimport.data_extraction(filename)
 model_info = INCA_reimport.extract_model_info(m)
 simulationParameters = INCA_reimport.extract_sim_params(
     simulation_id, info, m, filename
-    )
+)
 fittedData = INCA_reimport.extract_base_stats(f, simulation_id, info)
 f_mnt_info = INCA_reimport.get_fit_info(f)
 fittedMeasuredFluxes, fittedMeasuredFragments = INCA_reimport.sort_fit_info(
     f_mnt_info, simulation_info, fittedData
-    )
+)
 f_mnt_res_info = INCA_reimport.get_residuals_info(f, simulation_info)
-fittedMeasuredFluxResiduals, fittedMeasuredFragmentResiduals = \
-    INCA_reimport.sort_residual_info(
-        f_mnt_res_info, simulation_info, fittedData
-        )
+(
+    fittedMeasuredFluxResiduals,
+    fittedMeasuredFragmentResiduals,
+) = INCA_reimport.sort_residual_info(
+    f_mnt_res_info, simulation_info, fittedData
+)
 f_par_info = INCA_reimport.get_fitted_parameters(f, simulation_info)
 fittedFluxes, fittedFragments = INCA_reimport.sort_parameter_info(
     f_par_info, simulation_info, fittedData
-    )
+)
 
 
 pickle.dump(
     [
-            filename,
-            simulation_info,
-            simulation_id,
-            info,
-            parallel,
-            non_stationary,
-            m,
-            f,
-            model_info,
-            f_mnt_info,
-            f_mnt_res_info,
-            f_par_info,
-            fittedData,
-            fittedFluxes,
-            fittedFragments,
-            fittedMeasuredFluxes,
-            fittedMeasuredFragments,
-            fittedMeasuredFluxResiduals,
-            fittedMeasuredFragmentResiduals,
-            simulationParameters,
+        filename,
+        simulation_info,
+        simulation_id,
+        info,
+        parallel,
+        non_stationary,
+        m,
+        f,
+        model_info,
+        f_mnt_info,
+        f_mnt_res_info,
+        f_par_info,
+        fittedData,
+        fittedFluxes,
+        fittedFragments,
+        fittedMeasuredFluxes,
+        fittedMeasuredFragments,
+        fittedMeasuredFluxResiduals,
+        fittedMeasuredFragmentResiduals,
+        simulationParameters,
     ],
     filehandler,
 )
