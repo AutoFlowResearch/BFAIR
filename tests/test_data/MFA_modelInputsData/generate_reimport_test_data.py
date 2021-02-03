@@ -7,6 +7,7 @@
 import pickle
 import pandas as pd
 import pathlib
+import os
 from BFAIR.INCA import INCA_reimport
 
 test_dir = str(pathlib.Path(__file__).parent.absolute().parents[1])
@@ -18,11 +19,13 @@ filehandler = open("reimport_test_data.obj", "wb")
 INCA_reimport = INCA_reimport()
 
 # Load the data
-filename = test_dir + '/test_data/MFA_modelInputsData/TestFile.mat'
+filename = 'test_data/MFA_modelInputsData/TestFile.mat'
 simulation_info = pd.read_csv(
     'data-1604345289079.csv'
     )
 simulation_id = 'WTEColi_113C80_U13C20_01'
+os.chdir(test_dir)
+
 
 # Generate variables to save
 # Succession of functions
