@@ -67,10 +67,9 @@ class test_methods(unittest.TestCase):
     """
 
     def test_extract_file_info(self):
-        with freeze_time("2021-01-15 19:24:19"):
-            info = self.INCA_reimport.extract_file_info(
-                self.filename
-            )
+        info = self.INCA_reimport.extract_file_info(
+            '/' + self.filename
+        )
         info_ = self.info
         self.assertEqual(info, info_)
 
