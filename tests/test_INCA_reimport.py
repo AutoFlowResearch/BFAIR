@@ -1,6 +1,7 @@
 import unittest
 import pickle
 import pathlib
+from freezegun import freeze_time
 from BFAIR.INCA import INCA_reimport
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
@@ -82,10 +83,11 @@ class test_methods(unittest.TestCase):
         self.assertEqual(non_stationary, non_stationary_)
 
     def test_data_extraction(self):
-        m, f = self.INCA_reimport.data_extraction(
-            current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename
-        )
+        with freeze_time("2021-01-15 19:24:19"):
+            m, f = self.INCA_reimport.data_extraction(
+                current_dir
+                + '/test_data/MFA_modelInputsData/' + self.filename
+            )
         m_ = self.m
         f_ = self.f
         self.assertEqual(m, m_)
@@ -172,7 +174,8 @@ class test_methods(unittest.TestCase):
     #     self.assertTrue(len(fittedMeasuredFluxResiduals_) > 0)
 
     # def test_fittedMeasuredFragmentResiduals_testdata(self):
-    #     fittedMeasuredFragmentResiduals_ = self.fittedMeasuredFragmentResiduals
+    #     fittedMeasuredFragmentResiduals_ =
+    # self.fittedMeasuredFragmentResiduals
     #     self.assertTrue(len(fittedMeasuredFragmentResiduals_) > 0)
 
     def test_get_fitted_parameters(self):
