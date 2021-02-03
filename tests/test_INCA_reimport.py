@@ -95,10 +95,10 @@ class test_methods(unittest.TestCase):
         )
         m_ = self.m
         f_ = self.f
-        # self.assertEqual(m, m_)
-        self.np.testing.assert_array_equal(m, m_)
+        self.assertEqual(m.tolist(), m_.tolist())
+        # self.np.testing.assert_array_equal(m, m_)
         self.assertEqual(f, f_)
-    
+
     """
     # datetime issue
     def test_extract_model_info(self):
