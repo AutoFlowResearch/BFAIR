@@ -1,13 +1,15 @@
 # generate test_data
-# Last date : 02.02.2020
+# Last date : 02.03.2020
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
 # INCA_reimport using unit testing.
 import pickle
 import pandas as pd
+import pathlib
 from BFAIR.INCA import INCA_reimport
 
+test_dir = str(pathlib.Path(__file__).parent.absolute().parents[1])
 
 pd.set_option("mode.chained_assignment", None)
 # Use pickle to save python variables
@@ -16,7 +18,7 @@ filehandler = open("reimport_test_data.obj", "wb")
 INCA_reimport = INCA_reimport()
 
 # Load the data
-filename = 'TestFile.mat'
+filename = test_dir + '/test_data/MFA_modelInputsData/TestFile.mat'
 simulation_info = pd.read_csv(
     'data-1604345289079.csv'
     )

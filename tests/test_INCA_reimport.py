@@ -85,17 +85,14 @@ class test_methods(unittest.TestCase):
         self.assertEqual(non_stationary, non_stationary_)
 
     def test_data_extraction(self):
-        """
-        assertEqual does not work on MATLAB objects
-        """
         m, f = self.INCA_reimport.data_extraction(
             current_dir
             + '/test_data/MFA_modelInputsData/' + self.filename
         )
         m_ = self.m
         f_ = self.f
-        self.assertTrue(m == m_)
-        self.assertTrue(f == f_)
+        self.assertEqual(m, m_)
+        self.assertEqual(f, f_)
 
     def test_extract_model_info(self):
         model_info = self.INCA_reimport.extract_model_info(self.m)
