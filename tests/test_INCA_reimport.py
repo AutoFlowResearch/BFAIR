@@ -66,10 +66,11 @@ class test_methods(unittest.TestCase):
     """
 
     def test_extract_file_info(self):
-        info = self.INCA_reimport.extract_file_info(
-            current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename
-        )
+        with freeze_time("2021-01-15 19:24:19"):
+            info = self.INCA_reimport.extract_file_info(
+                current_dir
+                + '/test_data/MFA_modelInputsData/' + self.filename
+            )
         info_ = self.info
         self.assertEqual(info, info_)
 
@@ -99,10 +100,11 @@ class test_methods(unittest.TestCase):
         self.assertEqual(model_info, model_info_)
 
     def test_extract_sim_params(self):
-        simulationParameters = self.INCA_reimport.extract_sim_params(
-            self.simulation_id, self.info, self.m, current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename
-        )
+        with freeze_time("2021-01-15 19:24:19"):
+            simulationParameters = self.INCA_reimport.extract_sim_params(
+                self.simulation_id, self.info, self.m, current_dir
+                + '/test_data/MFA_modelInputsData/' + self.filename
+            )
         simulationParameters_ = self.simulationParameters
         self.assertEqual(simulationParameters, simulationParameters_)
 
@@ -203,21 +205,22 @@ class test_methods(unittest.TestCase):
     #     self.assertTrue(len(fittedFragments_) > 0)
 
     def test_reimport(self):
-        (
-            fittedData,
-            fittedFluxes,
-            fittedFragments,
-            fittedMeasuredFluxes,
-            fittedMeasuredFragments,
-            fittedMeasuredFluxResiduals,
-            fittedMeasuredFragmentResiduals,
-            simulationParameters,
-        ) = self.INCA_reimport.reimport(
-            current_dir
-            + '/test_data/MFA_modelInputsData/' + self.filename,
-            self.simulation_info,
-            self.simulation_id
-        )
+        with freeze_time("2021-01-15 19:24:19"):
+            (
+                fittedData,
+                fittedFluxes,
+                fittedFragments,
+                fittedMeasuredFluxes,
+                fittedMeasuredFragments,
+                fittedMeasuredFluxResiduals,
+                fittedMeasuredFragmentResiduals,
+                simulationParameters,
+            ) = self.INCA_reimport.reimport(
+                current_dir
+                + '/test_data/MFA_modelInputsData/' + self.filename,
+                self.simulation_info,
+                self.simulation_id
+            )
         fittedData_ = self.fittedData
         fittedFluxes_ = self.fittedFluxes
         fittedFragments_ = self.fittedFragments
