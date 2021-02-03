@@ -15,7 +15,7 @@ class test_methods(unittest.TestCase):
     def setUp(self):
         file_obj = open(
             current_dir
-            + "/reimport_test_data.obj",
+            + "/test_data/MFA_modelInputsData/reimport_test_data.obj",
             "rb",
         )
         (
