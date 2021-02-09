@@ -16,6 +16,7 @@ pd.set_option("mode.chained_assignment", None)
 # Use pickle to save python variables
 filehandler = open("reimport_test_data.obj", "wb")
 
+# INCA_reimport_directly = INCA_reimport()
 INCA_reimport = INCA_reimport()
 
 # Load the data
@@ -50,6 +51,10 @@ fittedFluxes, fittedFragments = INCA_reimport.sort_parameter_info(
     f_par_info, simulation_info, fittedData
 )
 
+# (fittedData2, fittedFluxes2, fittedFragments2, fittedMeasuredFluxes2,
+#     fittedMeasuredFragments2, fittedMeasuredFluxResiduals2,
+#     fittedMeasuredFragmentResiduals2, simulationParameters2) = \
+#     INCA_reimport_directly.reimport(filename, simulation_info, simulation_id)
 
 pickle.dump(
     [
@@ -73,6 +78,14 @@ pickle.dump(
         fittedMeasuredFluxResiduals,
         fittedMeasuredFragmentResiduals,
         simulationParameters,
+        # fittedData2,
+        # fittedFluxes2,
+        # fittedFragments2,
+        # fittedMeasuredFluxes2,
+        # fittedMeasuredFragments2,
+        # fittedMeasuredFluxResiduals2,
+        # fittedMeasuredFragmentResiduals2,
+        # simulationParameters2
     ],
     filehandler,
 )
