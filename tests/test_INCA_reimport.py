@@ -12,7 +12,6 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 os.chdir(current_dir + "/test_data/MFA_modelInputsData")
 
 
-@freeze_time(datetime.datetime(2021, 2, 9, 17, 12, 50))
 class test_methods(unittest.TestCase):
 
     maxDiff = None
@@ -92,6 +91,7 @@ class test_methods(unittest.TestCase):
     the other INCA module is solved.
     """
 
+    @freeze_time(datetime.datetime(2021, 2, 9, 17, 12, 50))
     # datetime issue
     def test_extract_file_info(self):
         info = self.INCA_reimport.extract_file_info(
