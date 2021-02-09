@@ -57,7 +57,8 @@ class INCA_reimport:
             )
             info = {
                 "File_size": file_size,
-                "Simulation_timestamp_structure": simulation_dateAndTime_struct,
+                "Simulation_timestamp_structure":
+                    simulation_dateAndTime_struct,
                 "Simulation_timestamp": simulation_dateAndTime,
             }
         return info
@@ -619,7 +620,7 @@ class INCA_reimport:
                             "sample_name_abbreviation": simulation_info[
                                 "sample_name_abbreviation"
                             ][0],
-                            "time_point": time_point,  # removed "[cnt]" since only a single value is used in this option
+                            "time_point": time_point,
                             "fragment_id": fragment_id,
                             "fragment_mass": fragment_mass,
                             "res_data": float(res_data[cnt]),
