@@ -11,8 +11,11 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 os.chdir(current_dir + "/test_data/MFA_modelInputsData")
 
 
-@freeze_time("2021-02-09 05:23")
+@freeze_time("2021-02-09 10:03:22")
 class test_methods(unittest.TestCase):
+
+    maxDiff = None
+
     def setUp(self):
         file_obj = open(
             current_dir
