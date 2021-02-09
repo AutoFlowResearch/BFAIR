@@ -11,7 +11,7 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 os.chdir(current_dir + "/test_data/MFA_modelInputsData")
 
 
-@freeze_time("2021-02-09 07:23")
+@freeze_time("2021-02-09 05:23")
 class test_methods(unittest.TestCase):
     def setUp(self):
         file_obj = open(
@@ -70,7 +70,6 @@ class test_methods(unittest.TestCase):
     the other INCA module is solved.
     """
 
-    """
     # datetime issue
     def test_extract_file_info(self):
         info = self.INCA_reimport.extract_file_info(
@@ -78,7 +77,6 @@ class test_methods(unittest.TestCase):
         )
         info_ = self.info
         self.assertEqual(info, info_)
-    """
 
     def test_det_simulation_type(self):
         parallel, non_stationary = self.INCA_reimport.det_simulation_type(
@@ -89,25 +87,23 @@ class test_methods(unittest.TestCase):
         self.assertEqual(parallel, parallel_)
         self.assertEqual(non_stationary, non_stationary_)
 
-    # def test_data_extraction(self):
-    #     """
-    #     comparing m and f fails
-    #     """
-    #     m, f = self.INCA_reimport.data_extraction(
-    #         self.filename
-    #     )
-    #     m_ = self.m
-    #     f_ = self.f
-    #     """np.testing.assert_array_equal(m, m_)"""
-    #     """self.assertEqual(f, f_)"""
+    def test_data_extraction(self):
+        """
+        comparing m and f fails
+        """
+        m, f = self.INCA_reimport.data_extraction(
+            self.filename
+        )
+        m_ = self.m
+        f_ = self.f
+        self.assertEqual(type(m), type(m_))
+        self.assertEqual(type(f), type(f_))
 
-    """
     # datetime issue
     def test_extract_model_info(self):
         model_info = self.INCA_reimport.extract_model_info(self.m)
         model_info_ = self.model_info
         self.assertEqual(model_info, model_info_)
-    """
 
     def test_extract_sim_params(self):
         simulationParameters = self.INCA_reimport.extract_sim_params(
@@ -117,9 +113,9 @@ class test_methods(unittest.TestCase):
         simulationParameters_ = self.simulationParameters
         self.assertEqual(simulationParameters, simulationParameters_)
 
-    # def test_simulationParameters_testdata(self):
-    #     simulationParameters_ = self.simulationParameters
-    #     self.assertTrue(len(simulationParameters_) > 0)
+    def test_simulationParameters_testdata(self):
+        simulationParameters_ = self.simulationParameters
+        self.assertTrue(len(simulationParameters_) > 0)
 
     def test_extract_base_stats(self):
         fittedData = self.INCA_reimport.extract_base_stats(
@@ -128,9 +124,9 @@ class test_methods(unittest.TestCase):
         fittedData_ = self.fittedData
         self.assertEqual(fittedData, fittedData_)
 
-    # def test_fittedData_testdata(self):
-    #     fittedData_ = self.fittedData
-    #     self.assertTrue(len(fittedData_) > 0)
+    def test_fittedData_testdata(self):
+        fittedData_ = self.fittedData
+        self.assertTrue(len(fittedData_) > 0)
 
     def test_get_fit_info(self):
         f_mnt_info = self.INCA_reimport.get_fit_info(self.f)
@@ -149,13 +145,13 @@ class test_methods(unittest.TestCase):
         self.assertEqual(fittedMeasuredFluxes, fittedMeasuredFluxes_)
         self.assertEqual(fittedMeasuredFragments, fittedMeasuredFragments_)
 
-    # def test_fittedMeasuredFluxes_testdata(self):
-    #     fittedMeasuredFluxes_ = self.fittedMeasuredFluxes
-    #     self.assertTrue(len(fittedMeasuredFluxes_) > 0)
+    def test_fittedMeasuredFluxes_testdata(self):
+        fittedMeasuredFluxes_ = self.fittedMeasuredFluxes
+        self.assertTrue(len(fittedMeasuredFluxes_) > 0)
 
-    # def test_fittedMeasuredFragments_testdata(self):
-    #     fittedMeasuredFragments_ = self.fittedMeasuredFragments
-    #     self.assertTrue(len(fittedMeasuredFragments_) > 0)
+    def test_fittedMeasuredFragments_testdata(self):
+        fittedMeasuredFragments_ = self.fittedMeasuredFragments
+        self.assertTrue(len(fittedMeasuredFragments_) > 0)
 
     def test_get_residuals_info(self):
         f_mnt_res_info = self.INCA_reimport.get_residuals_info(
@@ -180,14 +176,14 @@ class test_methods(unittest.TestCase):
             fittedMeasuredFragmentResiduals, fittedMeasuredFragmentResiduals_
         )
 
-    # def test_fittedMeasuredFluxResiduals_testdata(self):
-    #     fittedMeasuredFluxResiduals_ = self.fittedMeasuredFluxResiduals
-    #     self.assertTrue(len(fittedMeasuredFluxResiduals_) > 0)
+    def test_fittedMeasuredFluxResiduals_testdata(self):
+        fittedMeasuredFluxResiduals_ = self.fittedMeasuredFluxResiduals
+        self.assertTrue(len(fittedMeasuredFluxResiduals_) > 0)
 
-    # def test_fittedMeasuredFragmentResiduals_testdata(self):
-    #     fittedMeasuredFragmentResiduals_ =
-    # self.fittedMeasuredFragmentResiduals
-    #     self.assertTrue(len(fittedMeasuredFragmentResiduals_) > 0)
+    def test_fittedMeasuredFragmentResiduals_testdata(self):
+        fittedMeasuredFragmentResiduals_ = \
+            self.fittedMeasuredFragmentResiduals
+        self.assertTrue(len(fittedMeasuredFragmentResiduals_) > 0)
 
     def test_get_fitted_parameters(self):
         f_par_info = self.INCA_reimport.get_fitted_parameters(
@@ -205,15 +201,14 @@ class test_methods(unittest.TestCase):
         self.assertEqual(fittedFluxes, fittedFluxes_)
         self.assertEqual(fittedFragments, fittedFragments_)
 
-    # def test_fittedFluxes_testdata(self):
-    #     fittedFluxes_ = self.fittedFluxes
-    #     self.assertTrue(len(fittedFluxes_) > 0)
+    def test_fittedFluxes_testdata(self):
+        fittedFluxes_ = self.fittedFluxes
+        self.assertTrue(len(fittedFluxes_) > 0)
 
-    # def test_fittedFragments_testdata(self):
-    #     fittedFragments_ = self.fittedFragments
-    #     self.assertTrue(len(fittedFragments_) > 0)
+    def test_fittedFragments_testdata(self):
+        fittedFragments_ = self.fittedFragments
+        self.assertTrue(len(fittedFragments_) > 0)
 
-    """
     # datetime issue
     def test_reimport(self):
         (
@@ -250,7 +245,6 @@ class test_methods(unittest.TestCase):
             fittedMeasuredFragmentResiduals, fittedMeasuredFragmentResiduals_
         )
         self.assertEqual(simulationParameters, simulationParameters_)
-    """
 
 
 if __name__ == "__main__":
