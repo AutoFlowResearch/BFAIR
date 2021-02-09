@@ -3,8 +3,8 @@ import pickle
 import pathlib
 import os
 # import numpy as np
-# from freezegun import freeze_time
-# import datetime
+from freezegun import freeze_time
+import datetime
 from BFAIR.INCA import INCA_reimport
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
@@ -12,7 +12,7 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 os.chdir(current_dir + "/test_data/MFA_modelInputsData")
 
 
-# @freeze_time(datetime.datetime(2021, 2, 9, 7, 23))
+@freeze_time(datetime.datetime(2021, 2, 9, 17, 12, 50))
 class test_methods(unittest.TestCase):
 
     maxDiff = None
