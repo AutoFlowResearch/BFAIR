@@ -84,11 +84,11 @@ class RuleLibrary(AbstractContextManager):
         if "thorough" in kwargs:
             self._logger.info("Thorough standardization will be enforced. Changing 'thorough' to True.")
         kwargs["thorough"] = True
-        self._conn = sql.connect(static_path(f"rules_{'' if kwargs['add_hs'] else 'no'}hs.db"))
-        self._conn.create_aggregate(q.ChemicalSimilarity.__name__, 2, q.ChemicalSimilarity)
-        self._cursor = self._conn.cursor()
-        self._filters = []
         self._std_args = kwargs.copy()
+        self._conn = None
+        self._cursor = None
+        self._filters = []
+        self.open()
 
     def __iter__(self):
         return self.available.itertuples(index=False, name=None)
@@ -103,15 +103,43 @@ class RuleLibrary(AbstractContextManager):
         return self.available._repr_html_()
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
-        self._conn.close()
+        self.close()
 
     @property
     def available(self) -> pd.DataFrame:
         return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
 
+    @property
+    def database_path(self) -> str:
+        return static_path(f"rules_{'' if self._std_args['add_hs'] else 'no'}hs.db")
+
     def _fetch_results(self, query) -> set:
         # Returns a set of unique results obtained by executing the specified SQL statement
         return set(chain.from_iterable(self._cursor.execute(query)))
+
+    def open(self):
+        """
+        Connects to the SQL database.
+
+        Returns
+        -------
+        same type as caller
+        """
+        self._conn = sql.connect(self.database_path)
+        self._conn.create_aggregate(q.ChemicalSimilarity.__name__, 2, q.ChemicalSimilarity)
+        self._cursor = self._conn.cursor()
+        return self
+
+    def close(self):
+        """
+        Closes the connection to the SQL database.
+
+        Returns
+        -------
+        same type as caller
+        """
+        self._conn.close()
+        return self
 
     def apply_to(self, input_compound, input_type="inchi", timeout=60.0) -> Generator:
         """
@@ -150,27 +178,33 @@ class RuleLibrary(AbstractContextManager):
                     task.interrupt()
             del tasks
 
-    def list_offtargets(self, reaction_results: Generator):
+    def list_products(self, input_compound, input_type="inchi", timeout=60.0) -> dict:
         """
-        Processes reaction results into a dictionary that maps the InChI depictions of products to reaction identifiers.
+        Applies available rules to input compound and processes reaction results into a dictionary containing an entry
+        for each product and list of which reactions generated it.
 
         Parameters
         ----------
-        reaction_results : Generator
-            Reaction results from `RuleLibrary.apply_to`.
+        input_compound : str or rdkit.Chem.rdchem.Mol
+            String representation of a compound or a RDKit molecule object.
+        input_type : {'inchi', 'smiles', 'rdkit'}
+            Type of notation describing the input compound.
+        timeout : float
+            Number of seconds after which a rule simulation will be stopped.
 
         Returns
         -------
         dict
-            A dictionary with InChI depictions as keys and tuples as values. Each tuple contains a reaction rule ID and
-            its associated MetaNetX ID.
+            A dictionary of (InChI depiction, list) pairs. InChI strings correspond to products resulting from input
+            compound, whereas values are a list of 2-element tuples containing a reaction rule ID and MetaNetX ID
+            indicating which reaction produced such product.
 
         Notes
         -----
         Currency metabolites (such as CoA and NADH) are omitted from the output.
         """
-        offtargets = {}
-        for result in reaction_results:
+        results = {}
+        for result in self.apply_to(input_compound, input_type, timeout):
             for products in result.product_sets:
                 for inchi in products:
                     # Check if the InChi matches that of a currency metabolite
@@ -179,8 +213,8 @@ class RuleLibrary(AbstractContextManager):
                     )
                     if self._fetch_results(is_currency_metabolite):
                         continue
-                    offtargets.setdefault(inchi, []).append([result.rule_id, result.reaction_id])
-        return offtargets
+                    results.setdefault(inchi, []).append([result.rule_id, result.reaction_id])
+        return results
 
     def filter_by_diameter(self, cutoff):
         """
