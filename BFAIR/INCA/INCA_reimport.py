@@ -816,7 +816,10 @@ class INCA_reimport:
         flux_units = f_par_info["flux_units"]
         fit_alf = f_par_info["fit_alf"]
         free = f_par_info["free"]
-
+        f_par_chi2s = f_par_info["fit_chi2s"]
+        f_par_cor = f_par_info["fit_cor"]
+        f_par_cov = f_par_info["fit_cov"]
+        
         simulation_id = fittedData[0]["simulation_id"]
         simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
 
@@ -833,9 +836,9 @@ class INCA_reimport:
                         "flux_ub": flux_ub[cnt],
                         "flux_units": flux_units[cnt],
                         "fit_alf": fit_alf[cnt],
-                        "fit_chi2s": None,
-                        "fit_cor": None,
-                        "fit_cov": None,
+                        "fit_chi2s": f_par_chi2s[cnt],
+                        "fit_cor": f_par_cor[cnt],
+                        "fit_cov": f_par_cov[cnt],
                         "free": free[cnt],
                         "used_": True,
                         "comment_": None,
@@ -885,8 +888,8 @@ class INCA_reimport:
                             "fit_stdev": flux_stdev[cnt],
                             "fit_units": units,
                             "fit_alf": fit_alf[cnt],
-                            "fit_cor": None,
-                            "fit_cov": None,
+                            "fit_cor": f_par_cor[cnt],
+                            "fit_cov": f_par_cov[cnt],
                             "free": free[cnt],
                             "used_": True,
                             "comment_": None,
@@ -908,8 +911,8 @@ class INCA_reimport:
                             "fit_stdev": flux_stdev[cnt],
                             "fit_units": units,
                             "fit_alf": fit_alf[cnt],
-                            "fit_cor": None,
-                            "fit_cov": None,
+                            "fit_cor": f_par_cor[cnt],
+                            "fit_cov": f_par_cov[cnt],
                             "free": free[cnt],
                             "used_": True,
                             "comment_": None,
