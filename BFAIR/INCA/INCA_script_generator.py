@@ -958,6 +958,9 @@ class INCA_script:
             tmp_script = tmp_script + "\nm.expts(%d) = x;\n" % (
                 experiment_cnt + 1
             )
+            tmp_script = tmp_script + "\nm.expts(1).id = {'%s'};\n" % (
+                experiment
+            )
 
             mat_script = mat_script + tmp_script
         return mat_script, fragments_used
