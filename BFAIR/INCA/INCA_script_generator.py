@@ -556,8 +556,9 @@ class INCA_script:
                 )
                 met_positions = [
                     int(x)
-                    for x in self.prepare_input(met["met_atompositions"],
-                                                "Curly")
+                    for x in self.prepare_input(
+                        met["met_atompositions"], "Curly"
+                    )
                 ]
                 met_elements = self.prepare_input(met["met_elements"], "Curly")
                 met["met_symmetry_elements"] = met[

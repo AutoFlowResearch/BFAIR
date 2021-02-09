@@ -40,7 +40,7 @@ class INCA_reimport:
         Returns
         -------
         info: dict
-            a dict containing the file information, it's size,
+            a dict containing the file information, its size,
             the structure of the timestamp
             and the timestamp of when the simulation was run
         """
@@ -57,8 +57,7 @@ class INCA_reimport:
             )
             info = {
                 "File_size": file_size,
-                "Simulation_timestamp_structure":
-                simulation_dateAndTime_struct,
+                "Simulation_timestamp_structure": simulation_dateAndTime_struct,
                 "Simulation_timestamp": simulation_dateAndTime,
             }
         return info
@@ -95,7 +94,7 @@ class INCA_reimport:
     # add "s" to other script?
     def data_extraction(self, filename):
         """
-        Extract out simulation data
+        Extract simulation data
 
         Parameters
         ----------
@@ -105,7 +104,7 @@ class INCA_reimport:
         Returns
         -------
         m: scipy.MatlabObject
-            the model used for simulation
+            the model used for the simulation
         f: scipy.MatlabObject
             the fit of the model
         """
@@ -116,7 +115,7 @@ class INCA_reimport:
 
     def extract_model_info(self, m):
         """
-        Extract out model information (not currently recorded)
+        Extract model information
 
         Parameters
         ----------
@@ -144,7 +143,7 @@ class INCA_reimport:
 
     def extract_sim_params(self, simulation_id, info, m, filename):
         """
-        Extract out simulation parameters (options)
+        Extract simulation parameters
 
         Parameters
         ----------
@@ -221,7 +220,7 @@ class INCA_reimport:
 
     def extract_base_stats(self, f, simulation_id, info):
         """
-        Extract out fit information
+        Extract fit information
 
         Parameters
         ----------
@@ -268,7 +267,7 @@ class INCA_reimport:
 
     def get_fit_info(self, f):
         """
-         Extract out information and sum of the squared residuals of
+         Extract information and sum of the squared residuals of
          the fitted measurements
 
          Parameters
@@ -308,10 +307,10 @@ class INCA_reimport:
     # fluxes are the ones that were used as an inpupt
     def sort_fit_info(self, f_mnt_info, simulation_info, fittedData):
         """
-        Seperate the information form the original input, the "get_fit_info(f)"
+        Seperate the information from the original input, the "get_fit_info(f)"
         function, the "extract_file_info(filename)" function and the
         "extract_base_stats(f, simulation_id, info)" function
-        into appropriate table rows
+        into appropriate rows
 
         Parameters
         ----------
@@ -357,9 +356,8 @@ class INCA_reimport:
                             "comment_": None,
                         }
                     )
-                elif (
-                    expt_name[cnt]
-                    in list(simulation_info["sample_name_abbreviation"])
+                elif expt_name[cnt] in list(
+                    simulation_info["sample_name_abbreviation"]
                 ):
                     fittedMeasuredFluxes.append(
                         {
@@ -391,9 +389,8 @@ class INCA_reimport:
                             "comment_": None,
                         }
                     )
-                elif (
-                    expt_name[cnt]
-                    in list(simulation_info["sample_name_abbreviation"])
+                elif expt_name[cnt] in list(
+                    simulation_info["sample_name_abbreviation"]
                 ):
                     fittedMeasuredFragments.append(
                         {
@@ -417,7 +414,7 @@ class INCA_reimport:
     # please check!
     def get_residuals_info(self, f, simulation_info):
         """
-        Extract out the residuals of the fitted measurements
+        Extract the residuals of the fitted measurements
 
         Parameters
         ----------
@@ -482,10 +479,10 @@ class INCA_reimport:
 
     def sort_residual_info(self, f_mnt_res_info, simulation_info, fittedData):
         """
-        Seperate the information form the original input, the
+        Seperate the information from the original input, the
         "get_residuals_info(f)" function, the "extract_file_info(filename)"
         function and the "extract_base_stats(f, simulation_id, info)" function
-        into appropriate table rows
+        into appropriate rows
 
         Parameters
         ----------
@@ -526,7 +523,9 @@ class INCA_reimport:
 
         for cnt, x_type in enumerate(expt_type):
             if x_type == "Flux":
-                if experiment_id[cnt] in list(simulation_info["experiment_id"]):
+                if experiment_id[cnt] in list(
+                    simulation_info["experiment_id"]
+                ):
                     fittedMeasuredFluxResiduals.append(
                         {
                             "simulation_id": simulation_id,
@@ -548,9 +547,8 @@ class INCA_reimport:
                             "comment_": None,
                         }
                     )
-                elif (
-                    experiment_id[cnt]
-                    in list(simulation_info["sample_name_abbreviation"])
+                elif experiment_id[cnt] in list(
+                    simulation_info["sample_name_abbreviation"]
                 ):
                     fittedMeasuredFluxResiduals.append(
                         {
@@ -610,7 +608,9 @@ class INCA_reimport:
                 fragment_id = re.sub("-", "_DASH_", fragment_id)
                 fragment_id = re.sub("[(]", "_LPARANTHES_", fragment_id)
                 fragment_id = re.sub("[)]", "_RPARANTHES_", fragment_id)
-                if experiment_id[cnt] in list(simulation_info["experiment_id"]):
+                if experiment_id[cnt] in list(
+                    simulation_info["experiment_id"]
+                ):
                     fittedMeasuredFragmentResiduals.append(
                         {
                             "simulation_id": simulation_id,
@@ -619,7 +619,7 @@ class INCA_reimport:
                             "sample_name_abbreviation": simulation_info[
                                 "sample_name_abbreviation"
                             ][0],
-                            "time_point": time_point, # removed "[cnt]" since only a single value is used in this option
+                            "time_point": time_point,  # removed "[cnt]" since only a single value is used in this option
                             "fragment_id": fragment_id,
                             "fragment_mass": fragment_mass,
                             "res_data": float(res_data[cnt]),
@@ -633,9 +633,8 @@ class INCA_reimport:
                             "comment_": None,
                         }
                     )
-                elif (
-                    experiment_id[cnt]
-                    in list(simulation_info["sample_name_abbreviation"])
+                elif experiment_id[cnt] in list(
+                    simulation_info["sample_name_abbreviation"]
                 ):
                     fittedMeasuredFragmentResiduals.append(
                         {
@@ -665,7 +664,7 @@ class INCA_reimport:
 
     def get_fitted_parameters(self, f, simulation_info):
         """
-        Extract out the fitted parameters
+        Extract the fitted parameters
 
         Parameters
         ----------
@@ -682,7 +681,7 @@ class INCA_reimport:
             the corresponding flux value, the fluxes standard deviation,
             the type of the flux (net flux or norm), the lower and upper
             bounds of the flux,
-            the fluxes unit, the alf????????, the chi2 values of the fit,
+            the fluxes unit, the alf, the chi2 values of the fit,
             a correlation parameter,
             the fluxes covariance and a boolean describing if it's a free
             flux or not.
@@ -777,11 +776,11 @@ class INCA_reimport:
     # fit_cor, f_par_cov produce quite a lot of output, they are arrays
     def sort_parameter_info(self, f_par_info, simulation_info, fittedData):
         """
-        Seperate the information form the original input, the
+        Seperate the information from the original input, the
         "get_fitted_parameters(f, simulation_info)"
         function, the "extract_file_info(filename)" function and the
         "extract_base_stats(f, simulation_id, info)" function
-        into appropriate table rows
+        into appropriate rows
 
         Parameters
         ----------
@@ -819,7 +818,7 @@ class INCA_reimport:
         f_par_chi2s = f_par_info["fit_chi2s"]
         f_par_cor = f_par_info["fit_cor"]
         f_par_cov = f_par_info["fit_cov"]
-        
+
         simulation_id = fittedData[0]["simulation_id"]
         simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
 
@@ -966,10 +965,7 @@ class INCA_reimport:
         m, f = self.data_extraction(filename)
         # model_info = self.extract_model_info(m)
         simulationParameters = self.extract_sim_params(
-            simulation_id,
-            info,
-            m,
-            filename
+            simulation_id, info, m, filename
         )
         fittedData = self.extract_base_stats(f, simulation_id, info)
         f_mnt_info = self.get_fit_info(f)
