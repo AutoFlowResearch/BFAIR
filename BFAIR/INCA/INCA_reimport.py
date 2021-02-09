@@ -342,7 +342,7 @@ class INCA_reimport:
         simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
         for cnt, x_type in enumerate(expt_type):
             if x_type == "Flux":
-                if expt_name[cnt] in simulation_info["experiment_id"]:
+                if expt_name[cnt] in list(simulation_info["experiment_id"]):
                     fittedMeasuredFluxes.append(
                         {
                             "simulation_id": simulation_id,
@@ -359,7 +359,7 @@ class INCA_reimport:
                     )
                 elif (
                     expt_name[cnt]
-                    in simulation_info["sample_name_abbreviation"]
+                    in list(simulation_info["sample_name_abbreviation"])
                 ):
                     fittedMeasuredFluxes.append(
                         {
@@ -376,7 +376,7 @@ class INCA_reimport:
                         }
                     )
             elif x_type == "MS":
-                if expt_name[cnt] in simulation_info["experiment_id"]:
+                if expt_name[cnt] in list(simulation_info["experiment_id"]):
                     fittedMeasuredFragments.append(
                         {
                             "simulation_id": simulation_id,
@@ -393,7 +393,7 @@ class INCA_reimport:
                     )
                 elif (
                     expt_name[cnt]
-                    in simulation_info["sample_name_abbreviation"]
+                    in list(simulation_info["sample_name_abbreviation"])
                 ):
                     fittedMeasuredFragments.append(
                         {
@@ -521,13 +521,12 @@ class INCA_reimport:
         res_peak = f_mnt_res_info["res_peak"]
         res_stdev = f_mnt_res_info["res_stdev"]
         res_val = f_mnt_res_info["res_val"]
-
         simulation_id = fittedData[0]["simulation_id"]
         simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
 
         for cnt, x_type in enumerate(expt_type):
             if x_type == "Flux":
-                if experiment_id[cnt] in simulation_info["experiment_id"]:
+                if experiment_id[cnt] in list(simulation_info["experiment_id"]):
                     fittedMeasuredFluxResiduals.append(
                         {
                             "simulation_id": simulation_id,
@@ -551,7 +550,7 @@ class INCA_reimport:
                     )
                 elif (
                     experiment_id[cnt]
-                    in simulation_info["sample_name_abbreviation"]
+                    in list(simulation_info["sample_name_abbreviation"])
                 ):
                     fittedMeasuredFluxResiduals.append(
                         {
@@ -611,7 +610,7 @@ class INCA_reimport:
                 fragment_id = re.sub("-", "_DASH_", fragment_id)
                 fragment_id = re.sub("[(]", "_LPARANTHES_", fragment_id)
                 fragment_id = re.sub("[)]", "_RPARANTHES_", fragment_id)
-                if experiment_id[cnt] in simulation_info["experiment_id"]:
+                if experiment_id[cnt] in list(simulation_info["experiment_id"]):
                     fittedMeasuredFragmentResiduals.append(
                         {
                             "simulation_id": simulation_id,
@@ -636,7 +635,7 @@ class INCA_reimport:
                     )
                 elif (
                     experiment_id[cnt]
-                    in simulation_info["sample_name_abbreviation"]
+                    in list(simulation_info["sample_name_abbreviation"])
                 ):
                     fittedMeasuredFragmentResiduals.append(
                         {
@@ -870,7 +869,7 @@ class INCA_reimport:
                         fragment_list[4]
                     )
                     time_point = fragment_list[5]
-                if expt in simulation_info["experiment_id"]:
+                if expt in list(simulation_info["experiment_id"]):
                     fittedFragments.append(
                         {
                             "simulation_id": simulation_id,
@@ -893,7 +892,7 @@ class INCA_reimport:
                             "comment_": None,
                         }
                     )
-                elif expt in simulation_info["sample_name_abbreviation"]:
+                elif expt in list(simulation_info["sample_name_abbreviation"]):
                     fittedFragments.append(
                         {
                             "simulation_id": simulation_id,
