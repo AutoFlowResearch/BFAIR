@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 02.03.2020
+# Last date : 09.02.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -20,7 +20,7 @@ INCA_reimport = INCA_reimport()
 
 # Load the data
 filename = "TestFile.mat"
-simulation_info = pd.read_csv("data-1604345289079.csv")
+simulation_info = pd.read_csv("Re-import/experimentalMS_data_I.csv")
 simulation_id = "WTEColi_113C80_U13C20_01"
 
 
