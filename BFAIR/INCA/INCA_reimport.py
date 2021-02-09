@@ -619,7 +619,7 @@ class INCA_reimport:
                             "sample_name_abbreviation": simulation_info[
                                 "sample_name_abbreviation"
                             ][0],
-                            "time_point": time_point[cnt],
+                            "time_point": time_point, # removed "[cnt]" since only a single value is used in this option
                             "fragment_id": fragment_id,
                             "fragment_mass": fragment_mass,
                             "res_data": float(res_data[cnt]),
