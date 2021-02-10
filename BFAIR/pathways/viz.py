@@ -86,11 +86,12 @@ def plot_pathway(metabolites, offtargets, img_size=0.1, nrows=1, figsize=None):
             if j >= start + size:
                 continue
             # Add pathway intermediates
-            graph.add_edge(node, fixed_nodes[j + 1], off=False)
+            graph.add_edge(node, fixed_nodes[j + 1], offtarget=False)
             # Add off-target metabolites
             for extra_node in extra_nodes[j]:
-                graph.add_node(extra_node)
-                graph.add_edge(node, extra_node, off=True)
+                if extra_node not in graph:
+                    graph.add_node(extra_node)
+                    graph.add_edge(node, extra_node, offtarget=True)
 
         # Obtain node positions
         seed_pos = {node: (x, 0) for node, x in zip(nodes, np.linspace(-0.5, 0.5, size + 1))}
@@ -99,7 +100,7 @@ def plot_pathway(metabolites, offtargets, img_size=0.1, nrows=1, figsize=None):
         # Obtain edge colors
         edges = [[], []]
         for (u, v, d) in graph.edges(data=True):
-            edges[d["off"]].append((u, v))
+            edges[d["offtarget"]].append((u, v))
 
         # Draw nodes and edges
         nx.draw_networkx_nodes(graph, pos, ax=axs[i], node_size=2000, node_color="w")
