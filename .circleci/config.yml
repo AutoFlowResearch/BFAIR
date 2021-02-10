@@ -48,7 +48,7 @@ jobs:
           name : Run Unit Tests
           command: |
             python -m pytest --disable-warnings
-            python -m echo $?
+            echo $?
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
   # Linux integration 
