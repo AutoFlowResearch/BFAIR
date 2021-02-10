@@ -87,8 +87,10 @@ class test_methods(unittest.TestCase):
         # self.INCA_reimport_directly = INCA_reimport()
 
     """
-    The general instance tests will be added/activated once the problem in
-    the other INCA module is solved.
+    A couple of things are commented out here; they will be activated
+    once I figure out a solution to the datetime issue; to the problem
+    with comparing lists containing dicts that contain lists in the
+    summarizing reimport function and to the comparison of MATLAB objects
     """
 
     # @freeze_time(datetime.datetime(2021, 2, 9, 17, 12, 50))
@@ -111,7 +113,8 @@ class test_methods(unittest.TestCase):
 
     def test_data_extraction(self):
         """
-        comparing m and f directly fails
+        comparing m and f directly fails so we're only comparing their
+        types here
         """
         m, f = self.INCA_reimport.data_extraction(
             self.filename
