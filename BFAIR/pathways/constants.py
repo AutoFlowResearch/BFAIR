@@ -21,5 +21,6 @@ CURRENCY_METABOLITES = (
     "MNXM13",  # CO2
     "MNXM14",  # AMP
     "MNXM15",  # 'MNXM729302', NH4+
+    "MNXM17",  # UDP
     "MNXM21",  # 'MNXM732448', acetyl-CoA
 )
