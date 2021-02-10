@@ -48,6 +48,7 @@ jobs:
           name : Run Unit Tests
           command: |
             pytest --disable-warnings
+            exit($LASTEXITCODE)
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
   # Linux integration 
