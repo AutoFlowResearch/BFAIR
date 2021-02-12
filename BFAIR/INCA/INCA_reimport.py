@@ -2,15 +2,12 @@
 """Data re-import module."""
 
 import time
-
-# System
 from math import isnan, isinf
 import re
-
-# Dependencies from 3rd party
 from molmass.molmass import Formula
 import scipy.io
 import os
+import pandas as pd
 from datetime import datetime
 from stat import ST_SIZE, ST_MTIME
 
@@ -19,14 +16,14 @@ __version__ = "0.0.1"
 
 class INCA_reimport:
     def __init__(self):
-        self.fittedData = []
-        self.fittedFluxes = []
-        self.fittedFragments = []
-        self.fittedMeasuredFluxes = []
-        self.fittedMeasuredFragments = []
-        self.fittedMeasuredFluxResiduals = []
-        self.fittedMeasuredFragmentResiduals = []
-        self.simulationParameters = []
+        self.fittedData = pd.DataFrame()
+        self.fittedFluxes = pd.DataFrame()
+        self.fittedFragments = pd.DataFrame()
+        self.fittedMeasuredFluxes = pd.DataFrame()
+        self.fittedMeasuredFragments = pd.DataFrame()
+        self.fittedMeasuredFluxResiduals = pd.DataFrame()
+        self.fittedMeasuredFragmentResiduals = pd.DataFrame()
+        self.simulationParameters = pd.DataFrame()
 
     def extract_file_info(self, filename):
         """
@@ -57,8 +54,7 @@ class INCA_reimport:
             )
             info = {
                 "File_size": file_size,
-                "Simulation_timestamp_structure":
-                    simulation_dateAndTime_struct,
+                "Simulation_timestamp_structure": simulation_dateAndTime_struct,
                 "Simulation_timestamp": simulation_dateAndTime,
             }
         return info
@@ -92,7 +88,6 @@ class INCA_reimport:
             non_stationary = True
         return parallel, non_stationary
 
-    # add "s" to other script?
     def data_extraction(self, filename):
         """
         Extract simulation data
@@ -111,7 +106,7 @@ class INCA_reimport:
         """
         m = scipy.io.loadmat(filename)["m"]  # model
         f = scipy.io.loadmat(filename)["f"]  # fitdata
-        # s = scipy.io.loadmat(filename)['s']  # simdata
+        # s = scipy.io.loadmat(filename)['s']  # simdata, not used here
         return m, f
 
     def extract_model_info(self, m):
@@ -125,8 +120,8 @@ class INCA_reimport:
 
         Returns
         -------
-        model_info: dict
-            a dict containing the MS id,
+        model_info: pandas.DataFrame
+            a DataFrame containing the MS id,
             the id of the experiment and a boolean
             describing which experiments were used in the model
         """
@@ -140,6 +135,7 @@ class INCA_reimport:
                 m_ms_id.append(d[0])
                 m_ms_on.append(bool(d[0][0]))
         model_info = {"Exp": m_ms_expt, "MS_id": m_ms_id, "Exp_used": m_ms_on}
+        model_info = pd.DataFrame.from_dict(model_info, "index")
         return model_info
 
     def extract_sim_params(self, simulation_id, info, m, filename):
@@ -158,7 +154,7 @@ class INCA_reimport:
 
         Returns
         -------
-        simulationParameters: list
+        simulationParameters: pandas.DataFrame
             the simulation parameters
         """
         simulation_dateAndTime = info["Simulation_timestamp"]
@@ -194,19 +190,24 @@ class INCA_reimport:
             "sim_na": bool(m["options"][0][0][0]["sim_na"][0][0][0]),
             "sim_sens": bool(m["options"][0][0][0]["sim_sens"][0][0][0]),
             "sim_ss": bool(m["options"][0][0][0]["sim_ss"][0][0][0]),
-            "sim_tunit": m["options"][0][0][0]["sim_tunit"][0][0],
+            "sim_tunit": [m["options"][0][0][0]["sim_tunit"][0][0]],
         }
         try:
-            m_options["hpc_mcr"] = m["options"][0][0][0]["hpc_mcr"][0][0]
+            m_options.update(
+                {"hpc_mcr": m["options"][0][0][0]["hpc_mcr"][0][0]}
+            )
         except ValueError:
-            m_options["hpc_mcr"] = float(
-                m["options"][0][0][0]["hpc_bg"][0][0][0]
+            m_options.update(
+                {"hpc_mcr": float(m["options"][0][0][0]["hpc_bg"][0][0][0])}
             )
         try:
-            m_options["hpc_serve"] = m["options"][0][0][0]["hpc_serve"][0][0]
+            m_options.update(
+                {"hpc_serve": m["options"][0][0][0]["hpc_serve"][0][0]}
+            )
         except ValueError:
-            m_options["hpc_serve"] = m["options"][0][0][0]["hpc_sched"][0][0]
-        simulationParameters = []
+            m_options.update(
+                {"hpc_serve": m["options"][0][0][0]["hpc_sched"][0][0]}
+            )
         m_options.update(
             {
                 "simulation_id": simulation_id,
@@ -216,7 +217,7 @@ class INCA_reimport:
                 "comment_": None,
             }
         )
-        simulationParameters.append(m_options)
+        simulationParameters = pd.DataFrame.from_dict(m_options)
         return simulationParameters
 
     def extract_base_stats(self, f, simulation_id, info):
@@ -235,10 +236,9 @@ class INCA_reimport:
 
         Returns
         -------
-        fittedData: list
+        fittedData: pandas.DataFrame
             base statistics describing the fit
         """
-        fittedData = []
         f_Echi2 = None
         simulation_dateAndTime = info["Simulation_timestamp"]
         if not isnan(f["Echi2"][0][0][0][0]):
@@ -263,7 +263,7 @@ class INCA_reimport:
                 "comment_": None,
             }
         )
-        fittedData.append(f_)
+        fittedData = pd.DataFrame.from_dict(f_)
         return fittedData
 
     def get_fit_info(self, f):
@@ -305,7 +305,8 @@ class INCA_reimport:
         }
         return f_mnt_info
 
-    # fluxes are the ones that were used as an inpupt
+    # Only works for single experiments for now, might have to change it
+    # for parallel labeling
     def sort_fit_info(self, f_mnt_info, simulation_info, fittedData):
         """
         Seperate the information from the original input, the "get_fit_info(f)"
@@ -319,100 +320,94 @@ class INCA_reimport:
             the output of the "get_fit_info(f)" function
         simulation_info: pandas.DataFrame
             The MS fragment file corresponding to the simulation
-        fittedData: list
+        fittedData: pandas.DataFrame
             the output of the "extract_base_stats(f, simulation_id, info)"
             function
 
         Returns
         -------
-        fittedMeasuredFluxes: list
+        fittedMeasuredFluxes: pandas.DataFrame
             info about the fluxes used as an input
             for the simulation
-        fittedMeasuredFragments: list
+        fittedMeasuredFragments: pandas.DataFrame
             info about the MS data used as an
             input for the simulation
         """
-        fittedMeasuredFluxes = []
-        fittedMeasuredFragments = []
+        fittedMeasuredFluxes = {}
+        fittedMeasuredFragments = {}
         rxn_id = f_mnt_info["rxn_id"]
         rss = f_mnt_info["rss"]
         expt_name = f_mnt_info["expt_name"]
         expt_type = f_mnt_info["expt_type"]
-        simulation_id = fittedData[0]["simulation_id"]
-        simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
+        simulation_id = fittedData["simulation_id"].unique()[0]
+        simulation_dateAndTime = fittedData["simulation_dateAndTime"].unique()[
+            0
+        ]
         for cnt, x_type in enumerate(expt_type):
             if x_type == "Flux":
                 if expt_name[cnt] in list(simulation_info["experiment_id"]):
-                    fittedMeasuredFluxes.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": expt_name[cnt],
-                            "sample_name_abbreviation": simulation_info[
-                                "sample_name_abbreviation"
-                            ][0],
-                            "rxn_id": rxn_id[cnt],
-                            "fitted_sres": rss[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFluxes[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": expt_name[cnt],
+                        "sample_name_abbreviation": simulation_info[
+                            "sample_name_abbreviation"
+                        ][0],
+                        "rxn_id": rxn_id[cnt],
+                        "fitted_sres": rss[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
                 elif expt_name[cnt] in list(
                     simulation_info["sample_name_abbreviation"]
                 ):
-                    fittedMeasuredFluxes.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": simulation_info["experiment_id"][
-                                0
-                            ],
-                            "sample_name_abbreviation": expt_name[cnt],
-                            "rxn_id": rxn_id[cnt],
-                            "fitted_sres": rss[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFluxes[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": simulation_info["experiment_id"][0],
+                        "sample_name_abbreviation": expt_name[cnt],
+                        "rxn_id": rxn_id[cnt],
+                        "fitted_sres": rss[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
             elif x_type == "MS":
                 if expt_name[cnt] in list(simulation_info["experiment_id"]):
-                    fittedMeasuredFragments.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": expt_name[cnt],
-                            "sample_name_abbreviation": simulation_info[
-                                "sample_name_abbreviation"
-                            ][0],
-                            "fragment_id": rxn_id[cnt],
-                            "fitted_sres": rss[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFragments[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": expt_name[cnt],
+                        "sample_name_abbreviation": simulation_info[
+                            "sample_name_abbreviation"
+                        ][0],
+                        "fragment_id": rxn_id[cnt],
+                        "fitted_sres": rss[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
                 elif expt_name[cnt] in list(
                     simulation_info["sample_name_abbreviation"]
                 ):
-                    fittedMeasuredFragments.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": simulation_info["experiment_id"][
-                                0
-                            ],
-                            "sample_name_abbreviation": expt_name[cnt],
-                            "fragment_id": rxn_id[cnt],
-                            "fitted_sres": rss[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFragments[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": simulation_info["experiment_id"][0],
+                        "sample_name_abbreviation": expt_name[cnt],
+                        "fragment_id": rxn_id[cnt],
+                        "fitted_sres": rss[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
             else:
                 print("type not recognized")
+        fittedMeasuredFluxes = pd.DataFrame.from_dict(
+            fittedMeasuredFluxes, "index"
+        )
+        fittedMeasuredFragments = pd.DataFrame.from_dict(
+            fittedMeasuredFragments, "index"
+        )
         return fittedMeasuredFluxes, fittedMeasuredFragments
 
-    # I'm not sure about the info so the docstring might be faulty,
-    # please check!
     def get_residuals_info(self, f, simulation_info):
         """
         Extract the residuals of the fitted measurements
@@ -492,23 +487,23 @@ class INCA_reimport:
         simulation_info: pandas.DataFrame
             the MS fragment file corresponding to
             the simulation
-        fittedData: list
+        fittedData: pandas.DataFrame
             the output of the
             "extract_base_stats(f, simulation_id, info)" function
 
         Returns
         -------
-        fittedMeasuredFluxResiduals: list
+        fittedMeasuredFluxResiduals: pandas.DataFrame
             info about the residuals of the
             fluxes used as an input for the simulation
-        fittedMeasuredFragmentResiduals: list
+        fittedMeasuredFragmentResiduals: pandas.DataFrame
             info about the residuals of
             the fragments in the MS data used as an input for
             the simulation
         """
 
-        fittedMeasuredFluxResiduals = []
-        fittedMeasuredFragmentResiduals = []
+        fittedMeasuredFluxResiduals = {}
+        fittedMeasuredFragmentResiduals = {}
 
         expt_type = f_mnt_res_info["expt_type"]
         experiment_id = f_mnt_res_info["experiment_id"]
@@ -519,59 +514,55 @@ class INCA_reimport:
         res_peak = f_mnt_res_info["res_peak"]
         res_stdev = f_mnt_res_info["res_stdev"]
         res_val = f_mnt_res_info["res_val"]
-        simulation_id = fittedData[0]["simulation_id"]
-        simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
+        simulation_id = fittedData["simulation_id"].unique()[0]
+        simulation_dateAndTime = fittedData["simulation_dateAndTime"].unique()[
+            0
+        ]
 
         for cnt, x_type in enumerate(expt_type):
             if x_type == "Flux":
                 if experiment_id[cnt] in list(
                     simulation_info["experiment_id"]
                 ):
-                    fittedMeasuredFluxResiduals.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": experiment_id[cnt],
-                            "sample_name_abbreviation": simulation_info[
-                                "sample_name_abbreviation"
-                            ][0],
-                            "time_point": time_point[cnt],
-                            "rxn_id": rxn_id[cnt],
-                            "res_data": float(res_data[cnt]),
-                            "res_fit": float(res_fit[cnt]),
-                            "res_peak": res_peak[cnt],
-                            "res_stdev": float(res_stdev[cnt]),
-                            "res_val": float(res_val[cnt]),
-                            "res_msens": None,
-                            "res_esens": None,
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFluxResiduals[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": experiment_id[cnt],
+                        "sample_name_abbreviation": simulation_info[
+                            "sample_name_abbreviation"
+                        ][0],
+                        "time_point": time_point[cnt],
+                        "rxn_id": rxn_id[cnt],
+                        "res_data": float(res_data[cnt]),
+                        "res_fit": float(res_fit[cnt]),
+                        "res_peak": res_peak[cnt],
+                        "res_stdev": float(res_stdev[cnt]),
+                        "res_val": float(res_val[cnt]),
+                        "res_msens": None,
+                        "res_esens": None,
+                        "used_": True,
+                        "comment_": None,
+                    }
                 elif experiment_id[cnt] in list(
                     simulation_info["sample_name_abbreviation"]
                 ):
-                    fittedMeasuredFluxResiduals.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": simulation_info["experiment_id"][
-                                0
-                            ],
-                            "sample_name_abbreviation": experiment_id[cnt],
-                            "time_point": time_point[cnt],
-                            "rxn_id": rxn_id[cnt],
-                            "res_data": float(res_data[cnt]),
-                            "res_fit": float(res_fit[cnt]),
-                            "res_peak": res_peak[cnt],
-                            "res_stdev": float(res_stdev[cnt]),
-                            "res_val": float(res_val[cnt]),
-                            "res_msens": None,
-                            "res_esens": None,
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFluxResiduals[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": simulation_info["experiment_id"][0],
+                        "sample_name_abbreviation": experiment_id[cnt],
+                        "time_point": time_point[cnt],
+                        "rxn_id": rxn_id[cnt],
+                        "res_data": float(res_data[cnt]),
+                        "res_fit": float(res_fit[cnt]),
+                        "res_peak": res_peak[cnt],
+                        "res_stdev": float(res_stdev[cnt]),
+                        "res_val": float(res_val[cnt]),
+                        "res_msens": None,
+                        "res_esens": None,
+                        "used_": True,
+                        "comment_": None,
+                    }
             elif x_type == "MS":
                 # parse the id into fragment_id and mass
                 fragment_string = rxn_id[cnt]
@@ -612,55 +603,55 @@ class INCA_reimport:
                 if experiment_id[cnt] in list(
                     simulation_info["experiment_id"]
                 ):
-                    fittedMeasuredFragmentResiduals.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": experiment_id[cnt],
-                            "sample_name_abbreviation": simulation_info[
-                                "sample_name_abbreviation"
-                            ][0],
-                            "time_point": time_point,
-                            "fragment_id": fragment_id,
-                            "fragment_mass": fragment_mass,
-                            "res_data": float(res_data[cnt]),
-                            "res_fit": float(res_fit[cnt]),
-                            "res_peak": res_peak[cnt],
-                            "res_stdev": float(res_stdev[cnt]),
-                            "res_val": float(res_val[cnt]),
-                            "res_msens": None,
-                            "res_esens": None,
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFragmentResiduals[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": experiment_id[cnt],
+                        "sample_name_abbreviation": simulation_info[
+                            "sample_name_abbreviation"
+                        ][0],
+                        "time_point": time_point,
+                        "fragment_id": fragment_id,
+                        "fragment_mass": fragment_mass,
+                        "res_data": float(res_data[cnt]),
+                        "res_fit": float(res_fit[cnt]),
+                        "res_peak": res_peak[cnt],
+                        "res_stdev": float(res_stdev[cnt]),
+                        "res_val": float(res_val[cnt]),
+                        "res_msens": None,
+                        "res_esens": None,
+                        "used_": True,
+                        "comment_": None,
+                    }
                 elif experiment_id[cnt] in list(
                     simulation_info["sample_name_abbreviation"]
                 ):
-                    fittedMeasuredFragmentResiduals.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": simulation_info["experiment_id"][
-                                0
-                            ],
-                            "sample_name_abbreviation": experiment_id[cnt],
-                            "time_point": time_point[cnt],
-                            "fragment_id": fragment_id,
-                            "fragment_mass": fragment_mass,
-                            "res_data": float(res_data[cnt]),
-                            "res_fit": float(res_fit[cnt]),
-                            "res_peak": res_peak[cnt],
-                            "res_stdev": float(res_stdev[cnt]),
-                            "res_val": float(res_val[cnt]),
-                            "res_msens": None,
-                            "res_esens": None,
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedMeasuredFragmentResiduals[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": simulation_info["experiment_id"][0],
+                        "sample_name_abbreviation": experiment_id[cnt],
+                        "time_point": time_point[cnt],
+                        "fragment_id": fragment_id,
+                        "fragment_mass": fragment_mass,
+                        "res_data": float(res_data[cnt]),
+                        "res_fit": float(res_fit[cnt]),
+                        "res_peak": res_peak[cnt],
+                        "res_stdev": float(res_stdev[cnt]),
+                        "res_val": float(res_val[cnt]),
+                        "res_msens": None,
+                        "res_esens": None,
+                        "used_": True,
+                        "comment_": None,
+                    }
             else:
                 print("type not recognized")
+        fittedMeasuredFluxResiduals = pd.DataFrame.from_dict(
+            fittedMeasuredFluxResiduals, "index"
+        )
+        fittedMeasuredFragmentResiduals = pd.DataFrame.from_dict(
+            fittedMeasuredFragmentResiduals, "index"
+        )
         return fittedMeasuredFluxResiduals, fittedMeasuredFragmentResiduals
 
     def get_fitted_parameters(self, f, simulation_info):
@@ -774,7 +765,10 @@ class INCA_reimport:
         }
         return f_par_info
 
-    # fit_cor, f_par_cov produce quite a lot of output, they are arrays
+    # fit_cor, f_par_cov and fit_chi2s produce quite a lot of output,
+    # they are arrays, so they were set to "None". If desired, set them to
+    # f_par_c**[cnt] (the variable names can be found right underneath
+    # the docstring)
     def sort_parameter_info(self, f_par_info, simulation_info, fittedData):
         """
         Seperate the information from the original input, the
@@ -791,21 +785,21 @@ class INCA_reimport:
         simulation_info: pandas.DataFrame
             the MS fragment file corresponding to
             the simulation
-        fittedData: list
+        fittedData: pandas.DataFrame
             the output of the
             "extract_base_stats(f, simulation_id, info)" function
 
         Returns
         -------
-        fittedFluxes: list
+        fittedFluxes: pandas.DataFrame
             info about the parameters of the fluxes used
             as an input for the simulation
-        fittedFragments: list
+        fittedFragments: pandas.DataFrame
             info about the parameters of the MS data
             used as an input for the simulation
         """
-        fittedFluxes = []
-        fittedFragments = []
+        fittedFluxes = {}
+        fittedFragments = {}
 
         rxn_id = f_par_info["rxn_id"]
         flux = f_par_info["flux"]
@@ -820,30 +814,30 @@ class INCA_reimport:
         f_par_cor = f_par_info["fit_cor"]
         f_par_cov = f_par_info["fit_cov"]
 
-        simulation_id = fittedData[0]["simulation_id"]
-        simulation_dateAndTime = fittedData[0]["simulation_dateAndTime"]
+        simulation_id = fittedData["simulation_id"].unique()[0]
+        simulation_dateAndTime = fittedData["simulation_dateAndTime"].unique()[
+            0
+        ]
 
         for cnt, p_type in enumerate(par_type):
             if p_type == "Net flux":
-                fittedFluxes.append(
-                    {
-                        "simulation_id": simulation_id,
-                        "simulation_dateAndTime": simulation_dateAndTime,
-                        "rxn_id": rxn_id[cnt],
-                        "flux": flux[cnt],
-                        "flux_stdev": flux_stdev[cnt],
-                        "flux_lb": flux_lb[cnt],
-                        "flux_ub": flux_ub[cnt],
-                        "flux_units": flux_units[cnt],
-                        "fit_alf": fit_alf[cnt],
-                        "fit_chi2s": f_par_chi2s[cnt],
-                        "fit_cor": f_par_cor[cnt],
-                        "fit_cov": f_par_cov[cnt],
-                        "free": free[cnt],
-                        "used_": True,
-                        "comment_": None,
-                    }
-                )
+                fittedFluxes[cnt] = {
+                    "simulation_id": simulation_id,
+                    "simulation_dateAndTime": simulation_dateAndTime,
+                    "rxn_id": rxn_id[cnt],
+                    "flux": flux[cnt],
+                    "flux_stdev": flux_stdev[cnt],
+                    "flux_lb": flux_lb[cnt],
+                    "flux_ub": flux_ub[cnt],
+                    "flux_units": flux_units[cnt],
+                    "fit_alf": fit_alf[cnt],
+                    "fit_chi2s": None,
+                    "fit_cor": None,
+                    "fit_cov": None,
+                    "free": free[cnt],
+                    "used_": True,
+                    "comment_": None,
+                }
             elif p_type == "Norm":
                 # parse the id
                 id_list = rxn_id[cnt].split(" ")
@@ -873,56 +867,50 @@ class INCA_reimport:
                     )
                     time_point = fragment_list[5]
                 if expt in list(simulation_info["experiment_id"]):
-                    fittedFragments.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": expt,
-                            "sample_name_abbreviation": simulation_info[
-                                "sample_name_abbreviation"
-                            ][0],
-                            "time_point": time_point,
-                            "fragment_id": fragment_id,
-                            "fragment_mass": fragment_mass,
-                            "fit_val": flux[cnt],
-                            "fit_stdev": flux_stdev[cnt],
-                            "fit_units": units,
-                            "fit_alf": fit_alf[cnt],
-                            "fit_cor": f_par_cor[cnt],
-                            "fit_cov": f_par_cov[cnt],
-                            "free": free[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedFragments[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": expt,
+                        "sample_name_abbreviation": simulation_info[
+                            "sample_name_abbreviation"
+                        ][0],
+                        "time_point": time_point,
+                        "fragment_id": fragment_id,
+                        "fragment_mass": fragment_mass,
+                        "fit_val": flux[cnt],
+                        "fit_stdev": flux_stdev[cnt],
+                        "fit_units": units,
+                        "fit_alf": fit_alf[cnt],
+                        "fit_cor": None,
+                        "fit_cov": None,
+                        "free": free[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
                 elif expt in list(simulation_info["sample_name_abbreviation"]):
-                    fittedFragments.append(
-                        {
-                            "simulation_id": simulation_id,
-                            "simulation_dateAndTime": simulation_dateAndTime,
-                            "experiment_id": simulation_info["experiment_id"][
-                                0
-                            ],
-                            "sample_name_abbreviation": expt,
-                            "time_point": time_point,
-                            "fragment_id": fragment_id,
-                            "fragment_mass": fragment_mass,
-                            "fit_val": flux[cnt],
-                            "fit_stdev": flux_stdev[cnt],
-                            "fit_units": units,
-                            "fit_alf": fit_alf[cnt],
-                            "fit_cor": f_par_cor[cnt],
-                            "fit_cov": f_par_cov[cnt],
-                            "free": free[cnt],
-                            "used_": True,
-                            "comment_": None,
-                        }
-                    )
+                    fittedFragments[cnt] = {
+                        "simulation_id": simulation_id,
+                        "simulation_dateAndTime": simulation_dateAndTime,
+                        "experiment_id": simulation_info["experiment_id"][0],
+                        "sample_name_abbreviation": expt,
+                        "time_point": time_point,
+                        "fragment_id": fragment_id,
+                        "fragment_mass": fragment_mass,
+                        "fit_val": flux[cnt],
+                        "fit_stdev": flux_stdev[cnt],
+                        "fit_units": units,
+                        "fit_alf": fit_alf[cnt],
+                        "fit_cor": None,
+                        "fit_cov": None,
+                        "free": free[cnt],
+                        "used_": True,
+                        "comment_": None,
+                    }
             else:
                 print("type not recognized")
+        fittedFluxes = pd.DataFrame.from_dict(fittedFluxes, "index")
+        fittedFragments = pd.DataFrame.from_dict(fittedFragments, "index")
         return fittedFluxes, fittedFragments
-
-        # Split to make output more managable?
 
     def reimport(self, filename, simulation_info, simulation_id):
         """
@@ -941,23 +929,23 @@ class INCA_reimport:
 
         Returns
         -------
-        fittedData: list
+        fittedData: pandas.DataFrame
             base statistics describing the fit
-        fittedFluxes: list
+        fittedFluxes: pandas.DataFrame
             info about the fitted fluxes
-        fittedFragments:
+        fittedFragments: pandas.DataFrame
             info about the fitted fragments
-        fittedMeasuredFluxes: list
+        fittedMeasuredFluxes: pandas.DataFrame
             info about the fluxes used as an input for the simulation
-        fittedMeasuredFragments: list
+        fittedMeasuredFragments: pandas.DataFrame
             info about the MS data used as an input for the simulation
-        fittedMeasuredFluxResiduals: list
+        fittedMeasuredFluxResiduals: pandas.DataFrame
             info about the residuals of the fluxes used as an input for
             the simulation
-        fittedMeasuredFragmentResiduals: list
+        fittedMeasuredFragmentResiduals: pandas.DataFrame
             info about the residuals of the fragments in the
             MS data used as an input for the simulation
-        simulationParameters: list
+        simulationParameters: pandas.DataFrame
             the simulation parameters
         """
         # Succession of functions
@@ -965,6 +953,7 @@ class INCA_reimport:
         parallel, non_stationary = self.det_simulation_type(simulation_info)
         m, f = self.data_extraction(filename)
         # model_info = self.extract_model_info(m)
+        # not used for the final output
         simulationParameters = self.extract_sim_params(
             simulation_id, info, m, filename
         )
