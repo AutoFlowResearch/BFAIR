@@ -810,9 +810,9 @@ class INCA_reimport:
         flux_units = f_par_info["flux_units"]
         fit_alf = f_par_info["fit_alf"]
         free = f_par_info["free"]
-        f_par_chi2s = f_par_info["fit_chi2s"]
-        f_par_cor = f_par_info["fit_cor"]
-        f_par_cov = f_par_info["fit_cov"]
+        # f_par_chi2s = f_par_info["fit_chi2s"]
+        # f_par_cor = f_par_info["fit_cor"]
+        # f_par_cov = f_par_info["fit_cov"]
 
         simulation_id = fittedData["simulation_id"].unique()[0]
         simulation_dateAndTime = fittedData["simulation_dateAndTime"].unique()[

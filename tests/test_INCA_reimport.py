@@ -319,5 +319,6 @@ class test_methods(unittest.TestCase):
         self.assertEqual(simulationParameters2, simulationParameters2_)
     """
 
+
 if __name__ == "__main__":
     unittest.main()
