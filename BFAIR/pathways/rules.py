@@ -214,7 +214,7 @@ class RuleLibrary(AbstractContextManager):
                     )
                     if self._fetch_results(is_currency_metabolite):
                         continue
-                    results.setdefault(inchi, []).append([result.rule_id, result.reaction_id])
+                    results.setdefault(inchi, []).append((result.rule_id, result.reaction_id))
         return results
 
     def filter_by_diameter(self, cutoff):
