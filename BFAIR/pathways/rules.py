@@ -16,6 +16,7 @@ from typing import Generator
 import pandas as pd
 from rdkit import Chem
 from rdkit.Chem import AllChem
+
 from BFAIR import models
 from BFAIR.io._path import static_path
 from BFAIR.logger import get_logger
@@ -241,9 +242,9 @@ class RuleLibrary(AbstractContextManager):
         self._filters.append(q.rules.diameter >= cutoff)
         return self
 
-    def filter_by_organism(self, model_name, additional_identifiers=None, additional_ec_numbers=None):
+    def filter_by_organism(self, model_name=None, additional_identifiers=None, additional_ec_numbers=None):
         """
-        Applies a filter to the rule library that excludes reactions that are not available in an input genome-scale
+        Applies a filter to the rule library that excludes reactions that are not present in an input genome-scale
         model.
 
         Parameters
@@ -260,18 +261,20 @@ class RuleLibrary(AbstractContextManager):
         -------
         same type as caller
         """
-        model = getattr(models, model_name)
         reaction_ids = set(additional_identifiers) if additional_identifiers is not None else set()
         ec_numbers = set(additional_ec_numbers) if additional_ec_numbers is not None else set()
-        for rxn in model.reactions:
-            reaction_id = rxn.annotation.get("metanetx.reaction", None)
-            if reaction_id:
-                reaction_ids.add(reaction_id)
-            ec_num = rxn.annotation.get("ec-code", [])
-            if isinstance(ec_num, str):
-                ec_numbers.add(ec_num)
-            else:
-                ec_numbers.update(ec_num)
+        # TODO Accept custom models
+        if model_name:
+            model = getattr(models, model_name)
+            for rxn in model.reactions:
+                reaction_id = rxn.annotation.get("metanetx.reaction", None)
+                if reaction_id:
+                    reaction_ids.add(reaction_id)
+                ec_num = rxn.annotation.get("ec-code", [])
+                if isinstance(ec_num, str):
+                    ec_numbers.add(ec_num)
+                else:
+                    ec_numbers.update(ec_num)
 
         fetched_rules = set()
         if reaction_ids:
