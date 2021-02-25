@@ -183,7 +183,6 @@ def pqn_norm(
     """
     Probabilistic Quotient Normalization: This method adjusts for dilutions.
     This is a modified version of Total Sum Intensity normalization
-
     Parameters
     ----------
     df: pandas.DataFrame
@@ -191,15 +190,14 @@ def pqn_norm(
         or the calculateMeanVarRSD() function
     groupname_colname: string
         the name of the column with the sample group names,
-        defaults to 'sample_group_name'
+        defaults to ‘sample_group_name’
     value_colname: string
         the name of the column with the data that needs to be
-        normalized, defaults to 'Intensity'
+        normalized, defaults to ‘Intensity’
     corr_type: string
-        type of midpoint determination, 'median' or 'mean'
+        type of midpoint determination, ‘median’ or ‘mean’
     qc_vector: list
         an optional QC vector that can be provided
-
     Returns
     -------
     output_df: pandas.DataFrame
@@ -233,20 +231,36 @@ def pqn_norm(
         new_col = new_df[colname].div(tsi)
         tsi_df[colname] = new_col
     # 2)
+    calculated_qc_vector = []
+    for x, row in tsi_df.iterrows():
+        if corr_type == "median":
+            calculated_qc_vector.append(row[1:].median(skipna=True))
+        elif corr_type == "mean":
+            calculated_qc_vector.append(row[1:].mean(skipna=True))
     if qc_vector is not None:
-        qc_vector = qc_vector
+        provided_qc_vector = []
+        for cnt, metabolite in enumerate(list(grouped_df["Metabolite"])):
+            if metabolite in list(qc_vector["Metabolite"]):
+                provided_qc_vector.append(
+                    float(
+                        qc_vector[qc_vector["Metabolite"] == metabolite][
+                            value_colname
+                        ]
+                    )
+                )
+            else:
+                provided_qc_vector.append(calculated_qc_vector[cnt])
+        qc_vector = provided_qc_vector
+        print(qc_vector)
     else:
-        qc_vector = []
-        for x, row in tsi_df.iterrows():
-            if corr_type == "median":
-                qc_vector.append(row[1:].median(skipna=True))
-            elif corr_type == "mean":
-                qc_vector.append(row[1:].mean(skipna=True))
+        qc_vector = calculated_qc_vector
     # 3)
     dilution_factor_list = []
     for colname in tsi_df.columns[1:]:
         new_col = np.array(tsi_df[colname])
+        #print(new_col)
         new_col_div = list(new_col / np.array(qc_vector))
+        #print(new_col_div)
         # 4)
         if corr_type == "median":
             dilution_factor = pd.Series(new_col_div).median(skipna=True)
