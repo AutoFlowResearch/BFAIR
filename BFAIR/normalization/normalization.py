@@ -258,9 +258,7 @@ def pqn_norm(
     dilution_factor_list = []
     for colname in tsi_df.columns[1:]:
         new_col = np.array(tsi_df[colname])
-        #print(new_col)
         new_col_div = list(new_col / np.array(qc_vector))
-        #print(new_col_div)
         # 4)
         if corr_type == "median":
             dilution_factor = pd.Series(new_col_div).median(skipna=True)
