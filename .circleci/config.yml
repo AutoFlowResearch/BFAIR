@@ -47,8 +47,12 @@ jobs:
       - run:
           name : Run Unit Tests
           command: |
-            pytest --disable-warnings
-            exit($LASTEXITCODE)
+            Set-StrictMode -Version Latest
+            $ErrorActionPreference = 'Stop'
+            function ThrowOnFailure($Msg) { if (-not $?) { throw $Msg } }
+            
+            pytest --disable-warnings --junitxml=~/reports/test-results.xml
+            ThrowOnFailure "Python test failed!"
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
   
   # Linux integration 
