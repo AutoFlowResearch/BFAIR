@@ -164,8 +164,8 @@ class RuleLibrary(AbstractContextManager):
         available_rules = self.available
         compound = get_compound(input_compound, input_type, **self._std_args)
         with ThreadPoolExecutor(max_workers=1) as executor:
-            tasks = [_RuleSimulator(compound, reaction_smarts) for reaction_smarts in available_rules["smarts"]]
-            for i, (task, future) in enumerate([(task, executor.submit(task)) for task in tasks]):
+            tasks = (_RuleSimulator(compound, reaction_smarts) for reaction_smarts in available_rules["smarts"])
+            for i, (task, future) in enumerate(((task, executor.submit(task)) for task in tasks)):
                 try:
                     product_sets = future.result(timeout)
                     if not product_sets:
@@ -177,7 +177,6 @@ class RuleLibrary(AbstractContextManager):
                 except TimeoutError:
                     self._logger.warn(f"Timed out processing rule '{available_rules.index[i]}'.")
                     task.interrupt()
-            del tasks
 
     def list_products(self, input_compound, input_type="inchi", timeout=60.0) -> dict:
         """
@@ -209,10 +208,10 @@ class RuleLibrary(AbstractContextManager):
             for products in result.product_sets:
                 for inchi in products:
                     # Check if the InChi matches that of a currency metabolite
-                    is_currency_metabolite = q.select_metabolites_by_inchi(
+                    is_currency_metabolite_query = q.select_metabolites_by_inchi(
                         inchi, [q.metabolites.metabolite_id.isin(CURRENCY_METABOLITES)]
                     )
-                    if self._fetch_results(is_currency_metabolite):
+                    if self._fetch_results(is_currency_metabolite_query):
                         continue
                     results.setdefault(inchi, []).append((result.rule_id, result.reaction_id))
         return results
