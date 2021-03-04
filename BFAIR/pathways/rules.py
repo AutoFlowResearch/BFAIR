@@ -18,7 +18,7 @@ from rdkit import Chem
 from rdkit.Chem import AllChem
 
 from BFAIR import models
-from BFAIR.io._path import static_path
+from BFAIR.io.remote import LOCAL_PATH, fetch_remote
 from BFAIR.logger import get_logger
 from BFAIR.pathways.constants import CURRENCY_METABOLITES
 from BFAIR.pathways.standardization import standardize
@@ -65,6 +65,8 @@ class RuleLibrary(AbstractContextManager):
 
     Parameters
     ----------
+    pathname : Path, optional
+        Pathname to the reaction rule database. If it does not exist, the database will be downloaded into it.
     **kwargs
         Standardization parameters applied to input compounds, see `BFAIR.pathways.standardization.standardize`.
         Thorough standardization is enforced.
@@ -76,7 +78,7 @@ class RuleLibrary(AbstractContextManager):
         ID, and SMARTS expression.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, pathname=None, **kwargs):
         self._logger = get_logger(__name__)
         kwargs.setdefault("add_hs", True)
         if not kwargs["add_hs"]:
@@ -89,6 +91,7 @@ class RuleLibrary(AbstractContextManager):
         self._conn = None
         self._cursor = None
         self._filters = []
+        self._pathname = self._download_database(pathname)
         self.open()
 
     def __iter__(self):
@@ -110,9 +113,17 @@ class RuleLibrary(AbstractContextManager):
     def available(self) -> pd.DataFrame:
         return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
 
-    @property
-    def database_path(self) -> str:
-        return static_path(f"rules_{'' if self._std_args['add_hs'] else 'no'}hs.db")
+    def _download_database(self, pathname) -> str:
+        # Download database if need be
+        canonical_filename = f"rules_{'' if self._std_args['add_hs'] else 'no'}hs.db"
+        if pathname is None:
+            pathname = LOCAL_PATH / canonical_filename
+        if not pathname.exists():
+            self._logger.info(f"Database missing from `{pathname.parent}`. Downloading…")
+            fetch_remote(canonical_filename, pathname)
+        else:
+            self._logger.debug("Database exists.")
+        return pathname
 
     def _fetch_results(self, query) -> set:
         # Returns a set of unique results obtained by executing the specified SQL statement
@@ -126,7 +137,7 @@ class RuleLibrary(AbstractContextManager):
         -------
         same type as caller
         """
-        self._conn = sql.connect(self.database_path)
+        self._conn = sql.connect(str(self._pathname))
         self._conn.create_aggregate(q.ChemicalSimilarity.__name__, 2, q.ChemicalSimilarity)
         self._cursor = self._conn.cursor()
         return self
@@ -337,8 +348,7 @@ class RuleLibrary(AbstractContextManager):
         cutoff : float
             Biochemical uncertainty score below which reaction rules are filtered out. Each reaction rule has an
             associated score that functions as a proxy for uncertainty and specificity. Scores closer to 1 indicate less
-            uncertainty and higher specificity with respect to the annotated enzyme sequences. Note that, due to how it
-            is calculated, the score is biased against rarely studied enzymes.
+            uncertainty and higher specificity with respect to the annotated enzyme sequences.
 
         Returns
         -------
