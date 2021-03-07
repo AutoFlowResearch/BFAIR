@@ -7,7 +7,6 @@ orbs:
 jobs:
   
   # Linting and unit test
-
   unittest:
     executor: 
       name: python/default
