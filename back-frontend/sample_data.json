@@ -1,0 +1,52 @@
+{
+	name: 'Metabolic-Process',
+	toggled: true,
+	children: [{
+			id: 'GO:0000001',
+			name: 'Mitochondrion inheritance',
+			namespace: 'biological_process',
+			def: "The distribution of mitochondria, including the mitochondrial genome, into daughter cells after mitosis or meiosis, mediated by interactions between mitochondria and the cytoskeleton.[GOC:mcc, PMID:10873824, PMID:11389764]",
+			synonym: "mitochondrial inheritance",
+			children: [{
+					name: 'Organelle inheritance',
+					is_a: 'GO:0048308'
+				},
+				{
+					name: 'Mitochondrion distribution',
+					is_a: 'GO:0048311'
+				}
+			]
+		},
+		{
+			id: 'GO:0000002',
+			name: 'Mitochondrial genome maintenance',
+			namespace: 'biological_process',
+			def: "The maintenance of the structure and integrity of the mitochondrial genome; includes replication and segregation of the mitochondrial chromosome. [GOC:ai, GOC:vw]",
+			is_a: 'GO:0007005'
+		},
+		{
+			id: 'GO:0000003',
+			name: 'reproduction',
+			namespace: 'biological_process',
+			alt_id: 'GO:0019952',
+			alt_id: 'GO:0050876',
+			def: "The production of new individuals that contain some portion of genetic material inherited from one or more parent organisms. [GOC:go_curators, GOC:isa_complete, GOC:jl, ISBN:0198506732]",
+			is_a: 'GO:0008150'
+
+		},
+		{
+			id: 'GO:0048308',
+			name: 'organelle inheritance',
+			namespace: 'biological_process',
+			def: "The partitioning of organelles between daughter cells at cell division.",
+		},
+		{
+			id: 'GO:0048311',
+			name: 'mitochondrion distribution',
+			namespace: 'biological_process',
+			def: "Any process that establishes the spatial arrangement of mitochondria between and within cells.",
+			is_a: 'GO:0007005',
+			is_a: 'GO:0051646'
+		}
+	]
+};
