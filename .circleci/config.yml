@@ -72,7 +72,7 @@ jobs:
           name: Integrate BFAIR.sql into the database
           command: |
             psql -h localhost -p 5432 -U postgres -c "create database test_db"
-            psql -h localhost -p 5432 -U postgres -f backend/BFAIR_latest.sql test_db
+            psql -h localhost -p 5432 -U postgres -f back-frontend/BFAIR_latest.sql test_db
 
   # Windows integration
   Integration-on-windows:
@@ -99,7 +99,7 @@ jobs:
           command: |
             $Env:PGPASSWORD="$Env:WIN_PGPASSWORD"
             C:\"Program Files"\PostgreSQL\13\bin\psql.exe -U postgres -h localhost -p 5432 -d postgres -v ON_ERROR_STOP=1 -c "create database BFAIR_DB"
-            C:\"Program Files"\PostgreSQL\13\bin\psql.exe -U postgres -h localhost -p 5432 -v ON_ERROR_STOP=1 -f backend/BFAIR_latest.sql
+            C:\"Program Files"\PostgreSQL\13\bin\psql.exe -U postgres -h localhost -p 5432 -v ON_ERROR_STOP=1 -f back-frontend/BFAIR_latest.sql
               
   # MacOS integration
   Integration-on-macos:
@@ -119,7 +119,7 @@ jobs:
             PAGER: cat
           command: |
             psql -q -c "create database BFAIR_DB" -d postgres
-            psql -b -q -v ON_ERROR_STOP=1 -f backend/BFAIR_latest.sql -d postgres
+            psql -b -q -v ON_ERROR_STOP=1 -f back-frontend/BFAIR_latest.sql -d postgres
 
 workflows:
 
