@@ -5,9 +5,6 @@ from cobra.core.formula import Formula
 __version__ = "0.0.1"
 
 
-INVALID_FORMULA_STR = ["(", "Generic", "R", "X"]
-
-
 def print_formula(elements):
     """
     The input dictionary, atoms and their amount, is processed to produce
@@ -55,10 +52,10 @@ def zero_charge(metabolite):
     return formula
 
 
-def is_valid(metabolite):
+def is_valid(metabolite, INVALID_FORMULA_STR=["(", "Generic", "R", "X"]):
     """
     The validity of the input metabolites is checked. It's invalid if it
-    does not have any formula annotated of if the formula includes previously
+    does not have any formula annotated or if the formula includes previously
     defined invalid symbols
 
     Parameters
@@ -66,6 +63,9 @@ def is_valid(metabolite):
     metabolite: cobra.Metabolite
         A metabolite in the cobra format including additional information
         (formula, charge, elements)
+
+    INVALID_FORMULA_STR: list
+        A list of previously defined invalid symbol strings
 
     Returns
     -------
