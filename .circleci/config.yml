@@ -2,10 +2,9 @@ version: 2.1
 
 orbs:
   python: circleci/python@0.2.1
-  win: circleci/windows@2.2.0
+  win: circleci/windows@2.4.0
 
 jobs:
-
   # Linting and unit test
   unittest:
     executor:
@@ -17,6 +16,7 @@ jobs:
           name: Install Python Dependencies
           command : |
             pip install -r requirements.txt
+
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
@@ -53,25 +53,31 @@ jobs:
             pytest --disable-warnings --junitxml=~/reports/test-results.xml
             ThrowOnFailure "Python test failed!"
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
-
   # Linux integration
   Integration-on-linux:
-    executor: python/default
+    docker:
+      - image: circleci/python:3.7
+      - image: circleci/postgres:13.0
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
     steps:
       - checkout
       - run:
           name: Install Python dependencies and postgresql installation
           command: |
-            python3 -m venv venv
+            python -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
             sudo apt install -y postgresql-client || true
             sudo apt install postgresql
+
       - run:
-          name: Integrate IsaTAB.sql into the database
+          name: Integrate BFAIR.sql into the database
           command: |
-            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
+            psql -h localhost -p 5432 -U postgres -c "create database test_db"
+            psql -h localhost -p 5432 -U postgres -f back-frontend/BFAIR_latest.sql test_db
+
   # Windows integration
   Integration-on-windows:
     executor:
@@ -83,17 +89,21 @@ jobs:
       - run:
           name: Install postgresql
           command : |
-            choco install postgresql
+            choco install postgresql13 --params "/Password:$Env:WIN_PGPASSWORD"
             python -m pip install -U pip
+
       - run:
           name: Install Python Dependencies
           command : |
-            pip install -r requirements.txt
+            pip install -r requirements.txt --ignore-installed ruamel.yaml
+
       - run:
-          name : Integrate IsaTAB.sql into the database
+          name : Integrate BFAIR.sql into the database
+          no_output_timeout: 30m
           command: |
-            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
-            psql -h localhost -U biosustain -d biosustaindb -f AutoFlow-OmicsDataHandling/IsaTab.sql
+            $Env:PGPASSWORD="$Env:WIN_PGPASSWORD"
+            C:\"Program Files"\PostgreSQL\13\bin\psql.exe -U postgres -h localhost -p 5432 -d postgres -v ON_ERROR_STOP=1 -c "create database BFAIR_DB"
+            C:\"Program Files"\PostgreSQL\13\bin\psql.exe -U postgres -h localhost -p 5432 -v ON_ERROR_STOP=1 -f back-frontend/BFAIR_latest.sql
 
   # MacOS integration
   Integration-on-macos:
@@ -103,23 +113,48 @@ jobs:
       - checkout
       - run:
           name: Install PostgresSQL
-
-          environment:
-            POSTGRES_USER: circleCI
-            POSTGRES_DB: circleCI_test
-
           command: |
             brew install postgresql
+            brew services start postgresql
+
       - run:
-          name: Integrate IsaTAB.sql into the database
+          name: Integrate BFAIR.sql into the database
+          environment:
+            PAGER: cat
           command: |
-            psql -c "create database Isatab_DB" -U postgres -h localhost -p 5432
-            psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
+            psql -q -c "create database BFAIR_DB" -d postgres
+            psql -b -q -v ON_ERROR_STOP=1 -f back-frontend/BFAIR_latest.sql -d postgres
+
 workflows:
+
+  version: 2
   main:
     jobs:
       - unittest
       - win-unittest
+      - Integration-on-macos:
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - /release-.*/
+      - Integration-on-linux:
+          filters:
+            branches:
+              only:
+                - develop
+                - master
+                - /release-.*/
+      - Integration-on-windows:
+          filters:
+              branches:
+                only:
+                  - develop
+                  - master
+                  - /release-.*/
+
+      #- Integration-on-macos
       #- Integration-on-linux
       #- Integration-on-windows
       #- Integration-on-macos
