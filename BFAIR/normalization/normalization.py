@@ -197,81 +197,23 @@ def pqn_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    # 0)
-    grouped_df = pd.DataFrame()
-    grouped_df["Metabolite"] = df["Metabolite"].unique()
-    sample_group_names = df[groupname_colname].unique()
-    for sample_group_name in sample_group_names:
-        group_df = df[df[groupname_colname] == sample_group_name]
-        new_col = []
-        for metabolite in list(grouped_df["Metabolite"]):
-            if metabolite in list(group_df["Metabolite"]):
-                new_col.append(
-                    float(
-                        group_df[group_df["Metabolite"] == metabolite][
-                            value_colname
-                        ]
-                    )
-                )
-            else:
-                new_col.append(None)
-        grouped_df[sample_group_name] = new_col
-    # 1)
-    tsi_df = copy.deepcopy(grouped_df)
-    for colname in grouped_df.columns[1:]:
-        new_df = copy.deepcopy(grouped_df)
-        tsi = grouped_df[colname].sum(skipna=True)
-        new_col = new_df[colname].div(tsi)
-        tsi_df[colname] = new_col
-    # 2)
-    calculated_qc_vector = []
-    for x, row in tsi_df.iterrows():
-        if corr_type == "median":
-            calculated_qc_vector.append(row[1:].median(skipna=True))
-        elif corr_type == "mean":
-            calculated_qc_vector.append(row[1:].mean(skipna=True))
-    if qc_vector is not None:
-        provided_qc_vector = []
-        for cnt, metabolite in enumerate(list(grouped_df["Metabolite"])):
-            if metabolite in list(qc_vector["Metabolite"]):
-                provided_qc_vector.append(
-                    float(
-                        qc_vector[qc_vector["Metabolite"] == metabolite][
-                            value_colname
-                        ]
-                    )
-                )
-            else:
-                provided_qc_vector.append(calculated_qc_vector[cnt])
-        qc_vector = provided_qc_vector
-        print(qc_vector)
-    else:
-        qc_vector = calculated_qc_vector
-    # 3)
-    dilution_factor_list = []
-    for colname in tsi_df.columns[1:]:
-        new_col = np.array(tsi_df[colname])
-        new_col_div = list(new_col / np.array(qc_vector))
-        # 4)
-        if corr_type == "median":
-            dilution_factor = pd.Series(new_col_div).median(skipna=True)
-        elif corr_type == "mean":
-            dilution_factor = pd.Series(new_col_div).mean(skipna=True)
-        dilution_factor_list.append(dilution_factor)
-    # print(dilution_factor_list)
-    # 5)
-    norm_df = copy.deepcopy(tsi_df)
-    for position, colname in enumerate(tsi_df.columns[1:]):
-        norm_col = tsi_df[colname] * dilution_factor_list[position]
-        norm_df[colname] = norm_col
-    # 6)
-    output_df = copy.deepcopy(df)
-    for x, row in norm_df.iterrows():
-        for sample_num, sample in enumerate(row.index[1:]):
-            if not pd.isna(row[sample_num + 1]):
-                orig_df_reduced = df[df[groupname_colname] == sample]
-                index_pos = orig_df_reduced[
-                    orig_df_reduced["Metabolite"] == row[0]
-                ].index[0]
-                output_df.at[index_pos, value_colname] = row[sample_num + 1]
-    return output_df
+    # TODO: handle missing metabolites in provided qc vector
+    # 0, pivot table
+    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+    # 1, divide each column by its total intensity
+    pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
+    # 2, calculate QC vector as mean/median per row (i.e., metabolite)
+    qc_df = qc_vector if qc_vector is not None else getattr(pivot_df, corr_type)(axis=1, skipna=True)
+    # 3, normalize TSI by diving each row by corresponding value in QC vector
+    # 4, calculate dilution factor as mean/median per column (i.e., sample group name)
+    dilution = getattr(pivot_df.div(qc_df, axis=0), corr_type)(axis=0, skipna=True)
+    # 5, multiply each column by its dilution factor
+    pivot_df = pivot_df.multiply(dilution, axis=1)
+    # 6, output
+    pqn = (
+        pivot_df.stack()  # back to original shape
+        .reset_index()  # reset index, making a "0" column with intensities
+        .merge(df.drop(columns=value_colname), how="right")  # add missing data
+        .rename(columns={0: value_colname})  # renaming the "0" column
+    )[df.columns]  # match original column order
+    return pqn
