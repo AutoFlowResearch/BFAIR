@@ -69,16 +69,9 @@ def tsi_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    output_df = pd.DataFrame()
-    sample_group_names = df[groupname_colname].unique()
-    for i, sample_group_name in enumerate(sample_group_names):
-        new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        tsi = new_df[columnname].sum(skipna=True)
-        new_df[columnname] = new_df[columnname].div(tsi)
-        if i == 0:
-            output_df = new_df
-        else:
-            output_df = output_df.append(new_df)
+    tsi = df[[groupname_colname, columnname]].groupby(groupname_colname).transform(np.sum)
+    output_df = df.copy()
+    output_df[columnname] /= tsi[columnname]
     return output_df
 
 
