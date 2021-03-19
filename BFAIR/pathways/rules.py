@@ -111,7 +111,10 @@ class RuleLibrary(AbstractContextManager):
 
     @property
     def available(self) -> pd.DataFrame:
-        return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
+        try:
+            return pd.read_sql(q.select_rules_where(self._filters), self._conn, index_col="rule_id")
+        except sql.ProgrammingError as exception:
+            return pd.DataFrame([str(exception)], columns=["message"])
 
     def _download_database(self, pathname) -> str:
         # Download database if need be
