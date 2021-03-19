@@ -6,11 +6,15 @@ Contains basic functions to read, merge, and write FIA MS mapping files.
 __all__ = ["merge", "read", "write"]
 
 import csv
-from collections import Iterable
+from collections import Iterable, namedtuple
 
 import pandas as pd
 
+from BFAIR.io.database.struct import FILE_COLUMNS as STRUCT_FILE_COLUMNS
+
 FILE_COLUMNS = ["unused_mass", "formula", "ids"]
+
+Row = namedtuple("MappingRow", FILE_COLUMNS)
 
 
 def _get_metadata(df, attr_name):
@@ -19,6 +23,34 @@ def _get_metadata(df, attr_name):
         return df.attrs[attr_name]
     except KeyError:
         raise ValueError(f"Attribute '{attr_name}' missing.")
+
+
+def from_struct(struct, database_name=None, database_version=None):
+    """
+    Creates a mapping file from a struct file.
+
+    Parameters
+    ----------
+    struct : pandas.DataFrame
+        Dataframe containing 4 columns of metabolite ID, formula, SMILES, and InChI.
+    database_name : str
+        Name of the mapping file.
+    database_version : str
+        Version of the mapping file.
+
+    Returns
+    -------
+    mapping : pandas.DataFrame
+    """
+    mapping = pd.DataFrame([
+        Row(0, formula, group[STRUCT_FILE_COLUMNS[0]].tolist())
+        for formula, group in struct.groupby(FILE_COLUMNS[1])
+    ])
+    if database_name is None:
+        mapping.attrs["database_name"] = database_name
+    if database_version is None:
+        mapping.attrs["database_version"] = database_version
+    return mapping
 
 
 def merge(mapping_a, mapping_b):
