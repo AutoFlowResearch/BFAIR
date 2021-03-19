@@ -39,8 +39,9 @@ def merge_mappings(mapping_a, mapping_b):
     """
     mapping_merged = mapping_a.merge(mapping_b.iloc[:, 1:], how="outer", on=MAPPING_FILE_COLUMNS[1])
     rows = []
+    dup_colname = MAPPING_FILE_COLUMNS[2]
     for left_list, right_list in zip(
-        mapping_merged[MAPPING_FILE_COLUMNS[1] + "_x"], mapping_merged[MAPPING_FILE_COLUMNS[1] + "_y"]
+        mapping_merged[dup_colname + "_x"], mapping_merged[dup_colname + "_y"]
     ):
         row = []
         if isinstance(left_list, Iterable):
@@ -49,7 +50,7 @@ def merge_mappings(mapping_a, mapping_b):
             row.extend([item for item in right_list if item not in row])
         rows.append(row)
     mapping_merged[MAPPING_FILE_COLUMNS[0]] = 0
-    mapping_merged[MAPPING_FILE_COLUMNS[2]] = rows
+    mapping_merged[dup_colname] = rows
     return mapping_merged[MAPPING_FILE_COLUMNS]
 
 
