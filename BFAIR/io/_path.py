@@ -1,5 +1,7 @@
 # Private module to obtain static path
 
+__all__ = []
+
 from pathlib import Path
 
 from BFAIR.io import static

@@ -1,3 +1,5 @@
+__all__ = []
+
 from cobra.core.singleton import Singleton
 
 

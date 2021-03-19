@@ -4,6 +4,8 @@ Includes function to relax the bounds of a constraint-based model with
 thermodynamic information.
 """
 
+__all__ = ["relax_dgo", "relax_lc"]
+
 import pandas as pd
 
 from cobra.exceptions import Infeasible
