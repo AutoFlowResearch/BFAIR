@@ -1,4 +1,5 @@
 import unittest
+from pathlib import Path
 
 import pandas as pd
 
@@ -8,17 +9,17 @@ from BFAIR.pathways.rules import q
 
 
 class TestRuleLibrary(unittest.TestCase):
-    EXPECTED_RULES = 156670
-    EXPECTED_RULES_16_DIAMETER = 22031
-    EXPECTED_RULES_SMALL_ECOLI = 7576
-    EXPECTED_RULES_THEOBROMINE = 9
-    EXPECTED_RULES_UNCERTAINTY = 76706
+    EXPECTED_RULES = 174
+    EXPECTED_RULES_16_DIAMETER = 23
+    EXPECTED_RULES_SMALL_ECOLI = 166
+    EXPECTED_RULES_THEOBROMINE = 8
+    EXPECTED_RULES_UNCERTAINTY = 39
     CAFFEINE_SYNTHASE_REACTION_ID = "MNXR111503"
     CAFFEINE_SYNTHASE_RULE_ID = "RR-02-c9bb498ec42daefa-16-F"
 
     @classmethod
     def setUpClass(cls):
-        cls.rules = RuleLibrary()
+        cls.rules = RuleLibrary(Path(__file__).parent / "test_data" / "rules_test.db")
 
     @classmethod
     def tearDownClass(cls):
