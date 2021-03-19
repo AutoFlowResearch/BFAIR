@@ -46,9 +46,9 @@ def from_struct(struct, database_name=None, database_version=None):
         Row(0, formula, group[STRUCT_FILE_COLUMNS[0]].tolist())
         for formula, group in struct.groupby(FILE_COLUMNS[1])
     ])
-    if database_name is None:
+    if database_name is not None:
         mapping.attrs["database_name"] = database_name
-    if database_version is None:
+    if database_version is not None:
         mapping.attrs["database_version"] = database_version
     return mapping
 
