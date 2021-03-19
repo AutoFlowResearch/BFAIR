@@ -12,7 +12,14 @@ __all__ = [
     "models",
     "remote_files",
     "thermo_models",
+    "merge_mappings",
+    "merge_structs",
+    "read_mapping",
+    "read_struct",
+    "write_mapping",
+    "write_struct"
 ]
 
+from BFAIR.io.database import merge_mappings, merge_structs, read_mapping, read_struct, write_mapping, write_struct
 from BFAIR.io.model_factory import load_cbm, load_data, create_model, models, thermo_models
 from BFAIR.io.remote import LOCAL_PATH, fetch_remote, remote_files
