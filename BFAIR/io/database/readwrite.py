@@ -1,17 +1,19 @@
-"""Database.
+"""Read/Write.
 
-This module hosts functions to manipulate FIA MS mapping and struct files.
+Contains basic functions to read, merge, and write FIA MS database files.
 """
 
 __all__ = ["merge_mappings", "merge_structs", "read_mapping", "read_struct", "write_mapping", "write_struct"]
 
 import csv
-from collections import Iterable
+from collections import Iterable, namedtuple
 
 import pandas as pd
 
-MAPPING_FILE_COLUMNS = ["unused", "formula", "ids"]
-STRUCT_FILE_COLUMNS = ["id", "formula", "smiles", "inchi"]
+MAPPING_FILE_COLUMNS = ["unused_mass", "formula", "ids"]
+STRUCT_FILE_COLUMNS = ["id", "formula", "unused_smiles", "unused_inchi"]
+
+StructRow = namedtuple("StructRow", STRUCT_FILE_COLUMNS)
 
 
 def _get_metadata(df, attr_name):
@@ -29,22 +31,26 @@ def merge_mappings(mapping_a, mapping_b):
     Parameters
     ----------
     mapping_a, mapping_b : pandas.DataFrame
-        3-column dataframes representing mapping files. First column is unused. Chemical formulas and lists of
-        metabolite IDs are stored in the remaining columns.
+        Dataframes containing 3 columns of mass, formula, and metabolite IDs.
+
+    Returns
+    -------
+    pandas.DataFrame
     """
-    mapping_merged = mapping_a.merge(mapping_b.iloc[:, 1:], how="outer", on="formula")
+    mapping_merged = mapping_a.merge(mapping_b.iloc[:, 1:], how="outer", on=MAPPING_FILE_COLUMNS[1])
     rows = []
-    for left_list, right_list in zip(mapping_merged["ids_x"], mapping_merged["ids_y"]):
+    for left_list, right_list in zip(
+        mapping_merged[MAPPING_FILE_COLUMNS[1] + "_x"], mapping_merged[MAPPING_FILE_COLUMNS[1] + "_y"]
+    ):
         row = []
         if isinstance(left_list, Iterable):
             row.extend(left_list)
         if isinstance(right_list, Iterable):
             row.extend([item for item in right_list if item not in row])
         rows.append(row)
-    mapping_merged.drop(columns=["ids_x", "ids_y"], inplace=True)
-    mapping_merged["unused"] = 0
-    mapping_merged["ids"] = rows
-    return mapping_merged
+    mapping_merged[MAPPING_FILE_COLUMNS[0]] = 0
+    mapping_merged[MAPPING_FILE_COLUMNS[2]] = rows
+    return mapping_merged[MAPPING_FILE_COLUMNS]
 
 
 def merge_structs(struct_a, struct_b):
@@ -54,8 +60,11 @@ def merge_structs(struct_a, struct_b):
     Parameters
     ----------
     struct_a, struct_b : pandas.DataFrame
-        4-column dataframes representing struct files. First and second columns correspond to metabolite ID and chemical
-        formula, respectively.
+        Dataframes containing 4 columns of metabolite ID, formula, SMILES, and InChI.
+
+    Returns
+    -------
+    pandas.DataFrame
     """
     return struct_a.append(struct_b, ignore_index=True)
 
@@ -72,8 +81,7 @@ def read_mapping(pathname):
     Returns
     -------
     pandas.DataFrame
-        A dataframe with 3-columns. First column is unused. Second column contains chemical formulas and last column
-        stores a list of metabolite IDs that share a chemical formula.
+        Dataframe containing 3 columns of mass, formula, and metabolite IDs.
     """
     database_name = ""
     database_version = ""
@@ -103,8 +111,7 @@ def read_struct(pathname):
     Returns
     -------
     pandas.DataFrame
-        A dataframe with 4-columns. First and second columns correspond to metabolite ID and chemical formula,
-        respectively.
+        Dataframe containing 4 columns of metabolite ID, formula, SMILES, and InChI.
     """
     return pd.read_csv(pathname, names=STRUCT_FILE_COLUMNS, delimiter="\t")
 
@@ -116,8 +123,7 @@ def write_struct(struct, pathname):
     Parameters
     ----------
     struct : pandas.DataFrame
-        A dataframe with 4-columns. First and second columns correspond to metabolite ID and chemical formula,
-        respectively.
+        Dataframe containing 4 columns of metabolite ID, formula, SMILES, and InChI.
     """
     struct.to_csv(pathname, sep="\t", index=None, header=None)
 
@@ -129,8 +135,7 @@ def write_mapping(mapping, pathname, database_name=None, database_version=None):
     Parameters
     ----------
     mapping : pandas.DataFrame
-        A 3-column dataframe representing a mapping file. First column is unused. Chemical formulas and lists of
-        metabolite IDs that are stored in the remaining columns.
+        Dataframe containing 3 columns of mass, formula, and metabolite IDs.
     pathname : Path or str
         Destination pathname.
     database_name : str
