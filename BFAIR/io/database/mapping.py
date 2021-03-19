@@ -1,19 +1,16 @@
-"""Read/Write.
+"""Mapping.
 
-Contains basic functions to read, merge, and write FIA MS database files.
+Contains basic functions to read, merge, and write FIA MS mapping files.
 """
 
-__all__ = ["merge_mappings", "merge_structs", "read_mapping", "read_struct", "write_mapping", "write_struct"]
+__all__ = ["merge", "read", "write"]
 
 import csv
-from collections import Iterable, namedtuple
+from collections import Iterable
 
 import pandas as pd
 
-MAPPING_FILE_COLUMNS = ["unused_mass", "formula", "ids"]
-STRUCT_FILE_COLUMNS = ["id", "formula", "unused_smiles", "unused_inchi"]
-
-StructRow = namedtuple("StructRow", STRUCT_FILE_COLUMNS)
+FILE_COLUMNS = ["unused_mass", "formula", "ids"]
 
 
 def _get_metadata(df, attr_name):
@@ -24,7 +21,7 @@ def _get_metadata(df, attr_name):
         raise ValueError(f"Attribute '{attr_name}' missing.")
 
 
-def merge_mappings(mapping_a, mapping_b):
+def merge(mapping_a, mapping_b):
     """
     Merges two mapping files.
 
@@ -37,9 +34,9 @@ def merge_mappings(mapping_a, mapping_b):
     -------
     pandas.DataFrame
     """
-    mapping_merged = mapping_a.merge(mapping_b.iloc[:, 1:], how="outer", on=MAPPING_FILE_COLUMNS[1])
+    mapping_merged = mapping_a.merge(mapping_b.iloc[:, 1:], how="outer", on=FILE_COLUMNS[1])
     rows = []
-    dup_colname = MAPPING_FILE_COLUMNS[2]
+    dup_colname = FILE_COLUMNS[2]
     for left_list, right_list in zip(
         mapping_merged[dup_colname + "_x"], mapping_merged[dup_colname + "_y"]
     ):
@@ -49,28 +46,12 @@ def merge_mappings(mapping_a, mapping_b):
         if isinstance(right_list, Iterable):
             row.extend([item for item in right_list if item not in row])
         rows.append(row)
-    mapping_merged[MAPPING_FILE_COLUMNS[0]] = 0
+    mapping_merged[FILE_COLUMNS[0]] = 0
     mapping_merged[dup_colname] = rows
-    return mapping_merged[MAPPING_FILE_COLUMNS]
+    return mapping_merged[FILE_COLUMNS]
 
 
-def merge_structs(struct_a, struct_b):
-    """
-    Merges two mapping files.
-
-    Parameters
-    ----------
-    struct_a, struct_b : pandas.DataFrame
-        Dataframes containing 4 columns of metabolite ID, formula, SMILES, and InChI.
-
-    Returns
-    -------
-    pandas.DataFrame
-    """
-    return struct_a.append(struct_b, ignore_index=True)
-
-
-def read_mapping(pathname):
+def read(pathname):
     """
     Reads a FIA MS mapping file.
 
@@ -94,42 +75,13 @@ def read_mapping(pathname):
         for line in reader:
             # elements 2 onwards are metabolite IDs
             rows.append([*line[:2], line[2:]])
-    mapping = pd.DataFrame(rows, columns=MAPPING_FILE_COLUMNS)
+    mapping = pd.DataFrame(rows, columns=FILE_COLUMNS)
     mapping.attrs["database_name"] = database_name
     mapping.attrs["database_version"] = database_version
     return mapping
 
 
-def read_struct(pathname):
-    """
-    Reads a FIA MS struct file.
-
-    Parameters
-    ----------
-    pathname : Path or str
-        Pathname corresponding to a FIA MS struct file in TSV format.
-
-    Returns
-    -------
-    pandas.DataFrame
-        Dataframe containing 4 columns of metabolite ID, formula, SMILES, and InChI.
-    """
-    return pd.read_csv(pathname, names=STRUCT_FILE_COLUMNS, delimiter="\t")
-
-
-def write_struct(struct, pathname):
-    """
-    Writes a struct file to disk.
-
-    Parameters
-    ----------
-    struct : pandas.DataFrame
-        Dataframe containing 4 columns of metabolite ID, formula, SMILES, and InChI.
-    """
-    struct.to_csv(pathname, sep="\t", index=None, header=None)
-
-
-def write_mapping(mapping, pathname, database_name=None, database_version=None):
+def write(mapping, pathname, database_name=None, database_version=None):
     """
     Writes a mapping file to disk.
 
