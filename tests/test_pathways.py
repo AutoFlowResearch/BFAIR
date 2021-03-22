@@ -39,17 +39,18 @@ class TestRuleLibrary(unittest.TestCase):
         self.rules.filter_by_diameter(16)
         self.rules.filter_by_uncertainty(0.5)
         self.assertEqual(len(self.rules._filters), 2)
-
+        # Test that filter at position 0 (diameter) is removed
         self.rules.pop_filter(0)
         self.assertEqual(len(self.rules._filters), 1)
         self.assertEqual(str(self.rules._filters[0]), '"score">=0.5')
-
+        # Test that no filters are left
         self.rules.pop_filter()
         self.assertEqual(len(self.rules._filters), 0)
 
     def test_unsupported_diameter(self):
-        with self.assertRaisesRegex(ValueError, "^Unsupported diameter.*$"):
-            self.rules.filter_by_diameter(1)
+        for diameter in range(1, 16, 2):
+            with self.assertRaisesRegex(ValueError, "^Unsupported diameter.*$"):
+                self.rules.filter_by_diameter(diameter)
 
     def test_filter_by_diameter(self):
         self.rules.filter_by_diameter(16)
@@ -60,7 +61,6 @@ class TestRuleLibrary(unittest.TestCase):
         self.assertEqual(len(self.rules), self.EXPECTED_RULES_SMALL_ECOLI)
 
     def test_filter_by_compound(self):
-        self.rules.filter_by_diameter(16)
         self.rules.filter_by_compound(TestUtils.THEOBROMINE_INCHI)
         self.assertEqual(len(self.rules), self.EXPECTED_RULES_THEOBROMINE)
 
