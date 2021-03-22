@@ -11,7 +11,7 @@ from collections import namedtuple
 import pandas as pd
 from rdkit import Chem
 
-_CHARGE_REGEX = re.compile(r"((?:\+|-)\d+)$")
+_CHARGE_REGEX = re.compile(r"((?:\+|-)\d*)$")
 FILE_COLUMNS = ["id", "formula", "unused_smiles", "unused_inchi"]
 
 Row = namedtuple("StructRow", FILE_COLUMNS)

@@ -107,7 +107,7 @@ def read(pathname):
         for line in reader:
             # elements 2 onwards are metabolite IDs
             ids = [*filter(bool, line[2:])]
-            rows.append([*line[:2], ids])
+            rows.append([0, line[1], ids])
     mapping = pd.DataFrame(rows, columns=FILE_COLUMNS)
     mapping.attrs["database_name"] = database_name
     mapping.attrs["database_version"] = database_version
