@@ -40,7 +40,12 @@ commands:
       - run:
           name: Run Unit Tests
           command: |
-            pytest --disable-warnings
+            Set-StrictMode -Version Latest
+            $ErrorActionPreference = 'Stop'
+            function ThrowOnFailure($Msg) { if (-not $?) { throw $Msg } }
+            
+            pytest --disable-warnings --junitxml=~/reports/test-results.xml
+            ThrowOnFailure "Python test failed!"
             flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
 
 jobs:
@@ -57,17 +62,21 @@ jobs:
           key: linux-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
           paths:
             - "venv"
-      - run:
-          name : Run Unit Tests
-          command: |
-            Set-StrictMode -Version Latest
-            $ErrorActionPreference = 'Stop'
-            function ThrowOnFailure($Msg) { if (-not $?) { throw $Msg } }
-            
-            pytest --disable-warnings --junitxml=~/reports/test-results.xml
-            ThrowOnFailure "Python test failed!"
-            flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
-  
+      - run-unit-tests
+  win-test:
+    executor: win/default
+    steps:
+      - checkout
+      - setup-conda-windows
+      - restore_cache:
+          key: win-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      - install-python-deps
+      - save_cache:
+          key: win-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+      - run-unit-tests
+
   # Linux integration 
   Integration-on-linux:
     executor: python/default
