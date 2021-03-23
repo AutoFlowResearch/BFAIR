@@ -4,7 +4,7 @@ import copy
 
 
 def min_max_norm(
-    df, columnname="Intensity", groupname_colname="sample_group_name"
+    df, value_colname="Intensity", groupname_colname="sample_group_name"
 ):
     """
     Function that applies min/max scaling to the input dataframe; the data
@@ -28,23 +28,32 @@ def min_max_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
+    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
-        new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        min_val = min(new_df[columnname])
-        max_val = max(new_df[columnname])
-        new_df[columnname] = new_df[columnname].sub(min_val)
-        new_df[columnname] = new_df[columnname].div((max_val - min_val))
+        red_df = df[df[groupname_colname] == sample_group_name]
+        pivot_df = red_df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+        new_df = pivot_df
+        min_val = min(new_df[sample_group_name])
+        max_val = max(new_df[sample_group_name])
+        new_df[sample_group_name] = new_df[sample_group_name].sub(min_val)
+        new_df[sample_group_name] = new_df[sample_group_name].div((max_val - min_val))
+        temp_df = (
+            new_df.stack()  # back to original shape
+            .reset_index()  # reset index, making a "0" column with intensities
+            .merge(red_df.drop(columns=value_colname), how="right")  # add missing data
+            .rename(columns={0: value_colname})  # renaming the "0" column
+        )[df.columns]  # match original column order
         if i == 0:
-            output_df = new_df
+            output_df = temp_df
         else:
-            output_df = output_df.append(new_df)
+            output_df = output_df.append(temp_df)
     return output_df
 
 
 def tsi_norm(
-    df, columnname="Intensity", groupname_colname="sample_group_name"
+    df, value_colname="Intensity", groupname_colname="sample_group_name"
 ):
     """
     Applies Total Sum Intensity normalization; all values will be divided by
@@ -69,9 +78,14 @@ def tsi_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    tsi = df[[groupname_colname, columnname]].groupby(groupname_colname).transform(np.sum)
-    output_df = df.copy()
-    output_df[columnname] /= tsi[columnname]
+    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+    pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
+    output_df = (
+        pivot_df.stack()  # back to original shape
+        .reset_index()  # reset index, making a "0" column with intensities
+        .merge(df.drop(columns=value_colname), how="right")  # add missing data
+        .rename(columns={0: value_colname})  # renaming the "0" column
+    )[df.columns]  # match original column order
     return output_df
 
 
@@ -79,7 +93,7 @@ def lim_tsi_norm(
     metabolite_input,
     df,
     biomass_value=None,
-    columnname="Intensity",
+    value_colname="Intensity",
     groupname_colname="sample_group_name",
 ):
     """
@@ -132,24 +146,28 @@ def lim_tsi_norm(
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
-        new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
+        red_df = df[df[groupname_colname] == sample_group_name]
+        pivot_df = red_df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+        new_df = pivot_df
         if isinstance(metabolite_input,
                       (list, pd.core.series.Series, np.ndarray)):
             for metabolite in metabolite_input:
-                met_tsi = sum(new_df[new_df["Metabolite"] == metabolite][columnname])
-                lim_tsi += met_tsi
+                if metabolite in new_df.index:
+                    met_tsi = sum(new_df[new_df.index == metabolite].values[0])
+                    if not pd.isna(met_tsi):
+                        lim_tsi += met_tsi
         elif type(metabolite_input) == pd.core.frame.DataFrame:
 
             if biomass_value is None:
                 raise ValueError("'biomass_value' is missing!")
             for cnt, biomass_met in enumerate(metabolite_input["Metabolite"]):
-                met_tsi = sum(
-                    new_df[new_df["Metabolite"] == biomass_met][columnname]
-                )
-                norm_met_tsi = met_tsi * (
-                    metabolite_input["Value"][cnt] / biomass_value
-                )
-                lim_tsi += norm_met_tsi
+                if biomass_met in new_df.index:
+                    met_tsi = sum(new_df[new_df.index == biomass_met].values[0])
+                    norm_met_tsi = met_tsi * (
+                        metabolite_input["Value"][cnt] / biomass_value
+                    )
+                    if not pd.isna(met_tsi):
+                        lim_tsi += norm_met_tsi
         else:
             raise ValueError(
                 "Wrong type of input! Input must be either "
@@ -157,12 +175,17 @@ def lim_tsi_norm(
                 "'pd.core.frame.DataFrame', not '"
                 + type(metabolite_input) + "'"
             )
-        norm_vals = new_df[columnname].div(lim_tsi)
-        new_df[columnname] = norm_vals
+        temp_pivot_df = new_df.div(lim_tsi)
+        temp_df = (
+            temp_pivot_df.stack()  # back to original shape
+            .reset_index()  # reset index, making a "0" column with intensities
+            .merge(red_df.drop(columns=value_colname), how="right")  # add missing data
+            .rename(columns={0: value_colname})  # renaming the "0" column
+        )[df.columns]  # match original column order
         if i == 0:
-            output_df = new_df
+            output_df = temp_df
         else:
-            output_df = output_df.append(new_df)
+            output_df = output_df.append(temp_df)
     return output_df
 
 
