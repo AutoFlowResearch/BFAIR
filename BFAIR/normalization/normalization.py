@@ -4,7 +4,8 @@ import copy
 
 
 def min_max_norm(
-    df, value_colname="Intensity", groupname_colname="sample_group_name"
+    df, value_colname="Intensity", groupname_colname="sample_group_name",
+    element_name="Metabolite"
 ):
     """
     Function that applies min/max scaling to the input dataframe; the data
@@ -15,12 +16,15 @@ def min_max_norm(
     df: pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    columnname: string
+    groupname_colname: string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
     groupname_colname: string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
+    element_name: string
+        the name of the column with the identifiers of the tested elements
+        (e.g. metabolites or genes). Defaults to 'Metabolite'
 
     Returns
     -------
@@ -28,12 +32,12 @@ def min_max_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         red_df = df[df[groupname_colname] == sample_group_name]
-        pivot_df = red_df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+        pivot_df = red_df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
         new_df = pivot_df
         min_val = min(new_df[sample_group_name])
         max_val = max(new_df[sample_group_name])
@@ -53,7 +57,8 @@ def min_max_norm(
 
 
 def tsi_norm(
-    df, value_colname="Intensity", groupname_colname="sample_group_name"
+    df, value_colname="Intensity", groupname_colname="sample_group_name",
+    element_name="Metabolite"
 ):
     """
     Applies Total Sum Intensity normalization; all values will be divided by
@@ -71,6 +76,9 @@ def tsi_norm(
     groupname_colname: string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
+    element_name: string
+        the name of the column with the identifiers of the tested elements
+        (e.g. metabolites or genes). Defaults to 'Metabolite'
 
     Returns
     -------
@@ -78,7 +86,7 @@ def tsi_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
     pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
     output_df = (
         pivot_df.stack()  # back to original shape
@@ -95,6 +103,7 @@ def lim_tsi_norm(
     biomass_value=None,
     value_colname="Intensity",
     groupname_colname="sample_group_name",
+    element_name="Metabolite"
 ):
     """
     Applies a modified version of Total Sum Intensity normalization; all
@@ -128,6 +137,9 @@ def lim_tsi_norm(
         the name of the column with the sample group names,
         defaults to 'sample_group_name'.
         Defaults to "sample_group_name"
+    element_name: string
+        the name of the column with the identifiers of the tested elements
+        (e.g. metabolites or genes). Defaults to 'Metabolite'
 
     Returns
     -------
@@ -147,7 +159,7 @@ def lim_tsi_norm(
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         red_df = df[df[groupname_colname] == sample_group_name]
-        pivot_df = red_df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+        pivot_df = red_df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
         new_df = pivot_df
         if isinstance(metabolite_input,
                       (list, pd.core.series.Series, np.ndarray)):
@@ -160,7 +172,7 @@ def lim_tsi_norm(
 
             if biomass_value is None:
                 raise ValueError("'biomass_value' is missing!")
-            for cnt, biomass_met in enumerate(metabolite_input["Metabolite"]):
+            for cnt, biomass_met in enumerate(metabolite_input[element_name]):
                 if biomass_met in new_df.index:
                     met_tsi = sum(new_df[new_df.index == biomass_met].values[0])
                     norm_met_tsi = met_tsi * (
@@ -195,6 +207,7 @@ def pqn_norm(
     value_colname="Intensity",
     corr_type="median",
     qc_vector=None,
+    element_name="Metabolite"
 ):
     """
     Probabilistic Quotient Normalization: This method adjusts for dilutions.
@@ -214,6 +227,10 @@ def pqn_norm(
         type of midpoint determination, ‘median’ or ‘mean’
     qc_vector: list
         an optional QC vector that can be provided
+    element_name: string
+        the name of the column with the identifiers of the tested elements
+        (e.g. metabolites or genes). Defaults to 'Metabolite'
+
     Returns
     -------
     output_df: pandas.DataFrame
@@ -222,7 +239,7 @@ def pqn_norm(
     """
     # TODO: handle missing metabolites in provided qc vector
     # 0, pivot table
-    pivot_df = df.pivot(index="Metabolite", columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
     # 1, divide each column by its total intensity
     pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
     # 2, calculate QC vector as mean/median per row (i.e., metabolite)
