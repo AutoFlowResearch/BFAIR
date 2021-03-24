@@ -50,6 +50,7 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
                     "Metabolite": peptideRef,
                     "Formula": list(formula)[0],
                     "Intensity": f.getMetaValue("peak_apex_int"),
+                     "MZ_value": f.getMZ(),
                 }
                 cnt = cnt + 1
     extracted_data_all = pd.DataFrame.from_dict(extracted_data_dict, "index")
@@ -137,3 +138,21 @@ def calculateMeanVarRSD(
                 cnt = cnt + 1
     stats_all_df = pd.DataFrame.from_dict(stats_all_dict, "index")
     return stats_all_df
+
+def transform_dataframe(df, group_name, value_name):
+    samples = df[group_name].unique()
+    metabolites = []
+    for sample in samples:
+        sample_metabolites = df[df[group_name] == sample]['Metabolite'].unique()
+        metabolites = list(set(metabolites)) + list(set(sample_metabolites))
+    t_df = pd.DataFrame(index=samples, columns=metabolites)
+    for sample in samples:
+        for metabolite in metabolites:
+            sample_df = df[df[group_name] == sample]
+            met_df = sample_df[sample_df['Metabolite'] == metabolite]
+            try:
+                value = float(met_df[value_name])
+                t_df.at[sample, metabolite] = value
+            except TypeError:
+                continue
+    return t_df
