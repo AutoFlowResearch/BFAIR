@@ -80,7 +80,7 @@ commands:
                   python -m flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
 
 jobs:
-  test-linux:
+  unittest:
     docker:
       - image: cimg/base:stable
     steps:
@@ -88,7 +88,7 @@ jobs:
       - install-conda
       - setup-env
       - test
-  test-win:
+  win-unittest:
     executor: win/default
     steps:
       - checkout
@@ -168,8 +168,8 @@ workflows:
   version: 2
   main:
     jobs:
-      - test-linux
-      - test-win
+      - unittest
+      - win-unittest
       #- Integration-on-linux
       #- Integration-on-windows
       #- Integration-on-macos
