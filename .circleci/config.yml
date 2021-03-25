@@ -4,78 +4,98 @@ orbs:
   win: circleci/windows@2.2.0
 
 commands:
-  setup-conda-linux:
+  install-conda:
     steps:
       - run:
-          name: Install Miniconda
+          name: Installing Miniconda
           command: |
-            MINICONDA_URL="https://repo.continuum.io/miniconda/"
             MINICONDA_FILE="Miniconda3-latest-Linux-x86_64.sh"
-            curl -L -O "${MINICONDA_URL}/${MINICONDA_FILE}"
-            bash "$MINICONDA_FILE" -b -f -p ~/miniconda3
-            rm "${MINICONDA_FILE}"
+            curl -sSL -O "https://repo.continuum.io/miniconda/${MINICONDA_FILE}"
+            bash "${MINICONDA_FILE}" -b -p ~/miniconda3
+            rm -rf "${MINICONDA_FILE}"
             eval "$(~/miniconda3/bin/conda shell.bash hook)"
             conda init
-      - run:
-          name: Setup Miniconda
-          command: |
-            conda create -y -c rdkit -n test python=3.7.3 rdkit=2020.03
-            conda activate test
-  setup-conda-windows:
+  setup-env:
+    parameters:
+      os:
+        type: enum
+        default: "linux"
+        enum: ["linux", "win"]
     steps:
-      - run:
-          name: Setup Miniconda
-          command: |
-            conda create -y -c rdkit -n test python=3.7.3 rdkit=2020.03
-            conda init powershell
-            conda activate test
-  install-python-deps:
+      - restore_cache:
+          key: conda-{{ arch }}-{{ checksum "env.yml" }}
+      - when:
+          condition:
+            equal: [ "linux", << parameters.os >> ]
+          steps:
+            - run: 
+                name: Setting up environment
+                command: |
+                  eval "$(~/miniconda3/bin/conda shell.bash hook)"
+                  conda env create -f env.yml
+      - when:
+          condition:
+            equal: [ "win", << parameters.os >> ]
+          steps:
+            - run:
+                name: Setting up environment
+                command: |
+                  conda init powershell
+                  conda env create -f env.yml
+      - save_cache:
+          key: conda-{{ arch }}-{{ checksum "env.yml" }}
+          paths:
+            - ~/miniconda
+  test:
+    parameters:
+      os:
+        type: enum
+        default: "linux"
+        enum: ["linux", "win"]
     steps:
-      - run:
-          name: Install Python Dependencies
-          command: |
-            pip install -r requirements.txt
-  run-unit-tests:
-    steps:
-      - run:
-          name: Run Unit Tests
-          command: |
-            Set-StrictMode -Version Latest
-            $ErrorActionPreference = 'Stop'
-            function ThrowOnFailure($Msg) { if (-not $?) { throw $Msg } }
-            
-            pytest --disable-warnings --junitxml=~/reports/test-results.xml
-            ThrowOnFailure "Python test failed!"
-            flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
+      - when:
+          condition:
+            equal: [ "linux", << parameters.os >> ]
+          steps:
+            - run:
+                name: Running tests
+                command: |
+                  eval "$(~/miniconda3/bin/conda shell.bash hook)"
+                  conda activate test
+                  python -m pytest --disable-warnings
+                  python -m flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
+      - when:
+          condition:
+            equal: [ "win", << parameters.os >> ]
+          steps:
+            - run: 
+                name: Running tests
+                command: |
+                  Set-StrictMode -Version Latest
+                  $ErrorActionPreference = 'Stop'
+                  function ThrowOnFailure($Msg) { if (-not $?) { throw $Msg } }
+                  conda activate test
+                  python -m pytest --disable-warnings
+                  ThrowOnFailure "Python test failed!"
+                  python -m flake8 --max-line-length=120 --ignore=PT009,E203,W503,W601
 
 jobs:
-  linux-test:
+  test-linux:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - setup-conda-linux
-      - restore_cache:
-          key: linux-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - install-python-deps
-      - save_cache:
-          key: linux-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-      - run-unit-tests
-  win-test:
+      - install-conda
+      - setup-env
+      - test
+  test-win:
     executor: win/default
     steps:
       - checkout
-      - setup-conda-windows
-      - restore_cache:
-          key: win-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - install-python-deps
-      - save_cache:
-          key: win-deps-{{ .Branch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - "venv"
-      - run-unit-tests
+      - setup-env:
+          os: win
+      - test:
+          os: win
 
   # Linux integration 
   Integration-on-linux:
@@ -147,8 +167,8 @@ jobs:
 workflows:
   main:
     jobs:
-      - linux-test
-      - win-test
+      - test-linux
+      - test-win
       #- Integration-on-linux
       #- Integration-on-windows
       #- Integration-on-macos
