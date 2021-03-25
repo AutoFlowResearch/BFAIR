@@ -136,7 +136,7 @@ def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=No
 
 
 models = _ModelFactory()
-models.__doc__ = """A factory class to load metabolic models.
+"""A factory class to load metabolic models.
 
 Example
 -------
@@ -152,7 +152,7 @@ This is equivalent to ``BFAIR.io.load_cbm("small_ecoli")``.
 
 
 thermo_models = _ThermoModelFactory()
-thermo_models.__doc__ = """A factory class to create pre-curated thermodynamics-based metabolic models.
+"""A factory class to create pre-curated thermodynamics-based metabolic models.
 
 Example
 -------

@@ -105,7 +105,7 @@ def get_filesize(pathname: Path) -> int:
 
 
 remote_files = _Files()
-remote_files.__doc__ = """A factory class to fetch remote file information. Use indexing to access its members.
+"""A factory class to fetch remote file information. Use indexing to access its members.
 
 Example
 -------
