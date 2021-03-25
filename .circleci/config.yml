@@ -165,6 +165,7 @@ jobs:
             psql -f AutoFlow-OmicsDataHandling/IsaTab.sql Isatab_DB
 
 workflows:
+  version: 2
   main:
     jobs:
       - test-linux
