@@ -5,7 +5,7 @@ Toolbox of functions to visualize results from the pathway debugging module.
 
 __all__ = ["plot_pathway"]
 
-from collections import Iterable
+from collections.abc import Iterable
 
 import numpy as np
 import matplotlib.pyplot as plt
