@@ -22,7 +22,7 @@ def get_compound(input_compound, input_type="inchi", **kwargs) -> AllChem.Mol:
     input_type : {'inchi', 'smiles', 'rdkit'}
         Type of notation describing the input compound.
     **kwargs
-        Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.
+        Standardization parameters applied to the input compound, see `standardize`.
 
     Returns
     -------
@@ -33,6 +33,10 @@ def get_compound(input_compound, input_type="inchi", **kwargs) -> AllChem.Mol:
     ------
     ValueError
         If an unsupported input type is supplied.
+
+    See Also
+    --------
+    standardize
     """
     if input_type == "inchi":
         compound = Chem.MolFromInchi(input_compound, sanitize=False)
@@ -59,12 +63,17 @@ def get_molecular_fingerprint(input_compound, input_type="inchi", **kwargs):
     input_type : {'inchi', 'smiles', 'rdkit'}
         Type of notation describing the input compound.
     **kwargs
-        Standardization parameters applied to the input compound, see `BFAIR.pathways.standardization.standardize`.
+        Standardization parameters applied to the input compound, see `standardize`.
 
     Returns
     -------
     list of int
         A molecular fingerprint, represented as a list of indexes corresponding to present substructural features.
+
+
+    See Also
+    --------
+    standardize
     """
     compound = get_compound(input_compound, input_type, **kwargs)
     return [

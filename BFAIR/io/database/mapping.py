@@ -6,8 +6,7 @@ Contains basic functions to read, merge, and write FIA MS mapping files.
 __all__ = ["from_struct", "merge", "read", "write"]
 
 import csv
-from collections import namedtuple
-from collections.abc import Iterable
+from collections import Iterable, namedtuple
 
 import pandas as pd
 
