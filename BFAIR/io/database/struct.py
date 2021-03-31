@@ -72,7 +72,7 @@ def from_products_dict(results, prefix="p"):
 
 def merge(struct_a, struct_b):
     """
-    Merges two mapping files.
+    Merges two struct files.
 
     Parameters
     ----------
