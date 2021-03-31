@@ -1,6 +1,5 @@
 import unittest
 import pickle
-import sys
 import pathlib
 from BFAIR.INCA import parse_cobra_model
 
@@ -21,7 +20,6 @@ class test_methods(unittest.TestCase):
         self.coli_model = coli_model
         self.celegans_model = celegans_model
 
-        
     """
     For now, all the tests are based on comparing the output of the custom
     functions to manually checked previously generated instances
@@ -50,6 +48,7 @@ class test_methods(unittest.TestCase):
             'today',
         )
         self.assertEqual(celegans_model_, celegans_model)
+
 
 if __name__ == "__main__":
     unittest.main()
