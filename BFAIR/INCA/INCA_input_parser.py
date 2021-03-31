@@ -1,3 +1,7 @@
+"""INCA input parser.
+Methods to prepare input data to fit the BFAIR INCA tools format.
+"""
+
 import cobra
 import pandas as pd
 from molmass.molmass import Formula
@@ -101,7 +105,6 @@ def _parse_json_sbml_cobra_model(
     model_data = pd.DataFrame(
         {
             "model_id": model_id,
-            # "model_name": None,
             "date": date,
             "model_description": cobra_model.description,
             "model_file": model_file,
@@ -133,11 +136,7 @@ def _parse_json_sbml_cobra_model(
             "objective_coefficient": r.objective_coefficient,
             "flux_units": "mmol*gDW-1*hr-1",
             "reversibility": r.reversibility,
-            # "fixed": None,
-            # "free": None,
-            # "weight": None,
             "used_": True,
-            # "comment_": None
         }
         reaction_data_temp[cnt] = reaction_data_dict
     reaction_data = pd.DataFrame.from_dict(reaction_data_temp, "index")
@@ -159,17 +158,7 @@ def _parse_json_sbml_cobra_model(
             "charge": met.charge,
             "compartment": met.compartment,
             "bound": met._bound,
-            # "constraint_sense": met._constraint_sense
-            # 'met_elements': None
-            # 'met_atompositions': None
-            # "balanced": None
-            # "fixed": None
-            # 'met_symmetry': None
-            # 'met_symmetry_atompositions': None
             "used_": True,
-            # "comment_": None
-            # "lower_bound": None
-            # "upper_bound": None
         }
         metabolite_data_tmp[cnt] = metabolite_data_dict
     metabolite_data = pd.DataFrame.from_dict(metabolite_data_tmp, "index")
