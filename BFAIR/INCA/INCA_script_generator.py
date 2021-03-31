@@ -597,8 +597,9 @@ class INCA_script:
                 )
                 met_positions = [
                     int(x)
-                    for x in self.prepare_input(met["met_atompositions"],
-                                                "Curly")
+                    for x in self.prepare_input(
+                        met["met_atompositions"], "Curly"
+                    )
                 ]
                 met_elements = self.prepare_input(met["met_elements"], "Curly")
                 met["met_symmetry_elements"] = met[
@@ -1020,6 +1021,9 @@ class INCA_script:
             )
             tmp_script = tmp_script + "\nm.expts(%d) = x;\n" % (
                 experiment_cnt + 1
+            )
+            tmp_script = tmp_script + "\nm.expts(1).id = {'%s'};\n" % (
+                experiment
             )
 
             mat_script = mat_script + tmp_script
