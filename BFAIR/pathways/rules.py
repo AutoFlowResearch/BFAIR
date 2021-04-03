@@ -68,14 +68,18 @@ class RuleLibrary(AbstractContextManager):
     pathname : Path, optional
         Pathname to the reaction rule database. If it does not exist, the database will be downloaded into it.
     **kwargs
-        Standardization parameters applied to input compounds, see `BFAIR.pathways.standardization.standardize`.
-        Thorough standardization is enforced.
+        Standardization parameters applied to input compounds, see `BFAIR.pathways.utils.standardize`. Thorough
+        standardization is enforced.
 
     Attributes
     ----------
     available : pandas.DataFrame
         A dataframe with the available rules (after filters applied). It has columns for rule ID, associated MetaNetX
         ID, and SMARTS expression.
+
+    See Also
+    --------
+    utils.standardize
     """
 
     def __init__(self, pathname=None, **kwargs):

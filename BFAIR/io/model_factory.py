@@ -138,30 +138,42 @@ def create_model(model_name, thermo_data=None, lexicon=None, compartment_data=No
 models = _ModelFactory()
 """A factory class to load metabolic models.
 
-Example
--------
+Examples
+--------
+>>> from BFAIR.io import models
+
+Use the ``dir`` function to obtain a list of available models.
+
 >>> dir(models)
 ['iJO1366', 'small_ecoli', 'yeastGEM']
+
+Models can be loaded by accessing them as class attributes.
 
 >>> model = models.small_ecoli
 >>> model.slim_optimize()
 0.8109621653343296
 
-This is equivalent to ``BFAIR.io.load_cbm("small_ecoli")``.
+This is equivalent to ``load_cbm("small_ecoli")``.
 """
 
 
 thermo_models = _ThermoModelFactory()
 """A factory class to create pre-curated thermodynamics-based metabolic models.
 
-Example
--------
+Examples
+--------
+>>> from BFAIR.io import thermo_models
+
+Use the ``dir`` function to obtain a list of available models.
+
 >>> dir(models)
 ['iJO1366', 'small_ecoli']
+
+Models can be loaded by accessing them as class attributes.
 
 >>> tmodel = thermo_models.small_ecoli
 >>> tmodel.slim_optimize()
 0.8109972502600706
 
-This is equivalent to ``BFAIR.io.create_model("small_ecoli")``.
+This is equivalent to ``create_model("small_ecoli")``.
 """
