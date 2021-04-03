@@ -8,8 +8,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 ma = Marshmallow(app)
 CORS(app)
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://bfair_user:password@localhost:5432/smart"
 db = SQLAlchemy(app)
@@ -35,6 +35,7 @@ class MethodologyModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     Methodology = db.Column(db.String(120), nullable=False)
     Sample_id = db.Column(db.Integer, db.ForeignKey('Sample.id', ondelete="CASCADE"), nullable=False)
+
 
 class MethodSchema(ma.SQLAlchemySchema):
     class Meta:
