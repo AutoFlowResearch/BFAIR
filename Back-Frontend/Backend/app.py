@@ -158,7 +158,7 @@ def handle_assay():
                                    Assay_Technology_Platform=data['Assay_Technology_Platform'])
             db.session.add(new_assay)
             db.session.commit()
-            return {"message": f"Assay {new_assay.Assay_Identifier} has been created successfully."}
+            return {"message": f"Assay {new_assay.Assay_Identifier} has been created successfully. "}
         else:
             return {"error": "The request payload is not in JSON format"}
 
