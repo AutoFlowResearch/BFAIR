@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 from flask_marshmallow import Marshmallow, Schema
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 ma = Marshmallow(app)
 CORS(app)
