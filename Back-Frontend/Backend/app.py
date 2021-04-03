@@ -1,8 +1,7 @@
-from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask import Flask, jsonify
-from flask_marshmallow import Marshmallow, Schema, fields
+from flask import Flask, jsonify, request
+from flask_marshmallow import Marshmallow, Schema
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -34,11 +33,7 @@ class MethodologyModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     Methodology = db.Column(db.String(120), nullable=False)
-    Sample_id = db.Column(db.Integer, db.ForeignKey('Sample.id', ondelete="CASCADE"),
-        nullable=False)
-    # Samples = db.relationship('SampleModel',
-    #     backref=db.backref('Samples', lazy=True))
-
+    Sample_id = db.Column(db.Integer, db.ForeignKey('Sample.id', ondelete="CASCADE"), nullable=False)
 
 class MethodSchema(ma.SQLAlchemySchema):
     class Meta:
