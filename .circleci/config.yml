@@ -181,6 +181,7 @@ workflows:
     jobs:
       - unittest
       - win-unittest
+      - Integration-on-linux
       - Integration-on-macos:
           filters:
             branches:
