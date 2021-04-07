@@ -5,3 +5,4 @@ FIA-MS tools
    :maxdepth: 2
 
    fia_ms_tools
+   database_construction
