@@ -3,7 +3,7 @@ FIA-MS tools
 
 .. currentmodule:: BFAIR.FIA_MS.import_statistics
 
-The following tools can be used to extract metabolite data from .featureXML
+The following tools can be used to extract metabolite data from ``.featureXML``
 files (the outout of SmartPeak) into pandas DataFrames that can subsequently
 be analyzed and visualized. Import these tools like this:
 
@@ -14,7 +14,7 @@ be analyzed and visualized. Import these tools like this:
 Import
 ------
 
-SmartPeak stores the processed analytical data in folders containing .featureXML
+SmartPeak stores the processed analytical data in folders containing ``.featureXML``
 files. In order to use this information in python, it has extracted from the
 individual files and combined in a DataFrame. The extracted information can e.g.
 be :doc:`normalized <../normalization/normalization>` after this step.
