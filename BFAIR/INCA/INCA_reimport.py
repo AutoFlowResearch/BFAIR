@@ -54,7 +54,8 @@ class INCA_reimport:
             )
             info = {
                 "File_size": file_size,
-                "Simulation_timestamp_structure": simulation_dateAndTime_struct,
+                "Simulation_timestamp_structure":
+                    simulation_dateAndTime_struct,
                 "Simulation_timestamp": simulation_dateAndTime,
             }
         return info
@@ -983,3 +984,22 @@ class INCA_reimport:
             fittedMeasuredFragmentResiduals,
             simulationParameters,
         )
+
+
+reimport = INCA_reimport()
+"""A class to re-import the INCA output data.
+It is parsed from MATLAB to python DataFrames.
+
+Examples
+--------
+>>> from BFAIR.INCA import INCA_reimport
+
+After initialization, the data can either be re-imported all at once
+
+>>> reimport_data = INCA_reimport()
+>>> reimport_data.reimport(filename, simulation_info, simulation_id)
+
+Or sequentially (not shown)
+
+For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository.  # noqa E501
+"""

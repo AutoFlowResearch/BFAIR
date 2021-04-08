@@ -49,10 +49,10 @@ That should do the trick.
 Modules
 -------
 
-.. autodata:: INCA_script
+.. autodata:: INCA_script_generator.script_generator
    :annotation:
 
-.. autodata:: INCA_reimport
+.. autodata:: INCA_reimport.reimport
    :annotation:
 
 INCA script generation

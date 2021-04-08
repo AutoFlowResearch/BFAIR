@@ -1272,3 +1272,49 @@ class INCA_script:
         _f2(nargout=0)
         eng.quit()
         print("--- %s seconds -" % (time.time() - start_time))
+
+
+script_generator = INCA_script()
+"""A class to write and execute an INCA script in MATLAB.
+
+Examples
+--------
+>>> from BFAIR.INCA import INCA_script
+
+After pre-processing the input, the script can either be generated all at once
+
+>>> INCA_script = INCA_script()
+>>> script = INCA_script.script_generator(
+        modelReaction_data_I,
+        atomMappingReactions_data_I,
+        atomMappingMetabolite_data_I,
+        measuredFluxes_data_I,
+        experimentalMS_data_I,
+        tracer_I
+    )
+
+Or sequentially (not shown)
+After generation, the script can be saved
+
+>>> INCA_script.save_INCA_script(script, "testscript")
+
+Same goesfor the runner script
+
+>>> runner = INCA_script.runner_script_generator('TestFile', 10)
+>>> INCA_script.save_runner_script(runner=runner, scriptname="testscript")
+
+With working INCA and MATLAB installations and an active MATLAB engine, the script can be executed in python  # noqa E501
+
+>>> INCA_base_directory = "/Users/Username/Documents/INCAv1.9"
+>>> script_folder = %pwd
+>>> matlab_script = "testscript"
+>>> runner_script = matlab_script + "_runner"
+>>> INCA_script.run_INCA_in_MATLAB(
+>>>     INCA_base_directory,
+>>>     script_folder,
+>>>     matlab_script,
+>>>     runner_script
+>>> )
+
+For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository.  # noqa E501
+"""
