@@ -7,7 +7,7 @@ Prerequisites
 -------------
 
 The BFAIR :abbr:`MFA (metabolic flux analysis)` tools use the software
-:abbr:INCA (Isotopomer Network Compartmental Analysis)` in MATLAB and
+:abbr:`INCA (Isotopomer Network Compartmental Analysis)` in MATLAB and
 subsequently re-import it's output before processing the data. To make
 full use of these tools you will have to have both INCA and MATLAB
 installed on your system.
@@ -18,9 +18,9 @@ INCA
 "INCA (Isotopomer Network Compartmental Analysis) is a MATLAB-based
 software package for isotopomer network modeling and metabolic flux
 analysis." You can read more about it in
-`Young, 2014 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3998137/pdf/btu015.pdf>`
+`Young, 2014 <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3998137/pdf/btu015.pdf>`_
 You have to get a free academic licence for INCA from
-`the Vanderbilt University website <http://mfa.vueinnovations.com/licensing>`
+`the Vanderbilt University website <http://mfa.vueinnovations.com/licensing>`_
 (the second option is the relevant one) and install it. Note the path to the base
 directory of your INCA installation, you will need it later.
 
@@ -28,9 +28,9 @@ MATLAB
 ^^^^^^
 
 Get a free academic licence and install MATLAB from the
-`mathworks website <https://www.mathworks.com>´. Then, install the engine API following
+`mathworks website <https://www.mathworks.com>`_. Then, install the engine API following
 the guide provided
-`under this link <https://www.mathworks.com/help/matlab/matlab_external/install-the-matlab-engine-for-python.html>`.
+`under this link <https://www.mathworks.com/help/matlab/matlab_external/install-the-matlab-engine-for-python.html>`_.
 In short, you will have to go to your MATLAB root folder (find your
 installation and open that folder) and, in the command line, go to
 
