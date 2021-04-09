@@ -1,7 +1,7 @@
 Database construction
 =====================
 
-.. currentmodule:: BFAIR.FIA_MS.database_construction
+.. currentmodule:: BFAIR.FIA_MS
 
 The databases that are being used in the annotation process by SmartPeak
 can be constructed using these tools. The output are struct and mapping files.

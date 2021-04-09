@@ -8,7 +8,7 @@ Prerequisites
 
 The BFAIR :abbr:`MFA (metabolic flux analysis)` tools use the software
 :abbr:`INCA (Isotopomer Network Compartmental Analysis)` in MATLAB and
-subsequently re-import it's output before processing the data. To make
+subsequently re-import its output before processing the data. To make
 full use of these tools you will have to have both INCA and MATLAB
 installed on your system.
 
@@ -72,8 +72,8 @@ reduce them using these functions.
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.limit_to_one_model
-    INCA_script.limit_to_one_experiment
+    INCA_script.INCA_script.limit_to_one_model
+    INCA_script.INCA_script.limit_to_one_experiment
 
 Step-wise generation
 ^^^^^^^^^^^^^^^^^^^^
@@ -85,15 +85,15 @@ See below for the short-cut.
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.initiate_MATLAB_script
-    INCA_script.add_reactions_to_script
-    INCA_script.initialize_model
-    INCA_script.symmetrical_metabolites
-    INCA_script.unbalanced_reactions
-    INCA_script.add_reaction_parameters
-    INCA_script.verify_and_estimate
-    INCA_script.add_experimental_parameters
-    INCA_script.mapping
+    INCA_script.INCA_script.initiate_MATLAB_script
+    INCA_script.INCA_script.add_reactions_to_script
+    INCA_script.INCA_script.initialize_model
+    INCA_script.INCA_script.symmetrical_metabolites
+    INCA_script.INCA_script.unbalanced_reactions
+    INCA_script.INCA_script.add_reaction_parameters
+    INCA_script.INCA_script.verify_and_estimate
+    INCA_script.INCA_script.add_experimental_parameters
+    INCA_script.INCA_script.mapping
 
 Summary function
 ^^^^^^^^^^^^^^^^
@@ -105,7 +105,7 @@ script can be generated using the ``INCA_script.script_generator`` summary funct
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.script_generator
+    INCA_script.INCA_script.script_generator
 
 Runner script generation
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -117,7 +117,7 @@ using the following functions.
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.runner_script_generator
+    INCA_script.INCA_script.runner_script_generator
 
 Save the scripts
 ^^^^^^^^^^^^^^^^
@@ -128,8 +128,8 @@ MATLAB scripts.
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.save_INCA_script
-    INCA_script.save_runner_script
+    INCA_script.INCA_script.save_INCA_script
+    INCA_script.INCA_script.save_runner_script
 
 INCA execution
 --------------
@@ -143,7 +143,7 @@ MATLAB engine execution function
 .. autosummary::
    :toctree: generated/
 
-    INCA_script.run_INCA_in_MATLAB
+    INCA_script.INCA_script.run_INCA_in_MATLAB
 
 INCA output re-import
 ---------------------
@@ -161,18 +161,18 @@ as described here.
 .. autosummary::
    :toctree: generated/
 
-    INCA_reimport.extract_file_info
-    INCA_reimport.det_simulation_type
-    INCA_reimport.data_extraction
-    INCA_reimport.extract_model_info
-    INCA_reimport.extract_sim_params
-    INCA_reimport.extract_base_stats
-    INCA_reimport.get_fit_info
-    INCA_reimport.sort_fit_info
-    INCA_reimport.get_residuals_info
-    INCA_reimport.sort_residual_info
-    INCA_reimport.get_fitted_parameters
-    INCA_reimport.sort_parameter_info
+    INCA_reimport.INCA_reimport.extract_file_info
+    INCA_reimport.INCA_reimport.det_simulation_type
+    INCA_reimport.INCA_reimport.data_extraction
+    INCA_reimport.INCA_reimport.extract_model_info
+    INCA_reimport.INCA_reimport.extract_sim_params
+    INCA_reimport.INCA_reimport.extract_base_stats
+    INCA_reimport.INCA_reimport.get_fit_info
+    INCA_reimport.INCA_reimport.sort_fit_info
+    INCA_reimport.INCA_reimport.get_residuals_info
+    INCA_reimport.INCA_reimport.sort_residual_info
+    INCA_reimport.INCA_reimport.get_fitted_parameters
+    INCA_reimport.INCA_reimport.sort_parameter_info
 
 Summary function
 ^^^^^^^^^^^^^^^^
@@ -182,4 +182,4 @@ The output can also be re-imported using the ``INCA_reimport.reimport`` summary 
 .. autosummary::
    :toctree: generated/
 
-    INCA_reimport.reimport
+    INCA_reimport.INCA_reimport.reimport

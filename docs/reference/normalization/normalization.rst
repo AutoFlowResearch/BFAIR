@@ -18,14 +18,15 @@ output dataframes produced by the BFAIR metabolomics tools (e.g. FIA-MS), like
 the following example:
 
 .. code-block::
+
     >>> intensities_Ecoli.head()
-        sample_group_name 	          Metabolite  Formula 	  Intensity
-        ----------------------------  ----------  ----------  ------------
-    0 	StressTest1_P1Ecoli_10xDil_1  10fthf_c 	  C20H23N7O7  5621.594727
-    1 	StressTest1_P1Ecoli_10xDil_1  12dgr120_c  C27H52O5 	  43496.585938
-    2 	StressTest1_P1Ecoli_10xDil_1  12dgr140_c  C31H60O5 	  11121.828125
-    3 	StressTest1_P1Ecoli_10xDil_1  12dgr141_c  C31H56O5 	  6038.054688
-    4 	StressTest1_P1Ecoli_10xDil_1  12dgr160_c  C35H68O5 	  1283.704712
+    sample_group_name            Metabolite    Formula      Intensity
+    ---------------------------  ------------  ---------  -----------
+    Linearity_P1Ecoli_100xDil_1  12dgr120_c    C27H52O5       9583.65
+    Linearity_P1Ecoli_100xDil_1  12dgr140_c    C31H60O5       1276.41
+    Linearity_P1Ecoli_100xDil_1  12dgr141_c    C31H56O5       1282.27
+    Linearity_P1Ecoli_100xDil_1  12dgr160_c    C35H68O5      29685.5
+    Linearity_P1Ecoli_100xDil_1  12dgr161_c    C35H64O5      21447.5
 
 Functions
 ---------
