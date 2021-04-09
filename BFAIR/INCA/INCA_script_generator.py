@@ -31,6 +31,7 @@ class INCA_script:
     def limit_to_one_model(self, data_input, model_name_column, model_name):
         """
         Limits the data to values that are assigned to one metabolic model
+
         Parameters
         ----------
         data_input: pandas.DataFrame
@@ -61,6 +62,7 @@ class INCA_script:
     ):
         """
         Limits the data to values that were acquired in one experiment
+
         Parameters
         ----------
         data_input: pandas.DataFrame
@@ -92,6 +94,7 @@ class INCA_script:
     ):
         """
         Process data that is stored in strings of lists etc in the files
+
         Parameters
         ----------
         string: string, in this set up a single cell in a pandas.DataFrame
@@ -115,6 +118,7 @@ class INCA_script:
     def initiate_MATLAB_script(self):
         """
         Starts writing the MATLAB script
+
         Returns
         -------
         mat_script: string
@@ -137,6 +141,7 @@ class INCA_script:
         """
         Provides the carbon mapping for metabolites in a model.
         Called within "add_reactions_to_script()"
+
         Parameters
         ----------
         atomMapping_molecules_ids: list
@@ -298,6 +303,7 @@ class INCA_script:
     ):
         """
         Translates the model and adds mapping using reaction_mapping()
+
         Parameters
         ----------
         modelReaction_data_I: pandas.DataFrame
@@ -541,6 +547,7 @@ class INCA_script:
     def initialize_model(self):
         """
         Previously described reactions are assigned to a model object
+
         Returns
         -------
         mat_script: string
@@ -554,6 +561,7 @@ class INCA_script:
         """
         Takes care of symmetrical metabolites if not done so in the
         reaction equations
+
         Parameters
         ----------
         atomMappingMetabolite_data_I: pandas.DataFrame
@@ -623,6 +631,7 @@ class INCA_script:
     ):
         """
         Adds in the metabolite state (balanced or unbalanced)
+
         Parameters
         ----------
         atomMappingMetabolite_data_I: pandas.DataFrame
@@ -666,6 +675,7 @@ class INCA_script:
         """
         Flux parameters are added. They correspond to the previously
         described reactions
+
         Parameters
         ----------
             modelReaction_data_I: pandas.DataFrame
@@ -769,6 +779,7 @@ class INCA_script:
     def verify_and_estimate(self):
         """
         Adds a QC step and defines the restarts for later processing
+
         Returns
         -------
         mat_script:
@@ -791,6 +802,7 @@ class INCA_script:
     ):
         """
         Defines the measured fragments and adds tracer information
+
         Parameters
         ----------
         experimentalMS_data_I: pandas.DataFrame
@@ -1001,6 +1013,7 @@ class INCA_script:
     def mapping(self, experimentalMS_data_I, fragments_used):
         """
         Adds MS data to measured fragments
+
         Parameters
         ----------
         experimentalMS_data_I: pandas.DataFrame
@@ -1177,6 +1190,7 @@ class INCA_script:
     ):
         """
         Combines the functions that construct the model
+
         Parameters
         ----------
         modelReaction_data_I: pandas.DataFrame
@@ -1229,6 +1243,7 @@ class INCA_script:
     def save_INCA_script(self, script, scriptname):
         """
         Writes the output file
+
         Parameters
         ----------
         script: string
@@ -1246,6 +1261,7 @@ class INCA_script:
     def runner_script_generator(self, output_filename, n_estimates=10):
         """
         Adds the functions needed to run the script and export the .mat file
+
         Parameters
         ----------
         output_filename: string
@@ -1271,6 +1287,7 @@ class INCA_script:
     def save_runner_script(self, runner, scriptname):
         """
         Writes the runner output file
+
         Parameters
         ----------
         runner: string
@@ -1292,6 +1309,7 @@ class INCA_script:
         """
         Executes the script in MATLAB using INCA
         Prints time and produces .mat file
+
         Parameters
         ----------
         INCA_base_directory: path
@@ -1321,8 +1339,9 @@ class INCA_script:
         print("--- %s seconds -" % (time.time() - start_time))
 
 
-script_generator = INCA_script()
+script_generator_descr = INCA_script()
 """A class to write and execute an INCA script in MATLAB.
+
 Examples
 --------
 >>> from BFAIR.INCA import INCA_script
@@ -1353,5 +1372,4 @@ With working INCA and MATLAB installations and an active MATLAB engine, the scri
 >>>     matlab_script,
 >>>     runner_script
 >>> )
-For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository.  # noqa E501
-"""
+For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository."""  # noqa E501
