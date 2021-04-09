@@ -986,7 +986,7 @@ class INCA_reimport:
         )
 
 
-reimport = INCA_reimport()
+reimport_descr = INCA_reimport()
 """A class to re-import the INCA output data.
 It is parsed from MATLAB to python DataFrames.
 
@@ -1001,5 +1001,4 @@ After initialization, the data can either be re-imported all at once
 
 Or sequentially (not shown)
 
-For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository.  # noqa E501
-"""
+For more information on how to use this module or visualize the data, please check the example notebook in the BFAIR repository."""  # noqa E501
