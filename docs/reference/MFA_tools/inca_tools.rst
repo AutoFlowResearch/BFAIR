@@ -49,11 +49,17 @@ That should do the trick.
 Modules
 -------
 
-.. autodata:: INCA_script
+.. currentmodule:: BFAIR.INCA.INCA_script_generator
+
+.. autodata:: script_generator_descr
    :annotation:
 
-.. autodata:: INCA_reimport
+.. currentmodule:: BFAIR.INCA.INCA_reimport
+
+.. autodata:: reimport_descr
    :annotation:
+
+.. currentmodule:: BFAIR.INCA
 
 INCA script generation
 ----------------------
