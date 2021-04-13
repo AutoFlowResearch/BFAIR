@@ -62,8 +62,39 @@ def add_constraints(model_input, fittedFluxes):
         model, skip = _adjust_bounds(model, rxn, bounds)
     return model
 
+def find_biomass_reaction(
+    model,
+    biomass_string=['Biomass', 'BIOMASS', 'biomass']
+):
+    if type(biomass_string) == 'list':
+        biomass = biomass_string
+    else:
+        biomass = list(biomass_string)
+    biomass_reaction_ids = []
+    for reaction in model.reactions:
+        for biomass_spelling in biomass:
+            if biomass_spelling in reaction.id:
+                biomass_reaction_ids.append(reaction.id)
+    return biomass_reaction_ids
+
+def get_min_solution_val(fittedFluxes, biomass_string='Biomass'):
+    min_val = 0
+    for cnt, name in enumerate(fittedFluxes['rxn_id']):
+        if biomass_string in name:
+            min_val = fittedFluxes.at[cnt, 'flux']
+    return min_val
+
+def replace_biomass_rxn_name(
+    fittedFluxes,
+    biomass_rxn_name,
+    biomass_string='Biomass',
+):
+    for cnt, name in enumerate(fittedFluxes['rxn_id']):
+        if biomass_string in name:
+            fittedFluxes.at[cnt, 'rxn_id'] = biomass_rxn_name
+
 @timer
-def add_feasible_constraints(model_input, fittedFluxes):
+def add_feasible_constraints(model_input, fittedFluxes, min_val=0):
     no_restart = False
     problems = []
     restart_counter = 0
@@ -77,7 +108,7 @@ def add_feasible_constraints(model_input, fittedFluxes):
             if skip: continue
             solution_after_adj = model.optimize()
             if solution_after_adj.objective_value is not None and\
-                solution_after_adj.objective_value > 0:
+                solution_after_adj.objective_value >= min_val:
                 no_restart = True
             else:
                 print(f'Solution infeasible if adding {rxn}')
