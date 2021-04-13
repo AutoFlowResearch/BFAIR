@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-let baseUrl = 'https://5aef530697c5.ngrok.io';
+let baseUrl = 'http://5e1811bfb437.ngrok.io';
 
 class SampleSubmission extends React.Component {
     constructor(props) {
@@ -10,24 +10,38 @@ class SampleSubmission extends React.Component {
             sampleModule: '',
             sampleSelect: '',
             sampleData: [],
+            investigationData : [],
             typeName: '',
             method: '',
             description: '',
-            research_center: ''
+            research_center: '',
+            investigationTitleInput: '',
+            investigationDescInput: '',
+            investigationDescSelect: '',
+            investigation_Title: '',
+            investigation_Id: ''
         };
 
         this.sampleChange = this.sampleChange.bind(this);
+        this.investigationTitleChange = this.investigationTitleChange.bind(this)
         this.deleteSample = this.deleteSample.bind(this);
+        this.deleteInvestigation = this.deleteInvestigation.bind(this);
         this.clearSample = this.clearSample.bind(this);
+        this.changeText = this.changeText.bind(this);
         this.typeChange = this.typeChange.bind(this);
         this.methodChange = this.methodChange.bind(this);
         this.centerChange = this.centerChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleSampleModuleSubmit = this.handleSampleModuleSubmit.bind(this);
+        this.clearInvestigatingForm = this.clearInvestigatingForm.bind(this);
+        this.handleInvestigationSubmit = this.handleInvestigationSubmit.bind(this);
+        this.updateInvestigation = this.updateInvestigation.bind(this);
+        
     }
 
     componentDidMount() {
         this.getSampleDataList();
+        this.getInvestigationList();
     }
 
     clearSample() {
@@ -37,11 +51,32 @@ class SampleSubmission extends React.Component {
         console.log(this.state.sampleModule);
     }
 
+    clearInvestigatingForm() {
+        this.setState({
+            investigationTitleInput: ''
+        });
+    }
+
     sampleChange(event) {
         this.setState({
             sampleSelect: event.target.value
         });
         console.log(event.target.value);
+    }
+
+    investigationTitleChange(event){
+        this.setState({
+            investigationSelect: event.target.value
+        });
+        let selectedObj = this.state.investigationData.filter(function (el) {
+            return el.Investigation_id == event.target.value
+          });
+        this.setState({
+            investigationDescSelect: selectedObj[0].Description,
+            investigation_Id: selectedObj[0].Investigation_id,
+            investigation_Title: selectedObj[0].Title
+        });
+
     }
 
     deleteSample(event) {
@@ -58,6 +93,22 @@ class SampleSubmission extends React.Component {
                 response.json()
             } )
     }
+
+    deleteInvestigation(event) {
+        // console.log('sample selete', this.state);
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ Investigation_id: this.state.investigationSelect })
+        };
+        fetch(`${baseUrl}/investigation_api`, requestOptions)
+            .then((response) => {
+                alert('Investigation record successfully deleted')
+                this.getInvestigationList();
+                response.json()
+            } )
+    }
+
 
     typeChange(event) {
         this.setState({
@@ -91,9 +142,53 @@ class SampleSubmission extends React.Component {
         }
     }
 
+    updateInvestigation(){
+        console.log(this.state);
+        // e.preventDefault();
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ Title: this.state.investigation_Title,Description: this.state.investigationDescInput, Investigation_id: this.state.investigation_Id })
+        };
+        fetch(`${baseUrl}/investigation_api`, requestOptions)
+            .then(response => response.json())
+            .then((data) => {
+                alert('Investigation record updated successfully')
+                this.getInvestigationList();
+            })
+
+    }
+
+    handleInvestigationSubmit(e){
+        e.preventDefault();
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ Title: this.state.investigationTitleInput,Description: this.state.investigationDescInput })
+        };
+        fetch(`${baseUrl}/investigation_api`, requestOptions)
+            .then(response => response.json())
+            .then((data) => {
+                alert(data.message)
+                this.getInvestigationList();
+            })
+    }
+
     setSampleModuleInput(e) {
         this.setState({
             sampleModule: e
+        });
+    }
+
+    investigationSetTitleInput(e){
+        this.setState({
+            investigationTitleInput: e
+        });
+    }
+
+    investigationSetDescInput(e){
+        this.setState({
+            investigationDescInput: e
         });
     }
 
@@ -121,12 +216,32 @@ class SampleSubmission extends React.Component {
                  sampleData: data.Sample
              })
         })
+    }
 
+    getInvestigationList(){
+        fetch(`${baseUrl}/investigation_api`, {method: "GET"})
+        .then(response => response.json())
+        .then(data => {
+             this.setState({
+                investigationData: data.Investigation
+             })
+        })
+
+    }
+
+    changeText(event){
+        this.setState(
+            {investigationDescInput : event.target.value}
+        );
     }
 
     render() {
         let optionTemplate = this.state.sampleData.map(v => (
             <option value={v.id}>{v.Sample_name}</option>
+          ));
+
+        let optionInvestigation = this.state.investigationData.map(v => (
+            <option value={v.Investigation_id}>{v.Title}</option>
           ));
         return (
             <div className="container">
@@ -135,7 +250,7 @@ class SampleSubmission extends React.Component {
                         <a className="nav-link active" data-toggle="tab" href="#SampleModule">Sample Module</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" data-toggle="tab" href="#sampleSubmission">Sample Submission</a>
+                        <a className="nav-link" data-toggle="tab" href="#investigation">Investigation</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" data-toggle="tab" href="#other">other</a>
@@ -174,44 +289,37 @@ class SampleSubmission extends React.Component {
 
                     {/* Sample Submission */}
 
-                    <div id="sampleSubmission" className="container tab-pane fade">
+                    <div id="investigation" className="container tab-pane fade">
 
                         <div className="col-md-4 col-md-offset-3">
-                            <h2>Sample Submission</h2>
-                            <form name="form" onSubmit={this.handleSubmit}>
-                                <div className={'form-group'}>
-                                    <label htmlFor="username">Sample Type</label>
-                                    <select className="form-control" onChange={this.typeChange}>
-                                        <option disabled selected>Select Sample Type</option>
-                                        <option value="lime">Lime</option>
-                                        <option value="coconut">Coconut</option>
-                                        <option value="mango">Mango</option>
-                                    </select>
+                            <h2>Investigation</h2>
+                            <form name="form" onSubmit={this.handleInvestigationSubmit}>
+                            <div className={'form-group'}>
+                                    <label>Title</label>
+                                    <input type="text" onInput={e => this.investigationSetTitleInput(e.target.value)} className="form-control" name="investigationTitleInput" />
                                 </div>
                                 <div className={'form-group'}>
-                                    <label>Methodology</label>
-                                    <select className="form-control" onChange={this.methodChange} >
-                                        <option disabled selected>Select Methodology</option>
-                                        <option value="method1">Method1</option>
-                                        <option value="m2">m2</option>
-                                        <option value="m3">m3</option>
-                                    </select>
-                                </div>
-                                <div className={'form-group'}>
-                                    <label htmlFor="password">Description</label>
-                                    <input disabled type="text" value={this.state.description} className="form-control" name="description" />
-                                </div>
-                                <div className={'form-group'}>
-                                    <label>Research Center</label>
-                                    <select className="form-control" onChange={this.centerChange}>
-                                        <option disabled selected>Select Research Center</option>
-                                        <option value="center1">center1</option>
-                                        <option value="center2">center2</option>
-                                        <option value="center3">center3</option>
-                                    </select>
+                                    <label>Description</label>
+                                    <input type="text" onInput={e => this.investigationSetDescInput(e.target.value)} className="form-control" name="investigationDescInput" />
                                 </div>
                                 <div className="form-group">
-                                    <button className="btn btn-primary">Submit</button>
+                                    <button className="btn btn-primary">Add</button>
+                                    <button type="button" onClick={this.clearInvestigatingForm} className="btn btn-light">Cancel</button>
+                                </div>
+                                <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Title List</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.investigationTitleChange}>
+                                <option disabled selected>Select Title</option>
+                                {optionInvestigation}
+                                </select>
+                            </div>
+                                <div className={'form-group'}>
+                                    <label htmlFor="password">Description</label>
+                                    <input type="text" value={this.state.investigationDescSelect} onChange = {this.changeText} className="form-control" name="description" />
+                                </div>
+                                <div className="form-group">
+                                    <button className="btn btn-primary" type="button" onClick={this.updateInvestigation}>Update</button>
+                                    <button type="button" onClick={this.deleteInvestigation} className="btn btn-danger">Delete</button>
                                 </div>
                             </form>
                         </div>
