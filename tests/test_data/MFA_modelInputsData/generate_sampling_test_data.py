@@ -42,25 +42,7 @@ bound_relaxation(
 
 pickle.dump(
     [
-        modelReaction_data_I,
-        atomMappingReactions_data_I,
-        atomMappingMetabolite_data_I,
-        measuredFluxes_data_I,
-        experimentalMS_data_I,
-        tracer_I,
-        initiated_MATLAB_script,
-        model_reactions,
-        model_rxn_ids,
-        initialized_model,
-        symmetrical_metabolites_script,
-        unbalanced_reactions_script,
-        reaction_parameters,
-        verify_and_estimate_script,
-        experimental_parameters,
-        fragments_used,
-        mapping_script,
-        script,
-        runner,
+        name,
     ],
     filehandler,
 )
