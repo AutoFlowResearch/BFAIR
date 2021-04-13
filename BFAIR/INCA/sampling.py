@@ -92,6 +92,7 @@ def replace_biomass_rxn_name(
     for cnt, name in enumerate(fittedFluxes['rxn_id']):
         if biomass_string in name:
             fittedFluxes.at[cnt, 'rxn_id'] = biomass_rxn_name
+    return fittedFluxes
 
 @timer
 def add_feasible_constraints(model_input, fittedFluxes, min_val=0):
