@@ -1,11 +1,12 @@
 import pandas as pd
 import numpy as np
-import copy
 
 
 def min_max_norm(
-    df, value_colname="Intensity", groupname_colname="sample_group_name",
-    element_name="Metabolite"
+    df,
+    value_colname="Intensity",
+    groupname_colname="sample_group_name",
+    element_name="Metabolite",
 ):
     """
     Function that applies min/max scaling to the input dataframe; the data
@@ -32,23 +33,33 @@ def min_max_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(
+        index=element_name, columns=groupname_colname, values=value_colname
+    )
     output_df = pd.DataFrame()
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         red_df = df[df[groupname_colname] == sample_group_name]
-        pivot_df = red_df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
+        pivot_df = red_df.pivot(
+            index=element_name, columns=groupname_colname, values=value_colname
+        )
         new_df = pivot_df
         min_val = min(new_df[sample_group_name])
         max_val = max(new_df[sample_group_name])
         new_df[sample_group_name] = new_df[sample_group_name].sub(min_val)
-        new_df[sample_group_name] = new_df[sample_group_name].div((max_val - min_val))
+        new_df[sample_group_name] = new_df[sample_group_name].div(
+            (max_val - min_val)
+        )
         temp_df = (
             new_df.stack()  # back to original shape
             .reset_index()  # reset index, making a "0" column with intensities
-            .merge(red_df.drop(columns=value_colname), how="right")  # add missing data
+            .merge(
+                red_df.drop(columns=value_colname), how="right"
+            )  # add missing data
             .rename(columns={0: value_colname})  # renaming the "0" column
-        )[df.columns]  # match original column order
+        )[
+            df.columns
+        ]  # match original column order
         if i == 0:
             output_df = temp_df
         else:
@@ -57,8 +68,10 @@ def min_max_norm(
 
 
 def tsi_norm(
-    df, value_colname="Intensity", groupname_colname="sample_group_name",
-    element_name="Metabolite"
+    df,
+    value_colname="Intensity",
+    groupname_colname="sample_group_name",
+    element_name="Metabolite",
 ):
     """
     Applies Total Sum Intensity normalization; all values will be divided by
@@ -86,14 +99,18 @@ def tsi_norm(
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
-    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(
+        index=element_name, columns=groupname_colname, values=value_colname
+    )
     pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
     output_df = (
         pivot_df.stack()  # back to original shape
         .reset_index()  # reset index, making a "0" column with intensities
         .merge(df.drop(columns=value_colname), how="right")  # add missing data
         .rename(columns={0: value_colname})  # renaming the "0" column
-    )[df.columns]  # match original column order
+    )[
+        df.columns
+    ]  # match original column order
     return output_df
 
 
@@ -103,7 +120,7 @@ def lim_tsi_norm(
     biomass_value=None,
     value_colname="Intensity",
     groupname_colname="sample_group_name",
-    element_name="Metabolite"
+    element_name="Metabolite",
 ):
     """
     Applies a modified version of Total Sum Intensity normalization; all
@@ -159,10 +176,13 @@ def lim_tsi_norm(
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         red_df = df[df[groupname_colname] == sample_group_name]
-        pivot_df = red_df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
+        pivot_df = red_df.pivot(
+            index=element_name, columns=groupname_colname, values=value_colname
+        )
         new_df = pivot_df
-        if isinstance(metabolite_input,
-                      (list, pd.core.series.Series, np.ndarray)):
+        if isinstance(
+            metabolite_input, (list, pd.core.series.Series, np.ndarray)
+        ):
             for metabolite in metabolite_input:
                 if metabolite in new_df.index:
                     met_tsi = sum(new_df[new_df.index == metabolite].values[0])
@@ -174,7 +194,9 @@ def lim_tsi_norm(
                 raise ValueError("'biomass_value' is missing!")
             for cnt, biomass_met in enumerate(metabolite_input[element_name]):
                 if biomass_met in new_df.index:
-                    met_tsi = sum(new_df[new_df.index == biomass_met].values[0])
+                    met_tsi = sum(
+                        new_df[new_df.index == biomass_met].values[0]
+                    )
                     norm_met_tsi = met_tsi * (
                         metabolite_input["Value"][cnt] / biomass_value
                     )
@@ -185,15 +207,20 @@ def lim_tsi_norm(
                 "Wrong type of input! Input must be either "
                 "'list', 'pd.core.series.Series', 'np.ndarray' or "
                 "'pd.core.frame.DataFrame', not '"
-                + type(metabolite_input) + "'"
+                + type(metabolite_input)
+                + "'"
             )
         temp_pivot_df = new_df.div(lim_tsi)
         temp_df = (
             temp_pivot_df.stack()  # back to original shape
             .reset_index()  # reset index, making a "0" column with intensities
-            .merge(red_df.drop(columns=value_colname), how="right")  # add missing data
+            .merge(
+                red_df.drop(columns=value_colname), how="right"
+            )  # add missing data
             .rename(columns={0: value_colname})  # renaming the "0" column
-        )[df.columns]  # match original column order
+        )[
+            df.columns
+        ]  # match original column order
         if i == 0:
             output_df = temp_df
         else:
@@ -207,7 +234,7 @@ def pqn_norm(
     value_colname="Intensity",
     corr_type="median",
     qc_vector=None,
-    element_name="Metabolite"
+    element_name="Metabolite",
 ):
     """
     Probabilistic Quotient Normalization: This method adjusts for dilutions.
@@ -238,14 +265,23 @@ def pqn_norm(
         the input dataframe, just with normalized values
     """
     # 0, pivot table
-    pivot_df = df.pivot(index=element_name, columns=groupname_colname, values=value_colname)
+    pivot_df = df.pivot(
+        index=element_name, columns=groupname_colname, values=value_colname
+    )
     # 1, divide each column by its total intensity
     pivot_df = pivot_df.div(pivot_df.sum(axis=0), axis=1)
     # 2, calculate QC vector as mean/median per row (i.e., metabolite)
-    qc_df = qc_vector if qc_vector is not None else getattr(pivot_df, corr_type)(axis=1, skipna=True)
+    qc_df = (
+        qc_vector
+        if qc_vector is not None
+        else getattr(pivot_df, corr_type)(axis=1, skipna=True)
+    )
     # 3, normalize TSI by diving each row by corresponding value in QC vector
-    # 4, calculate dilution factor as mean/median per column (i.e., sample group name)
-    dilution = getattr(pivot_df.div(qc_df, axis=0), corr_type)(axis=0, skipna=True)
+    # 4, calculate dilution factor as mean/median per column
+    # (i.e., sample group name)
+    dilution = getattr(pivot_df.div(qc_df, axis=0), corr_type)(
+        axis=0, skipna=True
+    )
     # 5, multiply each column by its dilution factor
     pivot_df = pivot_df.multiply(dilution, axis=1)
     # 6, output
@@ -254,5 +290,7 @@ def pqn_norm(
         .reset_index()  # reset index, making a "0" column with intensities
         .merge(df.drop(columns=value_colname), how="right")  # add missing data
         .rename(columns={0: value_colname})  # renaming the "0" column
-    )[df.columns]  # match original column order
+    )[
+        df.columns
+    ]  # match original column order
     return pqn
