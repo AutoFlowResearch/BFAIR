@@ -12,19 +12,19 @@ def min_max_norm(
 
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    columnname: string
+    columnname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
@@ -53,19 +53,19 @@ def tsi_norm(
 
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    columnname: string
+    columnname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
@@ -100,31 +100,31 @@ def lim_tsi_norm(
 
     Parameters
     ----------
-    metabolite_input: list, pandas.Series, np.ndarray or
+    metabolite_input : list, pandas.Series, np.ndarray or
         pandas.DataFrame
         either an object listing the metabolites of interest, e.g
         metabolites that are part of the biomass function, or a
         dataframe with the metabolties in one columns and another
         column with their corresponding multipliers
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    biomass_value: float
+    biomass_value : float
         the multiplier of biomass on the product side of the
         biomass function in the corresponding metabolic model.
         Defaults to 'None'
-    columnname: string
+    columnname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'.
         Defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'.
         Defaults to "sample_group_name"
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
 
@@ -140,10 +140,13 @@ def lim_tsi_norm(
     sample_group_names = df[groupname_colname].unique()
     for i, sample_group_name in enumerate(sample_group_names):
         new_df = copy.deepcopy(df[df[groupname_colname] == sample_group_name])
-        if isinstance(metabolite_input,
-                      (list, pd.core.series.Series, np.ndarray)):
+        if isinstance(
+            metabolite_input, (list, pd.core.series.Series, np.ndarray)
+        ):
             for metabolite in metabolite_input:
-                met_tsi = sum(new_df[new_df["Metabolite"] == metabolite][columnname])
+                met_tsi = sum(
+                    new_df[new_df["Metabolite"] == metabolite][columnname]
+                )
                 lim_tsi += met_tsi
         elif type(metabolite_input) == pd.core.frame.DataFrame:
 
@@ -162,7 +165,8 @@ def lim_tsi_norm(
                 "Wrong type of input! Input must be either "
                 "'list', 'pd.core.series.Series', 'np.ndarray' or "
                 "'pd.core.frame.DataFrame', not '"
-                + type(metabolite_input) + "'"
+                + type(metabolite_input)
+                + "'"
             )
         norm_vals = new_df[columnname].div(lim_tsi)
         new_df[columnname] = norm_vals
@@ -181,28 +185,28 @@ def pqn_norm(
     qc_vector=None,
 ):
     """
-    Probabilistic Quotient Normalization: This method adjusts for dilutions.
+    Probabilistic Quotient Normalization : This method adjusts for dilutions.
     This is a modified version of Total Sum Intensity normalization
 
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
-    value_colname: string
+    value_colname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
-    corr_type: string
+    corr_type : string
         type of midpoint determination, 'median' or 'mean'
-    qc_vector: list
+    qc_vector : list
         an optional QC vector that can be provided
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
