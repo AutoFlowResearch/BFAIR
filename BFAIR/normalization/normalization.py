@@ -237,8 +237,9 @@ def pqn_norm(
     element_name="Metabolite",
 ):
     """
-    Probabilistic Quotient Normalization : This method adjusts for dilutions.
+    Probabilistic Quotient Normalization: This method adjusts for dilutions.
     This is a modified version of Total Sum Intensity normalization
+
     Parameters
     ----------
     df : pandas.DataFrame
