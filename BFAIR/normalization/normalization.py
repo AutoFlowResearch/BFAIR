@@ -14,13 +14,13 @@ def min_max_norm(
 
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
     element_name: string
@@ -29,7 +29,7 @@ def min_max_norm(
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
@@ -80,13 +80,13 @@ def tsi_norm(
 
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    columnname: string
+    columnname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'
     element_name: string
@@ -95,7 +95,7 @@ def tsi_norm(
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
@@ -133,24 +133,24 @@ def lim_tsi_norm(
 
     Parameters
     ----------
-    metabolite_input: list, pandas.Series, np.ndarray or
+    metabolite_input : list, pandas.Series, np.ndarray or
         pandas.DataFrame
         either an object listing the metabolites of interest, e.g
         metabolites that are part of the biomass function, or a
         dataframe with the metabolties in one columns and another
         column with their corresponding multipliers
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    biomass_value: float
+    biomass_value : float
         the multiplier of biomass on the product side of the
         biomass function in the corresponding metabolic model.
         Defaults to 'None'
-    columnname: string
+    columnname : string
         the name of the column with the data that needs to be
         normalized, defaults to 'Intensity'.
         Defaults to 'Intensity'
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to 'sample_group_name'.
         Defaults to "sample_group_name"
@@ -160,7 +160,7 @@ def lim_tsi_norm(
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
 
@@ -239,20 +239,21 @@ def pqn_norm(
     """
     Probabilistic Quotient Normalization: This method adjusts for dilutions.
     This is a modified version of Total Sum Intensity normalization
+
     Parameters
     ----------
-    df: pandas.DataFrame
+    df : pandas.DataFrame
         input dataframe, output of either the extractNamesAndIntensities()
         or the calculateMeanVarRSD() function
-    groupname_colname: string
+    groupname_colname : string
         the name of the column with the sample group names,
         defaults to ‘sample_group_name’
-    value_colname: string
+    value_colname : string
         the name of the column with the data that needs to be
         normalized, defaults to ‘Intensity’
-    corr_type: string
+    corr_type : string
         type of midpoint determination, ‘median’ or ‘mean’
-    qc_vector: list
+    qc_vector : list
         an optional QC vector that can be provided
     element_name: string
         the name of the column with the identifiers of the tested elements
@@ -260,7 +261,7 @@ def pqn_norm(
 
     Returns
     -------
-    output_df: pandas.DataFrame
+    output_df : pandas.DataFrame
         the output dataframe. It follows the same architecture as
         the input dataframe, just with normalized values
     """
