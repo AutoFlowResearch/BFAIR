@@ -16,7 +16,7 @@ def timer(func):
         elapsed_time = time.time() - start_time
         min_, sec = divmod(round(elapsed_time), 60)
         hour, min_ = divmod(min_, 60)
-        print(f"{func.__name__} takes {hour}h: {min_}min: {sec}sec to run")
+        print(f"{func.__name__} took {hour}h: {min_}min: {sec}sec to run")
         print("--- end ---")
         return output
 
