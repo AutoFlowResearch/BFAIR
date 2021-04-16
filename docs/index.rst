@@ -12,8 +12,8 @@ Documentation
 
    install
    reference/index
-   developer/index
    examples/index
+   developer/index
 
 
 Indices and tables
