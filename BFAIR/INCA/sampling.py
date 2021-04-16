@@ -67,7 +67,7 @@ def add_constraints(model_input, fittedFluxes):
 def find_biomass_reaction(
     model, biomass_string=["Biomass", "BIOMASS", "biomass"]
 ):
-    if type(biomass_string) == "list":
+    if isinstance(biomass_string, list):
         biomass = biomass_string
     else:
         biomass = list(biomass_string)
