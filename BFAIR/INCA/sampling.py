@@ -8,6 +8,9 @@ from cobra.exceptions import Infeasible
 
 
 def timer(func):
+    """
+    Wrapper that reports how it took to execute a function.
+    """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print("--- start ---")
@@ -16,7 +19,7 @@ def timer(func):
         elapsed_time = time.time() - start_time
         min_, sec = divmod(round(elapsed_time), 60)
         hour, min_ = divmod(min_, 60)
-        print(f"{func.__name__} took {hour}h: {min_}min: {sec}sec to run")
+        print(f"{func.__name__} takes {hour}h: {min_}min: {sec}sec to run")
         print("--- end ---")
         return output
 
@@ -24,6 +27,10 @@ def timer(func):
 
 
 def _reshape_fluxes(fittedFluxes):
+    """
+    Reshaped the flux information from a dataframe to a dict to be used in
+    constraint assigning functions.
+    """
     MFA_flux_bounds = {}
     for i, rxn in fittedFluxes.iterrows():
         MFA_flux_bounds[rxn["rxn_id"]] = [rxn["flux_ub"], rxn["flux_lb"]]
@@ -31,6 +38,9 @@ def _reshape_fluxes(fittedFluxes):
 
 
 def _adjust_bounds(model, rxn, bounds):
+    """
+    Applied new bounds to specified reactions in a cobra model.
+    """
     skip = False
     if bounds[0] < bounds[1]:  # to fix the issue with negaive values above
         try:
@@ -50,6 +60,9 @@ def _adjust_bounds(model, rxn, bounds):
 
 
 def _restart_message(restart_counter):
+    """
+    Prints a message if `add_feasible_constraints()` had to restart.
+    """
     extra_minus = "-" * len(str(restart_counter))
     print(f"--------------------------{extra_minus}")
     print(f"Total number of restarts: {restart_counter}")
@@ -57,6 +70,24 @@ def _restart_message(restart_counter):
 
 @timer
 def add_constraints(model_input, fittedFluxes):
+    """
+    Adds all the constraints defined in the input to a
+    metabolic model.
+
+    Parameters
+    ----------
+    model_input : cobra.Model
+        Metabolic model.
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model.
+
+    Returns
+    -------
+    model : cobra.Model
+        Metabolic model with adjusted constraints.
+    """
     MFA_fluxes = _reshape_fluxes(fittedFluxes)
     model = model_input.copy()
     for rxn, bounds in MFA_fluxes.items():
@@ -67,6 +98,24 @@ def add_constraints(model_input, fittedFluxes):
 def find_biomass_reaction(
     model, biomass_string=["Biomass", "BIOMASS", "biomass"]
 ):
+    """
+    Identifies the biomass reaction(s) in a metaboli model.
+
+    Parameters
+    ----------
+    model : cobra.Model
+        Metabolic model.
+    biomass_string : str or list
+        String denoting at least a part of the name of the
+        biomass function of the metabolic model or a list
+        containing multiple possibilities to be tested.
+        Preset to `["Biomass", "BIOMASS", "biomass"]`.
+
+    Returns
+    -------
+    biomass_reaction_ids : list
+        Reaction(s) containing the input string.
+    """
     if isinstance(biomass_string, list):
         biomass = biomass_string
     else:
@@ -80,6 +129,28 @@ def find_biomass_reaction(
 
 
 def get_min_solution_val(fittedFluxes, biomass_string="Biomass"):
+    """
+    Finds the value calculated for the biomass function in the
+    MFA simulation. This value can be seen as the minimum predicted
+    growth rate in subsequent simulations.
+
+    Parameters
+    ----------
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model.
+    biomass_string : str
+        String denoting at least a part of the name of the
+        biomass function in the `fittedFluxes` DataFrame.
+        Preset to `"Biomass"`.
+
+    Returns
+    -------
+    min_val : float
+        Value calculated for the biomass function in the INCA
+        simulation.
+    """
     min_val = 0
     for cnt, name in enumerate(fittedFluxes["rxn_id"]):
         if biomass_string in name:
@@ -92,6 +163,35 @@ def replace_biomass_rxn_name(
     biomass_rxn_name,
     biomass_string="Biomass",
 ):
+    """
+    Replaces the biomass function name in the INCA simulation results
+    with the biomass funciton name in the metabolic model. This is
+    only relevent if a different model was used as a basis for the
+    MFA simulation.
+
+    Parameters
+    ----------
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model.
+    biomass_rxn_name : str
+        Name of the biomass reaction in the metabolic model;
+        the name that should be assigned to the biomass function in
+        `fittedFluxes`.
+    biomass_string : str
+        String denoting at least a part of the name of the
+        biomass function in the `fittedFluxes` dataframe.
+        Preset to `"Biomass"`.
+
+    Returns
+    -------
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model. Now with same the biomass function name as in
+        the metabolic model.
+    """
     for cnt, name in enumerate(fittedFluxes["rxn_id"]):
         if biomass_string in name:
             fittedFluxes.at[cnt, "rxn_id"] = biomass_rxn_name
@@ -100,6 +200,34 @@ def replace_biomass_rxn_name(
 
 @timer
 def add_feasible_constraints(model_input, fittedFluxes, min_val=0):
+    """
+    Adds contraints to a metabolic model one by one; always checking
+    that is still produces a feasible solution and that the predicted
+    objective does not fall below a predefined value. If that were to
+    happen, the function would restart but skip the reaction that
+    caused the issue in the next iteration.
+    
+    Parameters
+    ----------
+    model_input : cobra.Model
+        Metabolic model.
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model.
+    min_val : float
+        Minimum allowed value for the optimized solution predicted for
+        the objective. Preset to `0`.
+
+    Returns
+    -------
+    model : cobra.Model
+        Feasible metabolic model with added constraints.
+    problems : list
+        list of the reaction names of the reactions whose added
+        constraints caused the model to fail the tests
+        (feasibilty or minimum value).
+    """
     no_restart = False
     problems = []
     restart_counter = 0
@@ -129,12 +257,33 @@ def add_feasible_constraints(model_input, fittedFluxes, min_val=0):
 
 
 def reshape_fluxes_escher(sampled_fluxes):
+    """
+    Reshapes either a cobra solution object or a pandas
+    Dataframe containing the sampled fluxes for a metabolic model
+    so that they can be visualized in Escher. If a dataframe is
+    provided, the mean of all the predictions from each reactions
+    will be calculated.
+
+    Parameters
+    ----------
+    sampled_fluxes : pandas.DataFrame or cobra.Solution
+        Object containing reaction fluxes.
+
+    Returns
+    -------
+    fluxes_escher : dict
+        Input for Escher.
+
+    Raises
+    ------
+    TypeError
+        If the wrong type of input was provided.
+    """
+    fluxes_escher = {}
     if type(sampled_fluxes) is pd.core.frame.DataFrame:
-        fluxes_escher = {}
         for col in sampled_fluxes.columns:
             fluxes_escher[col] = sampled_fluxes[col].mean()
     elif type(sampled_fluxes) is cobra.core.solution.Solution:
-        fluxes_escher = {}
         reactions = list(sampled_fluxes.fluxes.index)
         for cnt, row in enumerate(sampled_fluxes.fluxes):
             fluxes_escher[reactions[cnt]] = row
@@ -149,6 +298,10 @@ def reshape_fluxes_escher(sampled_fluxes):
 def _extract_bound_violations(
     grb_model, variables, negative_slack_prefix, positive_slack_prefix
 ):
+    """
+    Extracts the lower and upper bound changes that have to applied to
+    the input model in order ot make the predition feasible.
+    """
     # Extracts the magnitude of the bound violations on the relaxed
     # Gurobi model
     epsilon = grb_model.Params.FeasibilityTol
@@ -167,6 +320,40 @@ def _extract_bound_violations(
 def bound_relaxation(
     infeasible_model, fittedFluxes, destructive=True, fluxes_to_ignore=[]
 ):
+    """
+    Relaxation function for cobra metabolic models. By making use of the
+    Gurobi solver, this functions figures out which bounds have to be
+    relaxed by how much in order to make the model solution feasible.
+    If `destructive=True`, then these changes are automatically applied.
+
+    Parameters
+    ----------
+    infeasible_model : cobra.Model
+        A metabolic model with constraints that lead to an infeasible
+        solution.
+    fittedFluxes : pandas.DataFrame
+        Dataframe (reimported output of an INCA simulation)
+        that contains the confidence intervals predicted for
+        the model.
+    destructive : bool
+        Preset to `True`. If True, then the calculated fluxes will be
+        applied to the model.
+    fluxes_to_ignore : list
+        A list of fluxes that should not be relaxed. Preset to `[]`.
+
+    Returns
+    -------
+    cons_table : pandas.DataFrame
+        A dataframe listing the reactions that have to be relaxed and
+        the changes that need to be applied.
+
+    Raises
+    ------
+    ModuleNotFoundError
+        If Gurobi is not the solver of the input model.
+    Infeasible
+        If the feasibility relaxation fails.
+    """
     model = infeasible_model
     model.solver = "optlang-gurobi"
     if model.solver.interface.__name__ != "optlang.gurobi_interface":
