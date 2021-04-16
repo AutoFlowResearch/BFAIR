@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-let baseUrl = 'http://5e1811bfb437.ngrok.io';
+let baseUrl = 'http://127.0.0.1:5000';
 
 class SampleSubmission extends React.Component {
     constructor(props) {
@@ -253,8 +253,16 @@ class SampleSubmission extends React.Component {
                         <a className="nav-link" data-toggle="tab" href="#investigation">Investigation</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" data-toggle="tab" href="#other">other</a>
+                        <a className="nav-link" data-toggle="tab" href="#study">Study Module</a>
                     </li>
+                    <li className="nav-item">
+                        <a className="nav-link" data-toggle="tab" href="#protocol">Protocols Module</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" data-toggle="tab" href="#assay">Assay Module</a>
+                    </li>
+
+
                 </ul>
 
                 {/* Sample Module Form */}
@@ -324,9 +332,128 @@ class SampleSubmission extends React.Component {
                             </form>
                         </div>
                     </div>
-                    <div id="other" className="container tab-pane fade">
-                        <h3>Other</h3>
-                        {/* <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p> */}
+                    <div id="study" className="container tab-pane fade">
+                    <div className="col-md-4 col-md-offset-3">
+                            <h2>Study</h2>
+                            <form name="form" onSubmit={this.handleSampleModuleSubmit}>
+                                <div className={'form-group'}>
+                                    <label>Title</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Description</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Submission Date</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Release Date</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Full Name</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Assay</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Contact</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Design type</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Factors</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Protocols</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                            </form>
+                            <div className="form-group">
+                                <button className="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="protocol" className="container tab-pane fade">
+                     <div className="col-md-4 col-md-offset-3">
+                            <h2>Protocol</h2>
+                            <form name="form" onSubmit={this.handleSampleModuleSubmit}>
+                                <div className={'form-group'}>
+                                    <label>Title</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Type</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Description</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>URI</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Version</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Parameter</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Component Name</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Component Type</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                              
+                            </form>
+                            <div className="form-group">
+                                <button className="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div id="assay" className="container tab-pane fade">
+                     <div className="col-md-4 col-md-offset-3">
+                            <h2>Assay</h2>
+                            <form name="form" onSubmit={this.handleSampleModuleSubmit}>
+                                <div className={'form-group'}>
+                                    <label>Title</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Measurement Type</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Technology Type</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                                <div className={'form-group'}>
+                                    <label>Technology Platform</label>
+                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                                </div>
+                              
+                            </form>
+                            <div className="form-group">
+                                <button className="btn btn-primary">Save</button>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
