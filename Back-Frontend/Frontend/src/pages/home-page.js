@@ -44,9 +44,9 @@ function Home() {
                                 }
                             >
 
-                                <Menu.Item><NavLink to="/design-type">Design-Type</NavLink></Menu.Item>
+                                {/* <Menu.Item><NavLink to="/design-type">Design-Type</NavLink></Menu.Item>
                                 <Menu.Item><NavLink to="/design-graph">Design-Graph</NavLink></Menu.Item>
-                                <Link to="/register" className="btn btn-link">Register</Link>
+                                <Link to="/register" className="btn btn-link">Register</Link> */}
 
                             </SubMenu>
                         </Menu>

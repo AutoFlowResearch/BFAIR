@@ -271,27 +271,63 @@ class SampleSubmission extends React.Component {
                         <div className="col-md-4 col-md-offset-3">
                             <h2>Sample Module</h2>
                             <form name="form" onSubmit={this.handleSampleModuleSubmit}>
-                                <div className={'form-group'}>
-                                    <label>Sample</label>
-                                    <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
-                                </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Investigation</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Sample</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Study Design</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Intervation Selection</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Intervation Type</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Assay Type</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
+                            <div className={'form-group'} >
+                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Protocols</label>
+                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
+                                <option disabled selected>Select</option>
+                                {optionTemplate}
+                                </select>
+                            </div>
 
                                 <div className="form-group">
-                                    <button className="btn btn-primary">Add</button>
+                                    <button className="btn btn-primary">Save</button>
+                                    <button onClick={this.deleteSample} className="btn btn-danger">Delete</button>
                                     <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>
                                 </div>
                             </form>
 
-                            <div className={'form-group'} >
-                                <label htmlFor="sample" style={{ marginTop: '40px' }}>Sample List</label>
-                                <select className="form-control" value={this.state.value}  onChange={this.sampleChange}>
-                                <option disabled selected>Select Sample</option>
-                                {optionTemplate}
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <button onClick={this.deleteSample} className="btn btn-danger">Delete</button>
-                            </div>
                         </div>
                     </div>
 
@@ -353,7 +389,7 @@ class SampleSubmission extends React.Component {
                                     <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
                                 </div>
                                 <div className={'form-group'}>
-                                    <label>Full Name</label>
+                                    <label>File Name</label>
                                     <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
                                 </div>
                                 <div className={'form-group'}>
