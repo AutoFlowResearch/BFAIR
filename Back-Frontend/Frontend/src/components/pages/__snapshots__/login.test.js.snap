@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> should render correctly 1`] = `
+<div
+  style={
+    Object {
+      "backgroundImage": "url(mountain-1.jpg)",
+      "backgroundPosition": "center",
+      "backgroundRepeat": "no-repeat",
+      "backgroundSize": "cover",
+      "height": "100%",
+      "position": "absolute",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="col-sm-4"
+  >
+    <h3>
+      Login
+    </h3>
+    <form
+      onSubmit={[Function]}
+    >
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="username"
+          style={
+            Object {
+              "color": "#fff",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "opacity": 0.7,
+            }
+          }
+        >
+          Username
+        </label>
+        <input
+          aria-describedby="emailHelp"
+          className="form-control"
+          id="username"
+          name="username"
+          onChange={[Function]}
+          placeholder="Enter username"
+          type="email"
+        />
+        <small
+          className="form-text text-muted"
+          id="emailHelp"
+          style={
+            Object {
+              "color": "#fff",
+              "fontWeight": "bold",
+              "opacity": 0.7,
+            }
+          }
+        >
+          We'll never share your email with anyone else.
+        </small>
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="password"
+          style={
+            Object {
+              "color": "#fff",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "opacity": 0.7,
+            }
+          }
+        >
+          Password
+        </label>
+        <input
+          className="form-control"
+          id="password"
+          name="password"
+          onChange={[Function]}
+          placeholder="Enter Password"
+          type="password"
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="role"
+          style={
+            Object {
+              "color": "#fff",
+              "fontSize": 16,
+              "fontWeight": "bold",
+              "opacity": 0.7,
+            }
+          }
+        >
+          Select Role
+        </label>
+        <select
+          className="form-control"
+          defaultValue="selectrole"
+          id="role"
+          name="role"
+          onChange={[Function]}
+          placeholder="select role"
+        >
+          <option
+            disabled={true}
+            value="selectrole"
+          >
+            Select Role
+          </option>
+          <option
+            value="admin"
+          >
+            Admin
+          </option>
+          <option
+            value="operator"
+          >
+            Operator
+          </option>
+          <option
+            value="qa"
+          >
+            QA
+          </option>
+        </select>
+      </div>
+      <button
+        className="btn btn-primary"
+        disabled={true}
+        type="submit"
+      >
+        Loading
+      </button>
+    </form>
+  </div>
+</div>
+`;
