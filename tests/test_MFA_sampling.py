@@ -36,7 +36,8 @@ class test_methods(unittest.TestCase):
 
     def setUp(self):
         file_obj = open(
-            current_dir + "/sampling_test_data.obj",
+            current_dir
+            + "/test_data/MFA_modelInputsData/sampling_test_data.obj",
             "rb",
         )
         (
@@ -57,10 +58,12 @@ class test_methods(unittest.TestCase):
         file_obj.close()
 
         self.simulation_info = pd.read_csv(
-            current_dir + "/experimentalMS_data_I.csv"
+            current_dir
+            + "/test_data/MFA_modelInputsData/experimentalMS_data_I.csv"
         )
         self.simulation_id = "WTEColi_113C80_U13C20_01"
-        self.model = cobra.io.load_json_model(current_dir + "/iJO1366.json")
+        self.model = cobra.io.load_json_model(
+            current_dir + "/test_data/MFA_modelInputsData/iJO1366.json")
         self.constrained_model = self.add_constraints(
             self.model.copy(), adj_fittedFluxes
         )
