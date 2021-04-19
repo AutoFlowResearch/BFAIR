@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 // import { Route } from "../protectedRoutes";
 import Dashboard from "../../pages/admin/dashboard";
-import UserManagement from "../../pages/admin/userManagement";
 import UserForm from "../../pages/admin/NewUser";
 import Posts from "../../pages/admin/posts";
 import NewPost from "../../pages/admin/posts/NewPost";
-import SimpleForm from "../../pages/admin/SimpleForm";
-import Recipe from "../../pages/admin/recipe";
 import NewRecipe from "../../pages/admin/recipe/NewRecipe";
 import RecipeList from "../../pages/admin/recipe/RecipeList";
+import SimpleForm from "../../pages/admin/SimpleForm";
+import SampleSubmission from "../../pages/admin/userManagement"
 
 class ContentArea extends Component {
   state = {
@@ -37,8 +36,8 @@ class ContentArea extends Component {
           />
 
           <Route
-            path="/mainpage/admin/user-management"
-            component={UserManagement}
+            path="/mainpage/admin/doe-module"
+            component={SampleSubmission}
           />
 
           <Route

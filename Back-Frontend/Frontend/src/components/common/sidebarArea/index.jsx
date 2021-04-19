@@ -67,8 +67,8 @@ class SidebarArea extends Component {
                 <span>Dashboard</span>
               </NavLink>
             </li>
-            <li className={currentTab === "user-management" ? "active" : ""}>
-              <NavLink to="/mainpage/admin/user-management">
+            <li className={currentTab === "doe-module" ? "active" : ""}>
+              <NavLink to="/mainpage/admin/doe-module">
               <i className="fa fa-list" /><span>Doe Module</span>
               </NavLink>
             </li>
