@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 15.04.2021
+# Last date : 19.04.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the
@@ -25,7 +25,6 @@ pd.set_option("mode.chained_assignment", None)
 # Use pickle to save python variables
 filehandler = open("sampling_test_data.obj", "wb")
 
-<<<<<<< Updated upstream
 
 def get_bounds_df(model):
     # Helper function to have a way to compare the bounds
@@ -41,10 +40,6 @@ def get_bounds_df(model):
 
 # Re-import the MFA data
 filename = current_dir + '/TestFile.mat'
-=======
-# Re-import the MFA data
-filename = 'data/MFA_modelInputsData/TestFile.mat'
->>>>>>> Stashed changes
 simulation_info = pd.read_csv(
     current_dir + '/experimentalMS_data_I.csv'
     )
@@ -64,14 +59,9 @@ reimport_data = INCA_reimport()
 )
 # Import the conbra model
 model = cobra.io.load_json_model(
-<<<<<<< Updated upstream
     current_dir + '/iJO1366.json'
     )
 unconstraint_bounds = get_bounds_df(model)
-=======
-    'data/FIA_MS_example/database_files/iJO1366.json'
-    )
->>>>>>> Stashed changes
 # Copy the model in order to re-use it a few times
 # Get info about the model and the biomass reactions
 model_input = model.copy()
@@ -90,12 +80,8 @@ adj_fittedFluxes = replace_biomass_rxn_name(
 # Only add the constraints that keep the model in the expected range
 model_input = model.copy()
 feasible_constrained_model, problems = add_feasible_constraints(
-<<<<<<< Updated upstream
     model_input, adj_fittedFluxes, min_val=0)
 feasible_constrained_bounds = get_bounds_df(feasible_constrained_model)
-=======
-    model_input, fittedFluxes, min_val=0)
->>>>>>> Stashed changes
 # Sample and re-format the output
 sampled_fluxes = cobra.sampling.sample(model, n=100, processes=2)
 fluxes_sampling = reshape_fluxes_escher(sampled_fluxes)
@@ -113,23 +99,11 @@ relaxed_bounds = get_bounds_df(infeasible_model)
 
 pickle.dump(
     [
-<<<<<<< Updated upstream
         fittedFluxes,
         unconstraint_bounds,
         constrained_bounds,
         min_val,
         adj_fittedFluxes,
-=======
-        fittedFluxes,
-        constrained_model,
-        min_val,
-        fittedFluxes,
-        feasible_constrained_model,
-        sampled_fluxes,
-        fluxes_sampling,
-        solution,
-        fluxes_solution,
->>>>>>> Stashed changes
         problems,
         feasible_constrained_bounds,
         sampled_fluxes,
