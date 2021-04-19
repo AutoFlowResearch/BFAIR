@@ -180,15 +180,17 @@ class test_methods(unittest.TestCase):
     def test_reshape_fluxes_escher_solution(self):
         # Test if a samples result has only one value per reaction
         # coming in and the right shape coming out
-        self.assertTrue(len(self.solution.fluxes[0]) == 1)
+        test_list_input = []
+        test_list_input.append(self.solution.fluxes[0])
+        self.assertTrue(len(test_list_input) == 1)
         # Compare to reference
         fluxes_solution = self.fluxes_solution
         fluxes_solution_ = reshape_fluxes_escher(self.solution)
         self.assertEqual(fluxes_solution, fluxes_solution_)
         # Test shape of output
-        test_list = []
-        test_list.append(fluxes_solution[self.solution.fluxes.index[0]])
-        self.assertTrue(len(test_list) == 1)
+        test_list_output = []
+        test_list_output.append(fluxes_solution[self.solution.fluxes.index[0]])
+        self.assertTrue(len(test_list_output) == 1)
 
     def test_bound_relaxation(self):
         try:
