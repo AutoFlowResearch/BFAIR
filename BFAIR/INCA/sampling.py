@@ -1,10 +1,13 @@
 import pandas as pd
 import time
 import cobra
-from gurobipy import Model as GRBModel
 import re
 import functools
 from cobra.exceptions import Infeasible
+try:
+    from gurobipy import Model as GRBModel
+except ModuleNotFoundError:
+    pass
 
 
 def timer(func):
