@@ -33,34 +33,28 @@ def get_bounds_df(model):
         bounds_temp[cnt] = {
             "rxn_id": rxn.id,
             "lb": rxn.lower_bound,
-            "ub": rxn.upper_bound
+            "ub": rxn.upper_bound,
         }
     return pd.DataFrame.from_dict(bounds_temp, "index")
 
 
 # Re-import the MFA data
-filename = current_dir + '/TestFile.mat'
-simulation_info = pd.read_csv(
-    current_dir + '/experimentalMS_data_I.csv'
-    )
-simulation_id = 'WTEColi_113C80_U13C20_01'
+filename = current_dir + "/TestFile.mat"
+simulation_info = pd.read_csv(current_dir + "/experimentalMS_data_I.csv")
+simulation_id = "WTEColi_113C80_U13C20_01"
 reimport_data = INCA_reimport()
-(fittedData,
- fittedFluxes,
- fittedFragments,
- fittedMeasuredFluxes,
- fittedMeasuredFragments,
- fittedMeasuredFluxResiduals,
- fittedMeasuredFragmentResiduals,
- simulationParameters) = reimport_data.reimport(
-    filename,
-    simulation_info,
-    simulation_id
-)
+(
+    fittedData,
+    fittedFluxes,
+    fittedFragments,
+    fittedMeasuredFluxes,
+    fittedMeasuredFragments,
+    fittedMeasuredFluxResiduals,
+    fittedMeasuredFragmentResiduals,
+    simulationParameters,
+) = reimport_data.reimport(filename, simulation_info, simulation_id)
 # Import the conbra model
-model = cobra.io.load_json_model(
-    current_dir + '/iJO1366.json'
-    )
+model = cobra.io.load_json_model(current_dir + "/iJO1366.json")
 unconstraint_bounds = get_bounds_df(model)
 # Copy the model in order to re-use it a few times
 # Get info about the model and the biomass reactions
@@ -68,19 +62,19 @@ model_input = model.copy()
 constrained_model = add_constraints(model_input, fittedFluxes)
 constrained_bounds = get_bounds_df(constrained_model)
 find_biomass_reaction(
-    constrained_model,
-    biomass_string=['Biomass', 'BIOMASS', 'biomass']
+    constrained_model, biomass_string=["Biomass", "BIOMASS", "biomass"]
 )
-min_val = get_min_solution_val(fittedFluxes, biomass_string='Biomass')
+min_val = get_min_solution_val(fittedFluxes, biomass_string="Biomass")
 adj_fittedFluxes = replace_biomass_rxn_name(
     fittedFluxes,
-    biomass_rxn_name='BIOMASS_Ec_iJO1366_core_53p95M',
-    biomass_string='Biomass',
+    biomass_rxn_name="BIOMASS_Ec_iJO1366_core_53p95M",
+    biomass_string="Biomass",
 )
 # Only add the constraints that keep the model in the expected range
 model_input = model.copy()
 feasible_constrained_model, problems = add_feasible_constraints(
-    model_input, adj_fittedFluxes, min_val=0)
+    model_input, adj_fittedFluxes, min_val=0
+)
 feasible_constrained_bounds = get_bounds_df(feasible_constrained_model)
 # Sample and re-format the output
 sampled_fluxes = cobra.sampling.sample(model, n=100, processes=2)

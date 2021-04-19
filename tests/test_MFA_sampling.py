@@ -36,8 +36,7 @@ class test_methods(unittest.TestCase):
 
     def setUp(self):
         file_obj = open(
-            current_dir
-            + "/sampling_test_data.obj",
+            current_dir + "/sampling_test_data.obj",
             "rb",
         )
         (
@@ -58,15 +57,12 @@ class test_methods(unittest.TestCase):
         file_obj.close()
 
         self.simulation_info = pd.read_csv(
-            current_dir + '/experimentalMS_data_I.csv'
-            )
-        self.simulation_id = 'WTEColi_113C80_U13C20_01'
-        self.model = cobra.io.load_json_model(
-            current_dir + '/iJO1366.json'
-            )
+            current_dir + "/experimentalMS_data_I.csv"
+        )
+        self.simulation_id = "WTEColi_113C80_U13C20_01"
+        self.model = cobra.io.load_json_model(current_dir + "/iJO1366.json")
         self.constrained_model = self.add_constraints(
-            self.model.copy(),
-            adj_fittedFluxes
+            self.model.copy(), adj_fittedFluxes
         )
         self.fittedFluxes = fittedFluxes
         self.unconstraint_bounds = unconstraint_bounds
@@ -93,7 +89,7 @@ class test_methods(unittest.TestCase):
             bounds_temp[cnt] = {
                 "rxn_id": rxn.id,
                 "lb": rxn.lower_bound,
-                "ub": rxn.upper_bound
+                "ub": rxn.upper_bound,
             }
         return pd.DataFrame.from_dict(bounds_temp, "index")
 
@@ -111,7 +107,7 @@ class test_methods(unittest.TestCase):
     def test_find_biomass_reaction(self):
         biomass_reaction_ids = find_biomass_reaction(
             self.constrained_model,
-            biomass_string=['Biomass', 'BIOMASS', 'biomass']
+            biomass_string=["Biomass", "BIOMASS", "biomass"],
         )
         # This one basically just checks if there is an output
         self.assertIsInstance(biomass_reaction_ids, list)
@@ -122,13 +118,15 @@ class test_methods(unittest.TestCase):
         # Find in fittedFluxes
         min_val = self.min_val
         min_val_ = get_min_solution_val(
-            self.fittedFluxes, biomass_string='Biomass')
+            self.fittedFluxes, biomass_string="Biomass"
+        )
         self.assertEqual(min_val, min_val_)
         # Do not find in fake example (=0)
         fauxfittedFluxes = self.fittedFluxes
-        fauxfittedFluxes.at[11, 'rxn_id'] = 'Removed_ID'
+        fauxfittedFluxes.at[11, "rxn_id"] = "Removed_ID"
         no_BM_val = get_min_solution_val(
-            self.fauxfittedFluxes, biomass_string='Biomass')
+            self.fauxfittedFluxes, biomass_string="Biomass"
+        )
         self.assertEqual(no_BM_val, 0)
 
     def test_replace_biomass_rxn_name(self):
@@ -136,39 +134,37 @@ class test_methods(unittest.TestCase):
         adj_fittedFluxes = self.adj_fittedFluxes
         adj_fittedFluxes_ = replace_biomass_rxn_name(
             self.fittedFluxes,
-            biomass_rxn_name='BIOMASS_Ec_iJO1366_core_53p95M',
-            biomass_string='Biomass',
+            biomass_rxn_name="BIOMASS_Ec_iJO1366_core_53p95M",
+            biomass_string="Biomass",
         )
         self.assertEqual(adj_fittedFluxes, adj_fittedFluxes_)
         # Replace in a fake sample
-        test_df = pd.DataFrame({
-            'rxn_id': 'Biomass'
-        }, index=[0])
+        test_df = pd.DataFrame({"rxn_id": "Biomass"}, index=[0])
         test_df_replaced = replace_biomass_rxn_name(
-            test_df, biomass_string='Biomass', biomass_rxn_name='It works!')
-        self.assertEqual(test_df_replaced['rxn_id'][0], 'It works!')
+            test_df, biomass_string="Biomass", biomass_rxn_name="It works!"
+        )
+        self.assertEqual(test_df_replaced["rxn_id"][0], "It works!")
 
     def test_add_feasible_constraints(self):
         unconstraint_bounds = self.unconstraint_bounds
         feasible_constrained_bounds = self.feasible_constrained_bounds
         feasible_constrained_model, problems = add_feasible_constraints(
-            self.model.copy(), self.adj_fittedFluxes, min_val=0)
+            self.model.copy(), self.adj_fittedFluxes, min_val=0
+        )
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model
-            )
+        )
         self.assertNotEqual(unconstraint_bounds, feasible_constrained_bounds_)
         self.assertEqual(
-            feasible_constrained_bounds,
-            feasible_constrained_bounds_
-            )
+            feasible_constrained_bounds, feasible_constrained_bounds_
+        )
 
     def test_reshape_fluxes_escher_sampling(self):
         # Test if a samples result has more than one value per reaction
         # coming in and the right shape coming out
         self.assertTrue(
-            len(
-                self.sampled_fluxes[
-                    self.sampled_fluxes.columns[0]]) > 1)
+            len(self.sampled_fluxes[self.sampled_fluxes.columns[0]]) > 1
+        )
         # Compare to reference
         fluxes_sampling = self.fluxes_sampling
         fluxes_sampling_ = reshape_fluxes_escher(self.sampled_fluxes)
