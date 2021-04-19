@@ -11,5 +11,5 @@ Example Notebooks
    data/models/README
    EColi_TFA_with_metabolomic_data
    cobra_model_parser
-   MFA_INCA_example_notebook
+   MFA_INCA_example
    MFA_INCA_data_reimport
