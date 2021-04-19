@@ -64,7 +64,7 @@ class test_methods(unittest.TestCase):
         self.simulation_id = "WTEColi_113C80_U13C20_01"
         self.model = cobra.io.load_json_model(
             current_dir + "/test_data/MFA_modelInputsData/iJO1366.json")
-        self.constrained_model = self.add_constraints(
+        self.constrained_model = add_constraints(
             self.model.copy(), adj_fittedFluxes
         )
         self.fittedFluxes = fittedFluxes
