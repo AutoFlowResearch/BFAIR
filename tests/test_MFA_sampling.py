@@ -148,9 +148,10 @@ class test_methods(unittest.TestCase):
     def test_add_feasible_constraints(self):
         problems = self.problems
         unconstraint_bounds = self.unconstraint_bounds
+        model = self.model.copy()
         feasible_constrained_bounds = self.feasible_constrained_bounds
         feasible_constrained_model, problems_ = add_feasible_constraints(
-            self.model.copy(), self.adj_fittedFluxes, min_val=0
+            model, self.adj_fittedFluxes, min_val=0
         )
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model
