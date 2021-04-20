@@ -211,7 +211,7 @@ def add_feasible_constraints(model_input, fittedFluxes, min_val=0):
     objective does not fall below a predefined value. If that were to
     happen, the function would restart but skip the reaction that
     caused the issue in the next iteration.
-    
+
     Parameters
     ----------
     model_input : cobra.Model
