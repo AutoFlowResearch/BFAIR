@@ -60,8 +60,6 @@ class test_methods(unittest.TestCase):
         self.simulation_id = "WTEColi_113C80_U13C20_01"
         self.model = cobra.io.load_json_model(
             current_dir + "/test_data/MFA_modelInputsData/iJO1366.json")
-        self.second_instance_model = cobra.io.load_json_model(
-            current_dir + "/test_data/MFA_modelInputsData/iJO1366.json")
         self.constrained_model = add_constraints(
             self.model.copy(), adj_fittedFluxes
         )
@@ -149,12 +147,12 @@ class test_methods(unittest.TestCase):
 
     def test_add_feasible_constraints(self):
         problems = self.problems
-        adj_fittedFluxes = self.adj_fittedFluxes
         unconstraint_bounds = self.unconstraint_bounds
-        model = self.second_instance_model.copy()
         feasible_constrained_bounds = self.feasible_constrained_bounds
         feasible_constrained_model, problems_ = add_feasible_constraints(
-            model, adj_fittedFluxes, min_val=0
+            self.model.copy(),
+            self.adj_fittedFluxes,
+            min_val=self.min_val,
         )
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model

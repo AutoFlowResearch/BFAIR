@@ -74,7 +74,7 @@ adj_fittedFluxes = replace_biomass_rxn_name(
 # Only add the constraints that keep the model in the expected range
 model_input = model.copy()
 feasible_constrained_model, problems = add_feasible_constraints(
-    model_input, adj_fittedFluxes, min_val=0
+    model_input, adj_fittedFluxes, min_val=min_val,
 )
 feasible_constrained_bounds = get_bounds_df(feasible_constrained_model)
 # Sample and re-format the output
