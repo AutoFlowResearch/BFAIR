@@ -3,10 +3,6 @@ import pickle
 import pathlib
 import os
 import cobra
-
-# import numpy as np
-# from freezegun import freeze_time
-# import datetime
 import pandas as pd
 from BFAIR.INCA.sampling import (
     add_constraints,
@@ -104,7 +100,7 @@ class test_methods(unittest.TestCase):
             self.adj_fittedFluxes,
         )
         constrained_bounds_ = self.get_bounds_df(constrained_model)
-        self.assertNotEqual(unconstraint_bounds, constrained_bounds_)
+        self.assertFalse(unconstraint_bounds == constrained_bounds_)
         self.assertEqual(constrained_bounds, constrained_bounds_)
 
     def test_find_biomass_reaction(self):
@@ -157,7 +153,7 @@ class test_methods(unittest.TestCase):
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model
         )
-        self.assertNotEqual(unconstraint_bounds, feasible_constrained_bounds_)
+        self.assertFalse(unconstraint_bounds == feasible_constrained_bounds_)
         self.assertEqual(
             feasible_constrained_bounds, feasible_constrained_bounds_
         )
@@ -197,7 +193,7 @@ class test_methods(unittest.TestCase):
             # regular test
             cons_table = self.cons_table
             cons_table_ = bound_relaxation(
-                self.infeasible_model,
+                self.constrained_model.copy(),
                 self.fittedFluxes,
                 destructive=True,
                 fluxes_to_ignore=[],
