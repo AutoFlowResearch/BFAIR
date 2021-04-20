@@ -84,11 +84,12 @@ class test_methods(unittest.TestCase):
     def get_bounds_df(model):
         # Helper function to have a way to compare the bounds
         bounds_temp = {}
+        # Round to 5 decimal places to avoid issues in very low values
         for cnt, rxn in enumerate(model.reactions):
             bounds_temp[cnt] = {
                 "rxn_id": rxn.id,
-                "lb": rxn.lower_bound,
-                "ub": rxn.upper_bound,
+                "lb": round(rxn.lower_bound, 5),
+                "ub": round(rxn.upper_bound, 5),
             }
         return pd.DataFrame.from_dict(bounds_temp, "index")
 
@@ -203,7 +204,7 @@ class test_methods(unittest.TestCase):
         except Exception as exception:
             # Exception if can't find Gurobi
             self.assertIsInstance(exception, ModuleNotFoundError)
-            self.assertEqual(str(exception), "Requires Gurobi.")
+            self.assertEqual(str(exception), "Requires Gurobi solver.")
 
 
 if __name__ == "__main__":

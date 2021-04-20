@@ -362,7 +362,6 @@ def bound_relaxation(
     model = infeasible_model
     if model.solver.interface.__name__ != "optlang.gurobi_interface":
         raise ModuleNotFoundError("Requires Gurobi solver.")
-        
 
     # copy Gurobi model
     grb_model: GRBModel = model.solver.problem.copy()
