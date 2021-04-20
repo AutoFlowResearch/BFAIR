@@ -360,9 +360,9 @@ def bound_relaxation(
         If the feasibility relaxation fails.
     """
     model = infeasible_model
-    model.solver = "optlang-gurobi"
     if model.solver.interface.__name__ != "optlang.gurobi_interface":
         raise ModuleNotFoundError("Requires Gurobi solver.")
+        
 
     # copy Gurobi model
     grb_model: GRBModel = model.solver.problem.copy()

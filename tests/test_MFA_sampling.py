@@ -100,7 +100,7 @@ class test_methods(unittest.TestCase):
             self.adj_fittedFluxes,
         )
         constrained_bounds_ = self.get_bounds_df(constrained_model)
-        self.assertFalse(unconstraint_bounds == constrained_bounds_)
+        self.assertFalse(unconstraint_bounds.equals(constrained_bounds_))
         self.assertEqual(constrained_bounds, constrained_bounds_)
 
     def test_find_biomass_reaction(self):
@@ -153,7 +153,8 @@ class test_methods(unittest.TestCase):
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model
         )
-        self.assertFalse(unconstraint_bounds == feasible_constrained_bounds_)
+        self.assertFalse(unconstraint_bounds.equals(
+            feasible_constrained_bounds_))
         self.assertEqual(
             feasible_constrained_bounds, feasible_constrained_bounds_
         )
