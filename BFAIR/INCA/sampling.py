@@ -197,10 +197,10 @@ def replace_biomass_rxn_name(
         the metabolic model.
     """
     fittedFluxes_out = copy.deepcopy(fittedFluxes)
-    for cnt, name in enumerate(fittedFluxes["rxn_id"]):
+    for cnt, name in enumerate(fittedFluxes_out["rxn_id"]):
         if biomass_string in name:
-            fittedFluxes.at[cnt, "rxn_id"] = biomass_rxn_name
-    return fittedFluxes
+            fittedFluxes_out.at[cnt, "rxn_id"] = biomass_rxn_name
+    return fittedFluxes_out
 
 
 @timer

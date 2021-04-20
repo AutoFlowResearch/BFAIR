@@ -33,8 +33,8 @@ def get_bounds_df(model):
     for cnt, rxn in enumerate(model.reactions):
         bounds_temp[cnt] = {
             "rxn_id": rxn.id,
-            "lb": round(rxn.lower_bound, 5),
-            "ub": round(rxn.upper_bound, 5),
+            "lb": round(rxn.lower_bound, 1),
+            "ub": round(rxn.upper_bound, 1),
         }
     return pd.DataFrame.from_dict(bounds_temp, "index")
 
