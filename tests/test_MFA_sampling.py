@@ -88,8 +88,8 @@ class test_methods(unittest.TestCase):
         for cnt, rxn in enumerate(model.reactions):
             bounds_temp[cnt] = {
                 "rxn_id": rxn.id,
-                "lb": round(rxn.lower_bound, 1),
-                "ub": round(rxn.upper_bound, 1),
+                "lb": rxn.lower_bound,
+                "ub": rxn.upper_bound,
             }
         return pd.DataFrame.from_dict(bounds_temp, "index")
 
@@ -98,7 +98,7 @@ class test_methods(unittest.TestCase):
         constrained_bounds = self.constrained_bounds
         constrained_model = add_constraints(
             self.model.copy(),
-            self.adj_fittedFluxes,
+            self.fittedFluxes,
         )
         constrained_bounds_ = self.get_bounds_df(constrained_model)
         self.assertFalse(unconstraint_bounds.equals(constrained_bounds_))
@@ -125,7 +125,7 @@ class test_methods(unittest.TestCase):
         fauxfittedFluxes = self.fittedFluxes
         fauxfittedFluxes.at[11, "rxn_id"] = "Removed_ID"
         no_BM_val = get_min_solution_val(
-            self.fauxfittedFluxes, biomass_string="Biomass"
+            fauxfittedFluxes, biomass_string="Biomass"
         )
         self.assertEqual(no_BM_val, 0)
 
@@ -146,14 +146,16 @@ class test_methods(unittest.TestCase):
         self.assertEqual(test_df_replaced["rxn_id"][0], "It works!")
 
     def test_add_feasible_constraints(self):
+        problems = self.problems
         unconstraint_bounds = self.unconstraint_bounds
         feasible_constrained_bounds = self.feasible_constrained_bounds
-        feasible_constrained_model, problems = add_feasible_constraints(
+        feasible_constrained_model, problems_ = add_feasible_constraints(
             self.model.copy(), self.adj_fittedFluxes, min_val=0
         )
         feasible_constrained_bounds_ = self.get_bounds_df(
             feasible_constrained_model
         )
+        self.assertEqual(problems, problems_)
         self.assertFalse(unconstraint_bounds.equals(
             feasible_constrained_bounds_))
         self.assertEqual(
