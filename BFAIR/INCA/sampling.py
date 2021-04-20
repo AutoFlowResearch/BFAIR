@@ -3,6 +3,7 @@ import time
 import cobra
 import re
 import functools
+import copy
 from cobra.exceptions import Infeasible
 try:
     from gurobipy import Model as GRBModel
@@ -195,6 +196,7 @@ def replace_biomass_rxn_name(
         the model. Now with same the biomass function name as in
         the metabolic model.
     """
+    fittedFluxes_out = copy.deepcopy(fittedFluxes)
     for cnt, name in enumerate(fittedFluxes["rxn_id"]):
         if biomass_string in name:
             fittedFluxes.at[cnt, "rxn_id"] = biomass_rxn_name
