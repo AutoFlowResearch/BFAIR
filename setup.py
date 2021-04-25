@@ -48,7 +48,8 @@ setup(
         "escher == 1.6.0",
         "freezegun == 1.1.0",
         "openpyxl == 3.0.6",
-        "nbsphinx == 0.8.3"
+        "nbsphinx == 0.8.3",
+        "scipy == 1.6.0",
     ],
     # dependency_links=
     include_package_data=True,
