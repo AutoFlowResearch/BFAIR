@@ -23,6 +23,7 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
     "numpydoc",
+    "nbsphinx",
 ]
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -43,6 +44,4 @@ html_theme_options = {
 html_sidebars = {
     "**": ["globaltoc.html", "localtoc.html"]
 }
-html_static_path = ['_static']
-# html_css_files = ["style.css"]
 html_collapsible_definitions = True

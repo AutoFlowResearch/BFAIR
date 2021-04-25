@@ -18,20 +18,20 @@ def parse_cobra_model(model_file_name, model_id, date):
 
     Parameters
     ----------
-    model_file_name: str or path + str
+    model_file_name : str or path + str
         Filename or path to file + filename of the cobra metabolic model
-    model_id: str
+    model_id : str
         Name of the model (for downstream reference)
-    date: str
+    date : str
         Date of model processing (for downstream reference)
 
     Returns
     -------
-    model_data: pandas.DataFrame
+    model_data : pandas.DataFrame
         General information about the processed metabolic model
-    reaction_data: pandas.DataFrame
+    reaction_data : pandas.DataFrame
         Information about the reactions in the metabolic model
-    metabolite_data: pandas.DataFrame
+    metabolite_data : pandas.DataFrame
         Information about the metabolites in the metabolic model
 
     Raises
@@ -77,25 +77,25 @@ def _parse_json_sbml_cobra_model(
 
     Parameters
     ----------
-    cobra_model: cobra.Model
+    cobra_model : cobra.Model
         Cobra metabolic model as loaded by the file type specific import
         function
-    model_id: str
+    model_id : str
         Name of the model (for downstream reference)
-    date: str
+    date : str
         Date of model processing (for downstream reference)
-    model_file_name: str or path + str
+    model_file_name : str or path + str
         Filename or path to file + filename of the cobra metabolic model
-    filetype: str
+    filetype : str
         Extension of the provided file
 
     Returns
     -------
-    model_data: pandas.DataFrame
+    model_data : pandas.DataFrame
         General information about the processed metabolic model
-    reaction_data: pandas.DataFrame
+    reaction_data : pandas.DataFrame
         Information about the reactions in the metabolic model
-    metabolite_data: pandas.DataFrame
+    metabolite_data : pandas.DataFrame
         Information about the metabolites in the metabolic model
     """
     # Pre-process the model file information
