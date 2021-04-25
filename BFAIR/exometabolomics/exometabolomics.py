@@ -53,7 +53,8 @@ def extract_concentrations(df_sequence, feature_dir, dil=1):
     feature_dir : path
         Path of the feature files
     dil : int
-        Dilution factor, in case the samples have been diltued prior to measurement.
+        Dilution factor, in case the samples have been diltued prior to
+        measurement.
 
     Returns
     -------
@@ -134,8 +135,9 @@ def extract_OD600(df_DataSeries):
     Parameters
     ----------
     df_DataSeries : pandas.DataFrame
-        A dataframe that contains the OD600 measurements over time. For each sample there is one column for
-        the time points and one column for the OD 600 measurements.
+        A dataframe that contains the OD600 measurements over time. For each
+        sample there is one column for the time points and one column for the
+        OD 600 measurements.
 
     Returns
     -------
@@ -218,14 +220,16 @@ def extract_growthData(df_DataSeries, df_Annotations):
 def calculate_rates(df_data, n_min=2):
     """
     Calculates the specific uptake/secretion rates from the metabolite
-    concentrations and growth rates using the differently diluted samples, which mimic a time course.
+    concentrations and growth rates using the differently diluted samples,
+    which mimic a time course.
 
     Parameters
     ----------
     df_data : pandas.DataFrame
         Dataframe containing exometabolome concentrations and growth
-        information for each metabolite, dilution step and replica. Must contain the
-        columns "metabolite", "conc[mM]", "replica", "mu[/h]", "CDW[g/L]".
+        information for each metabolite, dilution step and replica. Must
+        contain the columns "metabolite", "conc[mM]", "replica", "mu[/h]",
+        "CDW[g/L]".
     n_min : int
         The minimum number of samples for a fixed replica and metabolite
         needed to calculate the slope and rate.
@@ -276,15 +280,17 @@ def plot_oneReplica(
 ):
     """
     Creates one plot for one replica:
-    Plots metabolite concentration over the dry cell weight. Adds the linear fit as a line and the dilution steps
+    Plots metabolite concentration over the dry cell weight. Adds the linear
+    fit as a line and the dilution steps
     as annotations.
 
     Parameters
     ----------
     df_data : pandas.DataFrame
         Dataframe containing exometabolome concentrations and growth
-        information for each metabolite, dilution step and replica. Must contain the
-        columns "metabolite", "dilution_step", "replica", "CDW[g/L]" and "conc[mM]".
+        information for each metabolite, dilution step and replica. Must
+        contain the columns "metabolite", "dilution_step", "replica",
+        "CDW[g/L]" and "conc[mM]".
     df_rates : pandas.DataFrame
         Dataframe containing the growth rate and the metabolite
         uptake rates for each metabolite and replica.
@@ -335,21 +341,21 @@ def plot_allReplica(
 ):
     """
     Creates one plot for all replicas.
-    Plots metabolite concentration over the dry cell weight, Adds the linear fit as a line and the dilution steps
+    Plots metabolite concentration over the dry cell weight, Adds the linear
+    fit as a line and the dilution steps
     as annotations.
 
     Parameters
     ----------
     df_data : pandas.DataFrame
         Dataframe containing exometabolome concentrations and growth
-        information for each metabolite, dilution step and replica.
-        Must contain the columns "metabolite", "dilution_step", "replica",
+        information for each metabolite, dilution step and replica. Must
+        contain the columns "metabolite", "dilution_step", "replica",
         "CDW[g/L]" and "conc[mM]".
     df_rates : pandas.DataFrame
         Dataframe containing the growth rate and the metabolite
-        uptake rates for each metabolite and replica.
-        Must contain the columns "replica", "metabolite", "intercept", "slope"
-        and "r-squared".
+        uptake rates for each metabolite and replica. Must contain the column
+        "replica", "metabolite", "intercept", "slope" and "r-squared".
     metabolite : str
         A string specifing the metabolite.
     annotation : bool, default True
@@ -393,14 +399,14 @@ def calculate_mean(df_rates):
     ----------
     df_rates : pandas.DataFrame
         Dataframe containing the growth rate and the metabolite uptake
-        rates for each metabolite and replica.
-        Must contain the columns "metabolite" and "rate[mmol/gDCW/h]".
+        rates for each metabolite and replica. Must contain the columns
+        "metabolite" and "rate[mmol/gDCW/h]".
 
     Returns
     -------
     df_results : pandas.DataFrame
-        Dataframe containing the calculated mean[mmol/(gDCW*h)] and standard deviation[mmol/(gDCW*h)] for the uptake rates
-        of each metabolite
+        Dataframe containing the calculated mean[mmol/(gDCW*h)] and standard
+        deviation[mmol/(gDCW*h)] for the uptake rates of each metabolite
     """
     df_results = df_rates.groupby("metabolite")["rate[mmol/gDCW/h]"]
     df_results = df_results.agg([np.mean, np.std])
