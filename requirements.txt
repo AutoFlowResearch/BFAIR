@@ -13,3 +13,4 @@ requests
 lazy_object_proxy
 pypika
 networkx
+nbsphinx == 0.8.3
