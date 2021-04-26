@@ -13,7 +13,7 @@ def get_filename(row):
 
     Parameters
     ----------
-    row: pandas.Series
+    row : pandas.Series
         A row fom the sequence dataframe. Must have the following index values:
         "sample_name", "inj_number", "batch_name", "acquisition_date_and_time".
 
