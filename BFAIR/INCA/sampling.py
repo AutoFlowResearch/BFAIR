@@ -13,7 +13,7 @@ except ModuleNotFoundError:
 
 def timer(func):
     """
-    Wrapper that reports how it took to execute a function.
+    Wrapper that reports how long it took to execute a function.
     """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
@@ -51,14 +51,14 @@ def _adjust_bounds(model, rxn, bounds):
             model.reactions.get_by_id(rxn).lower_bound = round(bounds[0], 1)
             model.reactions.get_by_id(rxn).upper_bound = round(bounds[1], 1)
         except KeyError:
-            # print(f'Did not work for {rxn}')
+            print(f'Did not work for {rxn}')
             skip = True
     else:
         try:
             model.reactions.get_by_id(rxn).upper_bound = round(bounds[0], 1)
             model.reactions.get_by_id(rxn).lower_bound = round(bounds[1], 1)
         except KeyError:
-            # print(f'Did not work for', rxn)
+            print(f'Did not work for', rxn)
             skip = True
     return model, skip
 
@@ -103,7 +103,7 @@ def find_biomass_reaction(
     model, biomass_string=["Biomass", "BIOMASS", "biomass"]
 ):
     """
-    Identifies the biomass reaction(s) in a metaboli model.
+    Identifies the biomass reaction(s) in a metabolic model.
 
     Parameters
     ----------
@@ -305,7 +305,7 @@ def _extract_bound_violations(
 ):
     """
     Extracts the lower and upper bound changes that have to applied to
-    the input model in order ot make the predition feasible.
+    the input model in order to make its solution feasible.
     """
     # Extracts the magnitude of the bound violations on the relaxed
     # Gurobi model
