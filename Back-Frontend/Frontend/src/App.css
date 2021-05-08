@@ -1,34 +1,123 @@
-.row.content {
-  height: 100%;
+body,html{
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  font-size: 100%;
 }
 
-/* Set gray background color and 100% height */
-.sidenav {
-  background-color: #f1f1f1;
-  height: 100%;
+.Maincard{
+  width: 100%;
+  min-height:100vh;
+  height:100%;
+
+}
+.innerBox{
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 150px;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
+}
+.Mainview{
+  min-height:180px ;
+  border-radius: 10px;
+  border: none;
+  border-radius: 10px;
+}
+.bottomCard{
+  height: 180px;
+  width: 100%;
+  max-width: 100%;
+}
+.bg-container{
+  background-color: #f8f9fb;
+}
+.readmore{
+  text-decoration: underline;
+  color: black;
+}
+.fas{
+  font-size: 12px;
+  padding-left: 6px;
+}
+i{
+  padding-right: 15px;
+}
+.main {
+  width:250px;
+  
+}
+.has-search .form-control {
+  padding-left: 2.375rem;
 }
 
-/* Set black background color, white text and some padding */
-footer {
-  background-color: #555;
-  color: white;
-  padding: 15px;
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 6.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+.navbar-nav .nav-link{
+  padding-left:20px;
+  padding-top: 20px;
+  color: #8792a5;
+}
+.sideBar{
+  min-height:100vh;
+  height:100%;
 }
 
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
-  .sidenav {
-    height: auto;
-    padding: 15px;
-  }
-  .row.content {
-    height: auto;
-  }
-}
+.sidebarBox{
+  width: 195px;
+  border-radius: 12px;
+  height:190px;
+  margin-left: 15px;
+  margin-top:64px;
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
 
-.navbar {
-  margin-bottom: 0;
-  border-radius: 0;
 }
-
-@import "~antd/dist/antd.css";
+.sideboxContent{
+  color: #fff;
+  padding-top: 55px;
+  padding-left: 15px;
+}
+.leftBtn{
+  background-color: #fff;
+  border: none;
+}
+.brand{
+  display: flex;
+  align-items: center;
+  margin-left: 15px;
+}
+.brand span{
+  padding: 10px;
+}
+.logo{
+  background: rgb(131,58,180);
+  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
+  width: 34px;
+  height: 34px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.headerUSer{
+  width: 34px;
+  height: 34px;
+  border-radius: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: coral;
+}
