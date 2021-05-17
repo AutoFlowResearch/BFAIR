@@ -5,6 +5,7 @@ import re
 import functools
 import copy
 from cobra.exceptions import Infeasible
+
 try:
     from gurobipy import Model as GRBModel
 except ModuleNotFoundError:
@@ -15,6 +16,7 @@ def timer(func):
     """
     Wrapper that reports how long it took to execute a function.
     """
+
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
         print("--- start ---")
@@ -58,7 +60,7 @@ def _adjust_bounds(model, rxn, bounds):
             model.reactions.get_by_id(rxn).upper_bound = round(bounds[0], 1)
             model.reactions.get_by_id(rxn).lower_bound = round(bounds[1], 1)
         except KeyError:
-            print(f'Did not work for', rxn)
+            print(f'Did not work for {rxn}')
             skip = True
     return model, skip
 
