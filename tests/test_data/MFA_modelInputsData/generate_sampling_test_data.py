@@ -8,8 +8,8 @@ import pickle
 import pandas as pd
 import pathlib
 import cobra
-from BFAIR.INCA import INCA_reimport
-from BFAIR.INCA.sampling import (
+from BFAIR.mfa.INCA import INCA_reimport
+from BFAIR.mfa.sampling import (
     add_constraints,
     find_biomass_reaction,
     get_min_solution_val,

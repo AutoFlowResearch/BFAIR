@@ -4,7 +4,7 @@ import pathlib
 import os
 import cobra
 import pandas as pd
-from BFAIR.INCA.sampling import (
+from BFAIR.mfa.sampling import (
     add_constraints,
     find_biomass_reaction,
     get_min_solution_val,
