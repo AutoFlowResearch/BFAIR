@@ -122,6 +122,10 @@ i{
   background-color: coral;
 }
 
+#searchSpan {
+  background: none;
+}
+
 .fa{
   background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
   width:15px;

@@ -1,14 +1,4 @@
 import React, { Component } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
-// import { Route } from "../protectedRoutes";
-import Dashboard from "../../pages/admin/dashboard";
-import UserForm from "../../pages/admin/NewUser";
-import Posts from "../../pages/admin/posts";
-import NewPost from "../../pages/admin/posts/NewPost";
-import NewRecipe from "../../pages/admin/recipe/NewRecipe";
-import RecipeList from "../../pages/admin/recipe/RecipeList";
-import SimpleForm from "../../pages/admin/SimpleForm";
-import SampleSubmission from "../../pages/admin/userManagement"
 
 class ContentArea extends Component {
   state = {
@@ -30,7 +20,7 @@ class ContentArea extends Component {
                       <b>Module</b>
                       <div class="main">
                           <div class="form-group has-search">
-                              <span class="fa fa-search form-control-feedback"></span>
+                              <span id="searchSpan" class="fa fa-search form-control-feedback"></span>
                               <input type="text" class="form-control" placeholder="Search for module name" />
                           </div>
                       </div>

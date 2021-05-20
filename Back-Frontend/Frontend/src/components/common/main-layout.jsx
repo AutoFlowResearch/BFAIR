@@ -39,7 +39,7 @@ export class MainLayout extends Component {
                         </div>
                         </div>
                     </div>
-                {/* <div className="row m-0 ">
+                <div className="row m-0 ">
                 <div className=" p-0 col-lg-2 col-md-2 col-sm-2">
                 <SidebarArea></SidebarArea>
                 
@@ -48,15 +48,15 @@ export class MainLayout extends Component {
                  
                     <ContentArea></ContentArea>
                 </div>
-            </div> */}
-            <div className="row m-0">
+            </div>
+            {/* <div className="row m-0">
                     <div className=" p-0 col-lg-2 col-md-2 col-sm-2">
                     <GeneralinvestigationSidebar></GeneralinvestigationSidebar>
                     </div>
                     <div className="col-lg-10 col-md-10 col-sm-10 p-0">
                         <GeneralStudy></GeneralStudy>
                     </div>
-                </div>
+                </div> */}
                 </div>
             </div>
         )
