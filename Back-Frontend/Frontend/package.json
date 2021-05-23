@@ -26,7 +26,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettify": "prettify --write ."
+    "prettify": "prettier --write ."
   },
   "eslintConfig": {
     "extends": "react-app"
