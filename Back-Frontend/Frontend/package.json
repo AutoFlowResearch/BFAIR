@@ -3,21 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "admin-lte": "^2.4.10",
-    "antd": "^3.16.1",
-    "axios": "^0.18.0",
-    "bootstrap": "^4.1.1",
-    "jquery": "^3.3.1",
-    "lodash": "^4.17.11",
-    "popper.js": "^1.15.0",
+    "admin-lte": "^2.4.18",
+    "antd": "^3.26.20",
+    "axios": "^0.18.1",
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.6.0",
+    "lodash": "^4.17.21",
+    "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-redux": "^6.0.1",
-    "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
-    "redux": "^4.0.1",
-    "redux-form": "^8.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.3",
+    "redux": "^4.1.0",
+    "redux-form": "^8.3.7",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
   },
@@ -29,7 +29,7 @@
     "eject": "react-scripts eject",
     "prettify": "prettier --write .",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "npm run lint -- --fix ."
   },
   "husky": {
     "hooks": {
@@ -46,10 +46,14 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.11.2",
+    "babel-eslint": "^10.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.7.2",
     "eslint-plugin-import": "^2.23.3",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prettier": "^3.4.0",
@@ -57,8 +61,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^6.0.0",
     "prettier": "^2.3.0",
-    "react-test-renderer": "^16.8.6",
-    "redux-devtools-extension": "^2.13.8",
-    "redux-mock-store": "^1.5.3"
+    "react-test-renderer": "^16.14.0",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-mock-store": "^1.5.4"
   }
 }
