@@ -8,9 +8,9 @@ import {
 const isuser = localStorage.getItem('token');
 
 const innitialState = {
-  token: isuser ? isuser : null,
+  token: isuser || null,
   userName: isuser ? 'lawrence' : null,
-  isAuthenticated: isuser ? true : false,
+  isAuthenticated: !!isuser,
   isAuthenticating: false,
   statusText: isuser ? 'Logged In' : null,
 };

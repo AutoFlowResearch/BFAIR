@@ -1,4 +1,4 @@
-import http from '../services/httpService';
+import http from './httpService';
 
 export const postsList = async () => {
   try {
@@ -28,7 +28,7 @@ export const createPost = async (newpost) => {
       'https://jsonplaceholder.typicode.com/posts',
       newpost,
     );
-    //send response to client
+    // send response to client
     return data;
   } catch (error) {
     throw new Error('Post not created');

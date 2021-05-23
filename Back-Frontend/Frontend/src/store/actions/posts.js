@@ -15,7 +15,7 @@ import {
   createPost,
 } from '../../services/posts';
 
-//list of posts
+// list of posts
 const requestPosts = () => ({
   type: REQUEST_POSTS,
 });

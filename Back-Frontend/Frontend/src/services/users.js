@@ -1,5 +1,5 @@
-import http from '../services/httpService';
 import Axios from 'axios';
+import http from './httpService';
 
 export const userslist = async () => {
   try {

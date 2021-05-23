@@ -2,9 +2,9 @@ import React from 'react';
 import renderer, { create } from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
-import Dashboard from './dashboard';
 import { shallow } from 'enzyme';
 import axios from 'axios';
+import Dashboard from './dashboard';
 
 const users = {
   data: [
@@ -285,7 +285,7 @@ describe('<Dashboard />', () => {
       await instance.componentDidMount();
       // console.log(instance.state);
 
-      const root = component.root;
+      const { root } = component;
       const h3 = root.find((element) => element.type === 'h3');
       expect(h3.props.children).toBe('Loading');
       // const listOfLi = root.findAll(element => element.type === "li");
@@ -303,7 +303,7 @@ describe('<Dashboard />', () => {
       await instance.componentDidMount();
       // console.log(instance.state);
 
-      const root = component.root;
+      const { root } = component;
       const h3 = root.find((element) => element.type === 'h3');
       expect(h3.props.children).toBe('Loading');
       // const listOfLi = root.findAll(element => element.type === "li");

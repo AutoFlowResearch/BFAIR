@@ -18,7 +18,7 @@ export const loginSuccess = ({ token }) => {
   localStorage.setItem('token', token);
   return {
     type: LOGIN_SUCCESS,
-    token: token,
+    token,
     username: 'ketan',
   };
 };
@@ -47,7 +47,7 @@ export const loginUser = (email, password) => async (dispatch) => {
       email,
       password,
     });
-    //decode token then
+    // decode token then
     dispatch(loginSuccess(data));
   } catch (error) {
     dispatch(loginFailure(error));

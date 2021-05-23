@@ -1,4 +1,4 @@
-import http from '../services/httpService';
+import http from './httpService';
 
 const apiEndpoint = 'http://127.0.0.1:3004/recipes';
 
@@ -23,7 +23,7 @@ export const getPostById = async (id) => {
 export const createRecipe = async (newrecipe) => {
   try {
     const { data } = await http.post(apiEndpoint, newrecipe);
-    //send response to client
+    // send response to client
     return data;
   } catch (error) {
     console.log('service catch');
@@ -33,8 +33,8 @@ export const createRecipe = async (newrecipe) => {
 
 export const updateRecipe = async (updatedrecipe, id) => {
   try {
-    const { data } = await http.put(apiEndpoint + '/' + id, updatedrecipe);
-    //send response to client
+    const { data } = await http.put(`${apiEndpoint}/${id}`, updatedrecipe);
+    // send response to client
     return data;
   } catch (error) {
     console.log('service catch');
@@ -44,8 +44,8 @@ export const updateRecipe = async (updatedrecipe, id) => {
 
 export const deleteRecipe = async (id) => {
   try {
-    const { data } = await http.delete(apiEndpoint + '/' + id);
-    //send response to client
+    const { data } = await http.delete(`${apiEndpoint}/${id}`);
+    // send response to client
     return data;
   } catch (error) {
     console.log('service catch');

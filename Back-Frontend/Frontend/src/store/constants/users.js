@@ -1,9 +1,9 @@
-//list of users
+// list of users
 const REQUEST_USERS = 'REQUEST_USERS';
 const RECEIVE_USERS = 'RECEIVE_USERS';
 const FAILURE_USERS = 'FAILURE_USERS';
 
-//user by id
+// user by id
 
 const REQUEST_USER = 'REQUEST_USER';
 const RECEIVE_USER = 'RECEIVE_USER';

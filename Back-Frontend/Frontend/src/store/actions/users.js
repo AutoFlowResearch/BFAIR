@@ -10,7 +10,7 @@ import {
 } from '../constants/users';
 import { userslist, getUserById as userById } from '../../services/users';
 
-//list of users
+// list of users
 const requestUsers = () => ({
   type: REQUEST_USERS,
 });

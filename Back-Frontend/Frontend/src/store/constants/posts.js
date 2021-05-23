@@ -1,9 +1,9 @@
-//list of POSTS
+// list of POSTS
 const REQUEST_POSTS = 'REQUEST_POSTS';
 const RECEIVE_POSTS = 'RECEIVE_POSTS';
 const FAILURE_POSTS = 'FAILURE_POSTS';
 
-//POST by id
+// POST by id
 
 const REQUEST_POST = 'REQUEST_POST';
 const RECEIVE_POST = 'RECEIVE_POST';
