@@ -32,7 +32,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:fix && npm run prettify"
+      "pre-commit": "npm run lint:fix; npm run prettify"
     }
   },
   "eslintConfig": {
