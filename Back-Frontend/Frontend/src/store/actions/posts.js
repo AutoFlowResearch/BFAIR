@@ -7,67 +7,67 @@ import {
   FAILURE_POST,
   UPDATE_POST_DATA,
   CLEAR_POST_DATA,
-  CREATE_POST
-} from "../constants/posts";
+  CREATE_POST,
+} from '../constants/posts';
 import {
   postsList,
   getPostById as postById,
-  createPost
-} from "../../services/posts";
+  createPost,
+} from '../../services/posts';
 
 //list of posts
 const requestPosts = () => ({
-  type: REQUEST_POSTS
+  type: REQUEST_POSTS,
 });
 
-const receivePosts = data => ({
+const receivePosts = (data) => ({
   type: RECEIVE_POSTS,
-  data
+  data,
 });
 
-const failurePosts = error => ({
+const failurePosts = (error) => ({
   type: FAILURE_POSTS,
-  error
+  error,
 });
 
 // post by id
 
 const requestPost = () => ({
-  type: REQUEST_POST
+  type: REQUEST_POST,
 });
 
-const receivePost = data => ({
+const receivePost = (data) => ({
   type: RECEIVE_POST,
-  data
+  data,
 });
 
-const failurePost = error => ({
+const failurePost = (error) => ({
   type: FAILURE_POST,
-  error
+  error,
 });
 
-export const updateData = payload => ({
+export const updateData = (payload) => ({
   type: UPDATE_POST_DATA,
-  payload
+  payload,
 });
 
 export const clearPostData = () => ({
-  type: CLEAR_POST_DATA
+  type: CLEAR_POST_DATA,
 });
 
-export const newPost = newpost => async dispatch => {
+export const newPost = (newpost) => async (dispatch) => {
   try {
     const data = await createPost(newpost);
     dispatch({
       type: CREATE_POST,
-      payload: { userid: 1, ...data, id: new Date() }
+      payload: { userid: 1, ...data, id: new Date() },
     });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getPosts = () => async dispatch => {
+export const getPosts = () => async (dispatch) => {
   dispatch(requestPosts());
   try {
     const data = await postsList();
@@ -77,7 +77,7 @@ export const getPosts = () => async dispatch => {
   }
 };
 
-export const getPostById = id => async dispatch => {
+export const getPostById = (id) => async (dispatch) => {
   dispatch(requestPost());
   try {
     const data = await postById(id);

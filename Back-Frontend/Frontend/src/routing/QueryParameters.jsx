@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 function ParamsDemo({ location }) {
   let params = new URLSearchParams(location.search);
@@ -12,19 +12,19 @@ function ParamsDemo({ location }) {
         to parse the search string yourself.
       </p>
       <p>
-        In modern browsers that support{" "}
+        In modern browsers that support{' '}
         <a href="https://developer.mozilla.org/en-US/docs/Web/API/URL">
           the URL API
         </a>
-        , you can instantiate a <code>URLSearchParams</code> object from{" "}
+        , you can instantiate a <code>URLSearchParams</code> object from{' '}
         <code>location.search</code> and use that.
       </p>
       <p>
-        In{" "}
+        In{' '}
         <a href="https://caniuse.com/#feat=url">
           browsers that do not support the URL API (read: IE)
-        </a>{" "}
-        you can use a 3rd party library such as{" "}
+        </a>{' '}
+        you can use a 3rd party library such as{' '}
         <a href="https://github.com/sindresorhus/query-string">query-string</a>.
       </p>
       <div>
@@ -40,23 +40,23 @@ function ParamsDemo({ location }) {
             <Link to="/account?name=ketan">Netflix</Link>
           </li>
           <li>
-            <Link to={{ pathname: "/account", search: "?name=zillow-group" }}>
+            <Link to={{ pathname: '/account', search: '?name=zillow-group' }}>
               Zillow Group
             </Link>
           </li>
           <li>
-            <Link to={{ pathname: "/account", search: "?name=yahoo" }}>
+            <Link to={{ pathname: '/account', search: '?name=yahoo' }}>
               Yahoo
             </Link>
           </li>
           <li>
-            <Link to={{ pathname: "/account", search: "?name=modus-create" }}>
+            <Link to={{ pathname: '/account', search: '?name=modus-create' }}>
               Modus Create
             </Link>
           </li>
         </ul>
 
-        <Child name={params.get("name")} />
+        <Child name={params.get('name')} />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getAllRecipes, deleteRecipe } from "../../../../store/actions/recipes";
-import Card from "../../../common/Card";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getAllRecipes, deleteRecipe } from '../../../../store/actions/recipes';
+import Card from '../../../common/Card';
 
 class RecipeList extends Component {
   componentDidMount() {
@@ -11,14 +11,14 @@ class RecipeList extends Component {
   }
 
   handleNewRecipe = () => {
-    this.props.history.push("/mainpage/admin/recipe/new-recipe");
+    this.props.history.push('/mainpage/admin/recipe/new-recipe');
   };
 
-  handleRecipe = id => {
+  handleRecipe = (id) => {
     this.props.history.push(`/mainpage/admin/recipe/${id}`);
   };
 
-  handleDelete = id => {
+  handleDelete = (id) => {
     this.props.deleteRecipe(id);
   };
 
@@ -36,7 +36,7 @@ class RecipeList extends Component {
         >
           chandu Recipe
         </button>
-        {data.map(recipe => (
+        {data.map((recipe) => (
           <Card
             key={recipe._id}
             handleClick={() => this.handleRecipe(recipe._id)}
@@ -49,18 +49,15 @@ class RecipeList extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   data: state.recipeManagement.recipeList.data,
   error: state.recipeManagement.recipeList.error,
-  isFetching: state.recipeManagement.recipeList.isFetching
+  isFetching: state.recipeManagement.recipeList.isFetching,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getAllRecipes: () => dispatch(getAllRecipes()),
-  deleteRecipe: id => dispatch(deleteRecipe(id))
+  deleteRecipe: (id) => dispatch(deleteRecipe(id)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RecipeList);
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeList);

@@ -2,17 +2,17 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT_REQUEST
-} from "../constants/auth";
+  LOGOUT_REQUEST,
+} from '../constants/auth';
 
-const isuser = localStorage.getItem("token");
+const isuser = localStorage.getItem('token');
 
 const innitialState = {
   token: isuser ? isuser : null,
-  userName: isuser ? "lawrence" : null,
+  userName: isuser ? 'lawrence' : null,
   isAuthenticated: isuser ? true : false,
   isAuthenticating: false,
-  statusText: isuser ? "Logged In" : null
+  statusText: isuser ? 'Logged In' : null,
 };
 
 export const auth = (state = innitialState, action) => {
@@ -26,7 +26,7 @@ export const auth = (state = innitialState, action) => {
         userName: action.userName,
         isAuthenticating: false,
         isAuthenticated: true,
-        statusText: "You have been successfully logged in"
+        statusText: 'You have been successfully logged in',
       };
     case LOGIN_FAILURE:
       return {
@@ -35,7 +35,7 @@ export const auth = (state = innitialState, action) => {
         userName: null,
         isAuthenticated: false,
         isAuthenticating: false,
-        statusText: `Authentication Error ${action.status} ${action.statusText}`
+        statusText: `Authentication Error ${action.status} ${action.statusText}`,
       };
     case LOGOUT_REQUEST:
       return {
@@ -43,7 +43,7 @@ export const auth = (state = innitialState, action) => {
         isAuthenticated: false,
         token: null,
         userName: null,
-        statusText: "You have been successfully logged out."
+        statusText: 'You have been successfully logged out.',
       };
     default:
       return state;

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 export const newField = ({
   input,
   placeholder,
@@ -16,7 +16,7 @@ export const newField = ({
         id={id}
         className="form-control"
       />
-      {touched && error && <p style={{ color: "red" }}>{error}</p>}
+      {touched && error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   );
 };

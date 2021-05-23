@@ -6,43 +6,43 @@ import {
   REQUEST_USER,
   FAILURE_USER,
   UPDATE_USER_DATA,
-  CLEAR_USER_DATA
-} from "../constants/users";
+  CLEAR_USER_DATA,
+} from '../constants/users';
 
 const initialState = {
   userslist: {
     data: [],
     isFetching: false,
-    error: null
+    error: null,
   },
 
   updateuser: {
     isFetching: false,
     error: null,
     data: {
-      id: "",
-      name: "",
-      username: "",
-      email: "",
+      id: '',
+      name: '',
+      username: '',
+      email: '',
       address: {
-        street: "",
-        suite: "",
-        city: "",
-        zipcode: "",
+        street: '',
+        suite: '',
+        city: '',
+        zipcode: '',
         geo: {
-          lat: "",
-          lng: ""
-        }
+          lat: '',
+          lng: '',
+        },
       },
-      phone: "",
-      website: "",
+      phone: '',
+      website: '',
       company: {
-        name: "",
-        catchPhrase: "",
-        bs: ""
-      }
-    }
-  }
+        name: '',
+        catchPhrase: '',
+        bs: '',
+      },
+    },
+  },
 };
 
 const userslist = (state, action) => {
@@ -81,7 +81,7 @@ export const usermanagement = (state = initialState, action) => {
     default:
       return {
         userslist: userslist(state.userslist, action),
-        updateuser: updateuser(state.updateuser, action)
+        updateuser: updateuser(state.updateuser, action),
       };
   }
 };

@@ -6,51 +6,51 @@ import {
   REQUEST_USER,
   FAILURE_USER,
   UPDATE_USER_DATA,
-  CLEAR_USER_DATA
-} from "../constants/users";
-import { userslist, getUserById as userById } from "../../services/users";
+  CLEAR_USER_DATA,
+} from '../constants/users';
+import { userslist, getUserById as userById } from '../../services/users';
 
 //list of users
 const requestUsers = () => ({
-  type: REQUEST_USERS
+  type: REQUEST_USERS,
 });
 
-const receiveUsers = data => ({
+const receiveUsers = (data) => ({
   type: RECEIVE_USERS,
-  data
+  data,
 });
 
-const failureUsers = error => ({
+const failureUsers = (error) => ({
   type: FAILURE_USERS,
-  error
+  error,
 });
 
 // user by id
 
 const requestUser = () => ({
-  type: REQUEST_USER
+  type: REQUEST_USER,
 });
 
-const receiveUser = data => ({
+const receiveUser = (data) => ({
   type: RECEIVE_USER,
-  data
+  data,
 });
 
-const failureUser = error => ({
+const failureUser = (error) => ({
   type: FAILURE_USER,
-  error
+  error,
 });
 
-export const updateData = payload => ({
+export const updateData = (payload) => ({
   type: UPDATE_USER_DATA,
-  payload
+  payload,
 });
 
 export const clearUserData = () => ({
-  type: CLEAR_USER_DATA
+  type: CLEAR_USER_DATA,
 });
 
-export const getUsers = () => async dispatch => {
+export const getUsers = () => async (dispatch) => {
   dispatch(requestUsers());
   try {
     const data = await userslist();
@@ -60,7 +60,7 @@ export const getUsers = () => async dispatch => {
   }
 };
 
-export const getUserByid = id => async dispatch => {
+export const getUserByid = (id) => async (dispatch) => {
   dispatch(requestUser());
   try {
     const data = await userById(id);

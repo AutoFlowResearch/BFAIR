@@ -1,36 +1,36 @@
-import http from "../services/httpService";
+import http from '../services/httpService';
 
 export const postsList = async () => {
   try {
     const { data } = await http.get(
-      "https://jsonplaceholder.typicode.com/posts"
+      'https://jsonplaceholder.typicode.com/posts',
     );
-    return data.filter(post => post.userId === 1);
+    return data.filter((post) => post.userId === 1);
   } catch (error) {
-    if (error.response.status >= 400) throw new Error("error fetching posts");
+    if (error.response.status >= 400) throw new Error('error fetching posts');
   }
 };
 
-export const getPostById = async id => {
+export const getPostById = async (id) => {
   try {
     const { data } = await http.get(
-      `https://jsonplaceholder.typicode.com/posts/${id}`
+      `https://jsonplaceholder.typicode.com/posts/${id}`,
     );
     return data;
   } catch (error) {
-    if (error.response.status >= 400) throw new Error("Post not found");
+    if (error.response.status >= 400) throw new Error('Post not found');
   }
 };
 
-export const createPost = async newpost => {
+export const createPost = async (newpost) => {
   try {
     const { data } = await http.post(
-      "https://jsonplaceholder.typicode.com/posts",
-      newpost
+      'https://jsonplaceholder.typicode.com/posts',
+      newpost,
     );
     //send response to client
     return data;
   } catch (error) {
-    throw new Error("Post not created");
+    throw new Error('Post not created');
   }
 };

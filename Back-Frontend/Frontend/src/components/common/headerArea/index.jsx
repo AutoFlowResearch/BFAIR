@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import user from "../../../../node_modules/admin-lte/dist/img/user2-160x160.jpg";
-import { logout } from "../../../store/actions/auth";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import user from '../../../../node_modules/admin-lte/dist/img/user2-160x160.jpg';
+import { logout } from '../../../store/actions/auth';
+import { connect } from 'react-redux';
 
 class HeaderArea extends Component {
   handleLogout = () => {
     const { dispatch } = this.props;
     dispatch(logout());
-    window.location = "/";
+    window.location = '/';
   };
 
   render() {
@@ -21,8 +21,8 @@ class HeaderArea extends Component {
           </span>
           {/* <!-- logo for regular state and mobile devices --> */}
           <span className="logo-lg">
-            <b style={{ color: "#fff" }}>Auto</b>
-            <font style={{ color: "#fff" }}>Flow</font>
+            <b style={{ color: '#fff' }}>Auto</b>
+            <font style={{ color: '#fff' }}>Flow</font>
           </span>
         </a>
 
@@ -74,7 +74,7 @@ class HeaderArea extends Component {
                     <img src={user} className="img-circle" alt="User Image" />
 
                     <p>
-                     Lawrence - Developer
+                      Lawrence - Developer
                       <small>Member since Nov. 2020</small>
                     </p>
                   </li>

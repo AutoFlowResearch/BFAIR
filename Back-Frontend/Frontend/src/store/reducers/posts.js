@@ -1,4 +1,4 @@
-import lodash from "lodash";
+import lodash from 'lodash';
 
 import {
   RECEIVE_POSTS,
@@ -9,24 +9,24 @@ import {
   FAILURE_POST,
   UPDATE_POST_DATA,
   CLEAR_POST_DATA,
-  CREATE_POST
-} from "../constants/posts";
+  CREATE_POST,
+} from '../constants/posts';
 
 const initialState = {
   postsList: {
     data: [],
     isFetching: false,
-    error: null
+    error: null,
   },
 
   updatePost: {
     isFetching: false,
     error: null,
     data: {
-      title: "",
-      body: ""
-    }
-  }
+      title: '',
+      body: '',
+    },
+  },
 };
 
 const postsList = (state, action) => {
@@ -37,7 +37,7 @@ const postsList = (state, action) => {
       return {
         ...state,
         isFetching: false,
-        data: lodash.unionBy(state.data, action.data, "id")
+        data: lodash.unionBy(state.data, action.data, 'id'),
       };
     case FAILURE_POSTS:
       return { ...state, error: action.error };
@@ -72,7 +72,7 @@ export const postManagement = (state = initialState, action) => {
     default:
       return {
         postsList: postsList(state.postsList, action),
-        updatePost: updatePost(state.updatePost, action)
+        updatePost: updatePost(state.updatePost, action),
       };
   }
 };

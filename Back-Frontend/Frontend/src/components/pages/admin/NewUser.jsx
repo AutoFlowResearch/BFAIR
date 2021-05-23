@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   getUserByid,
   updateData,
-  clearUserData
-} from "../../../store/actions/users";
+  clearUserData,
+} from '../../../store/actions/users';
 
 class UserForm extends Component {
   constructor() {
@@ -13,7 +13,7 @@ class UserForm extends Component {
   }
   async componentDidMount() {
     const { id } = this.props.match.params;
-    if (id === "new-user") return;
+    if (id === 'new-user') return;
 
     const { dispatch } = this.props;
     await dispatch(getUserByid(id));
@@ -23,7 +23,7 @@ class UserForm extends Component {
     const { dispatch, data } = this.props;
     const { id, value } = target;
     const newdata = { ...data };
-    const addressfileds = ["street", "city"];
+    const addressfileds = ['street', 'city'];
     if (addressfileds.includes(id)) {
       newdata.address[id] = value;
     } else newdata[id] = value;
@@ -36,7 +36,7 @@ class UserForm extends Component {
   }
 
   handleSubmit = () => {
-    console.log("submitted");
+    console.log('submitted');
   };
 
   render() {
@@ -122,7 +122,7 @@ class UserForm extends Component {
             </div>
             <div className="box-footer">
               <button className="btn btn-primary pull-right">
-                {id === "new-user" ? "Submit" : "Update"}
+                {id === 'new-user' ? 'Submit' : 'Update'}
               </button>
             </div>
           </form>
@@ -132,10 +132,10 @@ class UserForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isFetching: state.usermanagement.updateuser.isFetching,
   error: state.usermanagement.updateuser.error,
-  data: state.usermanagement.updateuser.data
+  data: state.usermanagement.updateuser.data,
 });
 
 export default connect(mapStateToProps)(UserForm);

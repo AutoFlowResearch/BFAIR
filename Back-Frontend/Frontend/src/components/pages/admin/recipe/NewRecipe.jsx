@@ -1,22 +1,22 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { updateRecipe, addRecipe } from "../../../../store/actions/recipes";
-import { getPostById } from "../../../../services/recipes";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { updateRecipe, addRecipe } from '../../../../store/actions/recipes';
+import { getPostById } from '../../../../services/recipes';
 
 class NewRecipe extends Component {
   constructor() {
     super();
     this.state = {
-      recipeName: "",
-      recipeIngredients: "",
-      recipeMethods: "",
-      error: false
+      recipeName: '',
+      recipeIngredients: '',
+      recipeMethods: '',
+      error: false,
     };
   }
 
   async componentDidMount() {
     const { id } = this.props.match.params;
-    if (id === "new-recipe") return;
+    if (id === 'new-recipe') return;
 
     //fetch data of particular id
     try {
@@ -31,7 +31,7 @@ class NewRecipe extends Component {
     this.setState({
       recipeIngredients,
       recipeMethods,
-      recipeName
+      recipeName,
     });
   };
 
@@ -40,18 +40,18 @@ class NewRecipe extends Component {
     this.setState({ [id]: value });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { recipeName, recipeIngredients, recipeMethods } = this.state;
 
-    if (this.props.match.params.id === "new-recipe") {
+    if (this.props.match.params.id === 'new-recipe') {
       try {
         await this.props.addRecipe({
           recipeName,
           recipeIngredients,
-          recipeMethods
+          recipeMethods,
         });
-        this.props.history.push("/mainpage/admin/recipe");
+        this.props.history.push('/mainpage/admin/recipe');
       } catch (error) {
         this.setState({ error });
       }
@@ -61,12 +61,12 @@ class NewRecipe extends Component {
           {
             recipeName,
             recipeIngredients,
-            recipeMethods
+            recipeMethods,
           },
-          this.props.match.params.id
+          this.props.match.params.id,
         );
 
-        this.props.history.push("/mainpage/admin/recipe");
+        this.props.history.push('/mainpage/admin/recipe');
       } catch (error) {
         this.setState({ error });
       }
@@ -144,7 +144,7 @@ class NewRecipe extends Component {
             </div>
             <div className="box-footer">
               <button className="btn btn-primary pull-right">
-                {id === "new-recipe" ? "Submit" : "Update"}
+                {id === 'new-recipe' ? 'Submit' : 'Update'}
               </button>
             </div>
           </form>
@@ -156,15 +156,12 @@ class NewRecipe extends Component {
 }
 
 const mapStateToProps = ({ recipeManagement }) => ({
-  error: recipeManagement.recipeList.error
+  error: recipeManagement.recipeList.error,
 });
 
-const mapDsipatchToProps = dispatch => ({
-  addRecipe: data => dispatch(addRecipe(data)),
-  updateRecipe: (data, id) => dispatch(updateRecipe(data, id))
+const mapDsipatchToProps = (dispatch) => ({
+  addRecipe: (data) => dispatch(addRecipe(data)),
+  updateRecipe: (data, id) => dispatch(updateRecipe(data, id)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDsipatchToProps
-)(NewRecipe);
+export default connect(mapStateToProps, mapDsipatchToProps)(NewRecipe);

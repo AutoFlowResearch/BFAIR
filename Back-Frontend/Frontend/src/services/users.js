@@ -1,25 +1,25 @@
-import http from "../services/httpService";
-import Axios from "axios";
+import http from '../services/httpService';
+import Axios from 'axios';
 
 export const userslist = async () => {
   try {
     const { data } = await http.get(
-      "https://jsonplaceholder.typicode.com/users"
+      'https://jsonplaceholder.typicode.com/users',
     );
     return data;
   } catch (error) {
-    if (error.response.status >= 400) throw new Error("error fetching users");
+    if (error.response.status >= 400) throw new Error('error fetching users');
   }
 };
 
-export const getUserById = async id => {
+export const getUserById = async (id) => {
   try {
     const { data } = await http.get(
-      `https://jsonplaceholder.typicode.com/users/${id}`
+      `https://jsonplaceholder.typicode.com/users/${id}`,
     );
     return data;
   } catch (error) {
-    if (error.response.status >= 400) throw new Error("User not found");
+    if (error.response.status >= 400) throw new Error('User not found');
   }
 };
 

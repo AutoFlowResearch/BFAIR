@@ -1,26 +1,26 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { reduxForm, Field } from "redux-form";
-import { newField } from "../../../common/newField";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { reduxForm, Field } from 'redux-form';
+import { newField } from '../../../common/newField';
 
 import {
   getPostById,
   updateData,
   clearPostData,
-  newPost
-} from "../../../../store/actions/posts";
+  newPost,
+} from '../../../../store/actions/posts';
 
 class NewPost extends Component {
   constructor() {
     super();
     this.state = {
-      loading: true
+      loading: true,
     };
   }
 
   async componentDidMount() {
     const { id } = this.props.match.params;
-    if (id === "new-post") return;
+    if (id === 'new-post') return;
 
     const { getPostById } = this.props;
     await getPostById(id);
@@ -38,13 +38,13 @@ class NewPost extends Component {
     updateData(newdata);
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { title, body } = this.props.data;
 
     if (title && body) {
       this.props.newPost({ title, body });
-      this.props.history.push("/admin/posts");
+      this.props.history.push('/admin/posts');
     }
   };
 
@@ -100,7 +100,7 @@ class NewPost extends Component {
                 className="btn btn-primary pull-right"
                 disabled={!(title && body)}
               >
-                {id === "new-post" ? "Submit" : "Update"}
+                {id === 'new-post' ? 'Submit' : 'Update'}
               </button>
             </div>
           </form>
@@ -110,20 +110,17 @@ class NewPost extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isFetching: state.postManagement.updatePost.isFetching,
   error: state.postManagement.updatePost.error,
-  data: state.postManagement.updatePost.data
+  data: state.postManagement.updatePost.data,
 });
 
-const mapDispatchToProps = dispatch => ({
-  newPost: newpost => dispatch(newPost(newpost)),
+const mapDispatchToProps = (dispatch) => ({
+  newPost: (newpost) => dispatch(newPost(newpost)),
   clearPostData: () => dispatch(clearPostData()),
-  getPostById: id => dispatch(getPostById(id)),
-  updateData: data => dispatch(updateData(data))
+  getPostById: (id) => dispatch(getPostById(id)),
+  updateData: (data) => dispatch(updateData(data)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NewPost);
+export default connect(mapStateToProps, mapDispatchToProps)(NewPost);

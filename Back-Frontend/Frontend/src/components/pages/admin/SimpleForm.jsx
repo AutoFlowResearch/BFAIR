@@ -1,8 +1,8 @@
-import React from "react";
-import { reduxForm, Field } from "redux-form";
-import { newField } from "../../common/newField";
+import React from 'react';
+import { reduxForm, Field } from 'redux-form';
+import { newField } from '../../common/newField';
 
-const required = value => (value ? undefined : "Required");
+const required = (value) => (value ? undefined : 'Required');
 
 // const newField = ({
 //   input,
@@ -29,7 +29,7 @@ const SimpleForm = ({ handleSubmit, reset, pristine, submitting, valid }) => {
         </div>
         <form
           className="form-horizontal"
-          onSubmit={handleSubmit(val => console.log(val))}
+          onSubmit={handleSubmit((val) => console.log(val))}
         >
           <div className="box-body">
             <div className="form-group">
@@ -61,4 +61,4 @@ const SimpleForm = ({ handleSubmit, reset, pristine, submitting, valid }) => {
   );
 };
 
-export default reduxForm({ form: "simpleForm" })(SimpleForm);
+export default reduxForm({ form: 'simpleForm' })(SimpleForm);

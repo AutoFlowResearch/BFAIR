@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { getPosts } from "../../../../store/actions/posts";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getPosts } from '../../../../store/actions/posts';
 
 class Posts extends Component {
   async componentDidMount() {
@@ -8,7 +8,7 @@ class Posts extends Component {
   }
 
   handleNewPost = () => {
-    this.props.history.push("/mainpage/admin/posts/new-post");
+    this.props.history.push('/mainpage/admin/posts/new-post');
   };
 
   handlePost(id) {
@@ -29,7 +29,7 @@ class Posts extends Component {
           New Post
         </button>
         <ul className="list-group">
-          {data.map(post => (
+          {data.map((post) => (
             <li
               key={post.id}
               className="list-group-item"
@@ -47,6 +47,6 @@ class Posts extends Component {
 const mapStateToProps = ({ postManagement }) => ({
   data: postManagement.postsList.data,
   isFetching: postManagement.postsList.isFetching,
-  error: postManagement.postsList.error
+  error: postManagement.postsList.error,
 });
 export default connect(mapStateToProps)(Posts);

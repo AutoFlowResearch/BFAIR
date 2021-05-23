@@ -19,11 +19,11 @@ class SampleSubmission extends React.Component {
       investigationDescInput: '',
       investigationDescSelect: '',
       investigation_Title: '',
-      investigation_Id: ''
+      investigation_Id: '',
     };
 
     this.sampleChange = this.sampleChange.bind(this);
-    this.investigationTitleChange = this.investigationTitleChange.bind(this)
+    this.investigationTitleChange = this.investigationTitleChange.bind(this);
     this.deleteSample = this.deleteSample.bind(this);
     this.deleteInvestigation = this.deleteInvestigation.bind(this);
     this.clearSample = this.clearSample.bind(this);
@@ -36,7 +36,6 @@ class SampleSubmission extends React.Component {
     this.clearInvestigatingForm = this.clearInvestigatingForm.bind(this);
     this.handleInvestigationSubmit = this.handleInvestigationSubmit.bind(this);
     this.updateInvestigation = this.updateInvestigation.bind(this);
-
   }
 
   componentDidMount() {
@@ -46,37 +45,36 @@ class SampleSubmission extends React.Component {
 
   clearSample() {
     this.setState({
-      sampleModule: ''
+      sampleModule: '',
     });
     console.log(this.state.sampleModule);
   }
 
   clearInvestigatingForm() {
     this.setState({
-      investigationTitleInput: ''
+      investigationTitleInput: '',
     });
   }
 
   sampleChange(event) {
     this.setState({
-      sampleSelect: event.target.value
+      sampleSelect: event.target.value,
     });
     console.log(event.target.value);
   }
 
   investigationTitleChange(event) {
     this.setState({
-      investigationSelect: event.target.value
+      investigationSelect: event.target.value,
     });
     let selectedObj = this.state.investigationData.filter(function (el) {
-      return el.Investigation_id == event.target.value
+      return el.Investigation_id == event.target.value;
     });
     this.setState({
       investigationDescSelect: selectedObj[0].Description,
       investigation_Id: selectedObj[0].Investigation_id,
-      investigation_Title: selectedObj[0].Title
+      investigation_Title: selectedObj[0].Title,
     });
-
   }
 
   deleteSample(event) {
@@ -84,14 +82,13 @@ class SampleSubmission extends React.Component {
     const requestOptions = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Sample_id: this.state.sampleSelect })
+      body: JSON.stringify({ Sample_id: this.state.sampleSelect }),
     };
-    fetch(`${baseUrl}/Sample_api`, requestOptions)
-      .then((response) => {
-        alert('Sample successfully deleted')
-        this.getSampleDataList();
-        response.json()
-      })
+    fetch(`${baseUrl}/Sample_api`, requestOptions).then((response) => {
+      alert('Sample successfully deleted');
+      this.getSampleDataList();
+      response.json();
+    });
   }
 
   deleteInvestigation(event) {
@@ -99,20 +96,20 @@ class SampleSubmission extends React.Component {
     const requestOptions = {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Investigation_id: this.state.investigationSelect })
+      body: JSON.stringify({
+        Investigation_id: this.state.investigationSelect,
+      }),
     };
-    fetch(`${baseUrl}/investigation_api`, requestOptions)
-      .then((response) => {
-        alert('Investigation record successfully deleted')
-        this.getInvestigationList();
-        response.json()
-      })
+    fetch(`${baseUrl}/investigation_api`, requestOptions).then((response) => {
+      alert('Investigation record successfully deleted');
+      this.getInvestigationList();
+      response.json();
+    });
   }
-
 
   typeChange(event) {
     this.setState({
-      typeName: event.target.value
+      typeName: event.target.value,
     });
     console.log(event.target.value);
   }
@@ -120,13 +117,13 @@ class SampleSubmission extends React.Component {
   methodChange(event) {
     this.setState({
       method: event.target.value,
-      description: 'auto_populated'
+      description: 'auto_populated',
     });
   }
 
   centerChange(event) {
     this.setState({
-      method: event.target.value
+      method: event.target.value,
     });
     console.log(event.target.value);
   }
@@ -138,8 +135,8 @@ class SampleSubmission extends React.Component {
       typeName: this.state.typeName,
       method: this.state.method,
       description: this.state.description,
-      research_center: this.state.research_center
-    }
+      research_center: this.state.research_center,
+    };
   }
 
   updateInvestigation() {
@@ -148,15 +145,18 @@ class SampleSubmission extends React.Component {
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Title: this.state.investigation_Title, Description: this.state.investigationDescInput, Investigation_id: this.state.investigation_Id })
+      body: JSON.stringify({
+        Title: this.state.investigation_Title,
+        Description: this.state.investigationDescInput,
+        Investigation_id: this.state.investigation_Id,
+      }),
     };
     fetch(`${baseUrl}/investigation_api`, requestOptions)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => {
-        alert('Investigation record updated successfully')
+        alert('Investigation record updated successfully');
         this.getInvestigationList();
-      })
-
+      });
   }
 
   handleInvestigationSubmit(e) {
@@ -164,31 +164,34 @@ class SampleSubmission extends React.Component {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Title: this.state.investigationTitleInput, Description: this.state.investigationDescInput })
+      body: JSON.stringify({
+        Title: this.state.investigationTitleInput,
+        Description: this.state.investigationDescInput,
+      }),
     };
     fetch(`${baseUrl}/investigation_api`, requestOptions)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => {
-        alert(data.message)
+        alert(data.message);
         this.getInvestigationList();
-      })
+      });
   }
 
   setSampleModuleInput(e) {
     this.setState({
-      sampleModule: e
+      sampleModule: e,
     });
   }
 
   investigationSetTitleInput(e) {
     this.setState({
-      investigationTitleInput: e
+      investigationTitleInput: e,
     });
   }
 
   investigationSetDescInput(e) {
     this.setState({
-      investigationDescInput: e
+      investigationDescInput: e,
     });
   }
 
@@ -198,71 +201,80 @@ class SampleSubmission extends React.Component {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ Sample_name: this.state.sampleModule })
+      body: JSON.stringify({ Sample_name: this.state.sampleModule }),
     };
     fetch(`${baseUrl}/Sample_api`, requestOptions)
-      .then(response => response.json())
+      .then((response) => response.json())
       .then((data) => {
-        alert(data.message)
+        alert(data.message);
         this.getSampleDataList();
-      })
+      });
   }
 
   getSampleDataList() {
-    fetch(`${baseUrl}/Sample_api`, { method: "GET" })
-      .then(response => response.json())
-      .then(data => {
+    fetch(`${baseUrl}/Sample_api`, { method: 'GET' })
+      .then((response) => response.json())
+      .then((data) => {
         this.setState({
-          sampleData: data.Sample
-        })
-      })
+          sampleData: data.Sample,
+        });
+      });
   }
 
   getInvestigationList() {
-    fetch(`${baseUrl}/investigation_api`, { method: "GET" })
-      .then(response => response.json())
-      .then(data => {
+    fetch(`${baseUrl}/investigation_api`, { method: 'GET' })
+      .then((response) => response.json())
+      .then((data) => {
         this.setState({
-          investigationData: data.Investigation
-        })
-      })
-
+          investigationData: data.Investigation,
+        });
+      });
   }
 
   changeText(event) {
-    this.setState(
-      { investigationDescInput: event.target.value }
-    );
+    this.setState({ investigationDescInput: event.target.value });
   }
 
   render() {
-    let optionTemplate = this.state.sampleData.map(v => (
+    let optionTemplate = this.state.sampleData.map((v) => (
       <option value={v.id}>{v.Sample_name}</option>
     ));
 
-    let optionInvestigation = this.state.investigationData.map(v => (
+    let optionInvestigation = this.state.investigationData.map((v) => (
       <option value={v.Investigation_id}>{v.Title}</option>
     ));
     return (
       <div className="container">
         <ul className="nav nav-tabs" role="tablist">
           <li className="nav-item">
-            <a className="nav-link active" data-toggle="tab" href="#SampleModule">Sample Module</a>
+            <a
+              className="nav-link active"
+              data-toggle="tab"
+              href="#SampleModule"
+            >
+              Sample Module
+            </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" data-toggle="tab" href="#investigation">Investigation</a>
+            <a className="nav-link" data-toggle="tab" href="#investigation">
+              Investigation
+            </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" data-toggle="tab" href="#study">Study Module</a>
+            <a className="nav-link" data-toggle="tab" href="#study">
+              Study Module
+            </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" data-toggle="tab" href="#protocol">Protocols Module</a>
+            <a className="nav-link" data-toggle="tab" href="#protocol">
+              Protocols Module
+            </a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" data-toggle="tab" href="#assay">Assay Module</a>
+            <a className="nav-link" data-toggle="tab" href="#assay">
+              Assay Module
+            </a>
           </li>
-
-
         </ul>
 
         {/* Sample Module Form */}
@@ -270,73 +282,126 @@ class SampleSubmission extends React.Component {
           <div id="SampleModule" className="container tab-pane active">
             <h2>Sample Module</h2>
             <div class="row">
-
               {/* <form name="form" onSubmit={this.handleSampleModuleSubmit}> */}
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Investigation</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Investigation
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Sample</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Sample
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Study Design</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Study Design
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Intervation Selection</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Intervation Selection
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Intervation Type</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Intervation Type
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Assay Type</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Assay Type
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
               <div className="col-md-4">
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Protocols</label>
-                  <select className="form-control" value={this.state.value} onChange={this.sampleChange}>
-                    <option disabled selected>Select</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Protocols
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.sampleChange}
+                  >
+                    <option disabled selected>
+                      Select
+                    </option>
                     {optionTemplate}
                   </select>
                 </div>
               </div>
-
-
             </div>
             <div class="row">
               <div className="col-md-5">
@@ -347,50 +412,98 @@ class SampleSubmission extends React.Component {
                   <button className="btn btn-primary">Save</button>
                 </div>
                 <div className="col-md-6">
-                  <button onClick={this.deleteSample} className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={this.deleteSample}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <div className="col-md-5">
-                        {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
+                  {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
                 </div>
               </div>
-
             </div>
-
           </div>
 
           {/* Sample Submission */}
 
           <div id="investigation" className="container tab-pane fade">
-
             <div className="col-md-4 col-md-offset-3">
               <h2>Investigation</h2>
               <form name="form" onSubmit={this.handleInvestigationSubmit}>
                 <div className={'form-group'}>
                   <label>Title</label>
-                  <input type="text" onInput={e => this.investigationSetTitleInput(e.target.value)} className="form-control" name="investigationTitleInput" />
+                  <input
+                    type="text"
+                    onInput={(e) =>
+                      this.investigationSetTitleInput(e.target.value)
+                    }
+                    className="form-control"
+                    name="investigationTitleInput"
+                  />
                 </div>
                 <div className={'form-group'}>
                   <label>Description</label>
-                  <input type="text" onInput={e => this.investigationSetDescInput(e.target.value)} className="form-control" name="investigationDescInput" />
+                  <input
+                    type="text"
+                    onInput={(e) =>
+                      this.investigationSetDescInput(e.target.value)
+                    }
+                    className="form-control"
+                    name="investigationDescInput"
+                  />
                 </div>
                 <div className="form-group">
                   <button className="btn btn-primary">Add</button>
-                  <button type="button" onClick={this.clearInvestigatingForm} className="btn btn-light">Cancel</button>
+                  <button
+                    type="button"
+                    onClick={this.clearInvestigatingForm}
+                    className="btn btn-light"
+                  >
+                    Cancel
+                  </button>
                 </div>
-                <div className={'form-group'} >
-                  <label htmlFor="sample" style={{ marginTop: '40px' }}>Title List</label>
-                  <select className="form-control" value={this.state.value} onChange={this.investigationTitleChange}>
-                    <option disabled selected>Select Title</option>
+                <div className={'form-group'}>
+                  <label htmlFor="sample" style={{ marginTop: '40px' }}>
+                    Title List
+                  </label>
+                  <select
+                    className="form-control"
+                    value={this.state.value}
+                    onChange={this.investigationTitleChange}
+                  >
+                    <option disabled selected>
+                      Select Title
+                    </option>
                     {optionInvestigation}
                   </select>
                 </div>
                 <div className={'form-group'}>
                   <label htmlFor="password">Description</label>
-                  <input type="text" value={this.state.investigationDescSelect} onChange={this.changeText} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    value={this.state.investigationDescSelect}
+                    onChange={this.changeText}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
                 <div className="form-group">
-                  <button className="btn btn-primary" type="button" onClick={this.updateInvestigation}>Update</button>
-                  <button type="button" onClick={this.deleteInvestigation} className="btn btn-danger">Delete</button>
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    onClick={this.updateInvestigation}
+                  >
+                    Update
+                  </button>
+                  <button
+                    type="button"
+                    onClick={this.deleteInvestigation}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
               </form>
             </div>
@@ -401,61 +514,111 @@ class SampleSubmission extends React.Component {
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Title</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Description</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Submission Date</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Release Date</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>File Name</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Assay</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Contact</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Design type</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Factors</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Protocols</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
             </div>
@@ -468,68 +631,112 @@ class SampleSubmission extends React.Component {
                   <button className="btn btn-primary">Save</button>
                 </div>
                 <div className="col-md-6">
-                  <button onClick={this.deleteSample} className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={this.deleteSample}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <div className="col-md-5">
-                        {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
+                  {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
                 </div>
               </div>
-
             </div>
           </div>
           <div id="protocol" className="container tab-pane fade">
-          <h2>Protocol</h2>
-          <div class="row">
+            <h2>Protocol</h2>
+            <div class="row">
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Title</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Type</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Description</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>URI</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Version</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Parameter</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Component Name</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
               <div className="col-md-4">
                 <div className={'form-group'}>
                   <label>Component Type</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
               </div>
-          </div>
-          <div class="row">
+            </div>
+            <div class="row">
               <div className="col-md-5">
                 {/* <button className="btn btn-primary">Save</button> */}
               </div>
@@ -538,15 +745,18 @@ class SampleSubmission extends React.Component {
                   <button className="btn btn-primary">Save</button>
                 </div>
                 <div className="col-md-6">
-                  <button onClick={this.deleteSample} className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={this.deleteSample}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <div className="col-md-5">
-                        {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
+                  {/* <button type="button" onClick={this.clearSample} className="btn btn-light">Cancel</button>    */}
                 </div>
               </div>
-
             </div>
-
           </div>
           <div id="assay" className="container tab-pane fade">
             <div className="col-md-4 col-md-offset-3">
@@ -554,27 +764,45 @@ class SampleSubmission extends React.Component {
               <form name="form" onSubmit={this.handleSampleModuleSubmit}>
                 <div className={'form-group'}>
                   <label>Title</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
                 <div className={'form-group'}>
                   <label>Measurement Type</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
                 <div className={'form-group'}>
                   <label>Technology Type</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
                 <div className={'form-group'}>
                   <label>Technology Platform</label>
-                  <input type="text" onInput={e => this.setSampleModuleInput(e.target.value)} className="form-control" name="description" />
+                  <input
+                    type="text"
+                    onInput={(e) => this.setSampleModuleInput(e.target.value)}
+                    className="form-control"
+                    name="description"
+                  />
                 </div>
-
               </form>
               <div className="form-group">
                 <button className="btn btn-primary">Save</button>
               </div>
             </div>
-
           </div>
         </div>
       </div>

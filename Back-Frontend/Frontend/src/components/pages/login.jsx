@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { loginUser } from "../../store/actions/auth";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loginUser } from '../../store/actions/auth';
 
-import Enzyme from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import Logo from "../../assets/images/mountain-1.jpg";
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import Logo from '../../assets/images/mountain-1.jpg';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -13,10 +13,10 @@ class LoginForm extends Component {
     super();
     this.state = {
       data: {
-        usrname: "",
-        password: "",
-        role: ""
-      }
+        usrname: '',
+        password: '',
+        role: '',
+      },
     };
   }
 
@@ -27,15 +27,15 @@ class LoginForm extends Component {
   };
 
   componentDidMount() {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
   }
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { dispatch } = this.props;
-    await dispatch(loginUser("xyz", "xyz"));
+    await dispatch(loginUser('xyz', 'xyz'));
     const { state } = this.props.location;
-    window.location = state ? state.from.pathname : "/";
+    window.location = state ? state.from.pathname : '/';
     // this.props.history.push("/mainpage");
   };
 
@@ -44,13 +44,13 @@ class LoginForm extends Component {
     return (
       <div
         style={{
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundImage: `url(${Logo})`
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundImage: `url(${Logo})`,
         }}
       >
         <div className="col-sm-4">
@@ -60,9 +60,9 @@ class LoginForm extends Component {
               <label
                 style={{
                   fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  opacity: 0.7
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  opacity: 0.7,
                 }}
                 htmlFor="username"
               >
@@ -79,9 +79,9 @@ class LoginForm extends Component {
               />
               <small
                 style={{
-                  fontWeight: "bold",
-                  color: "#fff",
-                  opacity: 0.7
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  opacity: 0.7,
                 }}
                 id="emailHelp"
                 className="form-text text-muted"
@@ -93,9 +93,9 @@ class LoginForm extends Component {
               <label
                 style={{
                   fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  opacity: 0.7
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  opacity: 0.7,
                 }}
                 htmlFor="password"
               >
@@ -115,9 +115,9 @@ class LoginForm extends Component {
                 htmlFor="role"
                 style={{
                   fontSize: 16,
-                  fontWeight: "bold",
-                  color: "#fff",
-                  opacity: 0.7
+                  fontWeight: 'bold',
+                  color: '#fff',
+                  opacity: 0.7,
                 }}
               >
                 Select Role
@@ -143,7 +143,7 @@ class LoginForm extends Component {
               disabled={isAuthenticating}
               className="btn btn-primary"
             >
-              {isAuthenticating ? "Loading" : "Submit"}
+              {isAuthenticating ? 'Loading' : 'Submit'}
             </button>
           </form>
         </div>
@@ -152,7 +152,7 @@ class LoginForm extends Component {
   }
 }
 
-const mapStateTOProps = store => {
+const mapStateTOProps = (store) => {
   return { isAuthenticating: store.auth.isAuthenticating };
 };
 

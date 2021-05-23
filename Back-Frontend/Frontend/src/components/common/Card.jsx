@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
 const styles = {
-  borderBottom: "2px solid #eee",
-  background: "#fafafa",
-  margin: ".75rem auto",
-  padding: ".6rem 1rem",
-  maxWidth: "500px",
-  borderRadius: "7px"
+  borderBottom: '2px solid #eee',
+  background: '#fafafa',
+  margin: '.75rem auto',
+  padding: '.6rem 1rem',
+  maxWidth: '500px',
+  borderRadius: '7px',
 };
 
 export default ({
   data: {
     recipeName: name,
     recipeIngredients: ingredients,
-    recipeMethods: methods
+    recipeMethods: methods,
   },
   handleClick,
-  handleDelete
+  handleDelete,
 }) => {
   return (
     <div style={styles}>

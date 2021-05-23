@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const Row = props => {
+const Row = (props) => {
   return <div>{props.children}</div>;
 };
 

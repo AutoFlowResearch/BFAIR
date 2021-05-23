@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-const Container = props => {
+const Container = (props) => {
   return <div>{props.children}</div>;
 };
 

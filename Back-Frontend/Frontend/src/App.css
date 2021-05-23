@@ -1,54 +1,58 @@
-body,html{
+body,
+html {
   height: 100vh;
   width: 100%;
   overflow-x: hidden;
   font-size: 100%;
 }
 
-.Maincard{
+.Maincard {
   width: 100%;
-  min-height:100vh;
-  height:100%;
-
+  min-height: 100vh;
+  height: 100%;
 }
-.innerBox{
+.innerBox {
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   height: 150px;
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 56, 1) 53%,
+    rgba(252, 176, 69, 1) 100%
+  );
 }
-.Mainview{
-  min-height:180px ;
+.Mainview {
+  min-height: 180px;
   border-radius: 10px;
   border: none;
   border-radius: 10px;
 }
-.bottomCard{
+.bottomCard {
   height: 180px;
   width: 100%;
   max-width: 100%;
 }
-.bg-container{
+.bg-container {
   background-color: #f8f9fb;
 }
-.readmore{
+.readmore {
   text-decoration: underline;
   color: black;
 }
-.fas{
+.fas {
   font-size: 12px;
   padding-left: 6px;
 }
-i{
+i {
   padding-right: 15px;
 }
 .main {
-  width:250px;
-  
+  width: 250px;
 }
 .has-search .form-control {
   padding-left: 2.375rem;
@@ -65,46 +69,55 @@ i{
   pointer-events: none;
   color: #aaa;
 }
-.navbar-nav .nav-link{
-  padding-left:20px;
+.navbar-nav .nav-link {
+  padding-left: 20px;
   padding-top: 20px;
   color: #8792a5;
 }
-.sideBar{
-  min-height:100vh;
-  height:100%;
+.sideBar {
+  min-height: 100vh;
+  height: 100%;
 }
 
-.sidebarBox{
+.sidebarBox {
   width: 195px;
   border-radius: 12px;
-  height:190px;
+  height: 190px;
   margin-left: 15px;
-  margin-top:64px;
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
-
+  margin-top: 64px;
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 56, 1) 53%,
+    rgba(252, 176, 69, 1) 100%
+  );
 }
-.sideboxContent{
+.sideboxContent {
   color: #fff;
   padding-top: 55px;
   padding-left: 15px;
 }
-.leftBtn{
+.leftBtn {
   background-color: #fff;
   border: none;
 }
-.brand{
+.brand {
   display: flex;
   align-items: center;
   margin-left: 15px;
 }
-.brand span{
+.brand span {
   padding: 10px;
 }
-.logo{
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(253,29,56,1) 53%, rgba(252,176,69,1) 100%);
+.logo {
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 56, 1) 53%,
+    rgba(252, 176, 69, 1) 100%
+  );
   width: 34px;
   height: 34px;
   border-radius: 40px;
@@ -112,7 +125,7 @@ i{
   justify-content: center;
   align-items: center;
 }
-.headerUSer{
+.headerUSer {
   width: 34px;
   height: 34px;
   border-radius: 40px;
@@ -126,9 +139,9 @@ i{
   background: none;
 }
 
-.fa{
-  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
-  width:15px;
+.fa {
+  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+  width: 15px;
   height: 15px;
   color: white;
   margin-right: 6px;
@@ -137,29 +150,30 @@ i{
   line-height: 15px;
   padding-left: 5px;
 }
-.fa_modified{
+.fa_modified {
   background: none;
   font-size: 15px;
-  color: #fff; 
+  color: #fff;
 }
-.fa-file-upload ,.fa-check-circle{
-  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
-  font-size:23px;
+.fa-file-upload,
+.fa-check-circle {
+  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+  font-size: 23px;
   padding-left: 0px;
 }
 
-.inputButton{
-  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
+.inputButton {
+  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
   color: #fff;
 }
-.inputButton:hover{
+.inputButton:hover {
   color: #fff;
 }
-label{
+label {
   font-weight: 600;
 }
 #main #faq .card .card-header .btn-header-link:after {
-  content: "\f107";
+  content: '\f107';
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   float: right;
@@ -172,13 +186,13 @@ label{
 }
 .btn:focus {
   outline: 0;
-  box-shadow:none
+  box-shadow: none;
 }
-.card-header{
-  background-color:#fff;
+.card-header {
+  background-color: #fff;
 }
 
-.investigation{
+.investigation {
   margin-top: 15px;
   margin-left: 37px;
 }

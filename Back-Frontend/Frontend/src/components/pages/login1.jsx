@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { loginUser } from "../../store/actions/auth";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { loginUser } from '../../store/actions/auth';
 
 class Login1 extends Component {
   constructor() {
     super();
     this.state = {
       data: {
-        usrname: "",
-        password: "",
-        role: ""
-      }
+        usrname: '',
+        password: '',
+        role: '',
+      },
     };
   }
 
@@ -20,12 +20,12 @@ class Login1 extends Component {
     this.setState({ data });
   };
 
-  handleSubmit = async e => {
+  handleSubmit = async (e) => {
     e.preventDefault();
     const { dispatch } = this.props;
-    await dispatch(loginUser("xyz", "xyz"));
+    await dispatch(loginUser('xyz', 'xyz'));
     const { state } = this.props.location;
-    window.location = state ? state.from.pathname : "/";
+    window.location = state ? state.from.pathname : '/';
     // this.props.history.push("/");
   };
 
@@ -33,20 +33,18 @@ class Login1 extends Component {
     return (
       <div
         style={{
-          position: "absolute",
-          height: "100%",
-          width: "100%",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundColor: "#E8E8E8"
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundColor: '#E8E8E8',
         }}
       >
         <div className="login-box">
           <div className="login-logo">
-            <a href="../../index2.html">
-              {/* <b>Neo</b>Soft */}
-            </a>
+            <a href="../../index2.html">{/* <b>Neo</b>Soft */}</a>
           </div>
           {/* <!-- /.login-logo --> */}
           <div className="login-box-body">

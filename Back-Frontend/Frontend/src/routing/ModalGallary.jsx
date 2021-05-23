@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 // This example shows how to render two different screens
 // (or the same screen in a different context) at the same url,
@@ -26,7 +26,7 @@ class ModalSwitch extends Component {
   previousLocation = this.props.location;
 
   componentDidMount() {
-    console.log("cdm ", this.previousLocation);
+    console.log('cdm ', this.previousLocation);
   }
 
   componentWillUpdate(nextProps) {
@@ -35,7 +35,7 @@ class ModalSwitch extends Component {
 
     // set previousLocation if props.location is not modal
     if (
-      nextProps.history.action !== "POP" &&
+      nextProps.history.action !== 'POP' &&
       (!location.state || !location.state.modal)
     ) {
       this.previousLocation = this.props.location;
@@ -65,11 +65,11 @@ class ModalSwitch extends Component {
 }
 
 const IMAGES = [
-  { id: 0, title: "Dark Orchid", color: "DarkOrchid" },
-  { id: 1, title: "Lime Green", color: "LimeGreen" },
-  { id: 2, title: "Tomato", color: "Tomato" },
-  { id: 3, title: "Seven Ate Nine", color: "#789" },
-  { id: 4, title: "Crimson", color: "Crimson" }
+  { id: 0, title: 'Dark Orchid', color: 'DarkOrchid' },
+  { id: 1, title: 'Lime Green', color: 'LimeGreen' },
+  { id: 2, title: 'Tomato', color: 'Tomato' },
+  { id: 3, title: 'Seven Ate Nine', color: '#789' },
+  { id: 4, title: 'Crimson', color: 'Crimson' },
 ];
 
 function Thumbnail({ color }) {
@@ -78,7 +78,7 @@ function Thumbnail({ color }) {
       style={{
         width: 50,
         height: 50,
-        background: color
+        background: color,
       }}
     />
   );
@@ -88,9 +88,9 @@ function Image({ color }) {
   return (
     <div
       style={{
-        width: "100%",
+        width: '100%',
         height: 400,
-        background: color
+        background: color,
       }}
     />
   );
@@ -116,13 +116,13 @@ function Home() {
 function Gallery() {
   return (
     <div>
-      {IMAGES.map(i => (
+      {IMAGES.map((i) => (
         <Link
           key={i.id}
           to={{
             pathname: `/img/${i.id}`,
             // this is the trick!
-            state: { modal: true }
+            state: { modal: true },
           }}
         >
           <Thumbnail color={i.color} />
@@ -151,7 +151,7 @@ function Modal({ match, history }) {
 
   if (!image) return null;
 
-  let back = e => {
+  let back = (e) => {
     e.stopPropagation();
     history.goBack();
   };
@@ -160,24 +160,24 @@ function Modal({ match, history }) {
     <div
       onClick={back}
       style={{
-        position: "absolute",
+        position: 'absolute',
         top: 0,
         left: 0,
         bottom: 0,
         right: 0,
-        background: "rgba(0, 0, 0, 0.15)"
+        background: 'rgba(0, 0, 0, 0.15)',
       }}
     >
       <div
         className="modal"
         style={{
-          position: "absolute",
-          background: "#fff",
+          position: 'absolute',
+          background: '#fff',
           top: 25,
-          left: "10%",
-          right: "10%",
+          left: '10%',
+          right: '10%',
           padding: 15,
-          border: "2px solid #444"
+          border: '2px solid #444',
         }}
       >
         <h1>{image.title}</h1>
