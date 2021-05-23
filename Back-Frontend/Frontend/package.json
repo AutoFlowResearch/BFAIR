@@ -40,9 +40,10 @@
   "devDependencies": {
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.11.2",
+    "eslint": "^7.27.0",
+    "prettier": "^2.3.0",
     "react-test-renderer": "^16.8.6",
     "redux-devtools-extension": "^2.13.8",
-    "redux-mock-store": "^1.5.3",
-    "prettier": "^2.3.0"
+    "redux-mock-store": "^1.5.3"
   }
 }
