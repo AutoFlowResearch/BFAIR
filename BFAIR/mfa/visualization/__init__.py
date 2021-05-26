@@ -1,11 +1,11 @@
 """Visualization.
 Tools to visualize flux distributions"""
 
-from BFAIR.mfa.sampling.visualization import (
+from BFAIR.mfa.visualization.visualization import (
     reshape_fluxes_escher,
 )
 
-from BFAIR.mfa.sampling.distributions import (
+from BFAIR.mfa.visualization.distributions import (
     sampled_fluxes_minrange,
     show_reactions,
     plot_sampled_reaction_fluxes,

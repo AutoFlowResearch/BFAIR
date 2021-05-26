@@ -2,6 +2,16 @@
 A collection of methods to sample and visualize fluxes in
 a metabolic model after adding constraints from a MFA"""
 
+from BFAIR.mfa.sampling.compatibility import (
+    model_rxn_overlap,
+    rxn_coverage,
+    split_lumped_rxns,
+    split_lumped_reverse_rxns,
+    find_reverse_rxns,
+    combine_split_rxns,
+    cobra_add_split_rxns,
+)
+
 from BFAIR.mfa.sampling.constraints import (
     add_constraints,
     add_feasible_constraints,
@@ -17,24 +27,8 @@ from BFAIR.mfa.sampling.relaxation import (
     bound_relaxation,
 )
 
-from BFAIR.mfa.sampling.compatibility import (
-    model_rxn_overlap,
-    rxn_coverage,
-    split_lumped_rxns,
-    split_lumped_reverse_rxns,
-    find_reverse_rxns,
-    combine_split_rxns,
-    cobra_add_split_rxns,
-)
-
 
 __all__ = [
-    "add_constraints",
-    "add_feasible_constraints",
-    "find_biomass_reaction",
-    "get_min_solution_val",
-    "replace_biomass_rxn_name",
-    "bound_relaxation",
     "model_rxn_overlap",
     "rxn_coverage",
     "split_lumped_rxns",
@@ -42,4 +36,11 @@ __all__ = [
     "find_reverse_rxns",
     "combine_split_rxns",
     "cobra_add_split_rxns",
+    "add_constraints",
+    "add_feasible_constraints",
+    "find_biomass_reaction",
+    "get_min_solution_val",
+    "replace_biomass_rxn_name",
+    "bound_relaxation",
+
 ]

@@ -1,3 +1,6 @@
+"""INCA tools.
+Writes MATLAB scripts, executes them and reimports the data"""
+
 from BFAIR.mfa.INCA.INCA_script_generator import (
     INCA_script,
     script_generator_descr,
