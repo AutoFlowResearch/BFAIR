@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from BFAIR.mfa.sampling.visualization.distributions import (
+from BFAIR.mfa.visualization.distributions import (
     _reduce_sampled_fluxes
 )
 
