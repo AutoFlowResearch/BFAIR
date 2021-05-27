@@ -35,6 +35,13 @@ class test_methods(unittest.TestCase):
             pd.testing.assert_frame_equal(a, b)
         except AssertionError as e:
             raise self.failureException(msg) from e
+    
+    # Create method to compare Series
+    def assertSeriesEqual(self, a, b, msg):
+        try:
+            pd.testing.assert_series_equal(a, b)
+        except AssertionError as e:
+            raise self.failureException(msg) from e
 
     def setUp(self):
         file_obj = open(
@@ -101,6 +108,7 @@ class test_methods(unittest.TestCase):
 
         # Add the method to compare dataframes in the class
         self.addTypeEqualityFunc(pd.DataFrame, self.assertDataframeEqual)
+        self.addTypeEqualityFunc(pd.Series, self.assertSeriesEqual)
 
     @staticmethod
     def get_bounds_df(model):
@@ -190,9 +198,9 @@ class test_methods(unittest.TestCase):
             fittedFluxes_split_temp, self.model)[mask_reverse]
         fittedFluxes_split_ = split_lumped_reverse_rxns(
             lumped_reverse_rxns, fittedFluxes_split_temp)
-        fittedFluxes_split_, rxns_to_split_ = combine_split_rxns(
+        fittedFluxes_split_combined_, rxns_to_split_ = combine_split_rxns(
             fittedFluxes_split_)
-        self.assertEqual(self.fittedFluxes_split, fittedFluxes_split_)
+        self.assertEqual(self.fittedFluxes_split_combined, fittedFluxes_split_combined_)
         self.assertEqual(self.rxns_to_split, rxns_to_split_)
 
     def test_cobra_add_split_rxns(self):

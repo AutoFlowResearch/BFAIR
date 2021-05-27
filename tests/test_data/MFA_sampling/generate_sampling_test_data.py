@@ -109,7 +109,7 @@ model_preproces_bounds = get_bounds_df(model_preproces)
 model_input = model.copy()
 constrained_model = add_constraints(model_input, adj_fittedFluxes)
 constrained_bounds = get_bounds_df(constrained_model)
-min_val = get_min_solution_val(adj_fittedFluxes, biomass_string="Biomass")
+min_val = get_min_solution_val(adj_fittedFluxes, biomass_string="BIOMASS")
 # Only add the constraints that keep the model in the expected range
 model_input = model.copy()
 feasible_constrained_model, problems = add_feasible_constraints(
