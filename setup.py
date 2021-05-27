@@ -56,6 +56,7 @@ setup(
         "nbsphinx == 0.8.3",
         "scipy == 1.6.0",
         "seaborn == 0.11.1",
+        "scikit-learn == 0.24.2"
     ],
     # dependency_links=
     include_package_data=True,
