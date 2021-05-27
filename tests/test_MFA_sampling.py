@@ -1,7 +1,6 @@
 import unittest
 import pickle
 import pathlib
-# import os
 import cobra
 import pandas as pd
 from BFAIR.mfa.sampling import (
@@ -22,8 +21,6 @@ from BFAIR.mfa.sampling import (
 
 current_dir = str(pathlib.Path(__file__).parent.absolute())
 
-# os.chdir(current_dir + "/test_data/MFA_modelInputsData")
-
 
 class test_methods(unittest.TestCase):
 
@@ -35,7 +32,7 @@ class test_methods(unittest.TestCase):
             pd.testing.assert_frame_equal(a, b)
         except AssertionError as e:
             raise self.failureException(msg) from e
-    
+
     # Create method to compare Series
     def assertSeriesEqual(self, a, b, msg):
         try:
