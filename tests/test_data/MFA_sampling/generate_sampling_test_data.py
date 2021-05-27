@@ -10,12 +10,18 @@ import pathlib
 import cobra
 from BFAIR.mfa.INCA import INCA_reimport
 from BFAIR.mfa.sampling import (
+    rxn_coverage,
+    split_lumped_rxns,
+    split_lumped_reverse_rxns,
+    find_reverse_rxns,
+    combine_split_rxns,
+    cobra_add_split_rxns,
+    model_rxn_overlap,
     add_constraints,
+    add_feasible_constraints,
     find_biomass_reaction,
     get_min_solution_val,
     replace_biomass_rxn_name,
-    add_feasible_constraints,
-    reshape_fluxes_escher,
     bound_relaxation,
 )
 
@@ -40,8 +46,9 @@ def get_bounds_df(model):
 
 
 # Re-import the MFA data
-filename = current_dir + "/TestFile.mat"
-simulation_info = pd.read_csv(current_dir + "/experimentalMS_data_I.csv")
+filename = current_dir + "/../MFA_modelInputsData/TestFile.mat"
+simulation_info = pd.read_csv(
+    current_dir + "/../MFA_modelInputsData/experimentalMS_data_I.csv")
 simulation_id = "WTEColi_113C80_U13C20_01"
 reimport_data = INCA_reimport()
 (
@@ -55,33 +62,60 @@ reimport_data = INCA_reimport()
     simulationParameters,
 ) = reimport_data.reimport(filename, simulation_info, simulation_id)
 # Import the conbra model
-model = cobra.io.load_json_model(current_dir + "/iJO1366.json")
+model = cobra.io.load_json_model(
+    current_dir + "/../MFA_modelInputsData/iJO1366.json")
 unconstraint_bounds = get_bounds_df(model)
 # Copy the model in order to re-use it a few times
-# Get info about the model and the biomass reactions
-model_input = model.copy()
-constrained_model = add_constraints(model_input, fittedFluxes)
-constrained_bounds = get_bounds_df(constrained_model)
-find_biomass_reaction(
-    constrained_model, biomass_string=["Biomass", "BIOMASS", "biomass"]
+biomass_rxn = find_biomass_reaction(
+    model, biomass_string=["Biomass", "BIOMASS", "biomass"]
 )
-min_val = get_min_solution_val(fittedFluxes, biomass_string="Biomass")
 adj_fittedFluxes = replace_biomass_rxn_name(
     fittedFluxes,
-    biomass_rxn_name="BIOMASS_Ec_iJO1366_core_53p95M",
+    biomass_rxn_name=biomass_rxn[1],
     biomass_string="Biomass",
 )
+model_preproces = model.copy()
+# Pre-process the model and re-imported data
+coverage = rxn_coverage(adj_fittedFluxes, model_preproces)
+# Check the example notebook for details
+lumped_ids = [1, 21, 26, 27, 53, 54, 67, 74, 82]
+mask = []
+overlap = model_rxn_overlap(adj_fittedFluxes, model_preproces)
+for i in overlap.iteritems():
+    if i[0] in lumped_ids:
+        mask.append(True)
+    else:
+        mask.append(False)
+lumped_rxns = model_rxn_overlap(adj_fittedFluxes, model_preproces)[mask]
+fittedFluxes_split_temp = split_lumped_rxns(lumped_rxns, adj_fittedFluxes)
+lumped_reverse_ids = [2, 28, 55, 68]
+mask_reverse = []
+for i in model_rxn_overlap(
+        fittedFluxes_split_temp, model_preproces).iteritems():
+    if i[0] in lumped_reverse_ids:
+        mask_reverse.append(True)
+    else:
+        mask_reverse.append(False)
+lumped_reverse_rxns = model_rxn_overlap(
+    fittedFluxes_split_temp, model_preproces)[mask_reverse]
+fittedFluxes_split = split_lumped_reverse_rxns(
+    lumped_reverse_rxns, fittedFluxes_split_temp)
+reverse_df = find_reverse_rxns(fittedFluxes_split)
+fittedFluxes_split_combined, rxns_to_split = combine_split_rxns(
+    fittedFluxes_split)
+cobra_add_split_rxns(rxns_to_split, model_preproces)
+model_preproces_bounds = get_bounds_df(model_preproces)
+# Get info about the model and the biomass reactions
+model_input = model.copy()
+constrained_model = add_constraints(model_input, adj_fittedFluxes)
+constrained_bounds = get_bounds_df(constrained_model)
+min_val = get_min_solution_val(adj_fittedFluxes, biomass_string="Biomass")
 # Only add the constraints that keep the model in the expected range
 model_input = model.copy()
 feasible_constrained_model, problems = add_feasible_constraints(
     model_input, adj_fittedFluxes, min_val=min_val,
 )
 feasible_constrained_bounds = get_bounds_df(feasible_constrained_model)
-# Sample and re-format the output
-sampled_fluxes = cobra.sampling.sample(model, n=100, processes=2)
-fluxes_sampling = reshape_fluxes_escher(sampled_fluxes)
-solution = model.optimize()
-fluxes_solution = reshape_fluxes_escher(solution)
 # Produce relaxation data
 infeasible_model = constrained_model.copy()
 cons_table = bound_relaxation(
@@ -96,15 +130,23 @@ pickle.dump(
     [
         fittedFluxes,
         unconstraint_bounds,
+        biomass_rxn,
+        adj_fittedFluxes,
+        coverage,
+        lumped_rxns,
+        overlap,
+        fittedFluxes_split_temp,
+        lumped_reverse_rxns,
+        reverse_df,
+        fittedFluxes_split,
+        fittedFluxes_split_combined,
+        rxns_to_split,
+        model_preproces_bounds,
         constrained_bounds,
         min_val,
         adj_fittedFluxes,
         problems,
         feasible_constrained_bounds,
-        sampled_fluxes,
-        fluxes_sampling,
-        solution,
-        fluxes_solution,
         cons_table,
         relaxed_bounds,
     ],
