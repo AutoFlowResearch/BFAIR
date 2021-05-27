@@ -1,5 +1,5 @@
 # generate test_data
-# Last date : 20.04.2021
+# Last date : 27.05.2021
 # By : Matthias Mattanovich (matmat@biosustain.dtu.dk)
 # This script is intended to generate sample data and save them into the
 # test_data file. The saved objects will then be used to test the

@@ -144,7 +144,7 @@ def plot_split_ratio(
         plot_title = (
             f'{influx.name} / {split_flux1.name} vs.\n'
             f'{influx.name} / {split_flux2.name}'
-            )
+        )
     else:
         split_df = pd.DataFrame(
             {
