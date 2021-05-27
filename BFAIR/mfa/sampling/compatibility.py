@@ -1,6 +1,7 @@
 import re
 import pandas as pd
 from cobra import Reaction
+import copy
 
 
 def model_rxn_overlap(fittedFluxes, model):
@@ -84,6 +85,7 @@ def split_lumped_rxns(lumped_rxns, fittedFluxes):
         Updated version of the input, now with separated
         lumped reactions.
     """
+    fittedFluxes = copy.deepcopy(fittedFluxes)
     for rxn in lumped_rxns:
         split_names = rxn.split("_")
         for index, split_name in enumerate(split_names):
@@ -122,6 +124,7 @@ def split_lumped_reverse_rxns(lumped_reverse_rxns, fittedFluxes):
         Updated version of the input, now with separated
         lumped reactions.
     """
+    fittedFluxes = copy.deepcopy(fittedFluxes)
     for rxn in lumped_reverse_rxns:
         print(rxn)
         name = re.match(".+?(?=_reverse)", rxn)[0]
@@ -220,6 +223,7 @@ def combine_split_rxns(fittedFluxes):
         Names of the reactions for which a corresponding
         reverse reaction should be added to the model.
     """
+    fittedFluxes = copy.deepcopy(fittedFluxes)
     rxns_to_split = []
     reverse_rxns = find_reverse_rxns(fittedFluxes)
     for _, row in reverse_rxns.iterrows():
