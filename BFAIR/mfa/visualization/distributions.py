@@ -71,6 +71,8 @@ def _sampled_reaction_fit(sampled_values, alpha=1e-3):
     fit : list
         Normal distribution fit (y-Values) over the sampled
         data.
+    norm_dist : boolean
+        Normal distribution, yes or no
     """
     sampled_reaction = sorted(sampled_values)
     k2, p = scipy.stats.normaltest(sampled_reaction)
@@ -352,17 +354,16 @@ def plot_subsystem_fluxes(
 
     Returns
     -------
-    fig : matplotlib.Figure
+    fig : matplotlib.AxesSubplot
         Figure of sampled value distribution for one reaction.
     """
-    fig = plt.plot(figsize=(15, 20))
     if no_zero_cols:
         sampled_fluxes = sampled_fluxes.loc[
             :, (sampled_fluxes != 0).any(axis=0)
         ]
     reactions, subsystems = get_subsytem_reactions(model, subsystem_id)
     re_arranged_df = _reduce_sampled_fluxes(sampled_fluxes, reactions)
-    sns.boxplot(
+    fig = sns.boxplot(
         x="Reaction", y="Sampled Fluxes", data=re_arranged_df, orient="v"
     )
     plt.xticks(rotation=70)
