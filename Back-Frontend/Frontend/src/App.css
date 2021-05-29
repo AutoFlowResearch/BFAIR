@@ -1,58 +1,67 @@
-body,
-html {
+body,html{
   height: 100vh;
   width: 100%;
   overflow-x: hidden;
   font-size: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+.innerText p{
+  color:#8792A6;
+}
+.innerText{
+  margin-top: 22px;
+}
+.innerText a{
+  font-weight: 900;
 }
 
-.Maincard {
+.Maincard{
   width: 100%;
-  min-height: 100vh;
-  height: 100%;
+  min-height:100vh;
+  height:100%;
+
 }
-.innerBox {
+.innerBox{
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   height: 150px;
-  background: rgb(131, 58, 180);
-  background: linear-gradient(
-    90deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 56, 1) 53%,
-    rgba(252, 176, 69, 1) 100%
-  );
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
+  font-family: 'Poppins', sans-serif;
+  
+
+  
 }
-.Mainview {
-  min-height: 180px;
+.Mainview{
+  min-height:180px ;
   border-radius: 10px;
   border: none;
   border-radius: 10px;
 }
-.bottomCard {
+.bottomCard{
   height: 180px;
   width: 100%;
   max-width: 100%;
 }
-.bg-container {
+.bg-container{
   background-color: #f8f9fb;
 }
-.readmore {
+.readmore{
   text-decoration: underline;
   color: black;
 }
-.fas {
+.fas{
   font-size: 12px;
   padding-left: 6px;
 }
-i {
+i{
   padding-right: 15px;
 }
 .main {
-  width: 250px;
+  width:250px;
+  
 }
 .has-search .form-control {
   padding-left: 2.375rem;
@@ -62,70 +71,67 @@ i {
   position: absolute;
   z-index: 2;
   display: block;
-  width: 6.375rem;
+  width: 2.375rem;
   height: 2.375rem;
   line-height: 2.375rem;
   text-align: center;
   pointer-events: none;
   color: #aaa;
 }
-.navbar-nav .nav-link {
-  padding-left: 20px;
+.navbar-nav .nav-link{
+  padding-left:20px;
   padding-top: 20px;
   color: #8792a5;
 }
-.sideBar {
-  min-height: 100vh;
-  height: 100%;
+.sideBar{
+  min-height:100vh;
+  height:100%;
+}
+.sidebarboxIcon{
+background: none !important;
+margin-left:11px;
+font-size: 24px !important;
+margin-top: 35px;
 }
 
-.sidebarBox {
-  width: 195px;
+.sidebarBox{
+  width:206px;
   border-radius: 12px;
-  height: 190px;
+  height:190px;
   margin-left: 15px;
-  margin-top: 64px;
-  background: rgb(131, 58, 180);
-  background: linear-gradient(
-    90deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 56, 1) 53%,
-    rgba(252, 176, 69, 1) 100%
-  );
+  margin-top:64px;
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%)
+  
+
 }
-.sideboxContent {
+.sideboxContent{
   color: #fff;
-  padding-top: 55px;
+  padding-top: 20px;
   padding-left: 15px;
 }
-.leftBtn {
+.leftBtn{
   background-color: #fff;
   border: none;
 }
-.brand {
+.brand{
   display: flex;
   align-items: center;
   margin-left: 15px;
 }
-.brand span {
+.brand span{
   padding: 10px;
 }
-.logo {
-  background: rgb(131, 58, 180);
-  background: linear-gradient(
-    90deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 56, 1) 53%,
-    rgba(252, 176, 69, 1) 100%
-  );
+.logo{
   width: 34px;
   height: 34px;
   border-radius: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%)
+
 }
-.headerUSer {
+.headerUSer{
   width: 34px;
   height: 34px;
   border-radius: 40px;
@@ -134,46 +140,56 @@ i {
   align-items: center;
   background-color: coral;
 }
-
-#searchSpan {
-  background: none;
+.fa-search{
+  background: none !important;
+}
+.leftSidebarIcon{
+  background: none !important;
+  font-size:15px !important;
+  color:#9FA2B4 !important;
+  margin-right: 15px !important;
+}
+.innerFile{
+  background: none !important;
+  font-size: 43px !important;
+  display: contents !important;
 }
 
-.fa {
-  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
-  width: 15px;
-  height: 15px;
+/*   Css for General Study*/
+.fa{
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
+  width: 20px;
+  height: 20px;
   color: white;
   margin-right: 6px;
   font-size: 10px;
   border-radius: 50%;
-  line-height: 15px;
-  padding-left: 5px;
+  line-height: 21px;
+  padding-left: 6px;
 }
-.fa_modified {
+.fa_modified{
   background: none;
   font-size: 15px;
-  color: #fff;
+  color: #fff; 
 }
-.fa-file-upload,
-.fa-check-circle {
-  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
-  font-size: 23px;
+.fa-file-upload ,.fa-check-circle{
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
+  font-size:23px;
   padding-left: 0px;
 }
 
-.inputButton {
-  background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+.inputButton{
+  background: linear-gradient(151.15deg, #F80284 2.22%, #8325C5 99.78%);
   color: #fff;
 }
-.inputButton:hover {
+.inputButton:hover{
   color: #fff;
 }
-label {
+label{
   font-weight: 600;
 }
 #main #faq .card .card-header .btn-header-link:after {
-  content: '\f107';
+  content: "\f107";
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   float: right;
@@ -184,15 +200,28 @@ label {
   text-align: left;
   color: #222;
 }
-.btn:focus {
-  outline: 0;
-  box-shadow: none;
+#mainLeft #faqSidebar .card .card-header .btn-header-link:after {
+  content: "\f107";
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  float: right;
 }
-.card-header {
-  background-color: #fff;
+#mainLeft #faqSidebar .card .card-header .btn-header-link {
+  color: #fff;
+  display: block;
+  text-align: left;
+  color: #222;
 }
 
-.investigation {
+.btn:focus {
+  outline: 0;
+  box-shadow:none
+}
+.card-header{
+  background-color:#fff;
+}
+
+.investigation{
   margin-top: 15px;
   margin-left: 37px;
 }
