@@ -42,5 +42,4 @@ __all__ = [
     "get_min_solution_val",
     "replace_biomass_rxn_name",
     "bound_relaxation",
-
 ]
