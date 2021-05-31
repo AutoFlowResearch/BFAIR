@@ -17,7 +17,6 @@ release = '0.0.1'
 
 # -- General configuration ---------------------------------------------------
 
-if 'hide_input' in cell['metadata'].get('tags', []):
 extensions = [
     "sphinx.ext.autosummary",
     "sphinx.ext.autodoc",
