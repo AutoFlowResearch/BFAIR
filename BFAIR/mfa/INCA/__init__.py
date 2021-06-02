@@ -1,12 +1,15 @@
-from BFAIR.INCA.INCA_script_generator import (
+"""INCA tools.
+Writes MATLAB scripts, executes them and reimports the data"""
+
+from BFAIR.mfa.INCA.INCA_script_generator import (
     INCA_script,
     script_generator_descr,
 )
-from BFAIR.INCA.INCA_reimport import (
+from BFAIR.mfa.INCA.INCA_reimport import (
     INCA_reimport,
     reimport_descr,
 )
-from BFAIR.INCA.INCA_input_parser import (
+from BFAIR.mfa.INCA.INCA_input_parser import (
     parse_cobra_model,
 )
 
