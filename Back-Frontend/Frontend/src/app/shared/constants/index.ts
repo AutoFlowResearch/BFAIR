@@ -3,25 +3,25 @@ import { IObjectType } from '../model/investigation.model';
 
 export const SIDEBAR: ISidebarItem[] = [
   {
-    id: '',
+    id: 'Dashboard',
     icon: '',
     title: 'Dashboard',
     href: 'doe',
   },
   {
-    id: '',
+    id: 'About',
     icon: '',
     title: 'About',
     href: '',
   },
   {
-    id: '',
+    id: 'Settings',
     icon: '',
     title: 'Settings',
     href: '',
   },
   {
-    id: '',
+    id: 'Source Code',
     icon: '',
     title: 'Source Code',
     href: '',
