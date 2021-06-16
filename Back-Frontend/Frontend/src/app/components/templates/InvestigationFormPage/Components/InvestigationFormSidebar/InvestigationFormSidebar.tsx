@@ -15,7 +15,7 @@ const InvestigationFormSidebar = (props) => {
     },
   ];
   const [activeItem, setActiveItem] = useState(
-    InvestigationFormSidebarItems[0]
+    InvestigationFormSidebarItems[0],
   );
 
   InvestigationFormSidebarItems.push(
@@ -30,7 +30,7 @@ const InvestigationFormSidebar = (props) => {
         href: '',
         icon: '',
       })),
-    }))
+    })),
   );
 
   console.log(InvestigationFormSidebarItems);

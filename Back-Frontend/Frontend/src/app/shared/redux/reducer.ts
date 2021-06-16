@@ -10,7 +10,7 @@ import { Investigation, Study, Assay } from '../model/investigation.model';
 
 const reducer = (
   state: Investigation = new Investigation(),
-  action: { type?: string; payload?: any }
+  action: { type?: string; payload?: any },
 ) => {
   const { studies } = state;
   const { type, payload } = action;

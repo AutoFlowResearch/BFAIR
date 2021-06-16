@@ -23,9 +23,9 @@ const ButtonToggle = (props: {
   };
 
   return (
-    <div className='form-element'>
-      <label className='form__label'>{label}</label>
-      <div className=' button-toggle'>
+    <div className="form-element">
+      <label className="form__label">{label}</label>
+      <div className=" button-toggle">
         {items.map((item, index: number) => (
           <div
             key={index}

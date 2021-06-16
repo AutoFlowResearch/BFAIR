@@ -1,5 +1,5 @@
-import React from "react";
-import { MainLayoutContainer } from "./MainLayout.style";
+import React from 'react';
+import { MainLayoutContainer } from './MainLayout.style';
 
 const MainLayout = (props) => {
   const { sidebar, content } = props;

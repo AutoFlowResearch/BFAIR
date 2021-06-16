@@ -10,10 +10,10 @@ const Input = (props) => {
     onChange(newVal);
   };
   return (
-    <div className='form-element input-container'>
-      <label className='form__label'>{label}</label>
+    <div className="form-element input-container">
+      <label className="form__label">{label}</label>
       <input
-        className='form-input'
+        className="form-input"
         type={type}
         value={inputValue}
         onChange={handleChange}

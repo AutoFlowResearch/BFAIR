@@ -6,16 +6,16 @@ import InvestigationFormStudies from '../InvestigationFormStudies';
 
 const InvestigationFormContent = () => {
   return (
-    <div className='investigation-form'>
+    <div className="investigation-form">
       <Card>
-        <div className='investigation-form__inner'>
-          <h3 className='form-title'>Investigation</h3>
+        <div className="investigation-form__inner">
+          <h3 className="form-title">Investigation</h3>
           <InvestigationFormGeneral />
-          <InvestigationFormStudies/>
+          <InvestigationFormStudies />
         </div>
-        <div className='card__footer'>
-          <button className='btn--flat'>Cancel</button>
-          <button className='btn--primary float--right'>Submit</button>
+        <div className="card__footer">
+          <button className="btn--flat">Cancel</button>
+          <button className="btn--primary float--right">Submit</button>
         </div>
       </Card>
     </div>

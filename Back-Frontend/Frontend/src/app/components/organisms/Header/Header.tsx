@@ -1,8 +1,8 @@
-import React from "react";
-import "./Header.style.scss";
+import React from 'react';
+import './Header.style.scss';
 
-import notifications from "../../../../assets/images/bell_notifications.svg";
-import profileImage from "../../../../assets/images/photo.png";
+import notifications from '../../../../assets/images/bell_notifications.svg';
+import profileImage from '../../../../assets/images/photo.png';
 
 const Header = (props) => {
   const { pageTitle } = props;

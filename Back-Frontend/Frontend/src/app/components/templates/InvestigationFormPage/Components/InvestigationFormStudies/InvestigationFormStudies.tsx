@@ -16,9 +16,9 @@ const InvestigationFormStudies = (props) => {
           deleteStudy={() => removeStudy(index)}
         />
       ))}
-      <div className='section__add'>
-        <button className='section__add__button' onClick={() => addStudy()}>
-          <img alt='' src={addIcon} className='section__add__button__icon' />
+      <div className="section__add">
+        <button className="section__add__button" onClick={() => addStudy()}>
+          <img alt="" src={addIcon} className="section__add__button__icon" />
           Add New Study
         </button>
       </div>
@@ -37,5 +37,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(InvestigationFormStudies);

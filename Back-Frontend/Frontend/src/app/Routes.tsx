@@ -6,13 +6,13 @@ import InvestigationFormPage from './components/templates/InvestigationFormPage'
 const Routes = () => (
   <Router>
     <Switch>
-      <Route path='/doe'>
+      <Route path="/doe">
         <InvestigationFormPage />
       </Route>
-      <Route path='/'>
+      <Route path="/">
         <DashboardPage />
       </Route>
-      <Route path='/'></Route>
+      <Route path="/"></Route>
     </Switch>
   </Router>
 );

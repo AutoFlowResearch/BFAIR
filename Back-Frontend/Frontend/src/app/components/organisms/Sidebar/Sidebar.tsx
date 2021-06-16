@@ -19,10 +19,10 @@ const SidebarItem = (props: {
     >
       <ReactCollapsible
         trigger={
-          <div className='sidebar__item__text collapsible-trigger--inner'>
+          <div className="sidebar__item__text collapsible-trigger--inner">
             {sidebarItem.title}
             {sidebarItem.children?.length ? (
-              <span className='material-icons trigger-icon'>
+              <span className="material-icons trigger-icon">
                 keyboard_arrow_down
               </span>
             ) : null}
@@ -52,12 +52,12 @@ const Sidebar = (props: {
 }) => {
   const { sidebarItems = [], itemClick, activeItem, children } = props;
   return (
-    <div className='sidebar--inner'>
-      <div className='site-title'>
-        <span className='ellipse'>B</span>
-        <span className='site-title__text'>BFAIR</span>
+    <div className="sidebar--inner">
+      <div className="site-title">
+        <span className="ellipse">B</span>
+        <span className="site-title__text">BFAIR</span>
       </div>
-      <div className='sidebar__items'>
+      <div className="sidebar__items">
         {sidebarItems.map((sidebarItem: ISidebarItem, index) => (
           <SidebarItem
             key={index}

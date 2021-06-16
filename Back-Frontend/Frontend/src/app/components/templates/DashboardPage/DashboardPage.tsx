@@ -17,9 +17,9 @@ import { Link } from 'react-router-dom';
 
 const BottomTip = ({ text }) => {
   return (
-    <div className='bottom-text'>
+    <div className="bottom-text">
       {text}
-      <img className='arrow-right' src={arrowRight} alt='' />
+      <img className="arrow-right" src={arrowRight} alt="" />
     </div>
   );
 };
@@ -31,15 +31,15 @@ const DashboardItem = (props: {
   const { dashboardItem, index } = props;
   return (
     <Link to={dashboardItem.href} key={index}>
-      <Card className='dashboard-module'>
-        <div className='dashboard-module__left'>
-          <p className='dashboard-module__title'>{dashboardItem.title}</p>
-          <p className='dashboard-module__subtitle'>
+      <Card className="dashboard-module">
+        <div className="dashboard-module__left">
+          <p className="dashboard-module__title">{dashboardItem.title}</p>
+          <p className="dashboard-module__subtitle">
             {dashboardItem.description}
           </p>
-          <BottomTip text='Read More' />
+          <BottomTip text="Read More" />
         </div>
-        <ModuleGradient className='dashboard-module__right'>
+        <ModuleGradient className="dashboard-module__right">
           {dashboardItem.title}
         </ModuleGradient>
       </Card>
@@ -54,7 +54,7 @@ const DashboardModules = () => {
         Modules
         <SearchBar />
       </DashboardSectionTitle>
-      <div className='dashboard-modules'>
+      <div className="dashboard-modules">
         {DASHBOARD_ITEMS.map((dashboardItem, index) => (
           <DashboardItem dashboardItem={dashboardItem} index={index} />
         ))}
@@ -67,18 +67,18 @@ const ProjectSourceCode = () => {
   return (
     <React.Fragment>
       <DashboardSectionTitle>Project Source Code</DashboardSectionTitle>
-      <Card className='project-source-code'>
-        <ModuleGradient className='project-source-code__left'>
-          <img alt='' src={codeIcon} />
+      <Card className="project-source-code">
+        <ModuleGradient className="project-source-code__left">
+          <img alt="" src={codeIcon} />
         </ModuleGradient>
-        <div className='project-source-code__right'>
-          <p className='dashboard-module__title'>Source Code</p>
-          <p className='dashboard-module__subtitle'>
+        <div className="project-source-code__right">
+          <p className="dashboard-module__title">Source Code</p>
+          <p className="dashboard-module__subtitle">
             Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
             sint. Velit officia consequat duis enim velit mollit. Exercitation
             veniam consequat sunt nostrud amet.
           </p>
-          <BottomTip text='View Source Code' />
+          <BottomTip text="View Source Code" />
         </div>
       </Card>
     </React.Fragment>
@@ -88,8 +88,8 @@ const ProjectSourceCode = () => {
 const Dashboard = (props) => {
   return (
     <React.Fragment>
-      <Header pageTitle='Dashboard' />
-      <div className='dashboard'>
+      <Header pageTitle="Dashboard" />
+      <div className="dashboard">
         <DashboardModules />
         <ProjectSourceCode />
       </div>
@@ -98,13 +98,13 @@ const Dashboard = (props) => {
 };
 
 const Docs = (props) => (
-  <div className='dashboard-docs'>
+  <div className="dashboard-docs">
     <ModuleGradient>
-      <div className='dashboard-docs__inner'>
-        <img alt='' src={docIcon} />
+      <div className="dashboard-docs__inner">
+        <img alt="" src={docIcon} />
         <br />
         <br />
-        <div className='dashboard-docs__text'>
+        <div className="dashboard-docs__text">
           <strong>Need help?</strong>
           <br />
           Please Check our docs

@@ -1,6 +1,6 @@
-import React from "react";
-import "./App.scss";
-import Routes from "./app/Routes";
+import React from 'react';
+import './App.scss';
+import Routes from './app/Routes';
 
 function App() {
   return <Routes />;

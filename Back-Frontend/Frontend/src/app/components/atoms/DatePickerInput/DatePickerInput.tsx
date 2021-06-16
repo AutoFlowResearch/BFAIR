@@ -20,9 +20,9 @@ const DatePickerInput = (props) => {
   };
 
   return (
-    <div className='form-element'>
-      <label className='form__label'>{label}</label>
-      <div className='custom-container'>
+    <div className="form-element">
+      <label className="form__label">{label}</label>
+      <div className="custom-container">
         <span></span>
         <DatePicker
           selected={date}
@@ -32,7 +32,7 @@ const DatePickerInput = (props) => {
           showYearDropdown={true}
         />
       </div>
-      <div className='datepicker-icon'>
+      <div className="datepicker-icon">
         <img src={datePickerIcon}></img>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import React from "react";
-import Select from "react-select";
-import AddOption from "../AddOption";
-import "./SelectBar.scss";
+import React from 'react';
+import Select from 'react-select';
+import AddOption from '../AddOption';
+import './SelectBar.scss';
 
 const SelectBar = (props) => {
   const {
@@ -10,7 +10,7 @@ const SelectBar = (props) => {
     selectedOption,
     options,
     onChange = () => {},
-    multiple
+    multiple,
   } = props;
   const handleChange = (selectedOption) => {
     console.log(selectedOption);
@@ -19,7 +19,7 @@ const SelectBar = (props) => {
     <div className="form-element">
       <div className="label-container">
         <label className="form__label">{label}</label>
-        <AddOption label={"Add New"} />
+        <AddOption label={'Add New'} />
       </div>
       <Select
         isMulti={multiple}

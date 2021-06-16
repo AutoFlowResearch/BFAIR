@@ -10,10 +10,10 @@ const TextArea = (props) => {
     onChange(newVal);
   };
   return (
-    <div className='form-element textarea-container'>
-      <label className='form__label'>{label}</label>
+    <div className="form-element textarea-container">
+      <label className="form__label">{label}</label>
       <textarea
-        className='form-textarea'
+        className="form-textarea"
         onChange={handleChange}
         placeholder={`Enter a ${label}...`}
         value={inputValue}

@@ -2,10 +2,7 @@ import React, { useContext } from 'react';
 import { Study } from '../../../../../shared/model/investigation.model';
 import InvestigationFormAssay from '../InvestigationFormAssay';
 import addIcon from '../../../../../../assets/images/add-icon.svg';
-import {
-  addAssay,
-  removeAssay,
-} from '../../../../../shared/redux/actions';
+import { addAssay, removeAssay } from '../../../../../shared/redux/actions';
 import { connect } from 'react-redux';
 
 const InvestigationFormAssays = (props) => {
@@ -20,12 +17,12 @@ const InvestigationFormAssays = (props) => {
           removeAssay={() => removeAssay(study, index)}
         />
       ))}
-      <div className='section__add'>
+      <div className="section__add">
         <button
-          className='section__add__button'
+          className="section__add__button"
           onClick={() => addAssay(study)}
         >
-          <img alt='' src={addIcon} className='section__add__button__icon' />
+          <img alt="" src={addIcon} className="section__add__button__icon" />
           Add New Assay
         </button>
       </div>
@@ -42,5 +39,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(InvestigationFormAssays);

@@ -9,12 +9,6 @@ const DeleteIcon = (props) => {
     onClick();
   };
 
-  return (
-    <img
-      alt=''
-      src={deleteIconImg}
-      onClick={handleClick}
-    />
-  );
+  return <img alt="" src={deleteIconImg} onClick={handleClick} />;
 };
 export default DeleteIcon;

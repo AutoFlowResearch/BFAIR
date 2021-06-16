@@ -5,9 +5,9 @@ import './Collapsible.style.scss';
 const CollapsibleTrigger = (props) => {
   const { trigger } = props;
   return (
-    <div className='collapsible-trigger--inner'>
+    <div className="collapsible-trigger--inner">
       {trigger}
-      <span className='material-icons trigger-icon'>keyboard_arrow_down</span>
+      <span className="material-icons trigger-icon">keyboard_arrow_down</span>
     </div>
   );
 };
@@ -17,14 +17,15 @@ const Collapsible = (props) => {
   const reactCollapsibleRef = React.createRef<ReactCollapsible>();
   const handleCollapsibleOpen = () => {
     console.log(
-      ((reactCollapsibleRef.current as any).innerRef.style.overflow = 'visible')
+      ((reactCollapsibleRef.current as any).innerRef.style.overflow =
+        'visible'),
     );
   };
   const handleCollapsibleClosing = () => {
     (reactCollapsibleRef.current as any).innerRef.style.overflow = 'hidden';
   };
   return (
-    <div className='collapsible--custom'>
+    <div className="collapsible--custom">
       <ReactCollapsible
         trigger={<CollapsibleTrigger trigger={trigger} />}
         onOpen={handleCollapsibleOpen}

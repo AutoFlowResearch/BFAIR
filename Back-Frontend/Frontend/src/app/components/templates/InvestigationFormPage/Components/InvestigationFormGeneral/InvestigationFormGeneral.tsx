@@ -12,15 +12,15 @@ import TextArea from '../../../../atoms/TextArea';
 
 const InvestigationFormGeneral = (props) => {
   return (
-    <Collapsible trigger='General Information'>
-      <Input label='Title' />
-      <TextArea label='Description' />
-      <div className='row'>
-        <div className='col-sm-12 col-lg-6 col-xl-4'>
-          <DatePickerInput label='Submission Date' />
+    <Collapsible trigger="General Information">
+      <Input label="Title" />
+      <TextArea label="Description" />
+      <div className="row">
+        <div className="col-sm-12 col-lg-6 col-xl-4">
+          <DatePickerInput label="Submission Date" />
         </div>
-        <div className='col-sm-12 col-lg-6 col-xl-4'>
-          <DatePickerInput label='Public Release Date' />
+        <div className="col-sm-12 col-lg-6 col-xl-4">
+          <DatePickerInput label="Public Release Date" />
         </div>
       </div>
       <SelectBar

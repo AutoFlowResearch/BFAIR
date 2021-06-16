@@ -22,12 +22,12 @@ import './InvestigationFormStudy.style.scss';
 const InvestigationStudyTitle = (props: { study: Study; deleteStudy }) => {
   const { study, deleteStudy } = props;
   return (
-    <div className='study__title'>
+    <div className="study__title">
       {study.title || 'New Study'}
-      <div className='study__delete'>
+      <div className="study__delete">
         <DeleteIcon onClick={deleteStudy} />
       </div>
-      <div className='study__assay-count'>
+      <div className="study__assay-count">
         <Badge isActive={true}>{study.assays.length} Assay</Badge>
       </div>
     </div>
@@ -44,14 +44,14 @@ const InvestigationFormStudy = (props: {
     setStudyTitle(study, title);
   };
   return (
-    <div className='investigation-form__study'>
+    <div className="investigation-form__study">
       <Collapsible
         trigger={
           <InvestigationStudyTitle study={study} deleteStudy={deleteStudy} />
         }
       >
-        <Input label='Title' onChange={handleStudyTitleChange} />
-        <TextArea label='Description' />
+        <Input label="Title" onChange={handleStudyTitleChange} />
+        <TextArea label="Description" />
         <SelectBar
           label={'Publications'}
           placeHolderText={'Publication'}
@@ -65,17 +65,17 @@ const InvestigationFormStudy = (props: {
           multiple
         />
         <ButtonToggle
-          label='Study Type'
+          label="Study Type"
           items={STUDY_TYPES}
           value={STUDY_TYPES[0]}
-          labelKey='studyName'
+          labelKey="studyName"
         />
         <SelectBar
           label={'Design Type'}
           placeHolderText={'Design Type'}
           options={DESIGN_TYPES}
         />
-        <Input label='Factor Name' />
+        <Input label="Factor Name" />
         <SelectBar
           label={'Factor Type'}
           placeHolderText={'Factor Type'}

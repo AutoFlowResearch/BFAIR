@@ -21,9 +21,9 @@ import SelectBar from '../../../../atoms/SelectBar';
 const InvestigationFormAssayTitle = (props) => {
   const { assay, removeAssay } = props;
   return (
-    <div className='assay__title'>
+    <div className="assay__title">
       {assay.title || 'New Assay'}
-      <div className='assay__delete'>
+      <div className="assay__delete">
         <DeleteIcon onClick={removeAssay} />
       </div>
     </div>
@@ -32,22 +32,22 @@ const InvestigationFormAssayTitle = (props) => {
 
 const InvestigationFormAssayFile = (props) => {
   return (
-    <div className='assay__file'>
-      <div className='row'>
-        <div className='col-sm-12 col-lg-6 col-xl-4'>
-          <p className='assay__file__object-title'>Digital Object</p>
-          <div className='assay__file__upload-btn'>
-            <img alt='' src={fileIcon} />
+    <div className="assay__file">
+      <div className="row">
+        <div className="col-sm-12 col-lg-6 col-xl-4">
+          <p className="assay__file__object-title">Digital Object</p>
+          <div className="assay__file__upload-btn">
+            <img alt="" src={fileIcon} />
             File Upload
           </div>
         </div>
-        <div className='col-sm-12 col-lg-6 col-xl-4'>
-          <Input label='Bio Material Object' />
+        <div className="col-sm-12 col-lg-6 col-xl-4">
+          <Input label="Bio Material Object" />
         </div>
       </div>
-      <div className='section__add'>
-        <button className='section__add__button'>
-          <img alt='' src={addIcon} className='section__add__button__icon' />
+      <div className="section__add">
+        <button className="section__add__button">
+          <img alt="" src={addIcon} className="section__add__button__icon" />
           Add New File
         </button>
       </div>
@@ -66,7 +66,7 @@ const InvestigationFormAssay = (props: {
     setAssayTitle(assay, title);
   };
   return (
-    <div className='investigation-form__assay'>
+    <div className="investigation-form__assay">
       <Collapsible
         trigger={
           <InvestigationFormAssayTitle
@@ -75,16 +75,16 @@ const InvestigationFormAssay = (props: {
           />
         }
       >
-        <Input label='Title' onChange={handleAssayTitleChange} />
-        <div className='row'>
-          <div className='col-sm-12 col-lg-6 col-xl-4'>
-            <DatePickerInput label='Start Date' />
+        <Input label="Title" onChange={handleAssayTitleChange} />
+        <div className="row">
+          <div className="col-sm-12 col-lg-6 col-xl-4">
+            <DatePickerInput label="Start Date" />
           </div>
-          <div className='col-sm-12 col-lg-6 col-xl-4'>
-            <DatePickerInput label='End Date' />
+          <div className="col-sm-12 col-lg-6 col-xl-4">
+            <DatePickerInput label="End Date" />
           </div>
-          <div className='col-sm-12 col-lg-6 col-xl-4'>
-            <Input label='Run Order' />
+          <div className="col-sm-12 col-lg-6 col-xl-4">
+            <Input label="Run Order" />
           </div>
         </div>
         <SelectBar
@@ -92,22 +92,22 @@ const InvestigationFormAssay = (props: {
           placeHolderText={'Performer'}
           options={PERFORMERS}
         />
-        <Collapsible trigger='Inputs'>
+        <Collapsible trigger="Inputs">
           <InvestigationFormAssayFile />
         </Collapsible>
-        <Collapsible trigger='Outputs'>
+        <Collapsible trigger="Outputs">
           <InvestigationFormAssayFile />
         </Collapsible>
 
-        <h3 className='form-section__title'>Measurement Type</h3>
-        <Input label='Name' />
+        <h3 className="form-section__title">Measurement Type</h3>
+        <Input label="Name" />
         <SelectBar
           label={'Annotation'}
           placeHolderText={'Annotation'}
           options={MEASUREMENT_TYPE_ANNOTATIONS}
         />
-        <h3 className='form-section__title'>Technology Type</h3>
-        <Input label='Name' />
+        <h3 className="form-section__title">Technology Type</h3>
+        <Input label="Name" />
         <SelectBar
           label={'Annotation'}
           placeHolderText={'Annotation'}

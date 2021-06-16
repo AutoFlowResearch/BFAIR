@@ -32,7 +32,11 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:coverage": "npm run test -- --coverage",
+    "eject": "react-scripts eject",
+    "prettify": "prettier --write .",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix ."
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +58,7 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
-    "@types/styled-components": "^5.1.9"
+    "@types/styled-components": "^5.1.9",
+    "prettier": "^2.3.1"
   }
 }

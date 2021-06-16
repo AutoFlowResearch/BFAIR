@@ -8,13 +8,10 @@ import InvestigationFormContent from './Components/InvestigationFormContent';
 import InvestigationFormContextProvider from './Components/InvestigationFormContext';
 import InvestigationFormSidebar from './Components/InvestigationFormSidebar';
 
-
-
-
 const InvestigationForm = () => {
   return (
     <React.Fragment>
-      <Header pageTitle='Design of Experiment' />
+      <Header pageTitle="Design of Experiment" />
       <InvestigationFormContent />
     </React.Fragment>
   );

@@ -13,10 +13,10 @@ const SearchBar = (props) => {
   };
 
   return (
-    <div className='search-bar'>
-      <img alt='' src={searchIcon} className='search-icon' />
+    <div className="search-bar">
+      <img alt="" src={searchIcon} className="search-icon" />
       <input
-        placeholder='Search...'
+        placeholder="Search..."
         value={searchTerm}
         onChange={handleSearchInput}
       />
