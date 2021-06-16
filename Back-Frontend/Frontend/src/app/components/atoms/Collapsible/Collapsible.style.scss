@@ -1,0 +1,38 @@
+.collapsible--custom {
+  .Collapsible {
+    border: 1px solid rgba(135, 146, 166, 0.38);
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: 22px auto;
+
+    .Collapsible__trigger {
+      display: block;
+      padding: 22px 36px;
+      cursor: pointer;
+
+      &.is-open {
+        .collapsible-trigger--inner {
+          .trigger-icon {
+            transform: translateY(-50%) rotate(180deg);
+          }
+        }
+      }
+
+      .collapsible-trigger--inner {
+        position: relative;
+
+        .trigger-icon {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          transition: 0.5s ease;
+        }
+      }
+    }
+
+    .Collapsible__contentInner {
+      padding: 22px 36px;
+    }
+  }
+}

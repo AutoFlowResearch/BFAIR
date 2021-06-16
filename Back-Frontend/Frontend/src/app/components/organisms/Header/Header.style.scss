@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 5em;
+
+  .page-title {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height */
+
+    letter-spacing: 0.2px;
+
+    color: #252f40;
+  }
+  .profile-detail {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    vertical-align: top;
+
+    .profile {
+      &__image {
+        height: 36px;
+      }
+
+      &__name {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 20px;
+        /* identical to box height, or 143% */
+
+        letter-spacing: 0.2px;
+
+        color: #252f40;
+        margin: 0 1em;
+      }
+    }
+  }
+}

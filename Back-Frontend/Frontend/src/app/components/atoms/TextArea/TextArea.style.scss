@@ -1,0 +1,25 @@
+.textarea-container {
+
+
+  textarea.form-textarea {
+    width: 100%;
+    border: 1px solid rgba(135, 146, 166, 0.38);
+    box-sizing: border-box;
+    border-radius: 4px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    /* identical to box height, or 167% */
+
+    letter-spacing: 0.2px;
+
+    padding: 10px 14px;
+    height: 76px;
+
+    ::placeholder {
+      color: #8792a6;
+    }
+  }
+}

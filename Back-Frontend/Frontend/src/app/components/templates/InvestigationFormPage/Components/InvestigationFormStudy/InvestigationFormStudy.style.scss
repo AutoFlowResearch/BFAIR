@@ -1,0 +1,15 @@
+.investigation-form__study {
+  .study__title {
+    position: relative;
+    width: calc(100% - 36px);
+
+    .study__assay-count {
+      float: right;
+    }
+
+    .study__delete {
+      margin: 0 0 0 10px;
+      float: right;
+    }
+  }
+}

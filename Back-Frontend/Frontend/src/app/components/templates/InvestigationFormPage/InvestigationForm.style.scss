@@ -1,0 +1,16 @@
+.investigation-form {
+  .form-title {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+    /* identical to box height */
+
+    letter-spacing: 0.2px;
+
+    color: #252f40;
+  }
+
+  &__inner {
+    padding: 40px;
+  }
+}

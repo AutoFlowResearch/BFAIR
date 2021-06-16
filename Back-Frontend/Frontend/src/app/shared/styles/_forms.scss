@@ -1,0 +1,73 @@
+// Helpers
+
+a {
+  color: unset;
+  text-decoration: unset;
+}
+
+.form-element {
+  margin-bottom: 22px;
+  label.form__label {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    /* identical to box height */
+
+    letter-spacing: 0.2px;
+
+    color: #252f40;
+    margin-bottom: 6px;
+    display: block;
+  }
+
+  a.form__label-small {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 24px;
+    /* identical to box height */
+
+    letter-spacing: 0.2px;
+
+    color: #252f40;
+    margin-left: 4px;
+    text-decoration: underline;
+  }
+}
+
+.form-section__title {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.2px;
+  color: #252f40;
+}
+
+.section__add {
+  text-align: center;
+
+  &__button {
+    cursor: pointer;
+    border: none;
+    box-shadow: none;
+    padding: 10px 16px;
+    background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+    box-shadow: 0px 10px 24px rgba(100, 108, 120, 0.09);
+    border-radius: 4px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    letter-spacing: 0.2px;
+
+    color: #ffffff;
+
+    &__icon {
+      margin-right: 10px;
+    }
+  }
+}
