@@ -52,12 +52,12 @@
   .dashboard-modules {
     display: flex;
     flex-wrap: wrap;
-    margin: -2em -2em 2em -2em;
+    margin: -1em -2em 2em -1em;
     .dashboard-module {
       // width: calc(50% - 4em);
-      max-width: 600px;
+      max-width: 560px;
       min-width: 450px;
-      margin: 2em;
+      margin: 1em;
       display: flex;
       cursor: pointer;
       &__left {

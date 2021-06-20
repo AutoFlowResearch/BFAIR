@@ -22,21 +22,18 @@ const InvestigationFormSidebar = (props) => {
     ...(investigation as Investigation).studies.map((study) => ({
       id: study.id,
       icon: '',
-      title: study.title,
+      title: study.title || 'New Study',
       href: '',
       children: study.assays.map((assay) => ({
         id: assay.id,
-        title: assay.title,
+        title: assay.title || 'New Assay',
         href: '',
         icon: '',
       })),
     })),
   );
 
-  console.log(InvestigationFormSidebarItems);
-
   const itemClick = (item) => {
-    console.log(item);
     setActiveItem(item);
   };
   return (

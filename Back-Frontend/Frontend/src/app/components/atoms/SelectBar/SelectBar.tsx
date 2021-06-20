@@ -12,9 +12,7 @@ const SelectBar = (props) => {
     onChange = () => {},
     multiple,
   } = props;
-  const handleChange = (selectedOption) => {
-    console.log(selectedOption);
-  };
+  const handleChange = (selectedOption) => {};
   return (
     <div className="form-element">
       <div className="label-container">

@@ -7,7 +7,7 @@ export const DashboardSectionTitle = styled.h1`
   line-height: 27px;
   letter-spacing: 0.2px;
   color: #252f40;
-  margin-bottom: 2em;
+  margin-bottom: 1.4em;
   display: flex;
   justify-content: space-between;
 `;

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 
 const InvestigationFormStudies = (props) => {
   const { investigation, addStudy, removeStudy } = props;
-  console.log({ investigation });
   return (
     <React.Fragment>
       {investigation.studies.map((study, index) => (

@@ -29,7 +29,6 @@ const reducer = (
       (payload.study as Study).assays.splice(index, 1);
       break;
     case SET_ASSAY_TITLE:
-      debugger;
       (payload.assay as Assay).title = payload.title;
       break;
     case SET_STUDY_TITLE:

@@ -16,10 +16,7 @@ const Collapsible = (props) => {
   const { trigger, children } = props;
   const reactCollapsibleRef = React.createRef<ReactCollapsible>();
   const handleCollapsibleOpen = () => {
-    console.log(
-      ((reactCollapsibleRef.current as any).innerRef.style.overflow =
-        'visible'),
-    );
+    (reactCollapsibleRef.current as any).innerRef.style.overflow = 'visible';
   };
   const handleCollapsibleClosing = () => {
     (reactCollapsibleRef.current as any).innerRef.style.overflow = 'hidden';

@@ -8,7 +8,8 @@
     font-size: 20px;
     line-height: 30px;
     /* identical to box height */
-    padding: 2.5em 2em;
+    padding: 1.8em 2em 0.4em 2em;
+    cursor: pointer;
 
     letter-spacing: 0.4px;
 
@@ -34,6 +35,22 @@
   }
 
   .sidebar {
+    &-children-badge {
+      background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+      height: 22px;
+      width: 22px;
+      display: flex;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      float: right;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0.2px;
+      color: #ffffff;
+    }
     &__items {
       padding: 1em;
     }
@@ -44,7 +61,7 @@
 
       &--inactive {
         padding: 16px;
-        margin: 16px 0;
+        // margin: 16px 0;
         &__text {
           font-family: Poppins;
           font-style: normal;
@@ -95,13 +112,27 @@
 
           .collapsible-trigger--inner {
             position: relative;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-right: 29px;
 
             .trigger-icon {
               position: absolute;
               right: 0;
               top: 50%;
-              transform: translateY(-50%);
+              transform: translateY(-50%) rotate(270deg);
               transition: 0.5s ease;
+            }
+          }
+        }
+
+        .Collapsible__contentInner {
+          padding-top: 10px;
+          .sidebar__item {
+            margin: 0;
+            padding: 10px 0;
+            &:hover {
+              box-shadow: none;
             }
           }
         }

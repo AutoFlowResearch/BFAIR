@@ -8,9 +8,15 @@
     letter-spacing: 0.2px;
 
     color: #252f40;
+
+    .back-icon {
+      margin-left: -30px;
+      margin-right: 21px;
+      cursor: pointer;
+    }
   }
 
   &__inner {
-    padding: 40px;
+    padding: 20px 40px 40px 40px;
   }
 }

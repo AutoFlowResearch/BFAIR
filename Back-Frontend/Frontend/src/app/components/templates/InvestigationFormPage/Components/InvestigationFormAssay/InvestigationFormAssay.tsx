@@ -60,7 +60,7 @@ const InvestigationFormAssay = (props: {
   removeAssay: any;
   setAssayTitle?: any;
 }) => {
-  const { assay, removeAssay } = props;
+  const { assay, removeAssay, setAssayTitle } = props;
 
   const handleAssayTitleChange = (title) => {
     setAssayTitle(assay, title);

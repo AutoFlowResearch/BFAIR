@@ -23,12 +23,14 @@ const InvestigationStudyTitle = (props: { study: Study; deleteStudy }) => {
   const { study, deleteStudy } = props;
   return (
     <div className="study__title">
-      {study.title || 'New Study'}
-      <div className="study__delete">
-        <DeleteIcon onClick={deleteStudy} />
-      </div>
-      <div className="study__assay-count">
-        <Badge isActive={true}>{study.assays.length} Assay</Badge>
+      <div className="study__title--text">{study.title || 'New Study'}</div>
+      <div className="study__title__cta">
+        <div className="study__delete">
+          <DeleteIcon onClick={deleteStudy} />
+        </div>
+        <div className="study__assay-count">
+          <Badge isActive={true}>{study.assays.length} Assay</Badge>
+        </div>
       </div>
     </div>
   );
