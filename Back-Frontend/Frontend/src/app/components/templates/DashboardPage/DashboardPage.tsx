@@ -31,7 +31,7 @@ const DashboardItem = (props: {
   const { dashboardItem, index } = props;
   return (
     <Link to={dashboardItem.href} key={index}>
-      <Card className="dashboard-module">
+      <Card className="dashboard-module" key={index}>
         <div className="dashboard-module__left">
           <p className="dashboard-module__title">{dashboardItem.title}</p>
           <p className="dashboard-module__subtitle">
