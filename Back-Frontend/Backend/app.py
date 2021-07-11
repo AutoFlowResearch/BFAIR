@@ -9,12 +9,71 @@ app = Flask(__name__)
 ma = Marshmallow(app)
 CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+app.secret_key = 'FA68F55B395E4326E414E78A7C221'
+app.config['SESSION_TYPE'] = 'memcached'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://bfair_user:password@localhost:5432/smart"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+login = LoginManager()
+db.init_app(app)
+login.init_app(app)
+login.login_view = 'login'
 
+
+@login.user_loader
+def load_user(id):
+    return UserModel.query.get(int(id))
+
+
+@app.route('/login', methods=['POST'])
+def login():
+    info = json.loads(request.data)
+    username = info.get('name', 'guest')
+    password = info.get('password', '')
+    if current_user.is_authenticated:
+        return jsonify(**{'result': 200,
+                          'data': {'message': 'Current user is already logged in'}})
+
+    user = UserModel.query.filter_by(name=username).first()
+    if user is not None and check_password_hash(user.password, password):
+        login_user(user)
+        return jsonify(**{'result': 200,
+                          'data': {'message': 'User {} successfully logged in'.format(user.name)}})
+    else:
+        return jsonify({"status": 401,
+                        "reason": "Username or Password Is Invalid"})
+
+
+@app.route('/register', methods=['POST', 'GET'])
+def register():
+    if current_user.is_authenticated:
+        return jsonify(**{'result': 200,
+                          'data': {'message': 'user already logged in please redirect to page directly'}})
+
+    if request.method == 'POST':
+        email = request.form['email']
+        name = request.form['name']
+        password = request.form['password']
+
+        if UserModel.query.filter_by(email=email).first():
+            return 'Email already Present'
+
+        user = UserModel(email=email, name=name)
+        user.set_password(password)
+        db.session.add(user)
+        db.session.commit()
+        return jsonify(**{'result': 200,
+                          'data': {'message': 'User registered successfully'}})
+    return jsonify(**{'result': 401,
+                      'data': {'message': 'Please open register page'}})
+
+
+@app.route('/logout', methods=['POST'])
+def logout():
+    logout_user()
+    return jsonify(**{'result': 200,
+                      'data': {'message': 'logout success'}})
 
 class SampleModel(db.Model):
     __tablename__ = "Sample"
