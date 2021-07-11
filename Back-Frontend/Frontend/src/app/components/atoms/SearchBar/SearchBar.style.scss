@@ -1,0 +1,36 @@
+.search-bar {
+  box-sizing: border-box;
+  width: 300px;
+  position: relative;
+
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+  }
+
+  input {
+    border: 1px solid rgba(135, 146, 166, 0.38);
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+    padding: 6px;
+    padding-left: 32px;
+
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 20px;
+    letter-spacing: 0.2px;
+    color: #8792a6;
+    background-color: transparent;
+
+    transition: 0.5s ease background-color;
+
+    &:focus {
+      outline: none;
+      background-color: white;
+    }
+  }
+}

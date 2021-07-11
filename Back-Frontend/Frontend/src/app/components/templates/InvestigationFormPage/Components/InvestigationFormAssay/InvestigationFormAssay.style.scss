@@ -1,0 +1,48 @@
+.investigation-form__assay {
+  .assay__title {
+    position: relative;
+    width: calc(100% - 36px);
+
+    .assay__delete {
+      margin: 0 0 0 10px;
+      float: right;
+    }
+  }
+
+  .assay__file {
+    &__object-title {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      /* identical to box height */
+
+      letter-spacing: 0.2px;
+
+      color: #252f40;
+    }
+    &__upload-btn {
+      width: 200px;
+      cursor: pointer;
+      background: #f8f9fa;
+      box-shadow: 0px 5px 10px rgba(226, 226, 226, 0.25);
+      border-radius: 4px;
+
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      /* identical to box height, or 143% */
+
+      letter-spacing: 0.2px;
+
+      color: #252f40;
+
+      padding: 10px 37px;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+}

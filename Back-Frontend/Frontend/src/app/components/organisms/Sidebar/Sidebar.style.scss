@@ -1,0 +1,142 @@
+.sidebar--inner {
+  height: 100%;
+  position: relative;
+  .site-title {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 30px;
+    /* identical to box height */
+    padding: 1.8em 2em 0.4em 2em;
+    cursor: pointer;
+
+    letter-spacing: 0.4px;
+
+    color: #252f40;
+
+    .ellipse {
+      background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+      box-shadow: 0px 10px 24px rgba(100, 108, 120, 0.09);
+      height: 32px;
+      width: 32px;
+      vertical-align: middle;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: white;
+      margin-right: 0.5em;
+    }
+    &__text {
+      vertical-align: middle;
+      opacity: 0.7;
+    }
+  }
+
+  .sidebar {
+    &-children-badge {
+      background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+      height: 22px;
+      width: 22px;
+      display: flex;
+      border-radius: 50%;
+      justify-content: center;
+      align-items: center;
+      float: right;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0.2px;
+      color: #ffffff;
+    }
+    &__items {
+      padding: 1em;
+    }
+    &__item {
+      cursor: pointer;
+      transition: 0.5s ease all;
+      border-radius: 16px;
+
+      &--inactive {
+        padding: 16px;
+        // margin: 16px 0;
+        &__text {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 24px;
+          /* identical to box height */
+
+          letter-spacing: 0.2px;
+
+          color: #8792a6;
+        }
+      }
+
+      &--active {
+        padding: 16px;
+        background: #ffffff;
+        box-shadow: 0px 16px 30px rgba(107, 107, 107, 0.16);
+        margin: 16px 0;
+
+        &__text {
+          font-family: Poppins;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 24px;
+          /* identical to box height */
+
+          letter-spacing: 0.2px;
+
+          color: #252f40;
+        }
+      }
+
+      &:hover {
+        @extend .sidebar__item--active;
+      }
+
+      .Collapsible {
+        .Collapsible__trigger {
+          &.is-open {
+            .collapsible-trigger--inner {
+              .trigger-icon {
+                transform: translateY(-50%) rotate(180deg);
+              }
+            }
+          }
+
+          .collapsible-trigger--inner {
+            position: relative;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            padding-right: 29px;
+
+            .trigger-icon {
+              position: absolute;
+              right: 0;
+              top: 50%;
+              transform: translateY(-50%) rotate(270deg);
+              transition: 0.5s ease;
+            }
+          }
+        }
+
+        .Collapsible__contentInner {
+          padding-top: 10px;
+          .sidebar__item {
+            margin: 0;
+            padding: 10px 0;
+            &:hover {
+              box-shadow: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

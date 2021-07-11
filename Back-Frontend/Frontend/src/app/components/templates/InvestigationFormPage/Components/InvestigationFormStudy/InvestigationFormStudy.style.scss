@@ -1,0 +1,26 @@
+.investigation-form__study {
+  .study__title {
+    position: relative;
+    width: calc(100% - 36px);
+    display: flex;
+    justify-content: space-between;
+
+    &--text {
+      flex: 1;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-width: calc(100% - 200px);
+    }
+
+    &__cta {
+      .study__assay-count {
+        float: right;
+      }
+
+      .study__delete {
+        margin: 0 0 0 10px;
+        float: right;
+      }
+    }
+  }
+}

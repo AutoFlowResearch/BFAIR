@@ -1,0 +1,25 @@
+.button-toggle {
+  border: 1px solid #efefef;
+  box-sizing: border-box;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-flex;
+  &__item {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    /* identical to box height, or 143% */
+
+    letter-spacing: 0.2px;
+    color: #8792a6;
+
+    cursor: pointer;
+
+    padding: 10px 23px;
+    &.selected {
+      color: #252f40;
+      background: #f8f9fa;
+    }
+  }
+}

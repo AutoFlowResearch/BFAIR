@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  /* identical to box height */
+
+  letter-spacing: 0.2px;
+  background: #efefef;
+  color: #8792a6;
+
+  padding: 2px 14px;
+
+  &.active {
+    background: linear-gradient(151.15deg, #f80284 2.22%, #8325c5 99.78%);
+    color: #ffffff;
+  }
+}

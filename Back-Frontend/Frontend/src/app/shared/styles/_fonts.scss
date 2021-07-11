@@ -1,0 +1,26 @@
+@mixin font-face($font-face) {
+  @font-face {
+    font-family: $font-face;
+    src: url('/assets/fonts/' + $font-face + '.ttf');
+  }
+}
+
+@include font-face('Poppins');
+@include font-face('Poppins-Black');
+@include font-face('Poppins-BlackItalic');
+@include font-face('Poppins-Bold');
+@include font-face('Poppins-BoldItalic');
+@include font-face('Poppins-ExtraBold');
+@include font-face('Poppins-ExtraBoldItalic');
+@include font-face('Poppins-ExtraLight');
+@include font-face('Poppins-ExtraLightItalic');
+@include font-face('Poppins-Italic');
+@include font-face('Poppins-Light');
+@include font-face('Poppins-LightItalic');
+@include font-face('Poppins-Medium');
+@include font-face('Poppins-MediumItalic');
+@include font-face('Poppins-Regular');
+@include font-face('Poppins-SemiBold');
+@include font-face('Poppins-SemiBoldItalic');
+@include font-face('Poppins-Thin');
+@include font-face('Poppins-ThinItalic');
