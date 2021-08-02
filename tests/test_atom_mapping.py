@@ -71,36 +71,49 @@ class test_methods(unittest.TestCase):
         self.addTypeEqualityFunc(pd.DataFrame, self.assertDataframeEqual)
         
         
-    def test_a_MolfileDownloader(self):
-        """ Tests the MolfileDownloader class with all of its' methods.
-        Compares downloaded files to the ones downloaded previously """
-        metabolites = self.metabolites
-        model_metabolite_df = self.model_metabolite_df
-        downloader = MolfileDownloader(model_metabolite_df)
-        downloader.generate_molfile_database()
+    # Currently, tests are supposed to be run in alphabetical order
+    # i.e. "test_a_" first, then "test_b_", because their output 
+    # depends on the output of other tests.
+    def test_g_check_symmetry(self):
+        """ Tests check_symmetry() function 
+        Makes sure that symmetric and non-symmetric compounds
+        are reported correctly """
+        self.assertTrue(check_symmetry('succ_c.mol'))
+        self.assertFalse(check_symmetry('f6p_c.mol'))
         
-        metabolites_ = os.listdir(current_dir + '/metabolites')
-        for i, molfile in enumerate(metabolites_):
-            with open(current_dir + f'/metabolites/{molfile}', 'r') as f:
-                metabolites_[i] = f.readlines()
-                
-        self.assertEqual(metabolites, metabolites_)
     
-    
-    def test_b_write_rxn_files(self):
-        """ Tests write_rxn_files function.
+    def test_f_generate_INCA_mapping_input(self):
+        """ Tests generate_INCA_mapping_input() function
         Compares the resulting output to the previously generated results """
-        unmapped_rxns = self.unmapped_rxns
-        model_reaction_df = self.model_reaction_df
-        write_rxn_files(model_reaction_df)
+        reaction_df_csv = self.reaction_df_csv
+        metabolite_df_csv = self.metabolite_df_csv
+        reaction_df_ = parse_reaction_mappings()
+        metabolite_df_ = parse_metabolite_mappings()
         
-        unmapped_rxns_ = os.listdir(current_dir + '/unmappedRxns')
-        for i, rxn_file in enumerate(unmapped_rxns_):
-            with open(current_dir + f'/unmappedRxns/{rxn_file}', 'r') as f:
-                 unmapped_rxns_[i] = f.readlines()
-                    
-        self.assertEqual(unmapped_rxns, unmapped_rxns_)
-               
+        generate_INCA_mapping_input(reaction_df_, metabolite_df_)
+        
+        reaction_df_csv_ = pd.read_csv(current_dir + '/MappingReactions.csv')
+        metabolite_df_csv_ = pd.read_csv(current_dir + '/MappingMetabolites.csv')
+        
+        self.assertEqual(reaction_df_csv, reaction_df_csv_)
+        self.assertEqual(metabolite_df_csv, metabolite_df_csv_)    
+        
+    
+    def test_e_parse_metabolite_mappings(self):
+        """ Tests parse_metabolite_mappings() function.
+        Compares the resulting output to the previously generated results """
+        metabolite_df = self.metabolite_df
+        metabolite_df_ = parse_metabolite_mappings()
+        self.assertEqual(metabolite_df, metabolite_df_)
+            
+        
+    def test_d_parse_reaction_mappings(self):
+        """ Tests parse_reaction_mappings function.
+        Compares the resulting output to the previously generated results """
+        reaction_df = self.reaction_df
+        reaction_df_ = parse_reaction_mappings()
+        self.assertEqual(reaction_df, reaction_df_)    
+                   
             
     def test_c_obtain_atom_mappings(self):
         """ Tests obtain_atom_mapppings() function.
@@ -122,46 +135,36 @@ class test_methods(unittest.TestCase):
                 
         self.assertEqual(mapped_rxns, mapped_rxns_)
         
-        
-    def test_d_parse_reaction_mappings(self):
-        """ Tests parse_reaction_mappings function.
+    
+    def test_b_write_rxn_files(self):
+        """ Tests write_rxn_files function.
         Compares the resulting output to the previously generated results """
-        reaction_df = self.reaction_df
-        reaction_df_ = parse_reaction_mappings()
-        self.assertEqual(reaction_df, reaction_df_)
-    
-    
-    def test_e_parse_metabolite_mappings(self):
-        """ Tests parse_metabolite_mappings() function.
-        Compares the resulting output to the previously generated results """
-        metabolite_df = self.metabolite_df
-        metabolite_df_ = parse_metabolite_mappings()
-        self.assertEqual(metabolite_df, metabolite_df_)
-    
-    
-    def test_f_generate_INCA_mapping_input(self):
-        """ Tests generate_INCA_mapping_input() function
-        Compares the resulting output to the previously generated results """
-        reaction_df_csv = self.reaction_df_csv
-        metabolite_df_csv = self.metabolite_df_csv
-        reaction_df_ = parse_reaction_mappings()
-        metabolite_df_ = parse_metabolite_mappings()
+        unmapped_rxns = self.unmapped_rxns
+        model_reaction_df = self.model_reaction_df
+        write_rxn_files(model_reaction_df)
         
-        generate_INCA_mapping_input(reaction_df_, metabolite_df_)
-        
-        reaction_df_csv_ = pd.read_csv(current_dir + '/MappingReactions.csv')
-        metabolite_df_csv_ = pd.read_csv(current_dir + '/MappingMetabolites.csv')
-        
-        self.assertEqual(reaction_df_csv, reaction_df_csv_)
-        self.assertEqual(metabolite_df_csv, metabolite_df_csv_)
+        unmapped_rxns_ = os.listdir(current_dir + '/unmappedRxns')
+        for i, rxn_file in enumerate(unmapped_rxns_):
+            with open(current_dir + f'/unmappedRxns/{rxn_file}', 'r') as f:
+                 unmapped_rxns_[i] = f.readlines()
+                    
+        self.assertEqual(unmapped_rxns, unmapped_rxns_)    
         
         
-    def test_g_check_symmetry(self):
-        """ Tests check_symmetry() function 
-        Makes sure that symmetric and non-symmetric compounds
-        are reported correctly """
-        self.assertTrue(check_symmetry('succ_c.mol'))
-        self.assertFalse(check_symmetry('f6p_c.mol'))
+    def test_a_MolfileDownloader(self):
+        """ Tests the MolfileDownloader class with all of its' methods.
+        Compares downloaded files to the ones downloaded previously """
+        metabolites = self.metabolites
+        model_metabolite_df = self.model_metabolite_df
+        downloader = MolfileDownloader(model_metabolite_df)
+        downloader.generate_molfile_database()
+        
+        metabolites_ = os.listdir(current_dir + '/metabolites')
+        for i, molfile in enumerate(metabolites_):
+            with open(current_dir + f'/metabolites/{molfile}', 'r') as f:
+                metabolites_[i] = f.readlines()
+                
+        self.assertEqual(metabolites, metabolites_)
         
         
 if __name__ == "__main__":
