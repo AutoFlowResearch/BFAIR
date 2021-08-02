@@ -5,11 +5,14 @@ Relies heavily on:
 Reaction Decoder Tool (RDT) (https://github.com/asad/ReactionDecoder)
 to map the reactions;
 CADD Group Chemoinformatics Tools and User Services (https://cactus.nci.nih.gov/chemical/structure)
-to resolve InChI strings from given InChI keys. """
+to resolve InChI strings from given InChI keys;
+Java, to run RDT"""
 
 import requests
 import os
 import glob
+import platform
+import subprocess
 import pandas as pd
 from rdkit import Chem
 from pymatgen.symmetry import analyzer
@@ -103,7 +106,7 @@ class MolfileDownloader:
                             wf.writelines(lines)
                     break
                 except:
-                    os.system(f'rm metabolites/{self.filename}')
+                    os.remove(f'metabolites/{self.filename}')
                     continue
                     
         print(
@@ -289,30 +292,41 @@ def obtain_atom_mappings(max_time=120):
     try:
         for rxnFile in rxn_list:
             # Check if reaction is mapped, and run RDT with specified time limit if not
-            if not os.path.isfile(f'rxnFiles/{rxnFile}'):
-                os.system(
-                    f'timeout {max_time} java -jar ../RDT.jar -Q RXN -q ../unmappedRxns/{rxnFile} -g -j AAM -f TEXT')
-
+            try:
+                if not os.path.isfile(f'rxnFiles/{rxnFile}'):             
+                    subprocess.run(['java', '-jar',
+                                    '../RDT.jar', '-Q', 
+                                    'RXN', '-q', 
+                                    f'../unmappedRxns/{rxnFile}', 
+                                    '-g', '-j', 
+                                    'AAM', '-f', 
+                                    'TEXT'], timeout=max_time)
+            except:
+                continue
         # Obtain filenames of generated files and simplify them to respective reaction IDs
         for name in glob.glob('ECBLAST*'):
             os.rename(name, name[8:-8]+name[-4:])
 
         # Move all generated files to different directories, in respect to their filetype
-        os.system('mv *.png ./pngFiles')
-        os.system('mv *.rxn ./rxnFiles')
-        os.system('mv *.txt ./txtFiles')
+        if platform.system() == 'Windows':
+            os.system('move *.png pngFiles')
+            os.system('move *.rxn rxnFiles')
+            os.system('move *.txt txtFiles')
+        else:
+            os.system('mv *.png ./pngFiles')
+            os.system('mv *.rxn ./rxnFiles')
+            os.system('mv *.txt ./txtFiles')
 
-        print(
-            f"Reactions mapped in total: {len(os.listdir('rxnFiles'))}/{len(rxn_list)}")
     except:
         # Make sure that wd is back to normal no matter what
         os.chdir(owd)
-        
+    
+    print(f"Reactions mapped in total: {len(os.listdir('rxnFiles'))}/{len(rxn_list)}")
     # Change working dir back to original
     os.chdir(owd)
     
     # Remove RDT.jar from working dir
-    os.system('rm RDT.jar')
+    os.remove('RDT.jar')
     
     
 def parse_reaction_mappings():
@@ -655,13 +669,14 @@ def clean_output(metabolites = True,
         Removes MappingReactions.csv and MappingMetabolites.csv.
     """
     if metabolites:
-        os.system('rm -r metabolites')
+        os.rmdir('metabolites')
     if reactions:
-        os.system('rm -r unmappedRxns')
+        os.rmdir('unmappedRxns')
     if mappings:
-        os.system('rm -r mappedRxns')
+        os.rmdir('mappedRxns')
     if csv:
-        os.system('rm MappingReactions.csv MappingMetabolites.csv')
+        os.remove('MappingReactions.csv')
+        os.remove('MappingMetabolites.csv')
 
         
 # molfile_downloader_descr = MolfileDownloader()
