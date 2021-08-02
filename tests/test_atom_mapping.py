@@ -122,7 +122,7 @@ class test_methods(unittest.TestCase):
         
         obtain_atom_mappings()
         
-        mapped_rxns_ = os.listdir(current_dir + '/mappedRxns/rxnFiles')
+        mapped_rxns_ = sorted(os.listdir(current_dir + '/mappedRxns/rxnFiles'))
         for i, rxn_file in enumerate(mapped_rxns_):
             with open(current_dir + f'/mappedRxns/rxnFiles/{rxn_file}', 'r') as f:
                 lines = f.readlines()
@@ -143,12 +143,12 @@ class test_methods(unittest.TestCase):
         model_reaction_df = self.model_reaction_df
         write_rxn_files(model_reaction_df)
         
-        unmapped_rxns_ = os.listdir(current_dir + '/unmappedRxns')
+        unmapped_rxns_ = sorted(os.listdir(current_dir + '/unmappedRxns'))
         for i, rxn_file in enumerate(unmapped_rxns_):
             with open(current_dir + f'/unmappedRxns/{rxn_file}', 'r') as f:
                  unmapped_rxns_[i] = f.readlines()
                     
-        self.assertEqual(unmapped_rxns, unmapped_rxns_)    
+        self.assertEqual(unmapped_rxns, unmapped_rxns_)  
         
         
     def test_a_MolfileDownloader(self):
@@ -159,11 +159,11 @@ class test_methods(unittest.TestCase):
         downloader = MolfileDownloader(model_metabolite_df)
         downloader.generate_molfile_database()
         
-        metabolites_ = os.listdir(current_dir + '/metabolites')
+        metabolites_ = sorted(os.listdir(current_dir + '/metabolites'))
         for i, molfile in enumerate(metabolites_):
             with open(current_dir + f'/metabolites/{molfile}', 'r') as f:
                 metabolites_[i] = f.readlines()
-                
+             
         self.assertEqual(metabolites, metabolites_)
         
         
