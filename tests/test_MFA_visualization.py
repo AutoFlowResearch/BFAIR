@@ -71,7 +71,7 @@ class test_methods(unittest.TestCase):
         self.assertEqual(self.fluxes_relaxed, fluxes_relaxed_)
         relaxed_fluxes_sampling_ = reshape_fluxes_escher(
             self.relaxed_sampled_fluxes)
-        self.assertEqual(
+        self.assertAlmostEqual(
             self.relaxed_fluxes_sampling, relaxed_fluxes_sampling_)
 
     def test_sampled_fluxes_minrange(self):
