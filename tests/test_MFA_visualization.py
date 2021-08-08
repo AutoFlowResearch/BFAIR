@@ -47,7 +47,7 @@ class test_methods(unittest.TestCase):
                 self.assertEqual(len(expected), len(actual))
                 for index in range(len(expected)):
                     v1, v2 = expected[index], actual[index]
-                    self.assertDeepAlmostEqual(v1, v2, 
+                    self.assertDeepAlmostEqual(v1, v2,
                                                __trace=repr(index), *args, **kwargs)
             elif isinstance(expected, dict):
                 self.assertEqual(set(expected), set(actual))

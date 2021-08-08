@@ -9,7 +9,6 @@ from BFAIR.atom_mapping import (MolfileDownloader,
                                 parse_reaction_mappings,
                                 parse_metabolite_mappings,
                                 generate_INCA_mapping_input,
-                                check_symmetry,
                                 clean_output,
                                 )
 

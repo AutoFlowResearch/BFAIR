@@ -61,7 +61,7 @@ class MolfileDownloader:
             os.mkdir('metabolites')
         # Disable RDKit warnings
         RDLogger.DisableLog('rdApp.*')
-        
+
         for i, met in self.metabolite_data.iterrows():
             self.filename = met.met_id + '.mol'
 
@@ -74,19 +74,19 @@ class MolfileDownloader:
             # present.
             if 'inchi_key' in met.annotations:
                 self.inchi_key = met.annotations['inchi_key'][0]
-                get_from_inchi_keyBool = True
+                get_from_inchi_keyBool = True  # noqa: F841
             if 'kegg.compound' in met.annotations:
                 self.keggIDs = [
                     keggID for keggID in met.annotations['kegg.compound']]
-                get_from_keggBool = True
+                get_from_keggBool = True  # noqa: F841
             if 'hmdb' in met.annotations:
                 self.hmdbIDnums = ['0' * (7 - len(hmdbID[4:])) + hmdbID[4:]
                                    for hmdbID in met.annotations['hmdb']]
-                get_from_hmdbBool = True
+                get_from_hmdbBool = True  # noqa: F841
             if 'chebi' in met.annotations:
                 self.chebiIDs = [
                     chebiID for chebiID in met.annotations['chebi']]
-                get_from_chebiBool = True
+                get_from_chebiBool = True  # noqa: F841
 
             # Call helper functions according to order of preference
             # and available references (specified by previous bool values).
@@ -363,8 +363,7 @@ def parse_reaction_mappings():
 
     rxn_list = os.listdir('unmappedRxns')
     # Compile list of reactions that do not have any mapping
-    unmapped_list = list(set(os.listdir('unmappedRxns')) -
-                         set(os.listdir('mappedRxns/rxnFiles')))
+    unmapped_list = list(set(os.listdir('unmappedRxns')) - set(os.listdir('mappedRxns/rxnFiles')))
 
     keys = ['Unnamed: 0',
             'Unnamed: 0.1',
@@ -625,11 +624,11 @@ def generate_INCA_mapping_input(reaction_df, metabolite_df):
     reaction_df.to_csv(
         path_or_buf=os.path.join(
             os.getcwd(),
-            f'MappingReactions.csv'))
+            'MappingReactions.csv'))
     metabolite_df.to_csv(
         path_or_buf=os.path.join(
             os.getcwd(),
-            f'MappingMetabolites.csv'))
+            'MappingMetabolites.csv'))
 
 
 def check_symmetry(met_filename):

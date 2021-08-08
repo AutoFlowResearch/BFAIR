@@ -71,8 +71,7 @@ class test_methods(unittest.TestCase):
         # test data is contained properly.
         os.chdir(current_dir)
         file_obj = open(
-            current_dir +
-            '/test_data/atom_mapping_Data/test_data.obj',
+            current_dir + '/test_data/atom_mapping_Data/test_data.obj',
             'rb')
         (
             metabolites,
