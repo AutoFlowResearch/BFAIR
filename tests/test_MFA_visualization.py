@@ -4,7 +4,7 @@ import pathlib
 import cobra
 import matplotlib
 import pandas as pd
-from numpy import long, ndarray
+from numpy import ndarray
 from BFAIR.mfa.visualization import (
     reshape_fluxes_escher,
     sampled_fluxes_minrange,
@@ -25,7 +25,7 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 class test_methods(unittest.TestCase):
 
     maxDiff = None
-    
+
     # Add method for dictionary AlmostEqual assertion
     def assertDeepAlmostEqual(self, expected, actual, *args, **kwargs):
         """
@@ -38,22 +38,22 @@ class test_methods(unittest.TestCase):
         intact to assertAlmostEqual() (that's how you specify comparison
         precision).
         """
-        is_root = not '__trace' in kwargs
+        is_root = '__trace' not in kwargs
         trace = kwargs.pop('__trace', 'ROOT')
         try:
-            if isinstance(expected, (int, float, long, complex)):
+            if isinstance(expected, (int, float, complex)):
                 self.assertAlmostEqual(expected, actual, *args, **kwargs)
             elif isinstance(expected, (list, tuple, ndarray)):
                 self.assertEqual(len(expected), len(actual))
                 for index in range(len(expected)):
                     v1, v2 = expected[index], actual[index]
-                    self.assertDeepAlmostEqual(v1, v2,
-                                          __trace=repr(index), *args, **kwargs)
+                    self.assertDeepAlmostEqual(v1, v2, 
+                                               __trace=repr(index), *args, **kwargs)
             elif isinstance(expected, dict):
                 self.assertEqual(set(expected), set(actual))
                 for key in expected:
                     self.assertDeepAlmostEqual(expected[key], actual[key],
-                                          __trace=repr(key), *args, **kwargs)
+                                               __trace=repr(key), *args, **kwargs)
             else:
                 self.assertEqual(expected, actual)
         except AssertionError as exc:
@@ -62,7 +62,7 @@ class test_methods(unittest.TestCase):
                 trace = ' -> '.join(reversed(exc.traces))
                 exc = AssertionError("%s\nTRACE: %s" % (exc.message, trace))
             raise exc
-    
+
     # Create method to compare dataframes
     def assertDataframeEqual(self, a, b, msg):
         try:
