@@ -27,10 +27,10 @@ class MolfileDownloader:
         
         Parameters
         ----------
-        metabolite_data: pandas.DataFrame
+        metabolite_data : pandas.DataFrame
             Dataframe that contains information about metabolites
             the model. Obtain from INCA_input_parser module.
-        db_preference: tuple of integers
+        db_preference : tuple of int, optional
             Four integers specify the order of preference of
             databases to obtain the metabolite structures from:
             0: Using InChI key > InChI string conversion
@@ -52,7 +52,7 @@ class MolfileDownloader:
         
         Outputs
         -------
-        Molfiles: .mol files
+        Molfiles : .mol files
         """
         print('Fetching metabolite structures...')
         
@@ -115,7 +115,8 @@ class MolfileDownloader:
     
     def get_from_inchi_key(self):
         """ Helper method to obtain InChI string from InChI key,
-        and generate the Molfile from the string. """
+        and generate the Molfile from the string. 
+        """
         url = f'https://cactus.nci.nih.gov/chemical/structure/{self.inchi_key}/stdinchi'
         r = requests.get(url, allow_redirects=False)
         inchi_string = r.text
@@ -165,13 +166,13 @@ def write_rxn_files(rxn_data):
     
     Parameters
     ----------
-    rxn_data: pandas.DataFrame
+    rxn_data : pandas.DataFrame
         Dataframe that contains information about reactions
         in the model. Obtained from INCA_input_parser module.
     
     Outputs
     -------
-    RXN files: .rxn files 
+    RXN files : .rxn files 
     """  
     met_filter = ['h_e', 'h_c', 'h_p', 'h2_e', 'h2_c', 'h2_p']
     biomass_filter = ['Biomass', 'biomass', 'BIOMASS']
@@ -254,16 +255,16 @@ def obtain_atom_mappings(max_time=120):
     
     Parameters
     ----------
-    max_time: int, optional
+    max_time : int, optional
         Specifies time limit for single reaction mapping 
         in seconds. Default: 120s.
         
     Outputs
     -------
-    mapped RXN files: .rxn files
-    mapped TXT files: .txt files
+    mapped RXN files : .rxn files
+    mapped TXT files : .txt files
         Mappings in SMILES format
-    pictures of mappings: .png files
+    pictures of mappings : .png files
     """
     # Check if Java is installed
     if os.system('java -version') != 0:
@@ -339,7 +340,7 @@ def parse_reaction_mappings():
     
     Returns
     -------
-    mapping_data: pandas.DataFrame
+    mapping_data : pandas.DataFrame
         Reaction mapping data.
     """
     if not os.path.isdir('mappedRxns'):
@@ -515,7 +516,7 @@ def parse_metabolite_mappings():
     
     Returns
     -------
-    metabolite_data: pandas.DataFrame
+    metabolite_data : pandas.DataFrame
         Dataframe containing mapped metabolite data.
     """
     metabolite_list = os.listdir('metabolites')
@@ -576,15 +577,15 @@ def generate_INCA_mapping_input(reaction_df, metabolite_df):
     
     Parameters
     ----------
-    reaction_df: pandas.DataFrame
+    reaction_df : pandas.DataFrame
         Dataframe that contains reaction mapping data.
-    metabolite_df: pandas.DataFrame
+    metabolite_df : pandas.DataFrame
         Dataframe that contains metabolite mapping data.
         
     Outputs
     -------
-    MappingReactions: .csv file
-    MappingMetabolites: .csv file
+    MappingReactions : .csv file
+    MappingMetabolites : .csv file
     """
     # Would be a good idea to make the filenames more informative.
     reaction_df.to_csv(path_or_buf = os.path.join(os.getcwd(), f'MappingReactions.csv'))
@@ -603,12 +604,12 @@ def check_symmetry(met_filename):
     
     Parameters
     ----------
-    met_filename: string
+    met_filename : str
         Filename of the specific Molfile
         
     Returns
     -------
-    symmetrical: bool
+    symmetrical : bool
         True if metabolite is symmetric, False if not.
         
     """
@@ -659,13 +660,13 @@ def clean_output(metabolites = True,
     
     Parameters
     ----------
-    metabolites: bool, optional
+    metabolites : bool, optional
         Removes /metabolites folder recursively.
-    reactions: bool, optional
+    reactions : bool, optional
         Removes /unmappedRxns folder recursively.
-    mappings: bool, optional
+    mappings : bool, optional
         Removes /mappedRxns folder recursively.
-    csv: bool, optional
+    csv : bool, optional
         Removes MappingReactions.csv and MappingMetabolites.csv.
     """
     if metabolites:
