@@ -1,7 +1,8 @@
 import pickle
 import os
 import pandas as pd
-from BFAIR.INCA import INCA_input_parser
+import pathlib
+from BFAIR.mfa.INCA import INCA_input_parser
 from BFAIR.atom_mapping import (MolfileDownloader,
                                 write_rxn_files,
                                 obtain_atom_mappings,
@@ -40,11 +41,11 @@ model_metabolite_df = model_metabolite_df.append(metabolite_data[metabolite_data
 
 # Obtain all required files
 # Metabolite Molfiles
-downloader = MolfileDownloader(met_df)
+downloader = MolfileDownloader(model_metabolite_df)
 downloader.generate_molfile_database()
 
 # Rxn files
-write_rxn_files(rxn_df)
+write_rxn_files(model_reaction_df)
 
 # Mapped Rxn files
 obtain_atom_mappings()
@@ -58,17 +59,33 @@ generate_INCA_mapping_input(reaction_df, metabolite_df)
 
 
 # Load all the generated files in Python
-# Molfiles in a single list
+# Molfiles in a single list.
+# All numerics converted to floats.
 metabolites = os.listdir('metabolites')
 for i, molfile in enumerate(metabolites):
     with open(f'metabolites/{molfile}', 'r') as f:
         metabolites[i] = f.readlines()
+        for j, met in enumerate(metabolites[i]): 
+            metabolites[i][j] = metabolites[i][j].split()
+            for k, val in enumerate(metabolites[i][j]):
+                try:
+                    metabolites[i][j][k] = float(val)
+                except:
+                    pass
 
-# Rxn files in a single list
+# Rxn files in a single list.
+# All numerics converted to floats.
 unmapped_rxns = os.listdir('unmappedRxns')
 for i, rxn_file in enumerate(unmapped_rxns):
     with open(f'unmappedRxns/{rxn_file}', 'r') as f:
-         unmapped_rxns[i] = f.readlines()
+        unmapped_rxns[i] = f.readlines()
+        for j, line in enumerate(unmapped_rxns[i]): 
+            unmapped_rxns[i][j] = unmapped_rxns[i][j].split()
+            for k, val in enumerate(unmapped_rxns[i][j]):
+                try:
+                    unmapped_rxns[i][j][k] = float(val)
+                except:
+                    pass
         
 # Mapped Rxn files in a single list
 mapped_rxns = os.listdir('mappedRxns/rxnFiles')

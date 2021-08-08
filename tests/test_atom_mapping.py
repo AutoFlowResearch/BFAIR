@@ -4,6 +4,7 @@ import pickle
 import pathlib
 import os
 import shutil
+from numpy import long, ndarray
 from BFAIR.atom_mapping import (MolfileDownloader,
                                 write_rxn_files,
                                 obtain_atom_mappings,
@@ -18,6 +19,44 @@ current_dir = str(pathlib.Path(__file__).parent.absolute())
 
 class test_methods(unittest.TestCase):
     
+    # Add method for list AlmostEqual assertion
+    def assertDeepAlmostEqual(self, expected, actual, *args, **kwargs):
+        """
+        Assert that two complex structures have almost equal contents.
+
+        Compares lists, dicts and tuples recursively. Checks numeric values
+        using test_case's :py:meth:`unittest.TestCase.assertAlmostEqual` and
+        checks all other values with :py:meth:`unittest.TestCase.assertEqual`.
+        Accepts additional positional and keyword arguments and pass those
+        intact to assertAlmostEqual() (that's how you specify comparison
+        precision).
+        """
+        is_root = not '__trace' in kwargs
+        trace = kwargs.pop('__trace', 'ROOT')
+        try:
+            if isinstance(expected, (int, float, long, complex)):
+                self.assertAlmostEqual(expected, actual, *args, **kwargs)
+            elif isinstance(expected, (list, tuple, ndarray)):
+                self.assertEqual(len(expected), len(actual))
+                for index in range(len(expected)):
+                    v1, v2 = expected[index], actual[index]
+                    self.assertDeepAlmostEqual(v1, v2,
+                                          __trace=repr(index), *args, **kwargs)
+            elif isinstance(expected, dict):
+                self.assertEqual(set(expected), set(actual))
+                for key in expected:
+                    self.assertDeepAlmostEqual(expected[key], actual[key],
+                                          __trace=repr(key), *args, **kwargs)
+            else:
+                self.assertEqual(expected, actual)
+        except AssertionError as exc:
+            exc.__dict__.setdefault('traces', []).append(trace)
+            if is_root:
+                trace = ' -> '.join(reversed(exc.traces))
+                exc = AssertionError("%s\nTRACE: %s" % (exc.message, trace))
+            raise exc
+            
+            
     # Create method to compare dataframes
     def assertDataframeEqual(self, a, b, msg):
         try:
@@ -143,12 +182,20 @@ class test_methods(unittest.TestCase):
         model_reaction_df = self.model_reaction_df
         write_rxn_files(model_reaction_df)
         
+        # Store all file contents in one list, and convert all numerics to floats
         unmapped_rxns_ = sorted(os.listdir(current_dir + '/unmappedRxns'))
         for i, rxn_file in enumerate(unmapped_rxns_):
             with open(current_dir + f'/unmappedRxns/{rxn_file}', 'r') as f:
-                 unmapped_rxns_[i] = f.readlines()
+                unmapped_rxns_[i] = f.readlines()
+                for j, line in enumerate(unmapped_rxns_[i]): 
+                    unmapped_rxns_[i][j] = unmapped_rxns_[i][j].split()
+                    for k, val in enumerate(unmapped_rxns_[i][j]):
+                        try:
+                            unmapped_rxns_[i][j][k] = float(val)
+                        except:
+                            pass
                     
-        self.assertEqual(unmapped_rxns, unmapped_rxns_)  
+        self.assertDeepAlmostEqual(unmapped_rxns, unmapped_rxns_)  
         
         
     def test_a_MolfileDownloader(self):
@@ -159,12 +206,20 @@ class test_methods(unittest.TestCase):
         downloader = MolfileDownloader(model_metabolite_df)
         downloader.generate_molfile_database()
         
+        # Store all file contents in one list, and convert all numerics to floats
         metabolites_ = sorted(os.listdir(current_dir + '/metabolites'))
         for i, molfile in enumerate(metabolites_):
             with open(current_dir + f'/metabolites/{molfile}', 'r') as f:
                 metabolites_[i] = f.readlines()
+                for j, met in enumerate(metabolites_[i]): 
+                    metabolites_[i][j] = metabolites_[i][j].split()
+                    for k, val in enumerate(metabolites_[i][j]):
+                        try:
+                            metabolites_[i][j][k] = float(val)
+                        except:
+                            pass
              
-        self.assertEqual(metabolites, metabolites_)
+        self.assertDeepAlmostEqual(metabolites, metabolites_)
         
         
 if __name__ == "__main__":
