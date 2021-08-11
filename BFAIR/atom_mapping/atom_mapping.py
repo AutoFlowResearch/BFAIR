@@ -361,7 +361,7 @@ def parse_reaction_mappings():
         raise RuntimeError(
             "'mappedRxns' directory not present in current working directory")
 
-    rxn_list = os.listdir('unmappedRxns')
+    rxn_list = sorted(os.listdir('unmappedRxns'))
     # Compile list of reactions that do not have any mapping
     unmapped_list = list(set(os.listdir('unmappedRxns')) - set(os.listdir('mappedRxns/rxnFiles')))
 
@@ -550,7 +550,7 @@ def parse_metabolite_mappings():
     metabolite_data : pandas.DataFrame
         Dataframe containing mapped metabolite data.
     """
-    metabolite_list = os.listdir('metabolites')
+    metabolite_list = sorted(os.listdir('metabolites'))
     keys = ['mapping_id',
             'met_id',
             'met_elements',
