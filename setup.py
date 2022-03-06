@@ -39,8 +39,8 @@ setup(
     ],
     install_requires=[
         "flake8",
-        #"cobra == 0.19.0",
-        #"pytfa == 0.9.3",
+        "cobra == 0.24.0",
+        "pytfa == 0.9.3",
         "pandas == 1.4.1",
         #"matplotlib == 3.2.2",
         #"sympy == 1.5.1",
@@ -56,7 +56,8 @@ setup(
         #"nbsphinx == 0.8.3",
         "scipy == 1.8.0",
         "seaborn == 0.11.2",
-        "scikit-learn == 1.0.2"
+        "scikit-learn == 1.0.2",
+        "rdkit-pypi == 2021.9.4"
     ],
     # dependency_links=
     include_package_data=True,
