@@ -7,6 +7,7 @@ Example Notebooks
    introduction
    FIA_MS_database_construction_example
    FIA_MS_example_notebook
+   FIA_MS_MetEngNP_demo_notebook
    Normalization_example_notebook
    data/models/README
    EColi_TFA_with_metabolomic_data
