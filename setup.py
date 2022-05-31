@@ -42,7 +42,7 @@ setup(
         "cobra == 0.24.0",
         "pytfa == 0.9.3",
         "pandas == 1.3.5",
-        #"matplotlib == 3.2.2",
+        "matplotlib == 3.2.2",
         #"sympy == 1.5.1",
         "pyopenms == 2.7.0",
         "molmass == 2020.6.10",
