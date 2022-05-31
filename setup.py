@@ -57,6 +57,7 @@ setup(
         "scipy == 1.7.3",
         "seaborn == 0.11.2",
         "scikit-learn == 1.0.2",
+        "numpy == 1.21.6",
         "rdkit-pypi == 2021.9.4"
     ],
     # dependency_links=
