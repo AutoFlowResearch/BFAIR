@@ -51,7 +51,7 @@ setup(
         #"openpyxl == 3.0.6",
         #"requests == 2.25.1",
         "lazy_object_proxy == 1.6.0",
-        #"pypika == 0.48.2",
+        "pypika == 0.48.2",
         #"networkx == 2.5.1",
         #"nbsphinx == 0.8.3",
         "scipy == 1.7.3",
