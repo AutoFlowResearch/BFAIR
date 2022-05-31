@@ -54,7 +54,7 @@ setup(
         #"pypika == 0.48.2",
         #"networkx == 2.5.1",
         #"nbsphinx == 0.8.3",
-        "scipy == 1.8.0",
+        "scipy == 1.7.3",
         "seaborn == 0.11.2",
         "scikit-learn == 1.0.2",
         "rdkit-pypi == 2021.9.4"
