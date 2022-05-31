@@ -48,7 +48,7 @@ setup(
         "molmass == 2020.6.10",
         #"escher == 1.6.0",
         #"freezegun == 1.1.0",
-        #"openpyxl == 3.0.6",
+        "openpyxl == 3.0.6",
         #"requests == 2.25.1",
         "lazy_object_proxy == 1.6.0",
         "pypika == 0.48.2",
