@@ -46,7 +46,7 @@ setup(
         #"sympy == 1.5.1",
         "pyopenms == 2.7.0",
         "molmass == 2020.6.10",
-        #"escher == 1.6.0",
+        "escher == 1.6.0",
         #"freezegun == 1.1.0",
         "openpyxl == 3.0.6",
         #"requests == 2.25.1",
