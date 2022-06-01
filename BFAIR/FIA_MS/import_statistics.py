@@ -55,7 +55,6 @@ def extractNamesAndIntensities(feature_dir, sample_names, database):
     extracted_data_all = pd.DataFrame.from_dict(extracted_data_dict, "index")
     return extracted_data_all
 
-
 def calculateMeanVarRSD(
     extracted_data_all, sample_name_2_replicate_groups, min_reps=3
 ):
@@ -84,53 +83,34 @@ def calculateMeanVarRSD(
         formula and the mean, variance and relative stdev.
     """
     stats_all_dict = {}
+    mets_unique = extracted_data_all["Metabolite"].unique()
+    rgn_unique = sample_name_2_replicate_groups[
+        "replicate_group_name"].unique()
     cnt = 0
-    for replicate_group in sample_name_2_replicate_groups[
-        "replicate_group_name"
-    ].unique():
-        list_of_compound_intensities = pd.DataFrame(
-            columns=["Metabolite", "Formula", "Intensities"]
-        )
-        for sample_name_index, sample_name in sample_name_2_replicate_groups[
-            sample_name_2_replicate_groups["replicate_group_name"]
-            == replicate_group
-        ].iterrows():
-            for met_index, met in extracted_data_all[
-                extracted_data_all["sample_group_name"]
-                == sample_name["sample_group_name"]
-            ].iterrows():
-                list_of_compound_intensities = (
-                    list_of_compound_intensities.append(
-                        pd.DataFrame(
-                            [
-                                {
-                                    "Metabolite": met["Metabolite"],
-                                    "Formula": met["Formula"],
-                                    "Intensities": met["Intensity"],
-                                }
-                            ]
-                        ),
-                        ignore_index=True,
-                    )
+    for replicate_group in rgn_unique:
+        for met_name in mets_unique:
+            sample_names = sample_name_2_replicate_groups[
+                sample_name_2_replicate_groups["replicate_group_name"]
+                == replicate_group
+            ]
+            intensities = extracted_data_all[
+                (extracted_data_all["Metabolite"] == met_name)
+                & (extracted_data_all["sample_group_name"].isin(
+                    sample_names["sample_group_name"].unique())
                 )
-        for met_name in list_of_compound_intensities["Metabolite"].unique():
-            intensities = list_of_compound_intensities[
-                list_of_compound_intensities["Metabolite"] == met_name
             ]
             if len(intensities) >= min_reps:
-                mean = np.mean(intensities["Intensities"])
-                var = np.var(intensities["Intensities"])
+                mean = np.mean(intensities["Intensity"])
+                median = np.median(intensities["Intensity"])
+                var = np.var(intensities["Intensity"])
                 rsd = np.sqrt(var) / mean
                 stats_all_dict[cnt] = {
                     "replicate_group_name": replicate_group,
                     "Metabolite": met_name,
                     "Formula": list(
-                        list_of_compound_intensities[
-                            list_of_compound_intensities["Metabolite"]
-                            == met_name
-                        ]["Formula"]
-                    )[0],
+                        intensities["Formula"])[0],
                     "Mean": mean,
+                    "Median": median,
                     "Variance": var,
                     "RSD": rsd,
                 }
