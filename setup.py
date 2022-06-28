@@ -49,7 +49,7 @@ setup(
         "escher == 1.6.0",
         "freezegun == 1.1.0",
         "openpyxl == 3.0.6",
-        #"requests == 2.25.1",
+        "requests",
         "lazy_object_proxy == 1.6.0",
         "pypika == 0.48.2",
         #"networkx == 2.5.1",
@@ -57,8 +57,10 @@ setup(
         "scipy == 1.7.3",
         "seaborn == 0.11.2",
         "scikit-learn == 1.0.2",
+        "statsmodels",
         "numpy == 1.21.6",
-        "rdkit-pypi == 2021.9.4"
+        "rdkit-pypi == 2021.9.4",
+        "umap-learn"
     ],
     # dependency_links=
     include_package_data=True,
